@@ -40,7 +40,7 @@ let g:syntastic_loc_list_height = 5
 autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd CompleteDone * pclose
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 highlight link NERDTreeExecFile ModeMsg
 
 autocmd FileType vue syntax sync fromstart
@@ -69,7 +69,7 @@ if has('macunix')
   set background=light
 endif
 
-if has("gui_running")
+if has('gui_running')
   set guifont=Liberation\ Mono\ for\ Powerline\ 10
   if has('macunix')
     set guifont=Meslo\ LG\ S\ for\ Powerline:h12
