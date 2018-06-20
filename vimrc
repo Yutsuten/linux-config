@@ -3,6 +3,7 @@ set nocp
 set showcmd
 set is ic
 set updatetime=250
+set colorcolumn=80
 set number
 set noshowmode
 set splitbelow
@@ -76,3 +77,4 @@ if has('gui_running')
     set guifont=Meslo\ LG\ S\ for\ Powerline:h12
   endif
 endif
+
