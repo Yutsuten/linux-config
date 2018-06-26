@@ -1,7 +1,10 @@
 filetype plugin indent on
 set nocp
 set showcmd
-set is ic
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
 set updatetime=250
 set colorcolumn=80
 set number
@@ -13,11 +16,12 @@ set softtabstop=4
 set expandtab
 set hidden
 set mouse=a
+set autoread
 set exrc
 set secure
 syntax enable
 
-set fileencodings=iso-2022-jp,euc-jp,cp932,utf8,default,latin1
+set fileencodings=utf8,iso-2022-jp,euc-jp,cp932,default,latin1
 set encoding=utf8
 
 set background=dark
@@ -44,6 +48,7 @@ autocmd CompleteDone * pclose
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 highlight link NERDTreeExecFile ModeMsg
+let NERDTreeIgnore = ['\.pyc$']
 
 autocmd FileType vue syntax sync fromstart
 
