@@ -6,7 +6,7 @@ set smartcase
 set hlsearch
 set incsearch
 set updatetime=250
-set colorcolumn=80
+set colorcolumn=100
 set number
 set noshowmode
 set splitbelow
@@ -42,6 +42,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_python_checkers = ['python', 'flake8']
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd CompleteDone * pclose
