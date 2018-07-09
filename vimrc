@@ -24,7 +24,7 @@ syntax enable
 set fileencodings=utf8,iso-2022-jp,euc-jp,cp932,default,latin1
 set encoding=utf8
 
-set background=dark
+set background=light
 colorscheme solarized
 
 let g:airline_powerline_fonts = 1
@@ -71,10 +71,6 @@ function! NERDCommenter_after()
     let g:ft = ''
   endif
 endfunction
-
-if has('macunix')
-  set background=light
-endif
 
 if has('gui_running')
   set guifont=Liberation\ Mono\ for\ Powerline\ 10
