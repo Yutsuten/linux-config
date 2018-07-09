@@ -48,7 +48,7 @@ autocmd CompleteDone * pclose
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 highlight link NERDTreeExecFile ModeMsg
-let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore = ['\.pyc$', '\.swp$', '\.swo$', '.DS_Store']
 
 autocmd FileType vue syntax sync fromstart
 
