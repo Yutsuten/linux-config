@@ -74,9 +74,9 @@ function! NERDCommenter_after()
 endfunction
 
 if has('gui_running')
-  set guifont=Liberation\ Mono\ for\ Powerline\ 10
+  set guifont=Liberation\ Mono\ for\ Powerline\ 11
   if has('macunix')
-    set guifont=Meslo\ LG\ S\ for\ Powerline:h12
+    set guifont=Meslo\ LG\ S\ for\ Powerline:h13
   endif
 endif
 
