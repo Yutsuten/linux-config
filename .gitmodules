@@ -31,12 +31,6 @@
 [submodule "pack/plugins/start/tlib_vim"]
 	path = pack/plugins/start/tlib_vim
 	url = https://github.com/tomtom/tlib_vim.git
-[submodule "pack/plugins/start/nerdtree-git-plugin"]
-	path = pack/plugins/start/nerdtree-git-plugin
-	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
-[submodule "pack/plugins/start/nerdtree"]
-	path = pack/plugins/start/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
 [submodule "pack/plugins/start/nerdcommenter"]
 	path = pack/plugins/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
