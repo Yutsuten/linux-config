@@ -33,10 +33,6 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 set laststatus=2
 set ttimeoutlen=20
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd CompleteDone * pclose
 autocmd StdinReadPre * let s:std_in=1
