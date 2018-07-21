@@ -55,3 +55,6 @@
 [submodule "pack/plugins/start/ale"]
 	path = pack/plugins/start/ale
 	url = git@github.com:w0rp/ale.git
+[submodule "pack/plugins/start/vim-airline-themes"]
+	path = pack/plugins/start/vim-airline-themes
+	url = git@github.com:vim-airline/vim-airline-themes.git
