@@ -61,6 +61,8 @@ endfunction
 
 if has('gui_running')
   set guifont=Liberation\ Mono\ for\ Powerline\ 11
+  set guioptions-=m  "remove menu bar
+  set guioptions-=T  "remove toolbar
   if has('macunix')
     set guifont=Meslo\ LG\ S\ for\ Powerline:h13
   endif
