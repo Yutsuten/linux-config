@@ -61,10 +61,10 @@ function! NERDCommenter_after()
 endfunction
 
 if has('gui_running')
-  set guifont=Liberation\ Mono\ for\ Powerline\ 11
+  set guifont=Liberation\ Mono\ for\ Powerline\ 12
   set guioptions-=m  "remove menu bar
   set guioptions-=T  "remove toolbar
   if has('macunix')
-    set guifont=Meslo\ LG\ S\ for\ Powerline:h13
+    set guifont=Meslo\ LG\ S\ for\ Powerline:h14
   endif
 endif
