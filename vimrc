@@ -61,17 +61,16 @@ function! NERDCommenter_after()
 endfunction
 
 function! Setguifont(...)
+  set guifont=Meslo\ LG\ S\ for\ Powerline:h14
+endfunction
+
+if has('gui_running')
   if has('macunix')
-    set guifont=Meslo\ LG\ S\ for\ Powerline:h14
+    call timer_start(300, 'Setguifont', {'repeat': -1})
+    call Setguifont()
   elseif has('unix')
     set guifont=Liberation\ Mono\ for\ Powerline\ 12
     set guioptions-=m  "remove menu bar
     set guioptions-=T  "remove toolbar
   endif
-endfunction
-
-if has('gui_running')
-  " Workaround to airline bug
-  call timer_start(300, 'Setguifont', {'repeat': -1})
-  call Setguifont()
 endif
