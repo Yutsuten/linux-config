@@ -1,1 +1,1 @@
-let b:ale_linters = ['htmlhint', 'tidy']
+let b:ale_linters = ['htmlhint']

@@ -1,1 +1,1 @@
-let b:ale_linters = ['python', 'flake8']
+let b:ale_linters = ['flake8', 'pylint']
