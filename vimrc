@@ -66,8 +66,8 @@ endfunction
 
 if has('gui_running')
   if has('macunix')
-    call timer_start(300, 'Setguifont', {'repeat': -1})
     call Setguifont()
+    nnoremap <F9> :call Setguifont()<CR>
   elseif has('unix')
     set guifont=Liberation\ Mono\ for\ Powerline\ 12
     set guioptions-=m  "remove menu bar
