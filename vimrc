@@ -29,14 +29,11 @@ set background=dark
 colorscheme solarized
 
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#ale#enabled = 1
 set laststatus=2
 set ttimeoutlen=20
 
 autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
-
 autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd CompleteDone * pclose
 autocmd StdinReadPre * let s:std_in=1
