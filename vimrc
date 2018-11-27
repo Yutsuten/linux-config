@@ -19,6 +19,8 @@ set mouse=a
 set autoread
 set exrc
 set secure
+set laststatus=2
+set ttimeoutlen=20
 syntax enable
 
 set fileencodings=utf8,iso-2022-jp,euc-jp,cp932,default,latin1
@@ -28,12 +30,13 @@ set t_Co=16
 set background=dark
 colorscheme solarized
 
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#ale#enabled = 1
-set laststatus=2
-set ttimeoutlen=20
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_section_z = '%2l/%L ln : %02v'
 
 autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
+autocmd BufNewFile,BufRead *.mako setlocal filetype=html
 autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd CompleteDone * pclose
 autocmd StdinReadPre * let s:std_in=1
