@@ -9,6 +9,8 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
+set list
+set listchars=tab:\ \ ,
 set mouse=a
 set nocp
 set noshowmode
@@ -46,10 +48,10 @@ let g:lightline = {
 \ }
 
 function! LightlineFileinfo()
-    if &filetype ==# 'netrw' || (&fileencoding ==# 'utf-8' && &fileformat ==# 'unix')
-        return ''
-    endif
-    return &fileencoding . '[' . &fileformat . ']'
+  if &filetype ==# 'netrw' || (&fileencoding ==# 'utf-8' && &fileformat ==# 'unix')
+    return ''
+  endif
+  return &fileencoding . '[' . &fileformat . ']'
 endfunction
 
 function! LightlineFilename()
@@ -67,11 +69,12 @@ endfunction
 
 colorscheme solarized
 filetype plugin indent on
+highlight SpecialKey ctermbg=0
 syntax enable
 
+autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
 autocmd BufNewFile,BufRead *.mako setlocal filetype=html
-autocmd BufEnter * EnableStripWhitespaceOnSave
 autocmd CompleteDone * pclose
 autocmd FileType vue syntax sync fromstart
 autocmd StdinReadPre * let s:std_in=1
