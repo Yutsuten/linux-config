@@ -46,7 +46,7 @@ let g:lightline = {
 \ }
 
 function! LightlineFileinfo()
-    if &fileencoding ==# 'utf-8' && &fileformat ==# 'unix'
+    if &filetype ==# 'netrw' || (&fileencoding ==# 'utf-8' && &fileformat ==# 'unix')
         return ''
     endif
     return &fileencoding . '[' . &fileformat . ']'
