@@ -19,9 +19,6 @@
 [submodule "pack/plugins/start/vim-better-whitespace"]
 	path = pack/plugins/start/vim-better-whitespace
 	url = https://github.com/ntpeters/vim-better-whitespace.git
-[submodule "pack/plugins/start/vim-airline"]
-	path = pack/plugins/start/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
 [submodule "pack/plugins/start/vim-addon-mw-utils"]
 	path = pack/plugins/start/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
@@ -55,6 +52,6 @@
 [submodule "pack/plugins/start/ale"]
 	path = pack/plugins/start/ale
 	url = git@github.com:w0rp/ale.git
-[submodule "pack/plugins/start/vim-airline-themes"]
-	path = pack/plugins/start/vim-airline-themes
-	url = git@github.com:vim-airline/vim-airline-themes.git
+[submodule "pack/plugins/start/lightline.vim"]
+	path = pack/plugins/start/lightline.vim
+	url = git@github.com:itchyny/lightline.vim.git
