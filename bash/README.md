@@ -1,7 +1,7 @@
 ## How to use
 Load the script in the top of the `~/.bashrc` or `~/.bash_profile`:
 ```shell
-source ~/bash-config/prompt.sh
+source ~/dev-config/bash/prompt.sh
 ```
 
 Append the `USER_PROMPT` variable to the `PS1`:
@@ -12,6 +12,6 @@ PS1="${debian_chroot:+($debian_chroot)}${USER_PROMPT}"
 
 ## Result
 ```shell
-[20:54] user@hostname:~/bash-config (master)
+[20:54] user@hostname:~/dev-config (master)
 $
 ```
