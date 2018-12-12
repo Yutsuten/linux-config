@@ -1,6 +1,3 @@
-# bash-config
-The configurations I use to personalize my bash.
-
 ## How to use
 Load the script in the top of the `~/.bashrc` or `~/.bash_profile`:
 ```shell
