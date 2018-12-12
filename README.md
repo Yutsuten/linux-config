@@ -1,2 +1,2 @@
-# vim-config
-The vimrc and plugins I use for my vim.
+# dev-config
+Configure my development environment. This configures some tools like Vim, Tmux and Bash.
