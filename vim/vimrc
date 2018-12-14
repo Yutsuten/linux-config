@@ -1,5 +1,6 @@
 set autoread
 set background=dark
+set backspace=indent,eol,start
 set colorcolumn=100
 set encoding=utf8
 set expandtab
@@ -48,7 +49,7 @@ let g:lightline = {
 \ }
 
 function! LightlineFileinfo()
-  if &filetype ==# 'netrw' || (&fileencoding ==# 'utf-8' && &fileformat ==# 'unix')
+  if &filetype ==# 'netrw' || &fileencoding ==# '' || (&fileencoding ==# 'utf-8' && &fileformat ==# 'unix')
     return ''
   endif
   return &fileencoding . '[' . &fileformat . ']'
@@ -61,6 +62,9 @@ function! LightlineFilename()
 endfunction
 
 function! LinterStatus() abort
+  if &filetype ==# 'netrw'
+    return ''
+  endif
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
