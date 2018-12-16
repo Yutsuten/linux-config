@@ -1,0 +1,8 @@
+# Vim
+.vimrc
+*.swp
+*.swo
+*~
+
+# Mac
+.DS_Store
