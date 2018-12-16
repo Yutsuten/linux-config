@@ -6,8 +6,10 @@ links: link_bash link_git link_tmux link_vim
 
 link_bash:
 	@echo '## Bash links'
-	echo 'source ~/dev-config/bash/prompt.sh' >> ~/.bashrc
-	echo 'PS1="$${USER_PROMPT}"' >> ~/.bashrc
+	$(eval LINE='source ~/dev-config/bash/prompt.sh')
+	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
+	$(eval LINE='PS1="$$$${USER_PROMPT}"')
+	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
 
 link_git:
 	@echo '## Git links'
