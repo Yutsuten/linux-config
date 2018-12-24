@@ -10,6 +10,7 @@ link_bash:
 	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
 	$(eval LINE='PS1="$$$${USER_PROMPT}"')
 	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
+	ln -sf $(CURDIR)/bash/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
 
 link_git:
 	@echo '## Git links'

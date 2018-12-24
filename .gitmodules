@@ -55,3 +55,6 @@
 [submodule "pack/plugins/start/lightline.vim"]
 	path = vim/pack/plugins/start/lightline.vim
 	url = git@github.com:itchyny/lightline.vim.git
+[submodule "bash/dircolors-solarized"]
+	path = bash/dircolors-solarized
+	url = git@github.com:seebi/dircolors-solarized.git
