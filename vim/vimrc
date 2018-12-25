@@ -5,7 +5,6 @@ set colorcolumn=100
 set encoding=utf8
 set expandtab
 set exrc
-set hidden
 set hlsearch
 set ignorecase
 set incsearch
