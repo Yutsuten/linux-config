@@ -9,11 +9,11 @@ branch() {
   local on_branch="On branch ([^${IFS}]*)"
   local on_commit="HEAD detached at ([^${IFS}]*)"
 
-  if [[ $git_status =~ $on_branch ]]; then
+  if [[ ${git_status} =~ ${on_branch} ]]; then
     local branch=${BASH_REMATCH[1]}
     echo -n ${branch}
     return 0
-  elif [[ $git_status =~ $on_commit ]]; then
+  elif [[ ${git_status} =~ ${on_commit} ]]; then
     local commit=${BASH_REMATCH[1]}
     echo -n ${commit}
     return 0
