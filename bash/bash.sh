@@ -36,4 +36,4 @@ USER_HOST="\[\033[01;32m\]\u@\h"
 WORKING_DIR="\[\033[01;34m\]\w"
 PROMPT="\[\033[00m\]$ "
 
-export PS1="${CLOCK} ${USER_HOST}:${WORKING_DIR}$(bash_branch)\n${PROMPT}"
+export PS1="${CLOCK} ${USER_HOST}:${WORKING_DIR}\$(bash_branch)\n${PROMPT}"
