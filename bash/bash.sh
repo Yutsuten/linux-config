@@ -27,7 +27,7 @@ bash_branch() {
 
   cur_branch="$(branch)"
   if [[ $? = 0 ]]; then
-      printf " $(bash_branch_color)(${cur_branch})"
+    printf " $(bash_branch_color)(${cur_branch})"
   fi
 }
 
