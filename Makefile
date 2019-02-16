@@ -6,7 +6,9 @@ links: link_bash link_git link_tmux link_vim
 
 link_bash:
 	@echo '## Bash links'
-	$(eval LINE='source $(CURDIR)/bash/prompt.sh')
+	$(eval LINE='source $(CURDIR)/bash/mylibrary.sh')
+	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
+	$(eval LINE='source $(CURDIR)/bash/bash.sh')
 	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
 	ln -sf $(CURDIR)/bash/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
 
