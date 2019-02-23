@@ -5,7 +5,6 @@ set colorcolumn=100
 set encoding=utf8
 set expandtab
 set exrc
-set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
@@ -25,6 +24,19 @@ set tabstop=4
 set fileencodings=utf8,iso-2022-jp,euc-jp,cp932,default,latin1
 set ttimeoutlen=20
 set updatetime=250
+
+colorscheme solarized
+filetype plugin indent on
+highlight SpecialKey ctermbg=0
+syntax enable
+
+autocmd BufEnter * EnableStripWhitespaceOnSave
+autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
+autocmd BufNewFile,BufRead *.mako setlocal filetype=html
+autocmd CompleteDone * pclose
+autocmd FileType vue syntax sync fromstart
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | Explore | endif
 
 let g:lightline = {
 \   'colorscheme': 'solarized',
@@ -68,19 +80,6 @@ function! LinterStatus() abort
   let l:all_non_errors = l:counts.total - l:all_errors
   return l:counts.total == 0 ? 'OK' : printf('%dW %dE', all_non_errors, all_errors)
 endfunction
-
-colorscheme solarized
-filetype plugin indent on
-highlight SpecialKey ctermbg=0
-syntax enable
-
-autocmd BufEnter * EnableStripWhitespaceOnSave
-autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
-autocmd BufNewFile,BufRead *.mako setlocal filetype=html
-autocmd CompleteDone * pclose
-autocmd FileType vue syntax sync fromstart
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | Explore | endif
 
 let g:ft = ''
 function! NERDCommenter_before()
