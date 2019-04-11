@@ -31,8 +31,8 @@ highlight SpecialKey ctermbg=0
 syntax enable
 
 autocmd BufEnter * EnableStripWhitespaceOnSave
-autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
-autocmd BufNewFile,BufRead *.mako setlocal filetype=html
+autocmd BufNewFile,BufRead *.es6,*.ts setlocal filetype=javascript
+autocmd BufNewFile,BufRead *.mako,*.hbs setlocal filetype=html
 autocmd CompleteDone * pclose
 autocmd FileType vue syntax sync fromstart
 autocmd StdinReadPre * let s:std_in=1
