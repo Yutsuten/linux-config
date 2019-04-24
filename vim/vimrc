@@ -81,6 +81,12 @@ function! LinterStatus() abort
   return l:counts.total == 0 ? 'OK' : printf('%dW %dE', all_non_errors, all_errors)
 endfunction
 
+let g:ale_linters = {
+\   'python': ['flake8', 'pylint'],
+\   'javascript': ['eslint', 'jshint'],
+\   'html': ['htmlhint']
+\ }
+
 let g:ft = ''
 function! NERDCommenter_before()
   if &ft == 'vue'
