@@ -24,4 +24,5 @@ link_tmux:
 
 link_vim:
 	@echo '## Vim links'
+	rm -rf ~/.vim
 	ln -snf $(CURDIR)/vim ~/.vim
