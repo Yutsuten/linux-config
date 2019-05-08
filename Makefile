@@ -31,3 +31,4 @@ link_lint:
 	@echo '## Lint links'
 	mkdir -p ~/.config
 	ln -sf $(CURDIR)/lint/flake8 ~/.config/flake8
+	ln -sf $(CURDIR)/lint/pylint ~/.config/pylintrc
