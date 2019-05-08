@@ -1,7 +1,7 @@
 all:
 	@echo 'Usage: make links'
 
-links: link_bash link_git link_tmux link_vim
+links: link_bash link_git link_tmux link_vim link_lint
 	@echo 'Done.'
 
 link_bash:
@@ -26,3 +26,8 @@ link_vim:
 	@echo '## Vim links'
 	rm -rf ~/.vim
 	ln -snf $(CURDIR)/vim ~/.vim
+
+link_lint:
+	@echo '## Lint links'
+	mkdir -p ~/.config
+	ln -sf $(CURDIR)/lint/flake8 ~/.config/flake8
