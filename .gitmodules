@@ -10,9 +10,6 @@
 [submodule "pack/plugins/start/vim-gitgutter"]
 	path = vim/pack/plugins/start/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "pack/plugins/start/vim-fugitive"]
-	path = vim/pack/plugins/start/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
 [submodule "pack/plugins/start/vim-colors-solarized"]
 	path = vim/pack/plugins/start/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
@@ -28,9 +25,6 @@
 [submodule "pack/plugins/start/nerdcommenter"]
 	path = vim/pack/plugins/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "pack/plugins/start/emmet-vim"]
-	path = vim/pack/plugins/start/emmet-vim
-	url = https://github.com/mattn/emmet-vim.git
 [submodule "pack/plugins/start/better-indent-support-for-php-with-html"]
 	path = vim/pack/plugins/start/better-indent-support-for-php-with-html
 	url = https://github.com/captbaritone/better-indent-support-for-php-with-html.git
@@ -40,12 +34,6 @@
 [submodule "pack/plugins/start/vim-vue"]
 	path = vim/pack/plugins/start/vim-vue
 	url = https://github.com/posva/vim-vue.git
-[submodule "pack/plugins/start/vim-pug"]
-	path = vim/pack/plugins/start/vim-pug
-	url = https://github.com/digitaltoad/vim-pug.git
-[submodule "pack/plugins/start/html5.vim"]
-	path = vim/pack/plugins/start/html5.vim
-	url = https://github.com/othree/html5.vim.git
 [submodule "pack/plugins/start/vim-python-pep8-indent"]
 	path = vim/pack/plugins/start/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
