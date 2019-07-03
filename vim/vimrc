@@ -114,8 +114,9 @@ if has('gui_running')
     call Setguifont()
     nnoremap <F9> :call Setguifont()<CR>
   elseif has('unix')
-    set guifont=Liberation\ Mono\ for\ Powerline\ 12
+    set guifont=Source\ Code\ Pro\ Regular\ 10
     set guioptions-=m  "remove menu bar
     set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
   endif
 endif
