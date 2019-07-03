@@ -4,5 +4,8 @@
 *.swo
 *~
 
+# Ctags
+tags
+
 # Mac
 .DS_Store
