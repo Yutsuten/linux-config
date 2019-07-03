@@ -5,7 +5,6 @@ set colorcolumn=100
 set encoding=utf8
 set expandtab
 set exrc
-set ignorecase
 set incsearch
 set laststatus=2
 set list
@@ -16,7 +15,6 @@ set number
 set secure
 set shiftwidth=4
 set showcmd
-set smartcase
 set softtabstop=4
 set splitbelow
 set t_Co=16
@@ -68,7 +66,7 @@ endfunction
 function! LightlineFilename()
   let filename = expand('%:t') !=# '' ? fnamemodify(@%, ':~:.') : '[No Name]'
   let modified = &modified ? '+' : ''
-  return filename . modified
+  return filename[-40:] . modified
 endfunction
 
 function! LinterStatus() abort
