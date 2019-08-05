@@ -34,7 +34,6 @@ autocmd BufNewFile,BufRead *.mako,*.hbs setlocal filetype=html
 autocmd CompleteDone * pclose
 autocmd FileType vue syntax sync fromstart
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | Explore | endif
 
 let g:lightline = {
 \   'colorscheme': 'solarized',
