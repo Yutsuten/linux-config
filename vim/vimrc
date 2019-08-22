@@ -4,7 +4,6 @@ set backspace=indent,eol,start
 set colorcolumn=100
 set encoding=utf8
 set expandtab
-set exrc
 set incsearch
 set laststatus=2
 set list
@@ -12,11 +11,9 @@ set listchars=tab:\ \ ,
 set nocp
 set noshowmode
 set number
-set secure
 set shiftwidth=4
 set showcmd
 set softtabstop=4
-set splitbelow
 set t_Co=16
 set tabstop=4
 set fileencodings=utf8,iso-2022-jp,euc-jp,cp932,default,latin1
