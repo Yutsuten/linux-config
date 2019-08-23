@@ -49,3 +49,12 @@
 [submodule "nvim/plugin/vim-surround"]
 	path = nvim/plugin/vim-surround
 	url = git@github.com:tpope/vim-surround.git
+[submodule "nvim/plugins/ale"]
+	path = nvim/plugins/ale
+	url = git@github.com:dense-analysis/ale.git
+[submodule "nvim/plugins/lightline.vim"]
+	path = nvim/plugins/lightline.vim
+	url = git@github.com:itchyny/lightline.vim.git
+[submodule "nvim/plugins/vim-surround"]
+	path = nvim/plugins/vim-surround
+	url = git@github.com:tpope/vim-surround.git
