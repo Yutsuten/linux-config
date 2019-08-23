@@ -26,6 +26,9 @@ link_nvim:
 	mkdir -p ~/.config/nvim
 	rm -rf ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
+	mkdir -p ~/.local/share/nvim/site
+	rm -rf ~/.local/share/nvim/site/plugin
+	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
 
 link_lint:
 	@echo '## Lint links'

@@ -46,3 +46,6 @@
 [submodule "bash/dircolors-solarized"]
 	path = bash/dircolors-solarized
 	url = git@github.com:seebi/dircolors-solarized.git
+[submodule "nvim/plugin/vim-surround"]
+	path = nvim/plugin/vim-surround
+	url = git@github.com:tpope/vim-surround.git
