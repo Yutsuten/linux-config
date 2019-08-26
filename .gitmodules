@@ -46,9 +46,6 @@
 [submodule "bash/dircolors-solarized"]
 	path = bash/dircolors-solarized
 	url = git@github.com:seebi/dircolors-solarized.git
-[submodule "nvim/plugin/vim-surround"]
-	path = nvim/plugin/vim-surround
-	url = git@github.com:tpope/vim-surround.git
 [submodule "nvim/plugins/ale"]
 	path = nvim/plugins/ale
 	url = git@github.com:dense-analysis/ale.git
@@ -58,3 +55,6 @@
 [submodule "nvim/plugins/vim-surround"]
 	path = nvim/plugins/vim-surround
 	url = git@github.com:tpope/vim-surround.git
+[submodule "nvim/plugins/vim-colors-solarized"]
+	path = nvim/plugins/vim-colors-solarized
+	url = git@github.com:altercation/vim-colors-solarized.git
