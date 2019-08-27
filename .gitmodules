@@ -58,3 +58,9 @@
 [submodule "nvim/plugins/vim-colors-solarized"]
 	path = nvim/plugins/vim-colors-solarized
 	url = git@github.com:altercation/vim-colors-solarized.git
+[submodule "nvim/plugins/nerdcommenter"]
+	path = nvim/plugins/nerdcommenter
+	url = git@github.com:scrooloose/nerdcommenter.git
+[submodule "nvim/plugins/vim-better-whitespace"]
+	path = nvim/plugins/vim-better-whitespace
+	url = git@github.com:ntpeters/vim-better-whitespace.git
