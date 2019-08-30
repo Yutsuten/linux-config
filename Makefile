@@ -24,10 +24,12 @@ link_tmux:
 link_nvim:
 	@echo '## Neovim links'
 	mkdir -p ~/.config/nvim
-	rm -rf ~/.config/nvim/init.vim
+	rm -f ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
-	mkdir -p ~/.local/share/nvim/site/pack/plugins
-	ln -snf $(CURDIR)/nvim/plugins ~/.local/share/nvim/site/pack/plugins/start
+	rm -rf ~/.local/share/nvim/site/pack ~/.local/share/nvim/site/plugin
+	mkdir -p ~/.local/share/nvim/site/pack/all
+	ln -snf $(CURDIR)/nvim/pack ~/.local/share/nvim/site/pack/all/start
+	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
 
 link_lint:
 	@echo '## Lint links'

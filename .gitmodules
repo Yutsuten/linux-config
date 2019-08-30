@@ -47,29 +47,29 @@
 	path = bash/dircolors-solarized
 	url = git@github.com:seebi/dircolors-solarized.git
 [submodule "nvim/plugins/ale"]
-	path = nvim/plugins/ale
+	path = nvim/pack/ale
 	url = git@github.com:dense-analysis/ale.git
 [submodule "nvim/plugins/lightline.vim"]
-	path = nvim/plugins/lightline.vim
+	path = nvim/pack/lightline.vim
 	url = git@github.com:itchyny/lightline.vim.git
 [submodule "nvim/plugins/vim-surround"]
-	path = nvim/plugins/vim-surround
+	path = nvim/pack/vim-surround
 	url = git@github.com:tpope/vim-surround.git
 [submodule "nvim/plugins/vim-colors-solarized"]
-	path = nvim/plugins/vim-colors-solarized
+	path = nvim/pack/vim-colors-solarized
 	url = git@github.com:altercation/vim-colors-solarized.git
 [submodule "nvim/plugins/nerdcommenter"]
-	path = nvim/plugins/nerdcommenter
+	path = nvim/pack/nerdcommenter
 	url = git@github.com:scrooloose/nerdcommenter.git
 [submodule "nvim/plugins/vim-better-whitespace"]
-	path = nvim/plugins/vim-better-whitespace
+	path = nvim/pack/vim-better-whitespace
 	url = git@github.com:ntpeters/vim-better-whitespace.git
 [submodule "nvim/plugins/vim-gitgutter"]
-	path = nvim/plugins/vim-gitgutter
+	path = nvim/pack/vim-gitgutter
 	url = git@github.com:airblade/vim-gitgutter.git
 [submodule "nvim/plugins/vim-python-pep8-indent"]
-	path = nvim/plugins/vim-python-pep8-indent
+	path = nvim/pack/vim-python-pep8-indent
 	url = git@github.com:Vimjas/vim-python-pep8-indent.git
 [submodule "nvim/plugins/vim-repeat"]
-	path = nvim/plugins/vim-repeat
+	path = nvim/pack/vim-repeat
 	url = git@github.com:tpope/vim-repeat.git
