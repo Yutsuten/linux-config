@@ -29,10 +29,19 @@ bash_branch() {
   fi
 }
 
-CLOCK="\[\033[01;33m\][\A]"
-USER_HOST="\[\033[01;32m\]\u@\h"
-WORKING_DIR="\[\033[01;34m\]\w"
+exit_code() {
+  EXIT_CODE=$?
+  if (( ${EXIT_CODE} )); then
+    echo -ne "\033[0;35m"  # Red
+  else
+    echo -ne "\033[0;34m"  # Blue
+  fi
+  echo -n "[${EXIT_CODE}]"
+}
+
+USER_HOST="\[\033[01;35m\]\u@\h"
+WORKING_DIR="\[\033[01;36m\]\w"
 PROMPT="\[\033[00m\]$ "
 
 export TZ="Asia/Tokyo"
-export PS1="${CLOCK} ${USER_HOST}:${WORKING_DIR}\$(bash_branch)\n${PROMPT}"
+export PS1="\$(exit_code) ${USER_HOST}:${WORKING_DIR}\$(bash_branch)\n${PROMPT}"
