@@ -3,6 +3,7 @@ let g:lightline = {
 \   'active': {
 \     'left': [
 \       ['mode', 'paste'],
+\       ['gitbranch'],
 \       ['readonly', 'filename']
 \     ],
 \     'right': [
@@ -12,6 +13,7 @@ let g:lightline = {
 \     ]
 \   },
 \   'component_function': {
+\     'gitbranch': 'FugitiveHead',
 \     'fileinfo': 'LightlineFileinfo',
 \     'filename': 'LightlineFilename',
 \     'linterstatus': 'LinterStatus'
