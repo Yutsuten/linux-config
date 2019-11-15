@@ -1,15 +1,7 @@
 all: links
 
-links: link_bash link_zsh link_git link_tmux link_nvim link_lint
+links: link_zsh link_git link_tmux link_nvim link_lint
 	@echo 'Done.'
-
-link_bash:
-	@echo '## Bash links'
-	$(eval LINE='source $(CURDIR)/bash/mylibrary.sh')
-	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
-	$(eval LINE='source $(CURDIR)/bash/bash.sh')
-	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
-	ln -sf $(CURDIR)/bash/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
 
 link_zsh:
 	@echo '## Zsh links'
