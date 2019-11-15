@@ -1,6 +1,6 @@
 all: links
 
-links: link_bash link_git link_tmux link_nvim link_lint
+links: link_bash link_zsh link_git link_tmux link_nvim link_lint
 	@echo 'Done.'
 
 link_bash:
@@ -10,6 +10,12 @@ link_bash:
 	$(eval LINE='source $(CURDIR)/bash/bash.sh')
 	grep -qF -- ${LINE} ~/.bashrc || echo ${LINE} >> ~/.bashrc
 	ln -sf $(CURDIR)/bash/dircolors-solarized/dircolors.ansi-dark ~/.dircolors
+
+link_zsh:
+	@echo '## Zsh links'
+	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
+	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
+	sed -ie 's/^[[:space:]]*ZSH_THEME=.*/ZSH_THEME="yutsuten"/' ~/.zshrc
 
 link_git:
 	@echo '## Git links'
