@@ -1,23 +1,19 @@
 all: links
 
-links: link_zsh link_git link_tmux link_nvim link_lint
+links: link_git link_lint link_nvim link_zsh
 	@echo 'Done.'
-
-link_zsh:
-	@echo '## Zsh links'
-	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
-	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
-	sed -ie 's/^[[:space:]]*ZSH_THEME=.*/ZSH_THEME="yutsuten"/' ~/.zshrc
 
 link_git:
 	@echo '## Git links'
 	ln -sf $(CURDIR)/git/global.gitignore ~/.gitignore
 	git config --global core.excludesfile ~/.gitignore
 
-link_tmux:
-	@echo '## Tmux links'
-	ln -snf $(CURDIR)/tmux ~/.tmux
-	ln -sf ~/.tmux/tmux.conf ~/.tmux.conf
+link_lint:
+	@echo '## Lint links'
+	mkdir -p ~/.config
+	ln -sf $(CURDIR)/lint/flake8 ~/.config/flake8
+	ln -sf $(CURDIR)/lint/pylint ~/.config/pylintrc
+	ln -sf $(CURDIR)/lint/jshint.json ~/.jshintrc
 
 link_nvim:
 	@echo '## Neovim links'
@@ -29,9 +25,8 @@ link_nvim:
 	ln -snf $(CURDIR)/nvim/pack ~/.local/share/nvim/site/pack/all/start
 	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
 
-link_lint:
-	@echo '## Lint links'
-	mkdir -p ~/.config
-	ln -sf $(CURDIR)/lint/flake8 ~/.config/flake8
-	ln -sf $(CURDIR)/lint/pylint ~/.config/pylintrc
-	ln -sf $(CURDIR)/lint/jshint.json ~/.jshintrc
+link_zsh:
+	@echo '## Zsh links'
+	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
+	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
+	sed -ie 's/^[[:space:]]*ZSH_THEME=.*/ZSH_THEME="yutsuten"/' ~/.zshrc
