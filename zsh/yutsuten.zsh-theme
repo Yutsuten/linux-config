@@ -16,6 +16,11 @@ format_prompt() {
   local num_spaces=$(( ${COLUMNS} - ${#prompt_text} - 2 ))
   local spaces=''
 
+  if [[ ${num_spaces} -lt 1 ]]; then
+    echo -n $1
+    return
+  fi
+
   for i in {0..${num_spaces}}; do
     spaces="${spaces} "
   done
