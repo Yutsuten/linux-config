@@ -57,8 +57,9 @@ git_current_user() {
 local status_code="%(?.%{$fg[green]%}.%{$fg[red]%})%? ↵"
 local user_host="%{$terminfo[bold]$fg[magenta]%}%n@%m"
 local dir="%{$fg[cyan]%}%~"
+local venv="%{$fg[cyan]%}\$(virtualenv_prompt_info)"
 
-local prompt_left="${user_host}:${dir}\$(git_custom_status)%{$reset_color%}"
+local prompt_left="${user_host}:${dir}\$(git_custom_status) ${venv}%{$reset_color%}"
 local prompt_right="\$(git_current_user)%{$reset_color%}"
 
 local sc=$(print -P %?)

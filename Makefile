@@ -29,4 +29,6 @@ link_zsh:
 	@echo '## Zsh links'
 	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
 	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
-	sed -ie 's/^[[:space:]]*ZSH_THEME=.*/ZSH_THEME="yutsuten"/' ~/.zshrc
+	sed -i \
+	  -e 's/^ZSH_THEME=.*/ZSH_THEME="yutsuten"/' \
+	  -e 's/^plugins=.*/plugins=(git virtualenv)/' ~/.zshrc
