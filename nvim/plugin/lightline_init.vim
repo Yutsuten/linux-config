@@ -20,20 +20,20 @@ let g:lightline = {
 \   }
 \ }
 
-function! LightlineFileinfo()
+function LightlineFileinfo()
   if &filetype ==# 'netrw' || &fileencoding ==# '' || (&fileencoding ==# 'utf-8' && &fileformat ==# 'unix')
     return ''
   endif
   return &fileencoding . '[' . &fileformat . ']'
 endfunction
 
-function! LightlineFilename()
+function LightlineFilename()
   let filename = expand('%:t') !=# '' ? fnamemodify(@%, ':~:.') : '[No Name]'
   let modified = &modified ? '+' : ''
   return filename[-40:] . modified
 endfunction
 
-function! LinterStatus() abort
+function LinterStatus() abort
   if &filetype ==# 'netrw'
     return ''
   endif
