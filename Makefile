@@ -7,6 +7,8 @@ link_git:
 	@echo '## Git links'
 	ln -sf $(CURDIR)/git/global.gitignore ~/.gitignore
 	git config --global core.excludesfile ~/.gitignore
+	git config --global core.pager 'less -S'
+	git config --global core.editor 'nvim'
 
 link_lint:
 	@echo '## Lint links'
