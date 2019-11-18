@@ -11,12 +11,13 @@ let mapleader = '\'
 
 autocmd TermOpen * setlocal bufhidden=hide
 
-function s:Setindent(val)
+function! s:Setindent(val)
   let &shiftwidth = a:val
   let &softtabstop = a:val
   let &tabstop = a:val
 endfunction
 
-command -nargs=1 Indent call s:Setindent(<args>)
+command! -nargs=1 Indent call s:Setindent(<args>)
 
 nnoremap <leader>r :call jobstart(['make'])<CR>
+nnoremap <leader>% :let @+ = @%<CR>
