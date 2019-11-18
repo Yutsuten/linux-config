@@ -7,6 +7,8 @@ set softtabstop=4
 set tabstop=4
 set updatetime=300
 
+let mapleader = '\'
+
 autocmd TermOpen * setlocal bufhidden=hide
 
 function s:Setindent(val)
@@ -16,3 +18,5 @@ function s:Setindent(val)
 endfunction
 
 command -nargs=1 Indent call s:Setindent(<args>)
+
+nnoremap <leader>r :call jobstart(['make'])<CR>
