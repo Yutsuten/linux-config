@@ -28,6 +28,6 @@ endfunction
 command! -nargs=1 Indent call s:SetIndent(<args>)
 command! -nargs=0 ToggleIndent call s:ToggleIndent(<args>)
 
-nnoremap <leader>r :call jobstart(['make'])<CR>
+nnoremap <leader>r :call jobstart(['nmake'])<CR>
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>% :let @+ = @%<CR>

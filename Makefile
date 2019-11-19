@@ -22,6 +22,7 @@ link_nvim:
 	mkdir -p ~/.config/nvim
 	rm -f ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
+	ln -sf $(CURDIR)/nvim/nmake ~/.local/bin/nmake
 	rm -rf ~/.local/share/nvim/site/pack ~/.local/share/nvim/site/plugin
 	mkdir -p ~/.local/share/nvim/site/pack/all
 	ln -snf $(CURDIR)/nvim/pack ~/.local/share/nvim/site/pack/all/start
