@@ -4,18 +4,21 @@
 set -eE
 
 notify_success() {
+  local message="make $@ finished successfully!"
   notify-send -t 15000 -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg \
-    'Job finished!' "make $@ finished successfully!"
+    'Job finished!' "${message}"
 }
 
 notify_fail() {
+  local message="make $@ finished with errors..."
   notify-send -u critical -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-error.svg \
-    'Job finished!' "make $@ finished with errors..."
+    'Job finished!' "${message}"
 }
 
-trap "notify_fail $@" ERR
+args="$@"
+trap "notify_fail ${args}" ERR
 
 make "$@"
-notify_success $@
+notify_success "$@"

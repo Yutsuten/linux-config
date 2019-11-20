@@ -25,8 +25,9 @@ function! s:ToggleIndent()
   endif
 endfunction
 
-command! -nargs=1 Indent call s:SetIndent(<args>)
-command! -nargs=0 ToggleIndent call s:ToggleIndent(<args>)
+command! -nargs=1 Indent call s:SetIndent(<f-args>)
+command! -nargs=0 ToggleIndent call s:ToggleIndent()
+command! -nargs=* Nmake call jobstart(['nmake', <f-args>])
 
 nnoremap <leader>r :call jobstart(['nmake'])<CR>
 nnoremap <leader>i :ToggleIndent<CR>
