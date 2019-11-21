@@ -1,24 +1,21 @@
-#!/bin/sh
+#!/bin/bash
 # Script used by nvim to show notifications when using make
 
 set -eE
 
 notify_success() {
-  local message="make $@ finished successfully!"
   notify-send -t 15000 -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg \
-    'Job finished!' "${message}"
+    'Job finished!' "make $* finished successfully!"
 }
 
 notify_fail() {
-  local message="make $@ finished with errors..."
   notify-send -u critical -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-error.svg \
-    'Job finished!' "${message}"
+    'Job finished!' "make $* finished with errors..."
 }
 
-args="$@"
-trap "notify_fail ${args}" ERR
+trap 'notify_fail $@' ERR
 
 make "$@"
 notify_success "$@"
