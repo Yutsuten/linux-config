@@ -1,4 +1,7 @@
+scriptencoding utf-8
+
 set expandtab
+set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set nohlsearch
 set noshowmode
 set number
