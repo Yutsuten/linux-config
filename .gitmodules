@@ -13,9 +13,6 @@
 [submodule "nvim/plugins/nerdcommenter"]
 	path = nvim/pack/nerdcommenter
 	url = git@github.com:scrooloose/nerdcommenter.git
-[submodule "nvim/plugins/vim-better-whitespace"]
-	path = nvim/pack/vim-better-whitespace
-	url = git@github.com:ntpeters/vim-better-whitespace.git
 [submodule "nvim/plugins/vim-gitgutter"]
 	path = nvim/pack/vim-gitgutter
 	url = git@github.com:airblade/vim-gitgutter.git
