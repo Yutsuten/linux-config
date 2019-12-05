@@ -19,14 +19,15 @@ link_lint:
 
 link_nvim:
 	@echo '## Neovim links'
-	mkdir -p ~/.config/nvim
 	rm -f ~/.config/nvim/init.vim
+	rm -rf ~/.local/share/nvim/site/*
+	mkdir -p ~/.config/nvim
+	mkdir -p ~/.local/share/nvim/site/pack/all
 	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/nvim/nmake ~/.local/bin/nmake
-	rm -rf ~/.local/share/nvim/site/pack ~/.local/share/nvim/site/plugin
-	mkdir -p ~/.local/share/nvim/site/pack/all
 	ln -snf $(CURDIR)/nvim/pack ~/.local/share/nvim/site/pack/all/start
 	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
+	ln -snf $(CURDIR)/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
 
 link_zsh:
 	@echo '## Zsh links'
