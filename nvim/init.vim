@@ -14,6 +14,12 @@ let mapleader = '\'
 
 autocmd TermOpen * setlocal bufhidden=hide
 
+function! g:OutputToPreviewWindow(content)
+  let path = '/tmp/nvim-preview'
+  call writefile(split(a:content, '\n'), path)
+  execute 'pedit' fnameescape(path)
+endfunction
+
 function! s:SetIndent(val)
   let &shiftwidth = a:val
   let &softtabstop = a:val
