@@ -4,7 +4,7 @@
 set -eE
 
 notify_success() {
-  notify-send -t 15000 -a Neovim \
+  notify-send -u critical -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg \
     'Job finished!' "make $* finished successfully!"
 }
