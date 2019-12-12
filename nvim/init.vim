@@ -23,7 +23,6 @@ endfunction
 function! s:SetIndent(val)
   let &shiftwidth = a:val
   let &softtabstop = a:val
-  let &tabstop = a:val
 endfunction
 
 function! s:ToggleIndent()
