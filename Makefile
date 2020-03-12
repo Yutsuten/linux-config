@@ -1,24 +1,21 @@
-all: links
+config: config_git config_lint config_nvim config_zsh
 
-links: link_git link_lint link_nvim link_zsh
-	@echo 'Done.'
-
-link_git:
-	@echo '## Git links'
+config_git:
+	@echo '## Git configuration'
 	ln -sf $(CURDIR)/git/global.gitignore ~/.gitignore
 	git config --global core.excludesfile ~/.gitignore
 	git config --global core.pager 'less -SXF'
 	git config --global core.editor 'nvim'
 
-link_lint:
-	@echo '## Lint links'
+config_lint:
+	@echo '## Lint configuration'
 	mkdir -p ~/.config
 	ln -sf $(CURDIR)/lint/flake8 ~/.config/flake8
 	ln -sf $(CURDIR)/lint/pylint ~/.config/pylintrc
 	ln -sf $(CURDIR)/lint/jshint.json ~/.jshintrc
 
-link_nvim:
-	@echo '## Neovim links'
+config_nvim:
+	@echo '## Neovim configuration'
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim
@@ -29,10 +26,22 @@ link_nvim:
 	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
 	ln -snf $(CURDIR)/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
 
-link_zsh:
-	@echo '## Zsh links'
+config_zsh:
+	@echo '## Zsh configuration'
 	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
 	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
 	sed -i \
 	  -e 's/^ZSH_THEME=.*/ZSH_THEME="yutsuten"/' \
 	  -e 's/^plugins=.*/plugins=(git virtualenv)/' ~/.zshrc
+
+arch:
+	@echo '## Arch Linux dependencies'
+	sudo pacman -S flake8 python-pylint eslint yarn
+	yarn global add htmlhint jshint
+	@echo "Add $$(yarn global dir) to your PATH!"
+
+ubuntu:
+	@echo '## Ubuntu dependencies'
+	sudo apt install flake8 pylint yarn
+	yarn global add eslint htmlhint jshint
+	@echo "Add $$(yarn global dir) to your PATH!"
