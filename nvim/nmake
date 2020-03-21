@@ -4,13 +4,13 @@
 set -eE
 
 notify_success() {
-  notify-send -u critical -a Neovim \
+  notify-send -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg \
     'Job finished!' "make $* finished successfully!"
 }
 
 notify_fail() {
-  notify-send -u critical -a Neovim \
+  notify-send -a Neovim \
     -i /usr/share/icons/breeze-dark/status/64/dialog-error.svg \
     'Job finished!' "make $* finished with errors..."
 }
