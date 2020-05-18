@@ -28,7 +28,7 @@ function! LightlineFileinfo()
 endfunction
 
 function! LightlineFilename()
-  let filename = expand('%:t') !=# '' ? fnamemodify(@%, ':~:.') : '[No Name]'
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
   let modified = &modified ? '+' : ''
   return filename[-40:] . modified
 endfunction
