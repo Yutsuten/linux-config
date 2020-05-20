@@ -1,9 +1,6 @@
 [submodule "nvim/plugins/ale"]
 	path = nvim/pack/ale
 	url = git@github.com:dense-analysis/ale.git
-[submodule "nvim/plugins/lightline.vim"]
-	path = nvim/pack/lightline.vim
-	url = git@github.com:itchyny/lightline.vim.git
 [submodule "nvim/plugins/vim-surround"]
 	path = nvim/pack/vim-surround
 	url = git@github.com:tpope/vim-surround.git
