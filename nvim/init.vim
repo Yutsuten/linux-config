@@ -54,9 +54,9 @@ augroup statusline
 augroup end
 
 function! UpdateStatusLine()
-  let statusline  = "%0* %y %<%{expand('%:t')} %m %h"     "Left aligned
-  let statusline .= '%='                                  "Separation
-  let statusline .= '%{FileInfo()} '                      "Right aligned
+  let statusline  = "%0* %y %<%{expand('%:t')} %m %h"
+  let statusline .= '%='
+  let statusline .= '%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] '
 
   let active_statusline  = '%#StatusLineMode# %{CurrentMode()} '
   let active_statusline .= statusline
@@ -109,8 +109,4 @@ function! CurrentMode()
     highlight StatusLineMode ctermbg=9
   endif
   return current_mode
-endfunction
-
-function! FileInfo()
-  return &fileencoding?&fileencoding:&encoding . ' [' . &fileformat . ']'
 endfunction
