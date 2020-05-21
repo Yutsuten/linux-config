@@ -51,62 +51,87 @@ augroup statusline
   autocmd VimEnter * highlight StatusLineNC ctermbg=0 ctermfg=10 cterm=NONE gui=NONE
   autocmd VimEnter * highlight StatusLineSub ctermbg=11 ctermfg=0 cterm=NONE gui=NONE
   autocmd VimEnter * highlight StatusLineMode ctermbg=4 ctermfg=0 cterm=NONE gui=NONE
+  autocmd VimEnter * highlight StatusLineLinter ctermbg=2 ctermfg=0 cterm=NONE gui=NONE
 augroup end
 
 function! UpdateStatusLine()
-  let statusline  = "%0* %y %<%{expand('%:t')} %m %h"
-  let statusline .= '%='
-  let statusline .= '%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] '
+  let l:statusline  = "%0* %y %<%{expand('%:t')} %m %h"
+  let l:statusline .= '%='
+  let l:statusline .= '%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] '
 
-  let active_statusline  = '%#StatusLineMode# %{CurrentMode()} '
-  let active_statusline .= statusline
-  let active_statusline .= '%#StatusLineSub# %2l:%-2c '
+  let l:active_statusline  = '%#StatusLineMode# %{CurrentMode()} '
+  let l:active_statusline .= statusline
+  let l:active_statusline .= '%#StatusLineSub# %2l:%-2c '
+  let l:active_statusline .= '%#StatusLineLinter#%{LinterStatus()}'
 
-  let cur_win_num = winnr()
-  for win_num in range(1, winnr('$'))
-    if cur_win_num == win_num
-      call setwinvar(win_num, '&statusline', active_statusline)
+  let l:cur_win_num = winnr()
+  for l:win_num in range(1, winnr('$'))
+    if l:cur_win_num == l:win_num
+      call setwinvar(l:win_num, '&statusline', l:active_statusline)
     else
-      call setwinvar(win_num, '&statusline', statusline)
+      call setwinvar(l:win_num, '&statusline', l:statusline)
     endif
   endfor
 endfunction
 
 function! CurrentMode()
-  let current_mode = mode()
-  if current_mode ==# 'n'
-    let current_mode = 'NORMAL'
+  let l:current_mode = mode()
+  if l:current_mode ==# 'n'
+    let l:current_mode = 'NORMAL'
     highlight StatusLineMode ctermbg=4
-  elseif current_mode ==# 'i'
-    let current_mode = 'INSERT'
+  elseif l:current_mode ==# 'i'
+    let l:current_mode = 'INSERT'
     highlight StatusLineMode ctermbg=2
-  elseif current_mode ==# 'v'
-    let current_mode = 'VISUAL'
+  elseif l:current_mode ==# 'v'
+    let l:current_mode = 'VISUAL'
     highlight StatusLineMode ctermbg=5
-  elseif current_mode ==# 'V'
-    let current_mode = 'V-LINE'
+  elseif l:current_mode ==# 'V'
+    let l:current_mode = 'V-LINE'
     highlight StatusLineMode ctermbg=5
-  elseif current_mode ==# "\<C-v>"
-    let current_mode = 'V-BLOCK'
+  elseif l:current_mode ==# "\<C-v>"
+    let l:current_mode = 'V-BLOCK'
     highlight StatusLineMode ctermbg=5
-  elseif current_mode ==# 'R'
-    let current_mode = 'REPLACE'
+  elseif l:current_mode ==# 'R'
+    let l:current_mode = 'REPLACE'
     highlight StatusLineMode ctermbg=9
-  elseif current_mode ==# 'c'
-    let current_mode = 'COMMAND'
+  elseif l:current_mode ==# 'c'
+    let l:current_mode = 'COMMAND'
     highlight StatusLineMode ctermbg=3
-  elseif current_mode ==# 't'
-    let current_mode = 'TERMINAL'
+  elseif l:current_mode ==# 't'
+    let l:current_mode = 'TERMINAL'
     highlight StatusLineMode ctermbg=3
-  elseif current_mode ==# 's'
-    let current_mode = 'SELECT'
+  elseif l:current_mode ==# 's'
+    let l:current_mode = 'SELECT'
     highlight StatusLineMode ctermbg=9
-  elseif current_mode ==# 'S'
-    let current_mode = 'S-LINE'
+  elseif l:current_mode ==# 'S'
+    let l:current_mode = 'S-LINE'
     highlight StatusLineMode ctermbg=9
-  elseif current_mode ==# "\<C-s>"
-    let current_mode = 'S-BLOCK'
+  elseif l:current_mode ==# "\<C-s>"
+    let l:current_mode = 'S-BLOCK'
     highlight StatusLineMode ctermbg=9
   endif
-  return current_mode
+  return l:current_mode
+endfunction
+
+function! LinterStatus()
+  if !exists('*ale#linter#Get') || len(ale#linter#Get(&filetype)) == 0
+    return ''
+  endif
+
+  let l:counts = ale#statusline#Count(bufnr())
+  let l:error_count = l:counts.error + l:counts.style_error
+  let l:warning_count = l:counts.warning + l:counts.style_warning
+
+  if l:error_count > 0
+    highlight StatusLineLinter ctermbg=1
+    return printf(' E:%d | W:%d | I:%d ', l:error_count, l:warning_count, l:counts.info)
+  elseif l:warning_count > 0
+    highlight StatusLineLinter ctermbg=3
+    return printf(' W:%d | I:%d ', l:warning_count, l:counts.info)
+  elseif l:counts.info > 0
+    highlight StatusLineLinter ctermbg=13
+    return printf(' I:%d ', l:counts.info)
+  endif
+  highlight StatusLineLinter ctermbg=2
+  return ' OK '
 endfunction
