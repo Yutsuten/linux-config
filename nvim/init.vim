@@ -46,10 +46,31 @@ augroup end
 
 augroup statusline
   autocmd!
+  autocmd VimEnter,WinEnter,BufEnter,BufDelete,SessionLoadPost,FileChangedShellPost * call UpdateStatusLine()
   autocmd VimEnter * highlight StatusLine ctermbg=0 ctermfg=14 cterm=NONE gui=NONE
-  autocmd VimEnter * highlight StatusLineSub ctermbg=10 ctermfg=0 cterm=NONE gui=NONE
+  autocmd VimEnter * highlight StatusLineNC ctermbg=0 ctermfg=10 cterm=NONE gui=NONE
+  autocmd VimEnter * highlight StatusLineSub ctermbg=11 ctermfg=0 cterm=NONE gui=NONE
   autocmd VimEnter * highlight StatusLineMode ctermbg=4 ctermfg=0 cterm=NONE gui=NONE
 augroup end
+
+function! UpdateStatusLine()
+  let statusline  = "%0* %y %<%{expand('%:t')} %m %h"     "Left aligned
+  let statusline .= '%='                                  "Separation
+  let statusline .= '%{FileInfo()} '                      "Right aligned
+
+  let active_statusline  = '%#StatusLineMode# %{CurrentMode()} '
+  let active_statusline .= statusline
+  let active_statusline .= '%#StatusLineSub# %2l:%-2c '
+
+  let cur_win_num = winnr()
+  for win_num in range(1, winnr('$'))
+    if cur_win_num == win_num
+      call setwinvar(win_num, '&statusline', active_statusline)
+    else
+      call setwinvar(win_num, '&statusline', statusline)
+    endif
+  endfor
+endfunction
 
 function! CurrentMode()
   let current_mode = mode()
@@ -93,9 +114,3 @@ endfunction
 function! FileInfo()
   return &fileencoding?&fileencoding:&encoding . ' [' . &fileformat . ']'
 endfunction
-
-set statusline=%#StatusLineMode#\ %{CurrentMode()}\   "Left aligned
-set statusline+=%0*\ %y\ %<%{expand('%:t')}\ %m\ %h   "Left aligned
-set statusline+=%=                                    "Separation
-set statusline+=%{FileInfo()}\                        "Right aligned
-set statusline+=%#StatusLineSub#\ %2l:%-2c\           "Right aligned
