@@ -29,6 +29,7 @@ config_nvim:
 config_zsh:
 	@echo '## Zsh configuration'
 	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
+	ln -sf $(CURDIR)/zsh/functions.zsh ~/.oh-my-zsh/custom/functions.zsh
 	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
 	sed -i \
 	  -e 's/^ZSH_THEME=.*/ZSH_THEME="yutsuten"/' \
