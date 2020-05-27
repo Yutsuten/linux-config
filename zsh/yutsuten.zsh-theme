@@ -59,7 +59,7 @@ git_current_user() {
   fi
 }
 
-local status_code="%(?.%{$fg[green]%}.%{$fg[red]%})%? ↵"
+local status_code="%(?.%{$fg[green]%}.%{$fg[red]%})%?"
 local user_host="%{$terminfo[bold]$fg[magenta]%}%n@%m"
 local dir="%{$fg[cyan]%}%~"
 local venv="%{$reset_color%}%{$fg[cyan]%}\$(virtualenv_prompt_info)"
