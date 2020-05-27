@@ -19,6 +19,7 @@ config_nvim:
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim
+	mkdir -p ~/.local/bin
 	mkdir -p ~/.local/share/nvim/site/pack/all
 	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/nvim/nmake ~/.local/bin/nmake
