@@ -38,7 +38,7 @@ config_zsh:
 
 arch:
 	@echo '## Arch Linux dependencies'
-	sudo pacman -S flake8 python-pylint eslint yarn
+	sudo pacman -S flake8 python-pylint python-language-server eslint yarn
 	yarn global add htmlhint jshint
 	@echo "Add $$(yarn global dir) to your PATH!"
 
@@ -47,3 +47,8 @@ ubuntu:
 	sudo apt install flake8 pylint yarn
 	yarn global add eslint htmlhint jshint
 	@echo "Add $$(yarn global dir) to your PATH!"
+
+homebrew:
+	@echo '## Homebrew dependencies'
+	brew install python flake8 pylint
+	pip3 install --user python-language-server
