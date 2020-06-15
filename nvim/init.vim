@@ -25,11 +25,32 @@ function! s:ToggleIndent()
   endif
 endfunction
 
+function! s:Nmake(...)
+  let l:make_cmd = 'make'
+  for make_arg in a:000
+    let l:make_cmd .= ' ' . make_arg
+  endfor
+  call system(l:make_cmd)
+
+  let l:notify_cmd = 'notify-send -a Neovim '
+  if v:shell_error
+    let l:notify_cmd .= '-i /usr/share/icons/breeze-dark/status/64/dialog-error.svg '
+    let l:notify_cmd .= '"Job finished!" '
+    let l:notify_cmd .= printf('"%s finished with errors..."', l:make_cmd)
+    call system(l:notify_cmd)
+    return
+  endif
+  let l:notify_cmd .= '-i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg '
+  let l:notify_cmd .= '"Job finished!" '
+  let l:notify_cmd .= printf('"%s finished successfully!"', l:make_cmd)
+  call system(l:notify_cmd)
+endfunction
+
 command! -nargs=1 Indent call s:SetIndent(<f-args>)
 command! -nargs=0 ToggleIndent call s:ToggleIndent()
-command! -nargs=* Nmake call jobstart(['nmake', <f-args>])
+command! -nargs=* Nmake call s:Nmake(<f-args>)
 
-nnoremap <leader>r :call jobstart(['nmake'])<CR>
+nnoremap <leader>r :call s:Nmake()<CR>
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 

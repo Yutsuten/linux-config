@@ -22,7 +22,6 @@ config_nvim:
 	mkdir -p ~/.local/bin
 	mkdir -p ~/.local/share/nvim/site/pack/all
 	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
-	ln -sf $(CURDIR)/nvim/nmake ~/.local/bin/nmake
 	ln -snf $(CURDIR)/nvim/pack ~/.local/share/nvim/site/pack/all/start
 	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
 	ln -snf $(CURDIR)/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
