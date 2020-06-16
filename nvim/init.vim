@@ -25,30 +25,48 @@ function! s:ToggleIndent()
   endif
 endfunction
 
-function! s:Nmake(...)
-  let l:make_cmd = 'make'
-  for make_arg in a:000
-    let l:make_cmd .= ' ' . make_arg
-  endfor
-  call system(l:make_cmd)
+" Nmake-start
+let s:make_running = 0
+let s:make_args = []
+let s:make_stderr = ''
 
-  let l:notify_cmd = 'notify-send -a Neovim '
-  if v:shell_error
-    let l:notify_cmd .= '-i /usr/share/icons/breeze-dark/status/64/dialog-error.svg '
-    let l:notify_cmd .= '"Job finished!" '
-    let l:notify_cmd .= printf('"%s finished with errors..."', l:make_cmd)
-    call system(l:notify_cmd)
-    return
+function! s:NmakeFinished(job_id, data, event) dict
+  let l:make_cmd = 'make'
+  for arg in s:make_args
+    let l:make_cmd .= ' ' . arg
+  endfor
+
+  let l:notify_cmd = ['notify-send', '-a', 'Neovim']
+  if a:data == 0
+    let l:notify_cmd += ['-i', '/usr/share/icons/breeze-dark/status/64/dialog-positive.svg']
+    let l:notify_cmd += ['Run: ' . l:make_cmd, 'Command finished successfully!']
+  else
+    let l:notify_cmd += ['-i', '/usr/share/icons/breeze-dark/status/64/dialog-error.svg']
+    let l:notify_cmd += ['Run: ' . l:make_cmd, s:make_stderr]
   endif
-  let l:notify_cmd .= '-i /usr/share/icons/breeze-dark/status/64/dialog-positive.svg '
-  let l:notify_cmd .= '"Job finished!" '
-  let l:notify_cmd .= printf('"%s finished successfully!"', l:make_cmd)
-  call system(l:notify_cmd)
+  if jobstart(l:notify_cmd) == -1
+    echo a:data == 0 ? 'Command finished successfully!' : s:make_stderr
+  endif
+  let s:make_running = 0
 endfunction
+
+function! s:NmakeStderr(job_id, data, event) dict
+  let s:make_stderr .= join(a:data, '')
+endfunction
+
+function! s:Nmake(...)
+  let s:make_args = a:000
+  let s:make_stderr = ''
+  if !s:make_running
+    let s:make_running = 1
+    call jobstart(['make'] + a:000, {'on_exit': function('s:NmakeFinished'), 'on_stderr': function('s:NmakeStderr')})
+  endif
+endfunction
+" Nmake-end
 
 command! -nargs=1 Indent call s:SetIndent(<f-args>)
 command! -nargs=0 ToggleIndent call s:ToggleIndent()
-command! -nargs=* Nmake call s:Nmake(<f-args>)
+command! -nargs=? Nmake call s:Nmake(<f-args>)
 
 nnoremap <leader>r :Nmake<CR>
 nnoremap <leader>i :ToggleIndent<CR>
