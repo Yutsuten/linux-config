@@ -50,7 +50,7 @@ command! -nargs=1 Indent call s:SetIndent(<f-args>)
 command! -nargs=0 ToggleIndent call s:ToggleIndent()
 command! -nargs=* Nmake call s:Nmake(<f-args>)
 
-nnoremap <leader>r :call s:Nmake()<CR>
+nnoremap <leader>r :Nmake<CR>
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 
