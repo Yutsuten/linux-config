@@ -1,2 +1,5 @@
+[MASTER]
+ignore-patterns=test_*
+
 [FORMAT]
 max-line-length=80
