@@ -10,6 +10,7 @@ set softtabstop=4
 set tabstop=4
 set updatetime=300
 
+let g:netrw_banner=0
 let mapleader = '\'
 
 function! s:SetIndent(val)
