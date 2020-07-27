@@ -73,6 +73,11 @@ nnoremap <leader>r :Nmake<CR>
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 
+augroup autocompletion
+  autocmd!
+  autocmd CompleteDone * pclose
+augroup end
+
 augroup terminal
   autocmd!
   autocmd TermOpen * setlocal bufhidden=hide nonumber
