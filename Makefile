@@ -1,4 +1,4 @@
-config: config_git config_lint config_nvim config_zsh
+config: config_git config_lint config_neovim config_zsh
 
 config_git:
 	@echo '## Git configuration'
@@ -14,17 +14,16 @@ config_lint:
 	ln -sf $(CURDIR)/lint/pylint ~/.config/pylintrc
 	ln -sf $(CURDIR)/lint/jshint.json ~/.jshintrc
 
-config_nvim:
+config_neovim:
 	@echo '## Neovim configuration'
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim
-	mkdir -p ~/.local/bin
 	mkdir -p ~/.local/share/nvim/site/pack/all
-	ln -sf $(CURDIR)/nvim/init.vim ~/.config/nvim/init.vim
-	ln -snf $(CURDIR)/nvim/pack ~/.local/share/nvim/site/pack/all/start
-	ln -snf $(CURDIR)/nvim/plugin ~/.local/share/nvim/site/plugin
-	ln -snf $(CURDIR)/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
+	ln -sf $(CURDIR)/neovim/init.vim ~/.config/nvim/init.vim
+	ln -snf $(CURDIR)/neovim/pack ~/.local/share/nvim/site/pack/all/start
+	ln -snf $(CURDIR)/neovim/plugin ~/.local/share/nvim/site/plugin
+	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
 
 config_zsh:
 	@echo '## Zsh configuration'

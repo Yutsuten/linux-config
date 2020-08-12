@@ -1,15 +1,15 @@
 [submodule "nvim/plugins/ale"]
-	path = nvim/pack/ale
+	path = neovim/pack/ale
 	url = git@github.com:dense-analysis/ale.git
 [submodule "nvim/plugins/vim-colors-solarized"]
-	path = nvim/pack/vim-colors-solarized
+	path = neovim/pack/vim-colors-solarized
 	url = git@github.com:altercation/vim-colors-solarized.git
 [submodule "nvim/plugins/vim-gitgutter"]
-	path = nvim/pack/vim-gitgutter
+	path = neovim/pack/vim-gitgutter
 	url = git@github.com:airblade/vim-gitgutter.git
 [submodule "nvim/plugins/vim-python-pep8-indent"]
-	path = nvim/pack/vim-python-pep8-indent
+	path = neovim/pack/vim-python-pep8-indent
 	url = git@github.com:Vimjas/vim-python-pep8-indent.git
 [submodule "nvim/pack/vim-fugitive"]
-	path = nvim/pack/vim-fugitive
+	path = neovim/pack/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
