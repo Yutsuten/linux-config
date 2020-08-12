@@ -94,13 +94,13 @@ augroup statusline
 augroup end
 
 function! UpdateStatusLine()
-  let l:statusline  = "%0* %y %<%{expand('%:t')} %m %h"
+  let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
-  let l:statusline .= '%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] '
+  let l:statusline .= '%y [%{&fileencoding?&fileencoding:&encoding}] [%{&fileformat}] '
 
   let l:active_statusline  = '%#StatusLineMode# %{CurrentMode()} '
   let l:active_statusline .= statusline
-  let l:active_statusline .= '%#StatusLineSub# %2l:%-2c '
+  let l:active_statusline .= '%#StatusLineSub# %2l,%-2c '
   let l:active_statusline .= '%#StatusLineLinter#%{LinterStatus()}'
 
   let l:cur_win_num = winnr()
