@@ -12,3 +12,8 @@ augroup gitgutterhighlight
   autocmd VimEnter * highlight GitGutterDeleteLineNr ctermbg=0 ctermfg=1
   autocmd VimEnter * highlight GitGutterChangeDeleteLineNr ctermbg=0 ctermfg=9
 augroup end
+
+augroup gitguttertrigger
+  autocmd!
+  autocmd BufEnter,TextChanged,TextChangedI * GitGutter
+augroup end
