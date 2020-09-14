@@ -9,6 +9,7 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set updatetime=300
+set fileencodings=ucs-bom,utf-8,sjis,latin1
 
 let g:netrw_banner=0
 let mapleader = '\'
@@ -96,7 +97,7 @@ augroup end
 function! UpdateStatusLine()
   let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
-  let l:statusline .= '%y [%{&fileencoding?&fileencoding:&encoding}] [%{&fileformat}] '
+  let l:statusline .= '%y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
 
   let l:active_statusline  = '%#StatusLineMode# %{CurrentMode()} '
   let l:active_statusline .= statusline
