@@ -1,5 +1,8 @@
 # Ctags
 tags
 
+# KDE
+.directory
+
 # Mac
 .DS_Store
