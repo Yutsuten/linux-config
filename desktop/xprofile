@@ -1,0 +1,5 @@
+PATH=${PATH}:${HOME}/.yarn/bin:${HOME}/.local/bin:${HOME}/Scripts
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus

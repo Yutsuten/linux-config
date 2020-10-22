@@ -1,4 +1,4 @@
-config: config_git config_lint config_neovim config_zsh
+config: config_git config_lint config_neovim config_zsh config_desktop
 
 config_git:
 	@echo '## Git configuration'
@@ -18,8 +18,7 @@ config_neovim:
 	@echo '## Neovim configuration'
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
-	mkdir -p ~/.config/nvim
-	mkdir -p ~/.local/share/nvim/site/pack/all
+	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
 	ln -sf $(CURDIR)/neovim/init.vim ~/.config/nvim/init.vim
 	ln -snf $(CURDIR)/neovim/pack ~/.local/share/nvim/site/pack/all/start
 	ln -snf $(CURDIR)/neovim/plugin ~/.local/share/nvim/site/plugin
@@ -32,6 +31,16 @@ config_zsh:
 	sed -i \
 	  -e 's/^ZSH_THEME=.*/ZSH_THEME="yutsuten"/' \
 	  -e 's/^plugins=.*/plugins=(git virtualenv ssh-agent)/' ~/.zshrc
+
+config_desktop:
+	@echo '## Desktop configuration'
+	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst
+	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
+	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
+	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
+	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
+	ln -sf $(CURDIR)/desktop/Xresources ~/.Xresources
+	ln -sf $(CURDIR)/desktop/xprofile ~/.xprofile
 
 arch:
 	@echo '## Arch Linux dependencies'
