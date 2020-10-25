@@ -21,6 +21,9 @@ URxvt.perl-ext-common: tabbed,xim-onthespot
 URxvt.inputMethod: ibus
 URxvt.preeditType: OnTheSpot
 
+URxvt.visualBell: false
+URxvt.urgentOnBell: true
+
 URxvt.tabbed.tabbar-fg: 10
 URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg: 2
