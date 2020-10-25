@@ -20,6 +20,7 @@ config_neovim:
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
 	ln -sf $(CURDIR)/neovim/init.vim ~/.config/nvim/init.vim
+	ln -sf $(CURDIR)/neovim/ginit.vim ~/.config/nvim/ginit.vim
 	ln -snf $(CURDIR)/neovim/pack ~/.local/share/nvim/site/pack/all/start
 	ln -snf $(CURDIR)/neovim/plugin ~/.local/share/nvim/site/plugin
 	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
