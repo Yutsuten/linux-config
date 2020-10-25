@@ -36,9 +36,9 @@ URxvt.scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-URxvt.font: xft:Noto Sans Mono:size=9,xft:Noto Sans Mono CJK JP:size=9,xft:Noto Symbols:size=6
+URxvt.font: xft:Noto Sans Mono:size=9,xft:Noto Sans Mono CJK JP:size=9,xft:Noto Symbols:size=7
 URxvt.boldFont: xft:Noto Sans Mono:bold:size=9,xft:Noto Sans Mono CJK JP:bold:size=9
-URxvt.letterSpace: -1
+URxvt.letterSpace: 0
 
 URxvt.background: [90]S_base03
 URxvt.foreground: S_base0
