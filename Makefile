@@ -35,12 +35,13 @@ config_zsh:
 
 config_desktop:
 	@echo '## Desktop configuration'
-	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst
+	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/kitty
 	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
 	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
 	ln -sf $(CURDIR)/desktop/Xresources ~/.Xresources
+	ln -sf $(CURDIR)/desktop/kitty.conf ~/.config/kitty/kitty.conf
 	ln -sf $(CURDIR)/desktop/xprofile ~/.xprofile
 
 arch:
