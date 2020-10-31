@@ -1,4 +1,17 @@
+scriptencoding utf-8
+
 set omnifunc=ale#completion#OmniFunc
+
+augroup alehighlight
+  autocmd!
+  autocmd VimEnter * highlight ALEErrorSign ctermfg=1 ctermbg=0
+  autocmd VimEnter * highlight ALEWarningSign ctermfg=3 ctermbg=0
+  autocmd VimEnter * highlight ALEInfoSign ctermfg=13 ctermbg=0
+augroup end
+
+let g:ale_sign_error = ' ✗'
+let g:ale_sign_warning = ' ‼'
+let g:ale_sign_info = ' 𝒾'
 
 let g:ale_python_pyls_config = {
 \  'pyls': { 'configurationSources': ['flake8'] }

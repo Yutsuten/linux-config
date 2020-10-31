@@ -9,6 +9,7 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set fileencodings=ucs-bom,utf-8,sjis,latin1
+set signcolumn=auto:1
 
 let g:netrw_banner=0
 let mapleader = '\'
@@ -163,14 +164,14 @@ function! LinterStatus()
 
   if l:error_count > 0
     highlight StatusLineLinter ctermbg=1
-    return printf(' E:%d | W:%d | I:%d ', l:error_count, l:warning_count, l:counts.info)
+    return printf(' ✗%d ‼%d ', l:error_count, l:warning_count)
   elseif l:warning_count > 0
     highlight StatusLineLinter ctermbg=3
-    return printf(' W:%d | I:%d ', l:warning_count, l:counts.info)
+    return printf(' ‼%d ', l:warning_count)
   elseif l:counts.info > 0
     highlight StatusLineLinter ctermbg=13
-    return printf(' I:%d ', l:counts.info)
+    return printf(' 𝒾%d ', l:counts.info)
   endif
   highlight StatusLineLinter ctermbg=2
-  return ' OK '
+  return ' ✓ '
 endfunction

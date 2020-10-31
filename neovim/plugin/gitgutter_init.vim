@@ -1,4 +1,8 @@
+scriptencoding utf-8
+
 let g:gitgutter_highlight_linenrs = 1
+let g:gitgutter_signs = 0
+let g:gitgutter_sign_allow_clobber = 1
 
 augroup gitgutterhighlight
   autocmd!
@@ -11,6 +15,7 @@ augroup gitgutterhighlight
   autocmd VimEnter * highlight GitGutterChangeLineNr ctermbg=0 ctermfg=3
   autocmd VimEnter * highlight GitGutterDeleteLineNr ctermbg=0 ctermfg=1
   autocmd VimEnter * highlight GitGutterChangeDeleteLineNr ctermbg=0 ctermfg=9
+  autocmd VimEnter * call gitgutter#highlight#define_highlights()
 augroup end
 
 augroup gitguttertrigger
