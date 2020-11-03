@@ -9,7 +9,6 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set fileencodings=ucs-bom,utf-8,sjis,latin1
-set signcolumn=auto:1
 
 let g:netrw_banner=0
 let mapleader = '\'
@@ -94,6 +93,14 @@ augroup statusline
   autocmd VimEnter * highlight StatusLineLinter ctermbg=2 ctermfg=0 cterm=NONE gui=NONE
 augroup end
 
+function! SetSignColumn(visible)
+  if a:visible
+    let &signcolumn='yes:1'
+  else
+    let &signcolumn='no'
+  endif
+endfunction
+
 function! UpdateStatusLine()
   let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
@@ -161,6 +168,8 @@ function! LinterStatus()
   let l:counts = ale#statusline#Count(bufnr())
   let l:error_count = l:counts.error + l:counts.style_error
   let l:warning_count = l:counts.warning + l:counts.style_warning
+
+  call SetSignColumn(l:counts.total > 0)
 
   if l:error_count > 0
     highlight StatusLineLinter ctermbg=1
