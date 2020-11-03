@@ -1,4 +1,7 @@
+setlocal shiftwidth=4
+setlocal softtabstop=4
 setlocal colorcolumn=81
+
 highlight ColorColumn ctermbg=0
 
 let b:ale_linters = ['flake8', 'pylint', 'pyls']

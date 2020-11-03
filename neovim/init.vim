@@ -5,8 +5,8 @@ set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set nohlsearch
 set noshowmode
 set number
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
 set tabstop=4
 set fileencodings=ucs-bom,utf-8,sjis,latin1
 
