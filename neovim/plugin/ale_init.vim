@@ -9,9 +9,9 @@ augroup alehighlight
   autocmd VimEnter * highlight ALEInfoSign ctermfg=13 ctermbg=0
 augroup end
 
-let g:ale_sign_error = ' ✗'
-let g:ale_sign_warning = ' ‼'
-let g:ale_sign_info = ' 𝒾'
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '‼'
+let g:ale_sign_info = '𝒾'
 
 let g:ale_python_pyls_config = {
 \  'pyls': { 'configurationSources': ['flake8'] }
