@@ -95,7 +95,7 @@ augroup end
 
 function! SetSignColumn(visible)
   if a:visible
-    let &signcolumn='yes:1'
+    let &signcolumn='auto:1'
   else
     let &signcolumn='no'
   endif
