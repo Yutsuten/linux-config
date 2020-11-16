@@ -39,10 +39,10 @@ function! s:NmakeFinished(job_id, data, event) dict
 
   let l:notify_cmd = ['notify-send', '-a', 'Neovim']
   if a:data == 0
-    let l:notify_cmd += ['-i', '/usr/share/icons/breeze-dark/status/64/dialog-positive.svg']
+    let l:notify_cmd += ['-i', '~/Pictures/Icons/success.svg']
     let l:notify_cmd += ['Run: ' . l:make_cmd, 'Command finished successfully!']
   else
-    let l:notify_cmd += ['-i', '/usr/share/icons/breeze-dark/status/64/dialog-error.svg']
+    let l:notify_cmd += ['-i', '~/Pictures/Icons/error.svg']
     let l:notify_cmd += ['Run: ' . l:make_cmd, s:make_stderr]
   endif
   if jobstart(l:notify_cmd) == -1
