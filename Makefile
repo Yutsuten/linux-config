@@ -40,7 +40,7 @@ config_desktop:
 	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
-	ln -sf $(CURDIR)/desktop/Xresources ~/.Xresources
+	ln -sf $(CURDIR)/desktop/ranger.conf ~/.config/ranger/rc.conf
 	ln -sf $(CURDIR)/desktop/kitty.conf ~/.config/kitty/kitty.conf
 	ln -sf $(CURDIR)/desktop/xprofile ~/.xprofile
 
