@@ -35,7 +35,7 @@ config_zsh:
 
 config_desktop:
 	@echo '## Desktop configuration'
-	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/kitty
+	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/ranger ~/.config/kitty
 	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
 	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
