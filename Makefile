@@ -29,9 +29,11 @@ config_zsh:
 	@echo '## Zsh configuration'
 	ln -sf $(CURDIR)/zsh/dev_aliases.zsh ~/.oh-my-zsh/custom/dev_aliases.zsh
 	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
+	ln -snf $(CURDIR)/zsh/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	sed -i \
 	  -e 's/^ZSH_THEME=.*/ZSH_THEME="yutsuten"/' \
-	  -e 's/^plugins=.*/plugins=(git virtualenv ssh-agent)/' ~/.zshrc
+	  -e 's/^plugins=.*/plugins=(git virtualenv ssh-agent zsh-syntax-highlighting)/' \
+	  ~/.zshrc
 
 config_desktop:
 	@echo '## Desktop configuration'

@@ -13,3 +13,6 @@
 [submodule "nvim/pack/vim-fugitive"]
 	path = neovim/pack/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
+[submodule "zsh/zsh-syntax-highlighting"]
+	path = zsh/zsh-syntax-highlighting
+	url = git@github.com:zsh-users/zsh-syntax-highlighting.git

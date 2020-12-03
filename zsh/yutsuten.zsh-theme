@@ -17,16 +17,16 @@ git_custom_status() {
     local color="%F{2}$(git_prompt_behind)$(git_prompt_ahead)$(parse_git_dirty)"
     local branch="$(git_prompt_remote)${git_branch}"
     local extra="$(git_commits_ahead)$(git_commits_behind)"
-    echo -n " ${color}(${branch}${extra})%{$reset_color%}"
+    echo -n " ${color}(${branch}${extra})%f"
   fi
 }
 
 local new_line=$'\n'
 
-local exit_code="%(?..%F{1}× Exit code: %?%{$reset_color%}${new_line})"
+local exit_code="%(?..%F{1}× Exit code: %?%f${new_line})"
 local user_host="%B%F{13}%n@%m%b"
-local curdir="%F{14}%~%{$reset_color%}"
+local curdir="%F{14}%~%f"
 local venv="%F{6}\$(virtualenv_prompt_info)"
 
-PROMPT="${exit_code}${user_host}:${curdir}\$(git_custom_status) ${venv}%{$reset_color%}
+PROMPT="${exit_code}${user_host}:${curdir}\$(git_custom_status) ${venv}%f
 %F{2}$%{$reset_color%} "
