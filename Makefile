@@ -37,14 +37,11 @@ config_zsh:
 
 config_desktop:
 	@echo '## Desktop configuration'
-	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/ranger ~/.config/kitty
+	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/kitty
 	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
 	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
-	ln -sf $(CURDIR)/desktop/ranger.conf ~/.config/ranger/rc.conf
-	ln -sf $(CURDIR)/desktop/rifle.conf ~/.config/ranger/rifle.conf
-	ln -sf $(CURDIR)/desktop/ranger_preview.sh ~/.config/ranger/scope.sh
 	ln -sf $(CURDIR)/desktop/kitty.conf ~/.config/kitty/kitty.conf
 	ln -sf $(CURDIR)/desktop/xprofile ~/.xprofile
 
