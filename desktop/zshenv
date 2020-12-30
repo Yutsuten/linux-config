@@ -1,0 +1,4 @@
+export VISUAL=nvim
+
+export NNN_OPTS="deoux"
+export NNN_FIFO='/tmp/nnn.fifo'
