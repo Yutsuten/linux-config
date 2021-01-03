@@ -1,5 +1,1 @@
 PATH=${PATH}:${HOME}/.yarn/bin:${HOME}/.local/bin:${HOME}/Scripts
-
-export GTK_IM_MODULE=uim
-export QT_IM_MODULE=uim
-export XMODIFIERS=@im=uim
