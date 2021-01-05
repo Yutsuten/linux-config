@@ -1,4 +1,7 @@
 export VISUAL=nvim
 
-export NNN_OPTS="deoux"
+export NNN_OPTS='deoux'
+export NNN_PLUG='d:dragdrop;p:preview-tui'
 export NNN_FIFO='/tmp/nnn.fifo'
+
+export USE_VIDEOTHUMB=1
