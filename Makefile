@@ -45,7 +45,6 @@ config_desktop:
 	ln -sf $(CURDIR)/desktop/kitty.conf ~/.config/kitty/kitty.conf
 	ln -sf $(CURDIR)/desktop/pam_environment ~/.pam_environment
 	ln -sf $(CURDIR)/desktop/xprofile ~/.xprofile
-	ln -sf $(CURDIR)/desktop/zshenv ~/.zshenv
 
 arch:
 	@echo '## Arch Linux dependencies'
