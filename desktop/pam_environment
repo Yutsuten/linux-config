@@ -1,4 +1,4 @@
-PATH                  DEFAULT=${PATH}:${HOME}/.yarn/bin:${HOME}/.local/bin:${HOME}/Scripts
+PATH                  DEFAULT=${PATH}:${HOME}/.local/bin:${HOME}/.yarn/bin
 
 GTK_IM_MODULE         DEFAULT=fcitx
 QT_IM_MODULE          DEFAULT=fcitx
@@ -8,7 +8,7 @@ QT_QPA_PLATFORMTHEME  DEFAULT=qt5ct
 
 VISUAL                DEFAULT=nvim
 
-NNN_OPTS              DEFAULT=deoux
+NNN_OPTS              DEFAULT=eoux
 NNN_PLUG              DEFAULT=d:dragdrop;p:preview-tui
 NNN_FIFO              DEFAULT=/tmp/nnn.fifo
 USE_VIDEOTHUMB        DEFAULT=1
