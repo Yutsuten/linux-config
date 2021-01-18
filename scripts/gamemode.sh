@@ -1,8 +1,7 @@
 #!/bin/bash
-# ----------------------------------------------- #
-# Optimize and record gaming                      #
-# ln -sf $(pwd)/gamemode.sh ~/.local/bin/gamemode #
-# ----------------------------------------------- #
+# --------------- #
+# Enable gamemode #
+# --------------- #
 
 set -e
 

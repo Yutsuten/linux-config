@@ -1,8 +1,7 @@
 #!/bin/bash
-# ------------------------------------------------- #
-# Customization of termdown                         #
-# ln -sf $(pwd)/countdown.sh ~/.local/bin/countdown #
-# ------------------------------------------------- #
+# ------------------------- #
+# Customization of termdown #
+# ------------------------- #
 
 set -e
 set -u
