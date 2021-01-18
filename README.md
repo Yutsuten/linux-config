@@ -17,3 +17,28 @@ To update the submodules:
 ```shell
 git submodule update --init
 ```
+
+## Dependencies
+
+Install the dependencies for this configuration into your system.
+
+### Arch Linux
+
+```shell
+sudo pacman -S flake8 python-pylint python-language-server eslint yarn
+yarn global add htmlhint jshint
+```
+
+### Ubuntu
+
+```shell
+sudo apt install flake8 pylint yarn
+yarn global add eslint htmlhint jshint
+```
+
+### Homebrew
+
+```shell
+brew install python flake8 pylint
+pip3 install --user python-language-server
+```
