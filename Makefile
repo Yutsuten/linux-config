@@ -25,9 +25,9 @@ git:
 linters:
 	@echo '>> Linters configuration <<'
 	mkdir -p ~/.config
-	ln -sf $(CURDIR)/lint/flake8 ~/.config/flake8
-	ln -sf $(CURDIR)/lint/pylint ~/.config/pylintrc
-	ln -sf $(CURDIR)/lint/jshint.json ~/.jshintrc
+	ln -sf $(CURDIR)/linters/flake8 ~/.config/flake8
+	ln -sf $(CURDIR)/linters/pylint ~/.config/pylintrc
+	ln -sf $(CURDIR)/linters/jshint.json ~/.jshintrc
 	@echo
 
 neovim:
