@@ -46,7 +46,6 @@ scripts:
 	@echo '>> Scripts configuration <<'
 	mkdir -p ~/.local/bin ~/.task/hooks
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
-	ln -sf $(CURDIR)/scripts/countdown.sh ~/.local/bin/countdown
 	ln -sf $(CURDIR)/scripts/gamemode.sh ~/.local/bin/gamemode
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 	@echo

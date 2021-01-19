@@ -20,3 +20,8 @@ function ankiprofile() {
       ;;
   esac
 }
+
+function countdown() {
+  termdown -B -f doh "$1"
+  fellow finish
+}
