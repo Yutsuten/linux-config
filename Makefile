@@ -53,7 +53,7 @@ scripts:
 zsh:
 	@echo '>> Zsh configuration <<'
 	ln -sf $(CURDIR)/zsh/misc.zsh ~/.oh-my-zsh/custom/misc.zsh
-	ln -sf $(CURDIR)/zsh/dev_aliases.zsh ~/.oh-my-zsh/custom/dev_aliases.zsh
+	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
 	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
 	ln -snf $(CURDIR)/zsh/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	sed -i \
