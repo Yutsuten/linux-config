@@ -10,6 +10,7 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=4
 set fileencodings=ucs-bom,utf-8,sjis,latin1
+set sessionoptions+=globals
 
 let g:netrw_banner=0
 let mapleader = '\'
