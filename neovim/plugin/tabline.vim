@@ -1,8 +1,15 @@
 scriptencoding utf-8
 
+" Settings
 set tabline=%!UpdateTabLine()
 
-function UpdateTabLine()
+" Commands
+command! -nargs=? TabName call s:SetCurrentTabName(<f-args>)
+
+" Script
+let s:tab_names = ['']
+
+function! UpdateTabLine()
   let tabline = ''
   for i in range(tabpagenr('$'))
     let tabnum = i + 1
@@ -17,6 +24,19 @@ function UpdateTabLine()
   return tabline
 endfunction
 
-function GetTabLabel(tabnum)
-  return a:tabnum
+function! GetTabLabel(tabnum)
+  let l:tab_name = s:tab_names[a:tabnum - 1]
+  if l:tab_name ==# ''
+    return a:tabnum
+  endif
+  return a:tabnum . ' ' . l:tab_name
+endfunction
+
+function! s:SetCurrentTabName(...)
+  let l:tab_index = tabpagenr() - 1
+  if !a:0
+    let s:tab_names[l:tab_index] = ''
+  else
+    let s:tab_names[l:tab_index] = a:1
+  endif
 endfunction
