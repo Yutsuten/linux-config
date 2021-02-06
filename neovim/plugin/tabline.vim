@@ -3,8 +3,8 @@ scriptencoding utf-8
 " Settings
 set tabline=%!UpdateTabLine()
 
-" Commands
-command! -nargs=? TabName call s:SetCurrentTabName(<f-args>)
+" Shortcuts
+nnoremap <leader>t :call SetTabName()<CR>
 
 " Triggers
 augroup tabmanipulation
@@ -41,11 +41,15 @@ function! GetTabLabel(tabnum)
   return a:tabnum . ' ' . l:tab_name
 endfunction
 
-function! s:SetCurrentTabName(...)
+function! SetTabName()
   let l:tab_index = tabpagenr() - 1
-  if !a:0
-    let s:tab_names[l:tab_index] = ''
-  else
-    let s:tab_names[l:tab_index] = a:1
-  endif
+  call inputsave()
+  let l:input_opts = {
+        \ 'prompt': 'Tab name: ',
+        \ 'default': s:tab_names[l:tab_index],
+        \ 'cancelreturn': s:tab_names[l:tab_index],
+        \ }
+  let l:tab_name = input(l:input_opts)
+  call inputrestore()
+  let s:tab_names[l:tab_index] = l:tab_name
 endfunction
