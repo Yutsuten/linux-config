@@ -6,8 +6,17 @@ set tabline=%!UpdateTabLine()
 " Commands
 command! -nargs=? TabName call s:SetCurrentTabName(<f-args>)
 
+" Triggers
+augroup tabmanipulation
+  autocmd!
+  autocmd TabNewEntered * call insert(s:tab_names, '', tabpagenr() - 1)
+  autocmd TabClosed * call remove(s:tab_names, s:last_tab_index)
+  autocmd TabLeave * let s:last_tab_index = tabpagenr() - 1
+augroup end
+
 " Script
 let s:tab_names = ['']
+let s:last_tab_index = 0
 
 function! UpdateTabLine()
   let tabline = ''
