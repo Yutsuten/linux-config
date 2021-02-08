@@ -23,6 +23,8 @@ let s:ready = 0
 function! s:SessionRestored()
   if exists('g:TabNames')
     let s:tab_names = split(g:TabNames, ',')
+  else
+    let s:tab_names = repeat([''], tabpagenr('$'))
   endif
   let s:ready = 1
 endfunction
