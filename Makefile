@@ -52,12 +52,10 @@ scripts:
 
 zsh:
 	@echo '>> Zsh configuration <<'
-	ln -sf $(CURDIR)/zsh/misc.zsh ~/.oh-my-zsh/custom/misc.zsh
+	rm -f ~/.zshrc
+	ln -sf $(CURDIR)/zsh/run_commands.zsh ~/.zshrc
+	ln -sf $(CURDIR)/zsh/commands.zsh ~/.oh-my-zsh/custom/commands.zsh
 	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
-	ln -sf $(CURDIR)/zsh/yutsuten.zsh-theme ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
+	ln -sf $(CURDIR)/zsh/yutsuten.zsh ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
 	ln -snf $(CURDIR)/zsh/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-	sed -i \
-	  -e 's/^ZSH_THEME=.*/ZSH_THEME="yutsuten"/' \
-	  -e 's/^plugins=.*/plugins=(git virtualenv ssh-agent zsh-syntax-highlighting)/' \
-	  ~/.zshrc
 	@echo
