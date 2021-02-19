@@ -1,11 +1,3 @@
-function precmd() {
-  if [[ ${PWD} == ${HOME} ]]; then
-    title home
-  else
-    title $(basename $PWD)
-  fi
-}
-
 function termcolors() {
   for COLOR1 in {0..7}; do
     COLOR2=$((COLOR1+8))

@@ -8,6 +8,10 @@ DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
 HIST_STAMPS="yyyy-mm-dd"
 
+function precmd() {
+  title $(basename $PWD)
+}
+
 plugins=(git virtualenv ssh-agent zsh-syntax-highlighting)
 
 source "${ZSH}/oh-my-zsh.sh"
