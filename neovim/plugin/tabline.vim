@@ -9,7 +9,7 @@ nnoremap <leader>t :call SetTabName()<CR>
 " Triggers
 augroup tabmanipulation
   autocmd!
-  autocmd SessionLoadPost * call s:SessionRestored()
+  autocmd VimEnter * call s:SessionRestored()
   autocmd TabEnter * let s:last_tab_index = tabpagenr() - 1
   autocmd TabNewEntered * call s:TabCreated()
   autocmd TabClosed * call s:TabClosed()
