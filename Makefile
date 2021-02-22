@@ -1,12 +1,20 @@
-.PHONY: all desktop git linters neovim scripts zsh
+.PHONY: all system desktop git linters neovim scripts zsh
 
 all: desktop git linters neovim scripts zsh
+	@echo 'Checking differences in pam_environment...'
+	@diff --color=always -u ~/.pam_environment desktop/pam_environment || true
+	@echo
 	@echo 'Done!'
+
+system:
+	@echo '>> System configuration <<'
+	sudo cp -pi $(CURDIR)/system/environment /etc/environment
+	@echo
 
 desktop:
 	@echo '>> Desktop configuration <<'
 	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/kitty
-	ln -sf $(CURDIR)/desktop/pam_environment ~/.pam_environment
+	cp -pn $(CURDIR)/desktop/pam_environment ~/.pam_environment
 	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
 	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf

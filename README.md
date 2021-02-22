@@ -9,13 +9,20 @@ To clone it locally,
 I recommend using SSH with `--recurse-submodules`:
 
 ```shell
-git clone --recurse-submodules git@github.com:Yutsuten/linux-config.git ~/.dev_config
+git clone --recurse-submodules git@github.com:Yutsuten/linux-config.git ~/.linux_config
 ```
 
 To update the submodules:
 
 ```shell
 git submodule update --init
+```
+
+Then apply the configuration with the commands bellow:
+
+```shell
+make              # User configuration
+sudo make system  # System-wide configuration
 ```
 
 ## Dependencies
