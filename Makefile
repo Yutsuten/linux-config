@@ -8,7 +8,11 @@ all: desktop git linters neovim scripts zsh
 
 system:
 	@echo '>> System configuration <<'
-	sudo cp -pi $(CURDIR)/system/environment /etc/environment
+	cp -p $(CURDIR)/system/environment /etc/environment
+	cp -p $(CURDIR)/system/wallpaper.service /etc/systemd/system/wallpaper.service
+	cp -p $(CURDIR)/system/wallpaper.timer /etc/systemd/system/wallpaper.timer
+	cp -p $(CURDIR)/system/openweather.service /etc/systemd/system/openweather.service
+	cp -p $(CURDIR)/system/openweather.timer /etc/systemd/system/openweather.timer
 	@echo
 
 desktop:

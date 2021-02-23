@@ -1,0 +1,8 @@
+[Unit]
+Description=random wallpaper using feh
+
+[Service]
+Type=oneshot
+User=mateus
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/feh --bg-fill --recursive --randomize /home/mateus/Pictures/Wallpapers/Active

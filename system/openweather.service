@@ -1,0 +1,10 @@
+[Unit]
+Description=openweather service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=mateus
+EnvironmentFile=/home/mateus/.config/openweather.conf
+ExecStart=/home/mateus/.linux_config/scripts/openweather_i3.py

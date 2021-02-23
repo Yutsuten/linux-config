@@ -10,10 +10,12 @@ def run_program(args):
     result = subprocess.run(args, text=True, capture_output=True)
     return result.stdout.strip()
 
+
 def print_line(message):
     """ Non-buffered printing to stdout. """
     sys.stdout.write(message + '\n')
     sys.stdout.flush()
+
 
 def read_line():
     """ Interrupted respecting reader for stdin. """
@@ -45,10 +47,10 @@ def main():
         j = json.loads(line)
 
         brightness = '☀ {}%'.format(run_program(['xbacklight', '-get']))
-        j.insert(1, {'full_text' : brightness, 'name' : 'brightness'})
+        j.insert(2, {'full_text': brightness, 'name': 'brightness'})
 
         current_kb = run_program(['xkblayout-state', 'print', '%s'])
-        j.insert(3, {'full_text' : current_kb, 'name' : 'curkb'})
+        j.insert(4, {'full_text': current_kb, 'name': 'curkb'})
 
         # and echo back new encoded json
         print_line(prefix+json.dumps(j))
