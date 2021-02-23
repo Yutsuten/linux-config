@@ -30,6 +30,7 @@ def read_line():
     except KeyboardInterrupt:
         sys.exit()
 
+
 def main():
     """ Inserts extra information into i3status. """
     # Skip the first line which contains the version header.
@@ -45,9 +46,6 @@ def main():
             line, prefix = line[1:], ','
 
         j = json.loads(line)
-
-        brightness = '☀ {}%'.format(run_program(['xbacklight', '-get']))
-        j.insert(2, {'full_text': brightness, 'name': 'brightness'})
 
         current_kb = run_program(['xkblayout-state', 'print', '%s'])
         j.insert(4, {'full_text': current_kb, 'name': 'curkb'})
