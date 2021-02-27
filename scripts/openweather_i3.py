@@ -9,6 +9,7 @@ import sys
 import time
 
 import requests
+from urllib3.util.retry import Retry
 
 
 WEATHER_API = 'https://api.openweathermap.org/data/2.5/weather'
@@ -30,7 +31,15 @@ def main():
         os.environ['OPEN_WEATHER_LON'],
     )
 
-    if weather['sys']['sunrise'] <= time.time() <= weather['sys']['sunset']:
+    now = time.time()
+    sunrise = weather['sys']['sunrise']
+    sunset = weather['sys']['sunset']
+    twilight = 1800
+    if sunrise - twilight <= now <= sunrise:
+        weather_status = ['🌅 ']
+    elif sunset <= now <= sunset + twilight:
+        weather_status = ['🌇 ']
+    elif sunrise <= now <= sunset:
         weather_status = ['☀️ ']
     else:
         weather_status = ['🌙 ']
@@ -59,7 +68,13 @@ def get_current_weather(key, lat, lon):
         'units': 'metric',
         'appid': key,
     }
-    response = requests.get(WEATHER_API, params=params)
+
+    with requests.Session() as session:
+        session.mount('https://', requests.adapters.HTTPAdapter(
+            max_retries=Retry(total=5, backoff_factor=2)
+        ))
+        response = session.get(WEATHER_API, params=params)
+
     return response.json()
 
 
