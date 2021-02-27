@@ -6,6 +6,7 @@ i3status.
 
 import os
 import sys
+import time
 
 import requests
 
@@ -23,14 +24,30 @@ def main():
         sys.stderr.write(msg.format(','.join(missing_vars)))
         return 1
 
-    weather_data = get_current_weather(
+    weather = get_current_weather(
         os.environ['OPEN_WEATHER_KEY'],
         os.environ['OPEN_WEATHER_LAT'],
         os.environ['OPEN_WEATHER_LON'],
     )
 
+    if weather['sys']['sunrise'] <= time.time() <= weather['sys']['sunset']:
+        weather_status = ['☀️ ']
+    else:
+        weather_status = ['🌙 ']
+    weather_status += [
+        '{:.1f}°C'.format(weather['main']['temp']),
+        '💧{}%'.format(weather['main']['humidity']),
+        '🎏 {:.1f} m/s'.format(weather['wind']['speed']),
+        '☁️ {}%'.format(weather['clouds']['all']),
+    ]
+    if 'rain' in weather:
+        weather_status.append('🌧️ {} mm'.format(weather['rain']['1h']))
+    if 'snow' in weather:
+        weather_status.append('❄️ {} mm'.format(weather['snow']['1h']))
+
     with open('/tmp/weather', 'w') as weather_file:
-        weather_file.write('{:.1f}'.format(weather_data['main']['temp']))
+        weather_file.write(' '.join(weather_status))
+
     return 0
 
 
