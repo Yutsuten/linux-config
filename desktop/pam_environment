@@ -6,5 +6,3 @@ NNN_OPTS              DEFAULT=eoux
 NNN_PLUG              DEFAULT=d:dragdrop;p:preview-tui
 NNN_FIFO              DEFAULT=/tmp/nnn.fifo
 USE_VIDEOTHUMB        DEFAULT=1
-
-I3_WEATHER_FILE       DEFAULT=${HOME}/.cache/weather
