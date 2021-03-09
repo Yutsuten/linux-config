@@ -15,7 +15,7 @@ augroup end
 function! s:UpdateStatusLine()
   let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
-  let l:statusline .= '%y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
+  let l:statusline .= '[ind:%{&shiftwidth}] %y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
 
   let l:active_statusline  = '%#StatusLineMode# %{GetCurrentMode()} '
   let l:active_statusline .= statusline
