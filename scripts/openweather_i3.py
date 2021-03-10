@@ -34,10 +34,10 @@ def main():
     now = time.time()
     sunrise = weather['sys']['sunrise']
     sunset = weather['sys']['sunset']
-    twilight = 1800
-    if sunrise - twilight <= now <= sunrise:
+    twilight = 1200
+    if sunrise - twilight <= now <= sunrise + twilight:
         weather_status = ['🌅 ']
-    elif sunset <= now <= sunset + twilight:
+    elif sunset - twilight <= now <= sunset + twilight:
         weather_status = ['🌇 ']
     elif sunrise <= now <= sunset:
         weather_status = ['☀️ ']
