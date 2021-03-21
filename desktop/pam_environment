@@ -2,7 +2,7 @@ PATH                  DEFAULT=${PATH}:${HOME}/.local/bin:${HOME}/.yarn/bin
 
 VISUAL                DEFAULT=nvim
 
-NNN_OPTS              DEFAULT=eoux
+NNN_OPTS              DEFAULT=eox
 NNN_PLUG              DEFAULT=d:dragdrop;p:preview-tui
 NNN_FIFO              DEFAULT=/tmp/nnn.fifo
 USE_VIDEOTHUMB        DEFAULT=1
