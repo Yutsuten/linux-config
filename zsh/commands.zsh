@@ -25,3 +25,24 @@ function countdown() {
   termdown -B -f doh "$1"
   fellow finish
 }
+
+function aur_update() {
+  WHITE="\033[0;37m"
+  NOCOLOR="\033[0m"
+  (
+    cd "${HOME}/Packages/AUR"
+    count=$(ls -1 | wc -l)
+    cur=1
+    for package in *; do
+      (
+        cd "${package}"
+        echo -e "${WHITE}[${cur}/${count}] Building ${package}${NOCOLOR}"
+        echo -e "${WHITE}> git pull${NOCOLOR}"
+        git pull
+        echo -e "${WHITE}> makepkg${NOCOLOR}"
+        makepkg --nocolor --syncdeps --install --needed --clean --noconfirm || true
+      )
+      (( cur+=1 ))
+    done
+  )
+}
