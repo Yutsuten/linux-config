@@ -24,7 +24,7 @@ i3-msg -q bar mode invisible
 if (( ${RECORD} )); then
   ffmpeg -f pulse -thread_queue_size 512 -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor \
     -f x11grab -framerate 60 -probesize 16M -thread_queue_size 512 -video_size 1366x768 -i :0.0 \
-    -vcodec libx264rgb -crf 0 -preset ultrafast "${HOME}/Downloads/gamemode_$(date '+%Y-%m-%d_%H-%M-%S').mp4"
+    -vcodec libx264rgb -crf 0 -preset ultrafast "${HOME}/Videos/gamemode_$(date '+%Y-%m-%d_%H-%M-%S').mp4"
 else
   KEY=\0
   while [[ ${KEY} != q ]]; do

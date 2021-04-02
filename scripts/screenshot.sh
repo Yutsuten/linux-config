@@ -16,7 +16,7 @@ case $1 in
     ;;
   --active)
     WIN_ID="$(xprop -root _NET_ACTIVE_WINDOW | cut -d ' ' -f 5)"
-    import -screen -frame -window "${WIN_ID}" "${SCREENSHOT_DIR}/${IMG_NAME}"
+    import -window "${WIN_ID}" "${SCREENSHOT_DIR}/${IMG_NAME}"
     notify-send -a Screenshot -i "${SCREENSHOT_DIR}/${IMG_NAME}" 'Active window capture' "File saved to ${SCREENSHOT_DIR}"
     ;;
   --select)
