@@ -36,13 +36,13 @@ def main():
     sunset = weather['sys']['sunset']
     twilight = 1200
     if sunrise - twilight <= now <= sunrise + twilight:
-        weather_status = ['🌅 ']
+        weather_status = ['🌅']
     elif sunset - twilight <= now <= sunset + twilight:
-        weather_status = ['🌇 ']
+        weather_status = ['🌇']
     elif sunrise <= now <= sunset:
-        weather_status = ['☀️ ']
+        weather_status = ['☀️']
     else:
-        weather_status = ['🌙 ']
+        weather_status = ['🌙']
     weather_status += [
         '{:.1f}°C'.format(weather['main']['temp']),
         '💧{}%'.format(weather['main']['humidity']),
