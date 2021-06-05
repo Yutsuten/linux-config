@@ -40,7 +40,7 @@ function aur_update() {
         echo -e "${WHITE}> git pull${NOCOLOR}"
         git pull
         echo -e "${WHITE}> makepkg${NOCOLOR}"
-        makepkg --nocolor --syncdeps --install --needed --clean --noconfirm || true
+        makepkg --nocolor --syncdeps --install --needed --clean || true
       )
       (( cur+=1 ))
     done
