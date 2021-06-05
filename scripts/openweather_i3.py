@@ -49,10 +49,6 @@ def main():
         '🎏 {:.1f} m/s'.format(weather['wind']['speed']),
         '☁️ {}%'.format(weather['clouds']['all']),
     ]
-    if 'rain' in weather and '1h' in weather['rain']:
-        weather_status.append('🌧️ {} mm'.format(weather['rain']['1h']))
-    if 'snow' in weather and '1h' in weather['snow']:
-        weather_status.append('❄️ {} mm'.format(weather['snow']['1h']))
 
     with open('/tmp/weather', 'w') as weather_file:
         weather_file.write(' '.join(weather_status))
