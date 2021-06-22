@@ -23,13 +23,13 @@ if [[ ${BACKUP} = 1 ]]; then
 
   for dir in ${CLOUD_SYNC_DIRS}; do
     echo "> Syncing ${dir} to dropbox"
-    rclone sync --exclude '.*{/**,}' "${HOME}/${dir}/" "dropbox:/${dir}/"
+    rclone sync --exclude '.*{/**,}' --exclude 'gamemode*.mp4' "${HOME}/${dir}/" "dropbox:/${dir}/"
   done
 
   if [[ -d ${LOCAL_BKP_DIR} ]]; then
     echo 'Syncing to local drive...'
     for dir in ${LOCAL_SYNC_DIRS}; do
-      rsync --archive --update --delete "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
+      rsync --archive --update --delete --exclude 'gamemode*.mp4' "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
     done
   fi
 elif [[ ${RESTORE} = 1 ]] && [[ -d ${LOCAL_BKP_DIR} ]]; then
