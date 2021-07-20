@@ -7,7 +7,7 @@ set -e
 set -u
 
 SCREENSHOT_DIR="${HOME}/Pictures/Screenshots"
-IMG_NAME="Screenshot_$(date '+%Y%m%d_%H%M%S%N' | cut -b -17).png"
+IMG_NAME="Screenshot_$(date '+%Y-%m-%dT%H:%M:%S.%N' | cut -b -23).png"
 
 case $1 in
   --full)

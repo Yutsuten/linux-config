@@ -5,7 +5,7 @@
     # Display
     monitor = 0
     follow = mouse
-    geometry = "350x5-30+20"
+    geometry = "350x5-30+35"
     indicate_hidden = yes
     shrink = no
     transparency = 15
