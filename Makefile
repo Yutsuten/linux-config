@@ -21,6 +21,9 @@ desktop:
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
 	ln -sf $(CURDIR)/desktop/kitty.conf ~/.config/kitty/kitty.conf
+	ln -sf $(CURDIR)/desktop/osu.desktop ~/.local/share/applications/osu.desktop
+	ln -sf $(CURDIR)/desktop/feh.desktop ~/.local/share/applications/feh.desktop
+	ln -sf $(CURDIR)/desktop/mimeapps.list ~/.config/mimeapps.list
 	@echo
 
 git:

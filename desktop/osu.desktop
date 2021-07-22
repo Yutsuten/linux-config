@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Osu!
+Comment=Rhythm is just a click away
+Categories=Game
+Exec=/home/mateus/Packages/AppImages/osu.AppImage
+Icon=/home/mateus/Pictures/Icons/osu-lazer.png
+Terminal=0
