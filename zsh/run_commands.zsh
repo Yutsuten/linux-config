@@ -1,5 +1,6 @@
 export GPG_TTY=$(tty)
 export ZSH="${HOME}/.oh-my-zsh"
+export LC_MESSAGES=C
 
 ZSH_THEME="yutsuten"
 
