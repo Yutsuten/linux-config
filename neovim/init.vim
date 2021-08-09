@@ -15,8 +15,10 @@ set sessionoptions+=globals
 set title
 set titlestring=nvim\ %{fnamemodify(getcwd(),':t')}
 
-let g:netrw_banner=0
-let mapleader = '\'
+" Disable Netrw
+let g:loaded_netrwPlugin = 1
+
+let g:mapleader = '\'
 
 " Commands
 command! -nargs=1 Indent call s:SetIndent(<f-args>)

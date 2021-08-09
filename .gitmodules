@@ -16,3 +16,6 @@
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+[submodule "neovim/pack/nnn.vim"]
+	path = neovim/pack/nnn.vim
+	url = git@github.com:mcchrish/nnn.vim.git
