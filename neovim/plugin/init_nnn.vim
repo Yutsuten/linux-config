@@ -5,7 +5,12 @@ let g:nnn#layout = 'enew'
 let g:nnn#replace_netrw = 1
 let g:nnn#statusline = 0
 
-command! -nargs=? -complete=file NnnPicker call nnn#pick(expand('%:p:h'))
-command! -nargs=? -complete=file Np call nnn#pick(expand('%:p:h'))
+function NnnPick(...)
+  if a:0 > 0
+    call nnn#pick(a:1)
+  else
+    call nnn#pick(expand('%:p:h'))
+  endif
+endfunction
 
-nnoremap <leader>n :NnnPicker<CR>
+command -nargs=? -complete=file Explore call NnnPick(<f-args>)
