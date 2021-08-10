@@ -13,8 +13,8 @@ let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '‼'
 let g:ale_sign_info = '𝒾'
 
-let g:ale_python_pyls_config = {
-\  'pyls': { 'configurationSources': ['flake8'] }
+let g:ale_python_pylsp_config = {
+\  'pylsp': { 'configurationSources': ['flake8'] }
 \}
 
 nnoremap <leader>n :ALENext<CR>
