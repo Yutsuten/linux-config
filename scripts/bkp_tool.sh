@@ -7,7 +7,7 @@ set -e
 set -u
 
 CLOUD_SYNC_DIRS='Documents Pictures Shared Videos'
-LOCAL_SYNC_DIRS='Anki Documents Music Pictures Shared Videos'
+LOCAL_SYNC_DIRS='Documents Music Pictures Shared Videos'
 LOCAL_BKP_DIR="${HOME}/Mount"
 
 while getopts ":br" opt; do
