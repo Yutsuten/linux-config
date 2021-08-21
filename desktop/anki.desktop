@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Anki
+Comment=Helps you remember facts (like words/phrases in a foreign language) efficiently
+Categories=Education
+Exec=anki -p Mateus
+Terminal=false

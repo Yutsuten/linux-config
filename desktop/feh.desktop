@@ -5,4 +5,4 @@ Comment=Image viewer and cataloguer
 Categories=Graphics
 Exec=feh --scale-down
 NoDisplay=true
-Terminal=0
+Terminal=false
