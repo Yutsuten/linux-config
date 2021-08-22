@@ -15,9 +15,7 @@ set sessionoptions+=globals
 set title
 set titlestring=nvim\ %{fnamemodify(getcwd(),':t')}
 
-" Disable Netrw
-let g:loaded_netrwPlugin = 1
-
+let g:netrw_banner=0
 let g:mapleader = '\'
 
 " Commands
