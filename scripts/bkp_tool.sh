@@ -9,16 +9,20 @@ set -u
 CLOUD_SYNC_DIRS='Documents Pictures Shared Videos'
 LOCAL_SYNC_DIRS='Documents Music Pictures Shared Videos'
 LOCAL_BKP_DIR="${HOME}/Mount"
+BACKUP=1
 
-while getopts ":br" opt; do
+while getopts ":r" opt; do
   case ${opt} in
-    b) BACKUP=1 ;;
-    r) RESTORE=1 ;;
-    *) echo "Usage: bkp_tool [-b|-r]"; exit 1 ;;
+    r) BACKUP=0 ;;
+    *) echo "Usage: bkp_tool [-r]"; exit 1 ;;
   esac
 done
 
 if [[ ${BACKUP} = 1 ]]; then
+  echo "> Export and encrypt GPG secret keys"
+  gpg --armor --export-secret-keys 281E7046D5349560 | gpg --output "${HOME}/Documents/GPG/gpg-master-keys.asc.gpg" --yes --symmetric -
+
+  echo "> Export taskwarrior"
   task export > "${HOME}/Documents/taskwarrior.json"
 
   for dir in ${CLOUD_SYNC_DIRS}; do
@@ -32,7 +36,7 @@ if [[ ${BACKUP} = 1 ]]; then
       rsync --archive --update --delete --exclude 'gamemode*.mp4' "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
     done
   fi
-elif [[ ${RESTORE} = 1 ]] && [[ -d ${LOCAL_BKP_DIR} ]]; then
+elif [[ -d ${LOCAL_BKP_DIR} ]]; then
   echo 'Restoring from local drive...'
   for dir in ${LOCAL_SYNC_DIRS}; do
     rsync --archive --update --delete "${LOCAL_BKP_DIR}/${dir}/" "${HOME}/${dir}/"
