@@ -3,7 +3,7 @@
 ZSH_THEME_GIT_PROMPT_DIRTY="%F{1}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_AHEAD="%F{3}"
-ZSH_THEME_GIT_PROMPT_BEHIND="%F{9}"
+ZSH_THEME_GIT_PROMPT_BEHIND="%F{3}"
 ZSH_THEME_GIT_COMMITS_AHEAD_PREFIX=' 🠉'
 ZSH_THEME_GIT_COMMITS_AHEAD_SUFFIX=''
 ZSH_THEME_GIT_COMMITS_BEHIND_PREFIX=' 🠋'
@@ -22,8 +22,8 @@ git_custom_status() {
   if [[ $ret == 0 ]]; then
     git_title="$(git_prompt_remote) ${git_branch#refs/heads/}"
   else
-    local label=$(__git_prompt_git log --decorate -1 --pretty=%D HEAD 2> /dev/null | sed -E 's/^.*tag: ([^,]+).*$/\1/')
-    if (__git_prompt_git rev-parse "refs/tags/${label}" > /dev/null 2>&1); then
+    local label=$(__git_prompt_git for-each-ref --points-at=HEAD --count=1 --format='%(refname:short)' refs/tags 2> /dev/null)
+    if [[ -n ${label} ]]; then
       git_title="🏷 ${label}"
     else
       local commit_hash=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
