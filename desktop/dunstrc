@@ -8,13 +8,13 @@
     geometry = "350x5-30+35"
     indicate_hidden = yes
     shrink = no
-    transparency = 15
-    notification_height = 20
+    transparency = 7
+    notification_height = 50
     separator_height = 1
-    padding = 8
+    padding = 10
     horizontal_padding = 15
     frame_width = 2
-    frame_color = "#333333"
+    frame_color = "#1e2128"
     separator_color = frame
     sort = yes
     idle_threshold = 120
@@ -73,18 +73,18 @@
     context = ctrl+shift+period
 
 [urgency_low]
-    background = "#111111"
-    foreground = "#eeeeee"
+    background = "#32324f"
+    foreground = "#afbad9"
     timeout = 3
 
 [urgency_normal]
-    background = "#395393"
-    foreground = "#eeeeee"
-    timeout = 6
+    background = "#383c4a"
+    foreground = "#cdd1dc"
+    timeout = 8
 
 [urgency_critical]
-    background = "#c44f97"
-    foreground = "#eeeeee"
+    background = "#4a3838"
+    foreground = "#dbb5b5"
     timeout = 30
 
 # Rules

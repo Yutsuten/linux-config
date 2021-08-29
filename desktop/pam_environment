@@ -1,5 +1,6 @@
 PATH                  DEFAULT=${PATH}:${HOME}/.local/bin:${HOME}/.yarn/bin
 
+PAGER                 DEFAULT="less -P?n -R"
 VISUAL                DEFAULT=nvim
 EDITOR                DEFAULT=nvim
 

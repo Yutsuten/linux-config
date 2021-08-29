@@ -13,6 +13,6 @@ function precmd() {
   title $(basename $PWD)
 }
 
-plugins=(git virtualenv ssh-agent zsh-syntax-highlighting)
+plugins=(virtualenv ssh-agent zsh-syntax-highlighting)
 
 source "${ZSH}/oh-my-zsh.sh"
