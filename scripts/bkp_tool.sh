@@ -9,18 +9,23 @@ set -u
 CLOUD_SYNC_DIRS='Documents Pictures Shared Videos'
 LOCAL_SYNC_DIRS='Documents Music Pictures Shared Videos'
 LOCAL_BKP_DIR="${HOME}/Mount"
-BACKUP=1
 
-while getopts ":r" opt; do
+BACKUP=1
+EXPORT_GPG=1
+
+while getopts ":rg" opt; do
   case ${opt} in
     r) BACKUP=0 ;;
-    *) echo "Usage: bkp_tool [-r]"; exit 1 ;;
+    g) EXPORT_GPG=0 ;;
+    *) echo "Usage: bkp_tool [-r|-g]"; exit 1 ;;
   esac
 done
 
 if [[ ${BACKUP} = 1 ]]; then
-  echo "> Export and encrypt GPG secret keys"
-  gpg --armor --export-secret-keys 281E7046D5349560 | gpg --output "${HOME}/Documents/GPG/gpg-master-keys.asc.gpg" --yes --symmetric -
+  if [[ ${EXPORT_GPG} = 1 ]]; then
+    echo "> Export and encrypt GPG secret keys"
+    gpg --armor --export-secret-keys 281E7046D5349560 | gpg --output "${HOME}/Documents/GPG/gpg-master-keys.asc.gpg" --yes --symmetric -
+  fi
 
   echo "> Export taskwarrior"
   task export > "${HOME}/Documents/taskwarrior.json"
