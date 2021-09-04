@@ -6,7 +6,7 @@ function termcolors() {
 }
 
 function countdown() {
-  termdown --no-bell --font doh --critical 30 "$1"
+  termdown --no-bell --font doh --critical 10 "$1"
   fellow finish
 }
 
