@@ -5,11 +5,6 @@ function termcolors() {
   done
 }
 
-function countdown() {
-  termdown --no-bell --font doh --critical 10 "$1"
-  fellow finish
-}
-
 function aur_update() {
   WHITE="\033[0;37m"
   NOCOLOR="\033[0m"
