@@ -19,11 +19,11 @@ let g:netrw_banner=0
 let g:mapleader = '\'
 
 " Commands
-command! -nargs=1 Indent call s:SetIndent(<f-args>)
-command! -nargs=0 ToggleIndent call s:ToggleIndent()
+command -nargs=1 Indent call s:SetIndent(<f-args>)
+command -nargs=0 ToggleIndent call s:ToggleIndent()
 
 " Shortcuts
-nnoremap <leader>r :Nmake<CR>
+nnoremap <leader>r :Make<CR>
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 
@@ -39,12 +39,12 @@ augroup terminal
 augroup end
 
 " Script
-function! s:SetIndent(val)
+function s:SetIndent(val)
   let &shiftwidth = a:val
   let &softtabstop = a:val
 endfunction
 
-function! s:ToggleIndent()
+function s:ToggleIndent()
   if &shiftwidth != 4
     call s:SetIndent(4)
   else
