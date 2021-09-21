@@ -38,7 +38,7 @@
     icon_position = left
     min_icon_size = 54
     max_icon_size = 54
-    icon_path = /usr/share/icons/Arc/status/64/:/usr/share/icons/Arc/devices/64/
+    icon_path = /usr/share/icons/Faenza/status/96
 
     # History
     sticky_history = yes
