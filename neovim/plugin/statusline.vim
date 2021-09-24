@@ -1,5 +1,8 @@
 scriptencoding utf-8
 
+" Commands
+command -nargs=0 ToggleFileInfo call s:ToggleFileInfo()
+
 " Triggers
 augroup statusline
   autocmd!
@@ -12,10 +15,23 @@ augroup statusline
 augroup end
 
 " Script
-function! s:UpdateStatusLine()
+let s:show_file_info = 0
+
+function s:ToggleFileInfo()
+  let s:show_file_info = !s:show_file_info
+  call s:UpdateStatusLine()
+endfunction
+
+function s:UpdateStatusLine()
   let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
-  let l:statusline .= '[ind:%{&shiftwidth}] %y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
+  if s:show_file_info
+    let l:statusline .= '[ind:%{&shiftwidth}] %y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
+  else
+    if (!empty(&fileencoding) && &fileencoding !=# 'utf-8') || &fileformat !=# 'unix'
+      let l:statusline .= '⚠  '
+    endif
+  endif
 
   let l:active_statusline  = '%#StatusLineMode# %{GetCurrentMode()} '
   let l:active_statusline .= statusline
@@ -32,7 +48,7 @@ function! s:UpdateStatusLine()
   endfor
 endfunction
 
-function! GetCurrentMode()
+function GetCurrentMode()
   let l:current_mode = mode()
   if l:current_mode ==# 'n'
     let l:current_mode = 'NORMAL'
@@ -71,7 +87,7 @@ function! GetCurrentMode()
   return l:current_mode
 endfunction
 
-function! LinterStatus()
+function LinterStatus()
   if !exists('*ale#linter#Get') || len(ale#linter#Get(&filetype)) == 0
     return ''
   endif
@@ -96,7 +112,7 @@ function! LinterStatus()
   return ' ✓ '
 endfunction
 
-function! SetSignColumn(visible)
+function SetSignColumn(visible)
   if a:visible
     let &signcolumn='auto:1'
   else

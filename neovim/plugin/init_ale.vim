@@ -2,6 +2,14 @@ scriptencoding utf-8
 
 set omnifunc=ale#completion#OmniFunc
 
+nnoremap <leader>n :ALENext<CR>
+nnoremap <leader>p :ALEPrevious<CR>
+nnoremap <leader>d :ALEGoToDefinition<CR>
+nnoremap <leader>f :ALEFindReferences -relative<CR>
+nnoremap <leader>h :ALEHover<CR>
+nnoremap <leader>s :ALESymbolSearch -relative 
+nnoremap <leader>e :ALEFix<CR>
+
 augroup alehighlight
   autocmd!
   autocmd VimEnter * highlight ALEErrorSign ctermfg=1 ctermbg=0
@@ -16,12 +24,3 @@ let g:ale_sign_info = '𝒾'
 let g:ale_python_pylsp_config = {
 \  'pylsp': { 'configurationSources': ['flake8'] }
 \}
-
-nnoremap <leader>n :ALENext<CR>
-nnoremap <leader>p :ALEPrevious<CR>
-
-nnoremap <leader>d :ALEGoToDefinition<CR>
-nnoremap <leader>f :ALEFindReferences -relative<CR>
-nnoremap <leader>h :ALEHover<CR>
-nnoremap <leader>s :ALESymbolSearch -relative 
-nnoremap <leader>e :ALEFix<CR>
