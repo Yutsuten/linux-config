@@ -14,13 +14,13 @@ system:
 
 desktop:
 	@echo '>> Desktop configuration <<'
-	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/kitty
+	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/alacritty
 	ln -sf $(CURDIR)/desktop/pam_environment ~/.pam_environment
 	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
 	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
-	ln -sf $(CURDIR)/desktop/kitty.conf ~/.config/kitty/kitty.conf
+	ln -sf $(CURDIR)/desktop/alacritty.yml ~/.config/alacritty/alacritty.yml
 	ln -sf $(CURDIR)/desktop/osu.desktop ~/.local/share/applications/osu.desktop
 	ln -sf $(CURDIR)/desktop/feh.desktop ~/.local/share/applications/feh.desktop
 	ln -sf $(CURDIR)/desktop/anki.desktop ~/.local/share/applications/anki.desktop
