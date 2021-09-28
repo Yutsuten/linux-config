@@ -5,6 +5,6 @@ VISUAL                DEFAULT=nvim
 EDITOR                DEFAULT=nvim
 
 NNN_OPTS              DEFAULT=eox
-NNN_PLUG              DEFAULT=d:dragdrop;p:preview-tui
+NNN_PLUG              DEFAULT=d:dragdrop
 NNN_FIFO              DEFAULT=/tmp/nnn.fifo
 USE_VIDEOTHUMB        DEFAULT=1
