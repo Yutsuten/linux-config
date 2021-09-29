@@ -2,7 +2,16 @@ export GPG_TTY=$(tty)
 export LC_MESSAGES=C
 export ZSH_CONF="${HOME}/.linux_config/zsh"
 
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
 setopt PROMPT_SUBST
+setopt APPENDHISTORY
+setopt EXTENDED_HISTORY       # record timestamp of command in HISTFILE
+setopt HIST_EXPIRE_DUPS_FIRST # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt HIST_IGNORE_DUPS       # ignore duplicated commands history list
+setopt HIST_IGNORE_SPACE      # ignore commands that start with space
 
 autoload -Uz compinit
 compinit
@@ -11,9 +20,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z-_}' 'r:|=*' 'l:|=* r:|
 zstyle ':completion:*' menu select
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors '=*=34'
-
-# Alt + Backspace to delete word
-bindkey '^[^?' backward-kill-word
 
 function precmd() {
   echo -ne "\033]0;$(basename $PWD)\007"
@@ -47,6 +53,7 @@ function aur_update() {
   )
 }
 
+source "${ZSH_CONF}/key-bindings.zsh"
 source "${ZSH_CONF}/prompt.zsh"
 source "${ZSH_CONF}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
