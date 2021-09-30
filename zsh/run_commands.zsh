@@ -1,14 +1,15 @@
 export GPG_TTY=$(tty)
 export LC_MESSAGES=C
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
+export LINUX_CONFIG="${HOME}/.linux_config"
 
 autoload -Uz compinit
 autoload -U colors
 compinit
 colors
 
-ZSH_CONF="${HOME}/.linux_config/zsh"
-HISTFILE="$HOME/.zsh_history"
+ZSH_CONF="${LINUX_CONFIG}/zsh"
+HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
 
@@ -30,7 +31,7 @@ function precmd() {
   echo -ne "\033]0;$(basename $PWD)\007"
 }
 
-source "${ZSH_CONF}/key-bindings.zsh"
+source "${ZSH_CONF}/key_bindings.zsh"
 source "${ZSH_CONF}/custom_commands.zsh"
 source "${ZSH_CONF}/prompt.zsh"
 source "${ZSH_CONF}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

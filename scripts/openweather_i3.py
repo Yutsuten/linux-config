@@ -46,8 +46,6 @@ def main():
     weather_status += [
         '{:.1f}°C'.format(weather['main']['temp']),
         '💧{}%'.format(weather['main']['humidity']),
-        '🎏 {:.1f} m/s'.format(weather['wind']['speed']),
-        '☁️ {}%'.format(weather['clouds']['all']),
     ]
 
     with open('/tmp/weather', 'w') as weather_file:
@@ -64,13 +62,11 @@ def get_current_weather(key, lat, lon):
         'units': 'metric',
         'appid': key,
     }
-
     with requests.Session() as session:
         session.mount('https://', requests.adapters.HTTPAdapter(
             max_retries=Retry(total=5, backoff_factor=2)
         ))
         response = session.get(WEATHER_API, params=params)
-
     return response.json()
 
 

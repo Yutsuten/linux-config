@@ -1,50 +1,43 @@
-.PHONY: all system desktop git linters neovim scripts zsh
+.PHONY: user_all system_all user_environment user_desktop user_apps user_linters user_git user_neovim user_zsh user_appentries user_scripts system_env system_settings systemctl_settings
 
-all: desktop git linters neovim scripts zsh
+user_all: user_environment user_desktop user_apps user_git user_neovim user_zsh user_linters user_appentries user_scripts
 	@echo 'Done!'
 
-system:
-	@echo '>> System configuration <<'
-	cp -p $(CURDIR)/system/environment /etc/environment
-	cp -p $(CURDIR)/system/wallpaper.service /etc/systemd/system/wallpaper.service
-	cp -p $(CURDIR)/system/wallpaper.timer /etc/systemd/system/wallpaper.timer
-	cp -p $(CURDIR)/system/openweather.service /etc/systemd/system/openweather.service
-	cp -p $(CURDIR)/system/openweather.timer /etc/systemd/system/openweather.timer
+system_all: system_env system_settings systemctl_settings
+	@echo 'Done!'
+
+
+user_environment:
+	@echo '>> Environment settings <<'
+	ln -sf $(CURDIR)/settings/environment/pam_environment ~/.pam_environment
 	@echo
 
-desktop:
-	@echo '>> Desktop configuration <<'
-	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst ~/.config/alacritty
-	ln -sf $(CURDIR)/desktop/pam_environment ~/.pam_environment
-	ln -sf $(CURDIR)/desktop/i3.conf ~/.config/i3/config
-	ln -sf $(CURDIR)/desktop/i3status.conf ~/.config/i3status/config
-	ln -sf $(CURDIR)/desktop/picom.conf ~/.config/picom/picom.conf
-	ln -sf $(CURDIR)/desktop/dunstrc ~/.config/dunst/dunstrc
-	ln -sf $(CURDIR)/desktop/alacritty.yml ~/.config/alacritty/alacritty.yml
-	ln -sf $(CURDIR)/desktop/osu.desktop ~/.local/share/applications/osu.desktop
-	ln -sf $(CURDIR)/desktop/feh.desktop ~/.local/share/applications/feh.desktop
-	ln -sf $(CURDIR)/desktop/anki.desktop ~/.local/share/applications/anki.desktop
-	ln -sf $(CURDIR)/desktop/mimeapps.list ~/.config/mimeapps.list
+user_desktop:
+	@echo '>> Desktop settings <<'
+	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst
+	ln -sf $(CURDIR)/settings/desktop/i3.conf ~/.config/i3/config
+	ln -sf $(CURDIR)/settings/desktop/i3status.conf ~/.config/i3status/config
+	ln -sf $(CURDIR)/settings/desktop/picom.conf ~/.config/picom/picom.conf
+	ln -sf $(CURDIR)/settings/desktop/dunstrc ~/.config/dunst/dunstrc
 	@echo
 
-git:
-	@echo '>> Git configuration <<'
-	ln -sf $(CURDIR)/git/global.gitignore ~/.gitignore
+user_apps:
+	@echo '>> Application settings <<'
+	mkdir -p ~/.config/alacritty
+	ln -sf $(CURDIR)/settings/app/alacritty.yml ~/.config/alacritty/alacritty.yml
+	ln -sf $(CURDIR)/settings/app/mimeapps.list ~/.config/mimeapps.list
+	@echo
+
+user_git:
+	@echo '>> Git settings <<'
+	ln -sf $(CURDIR)/settings/app/gitignore ~/.gitignore
 	git config --global core.excludesfile ~/.gitignore
 	git config --global core.pager 'less -SXF'
 	git config --global core.editor 'nvim'
 	@echo
 
-linters:
-	@echo '>> Linters configuration <<'
-	mkdir -p ~/.config
-	ln -sf $(CURDIR)/linters/flake8 ~/.config/flake8
-	ln -sf $(CURDIR)/linters/pylint ~/.config/pylintrc
-	ln -sf $(CURDIR)/linters/jshint.json ~/.jshintrc
-	@echo
-
-neovim:
-	@echo '>> Neovim configuration <<'
+user_neovim:
+	@echo '>> Neovim settings <<'
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
@@ -55,20 +48,50 @@ neovim:
 	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
 	@echo
 
-scripts:
-	@echo '>> Scripts configuration <<'
+user_zsh:
+	@echo '>> Zsh settings <<'
+	rm -f ~/.zshrc
+	ln -sf $(CURDIR)/zsh/run_commands.zsh ~/.zshrc
+	@echo
+
+user_linters:
+	@echo '>> Linter settings <<'
+	mkdir -p ~/.config
+	ln -sf $(CURDIR)/settings/linter/flake8.conf ~/.config/flake8
+	ln -sf $(CURDIR)/settings/linter/pylint.conf ~/.config/pylintrc
+	ln -sf $(CURDIR)/settings/linter/jshint.json ~/.jshintrc
+	@echo
+
+user_appentries:
+	@echo '>> Application entries <<'
+	ln -sf $(CURDIR)/settings/app_entry/osu.desktop ~/.local/share/applications/osu.desktop
+	ln -sf $(CURDIR)/settings/app_entry/feh.desktop ~/.local/share/applications/feh.desktop
+	ln -sf $(CURDIR)/settings/app_entry/anki.desktop ~/.local/share/applications/anki.desktop
+	@echo
+
+user_scripts:
+	@echo '>> Scripts symbolic links <<'
 	mkdir -p ~/.local/bin ~/.task/hooks
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
 	ln -sf $(CURDIR)/scripts/gamemode.sh ~/.local/bin/gamemode
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 	@echo
 
-zsh:
-	@echo '>> Zsh configuration <<'
-	rm -f ~/.zshrc
-	ln -sf $(CURDIR)/zsh/run_commands.zsh ~/.zshrc
-	ln -sf $(CURDIR)/zsh/commands.zsh ~/.oh-my-zsh/custom/commands.zsh
-	ln -sf $(CURDIR)/zsh/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
-	ln -sf $(CURDIR)/zsh/yutsuten.zsh ~/.oh-my-zsh/custom/themes/yutsuten.zsh-theme
-	ln -snf $(CURDIR)/zsh/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+system_env:
+	@echo '>> System environment settings <<'
+	cp -p $(CURDIR)/settings/environment/environment /etc/environment
+	@echo
+
+system_settings:
+	@echo '>> System settings <<'
+	cp -p $(CURDIR)/settings/system/slick-greeter.conf /etc/lightdm/slick-greeter.conf
+	cp -p $(CURDIR)/settings/system/wacom-options.conf /etc/X11/xorg.conf.d/72-wacom-options.conf
+	@echo
+
+systemctl_settings:
+	@echo '>> Systemctl settings <<'
+	cp -p $(CURDIR)/settings/systemctl/wallpaper.service /etc/systemd/system/wallpaper.service
+	cp -p $(CURDIR)/settings/systemctl/wallpaper.timer /etc/systemd/system/wallpaper.timer
+	cp -p $(CURDIR)/settings/systemctl/openweather.service /etc/systemd/system/openweather.service
+	cp -p $(CURDIR)/settings/systemctl/openweather.timer /etc/systemd/system/openweather.timer
 	@echo

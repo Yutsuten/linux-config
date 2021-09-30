@@ -3,3 +3,10 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 
 QT_QPA_PLATFORMTHEME=qt5ct
+
+PAGER="less -P?n -R"
+VISUAL=nvim
+EDITOR=nvim
+
+NNN_OPTS=eox
+NNN_PLUG=d:dragdrop
