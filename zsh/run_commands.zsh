@@ -57,7 +57,7 @@ source "${ZSH_CONF}/key-bindings.zsh"
 source "${ZSH_CONF}/prompt.zsh"
 source "${ZSH_CONF}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-alias ll='ls -l'
+alias ll='ls -hl'
 alias ~='cd ~'
 alias ..='cd ..'
 alias ...='cd ../..'
