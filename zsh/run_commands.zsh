@@ -43,5 +43,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+alias identify='identify -ping -precision 3'
+
 alias cpwd='echo -n $(pwd -P) | xclip -selection clipboard'
 alias calc='task calc'
