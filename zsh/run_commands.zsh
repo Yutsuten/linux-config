@@ -26,11 +26,6 @@ zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors '=*=39'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-function precmd() {
-  # Set the terminal title to the current directory name
-  echo -ne "\033]0;$(basename $PWD)\007"
-}
-
 source "${ZSH_CONF}/key_bindings.zsh"
 source "${ZSH_CONF}/custom_commands.zsh"
 source "${ZSH_CONF}/prompt.zsh"

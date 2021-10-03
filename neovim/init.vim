@@ -12,8 +12,6 @@ set tabstop=4
 set fileencodings=ucs-bom,utf-8,sjis,latin1
 set sessionoptions-=buffers
 set sessionoptions+=globals
-set title
-set titlestring=nvim\ %{fnamemodify(getcwd(),':t')}
 
 let g:netrw_banner=0
 let g:mapleader = '\'
