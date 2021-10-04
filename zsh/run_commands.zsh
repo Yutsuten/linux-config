@@ -20,6 +20,8 @@ setopt hist_ignore_dups       # Ignore duplicated commands history list
 setopt hist_ignore_space      # Ignore commands that start with space
 setopt sharehistory           # Share history across terminals
 
+zle_highlight=(default:fg=14) # Prompt input color
+
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z-_}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' special-dirs true
