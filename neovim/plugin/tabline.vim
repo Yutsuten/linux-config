@@ -21,7 +21,7 @@ let s:tab_names = ['']
 let s:last_tab_index = 0
 let s:ready = 0
 
-function! s:SessionRestored()
+function s:SessionRestored()
   if exists('g:TabNames')
     let s:tab_names = split(g:TabNames, ',', 1)
   else
@@ -30,7 +30,7 @@ function! s:SessionRestored()
   let s:ready = 1
 endfunction
 
-function! UpdateTabLine()
+function UpdateTabLine()
   let tabline = ''
   for i in range(tabpagenr('$'))
     let tabnum = i + 1
@@ -45,15 +45,18 @@ function! UpdateTabLine()
   return tabline
 endfunction
 
-function! GetTabLabel(tabnum)
-  let l:tab_name = s:tab_names[a:tabnum - 1]
+function GetTabLabel(tabnum)
+  let l:tab_name = ''
+  if a:tabnum - 1 < len(s:tab_names)
+    let l:tab_name = s:tab_names[a:tabnum - 1]
+  endif
   if l:tab_name ==# ''
     return a:tabnum
   endif
   return a:tabnum . ' ' . l:tab_name
 endfunction
 
-function! SetTabName()
+function SetTabName()
   let l:tab_index = tabpagenr() - 1
   call inputsave()
   let l:input_opts = {
@@ -67,27 +70,27 @@ function! SetTabName()
   let g:TabNames = join(s:tab_names, ',')
 endfunction
 
-function! s:TabCreated()
+function s:TabCreated()
   if s:ready
     call insert(s:tab_names, '', tabpagenr() - 1)
     let g:TabNames = join(s:tab_names, ',')
   endif
 endfunction
 
-function! s:TabClosed()
+function s:TabClosed()
   if s:ready
     call remove(s:tab_names, s:last_tab_index)
     let g:TabNames = join(s:tab_names, ',')
   endif
 endfunction
 
-function! s:FinishCommand()
+function s:FinishCommand()
   if getcmdline() =~# '\v^[0-9$.+-]*tabm%[ove]\s*[0-9$+-]*$'
     call timer_start(0, 'TabMoved')
   endif
 endfunction
 
-function! TabMoved(timer)
+function TabMoved(timer)
   let l:cur_tab_index = tabpagenr() - 1
   if s:last_tab_index != l:cur_tab_index
     let l:prev_tab_name = s:tab_names[s:last_tab_index]
@@ -96,4 +99,5 @@ function! TabMoved(timer)
     let g:TabNames = join(s:tab_names, ',')
   endif
   let s:last_tab_index = l:cur_tab_index
+  execute ':redrawtabline'
 endfunction
