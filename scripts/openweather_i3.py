@@ -49,7 +49,7 @@ def main():
     ]
 
     with open('/tmp/weather', 'w') as weather_file:
-        weather_file.write(' '.join(weather_status))
+        weather_file.write('  '.join(weather_status))
 
     return 0
 
