@@ -44,11 +44,11 @@ def main():
     else:
         weather_status = ['🌙']
     weather_status += [
-        '{:.1f}°C'.format(weather['main']['temp']),
-        '💧{}%'.format(weather['main']['humidity']),
+        f'{round(weather["main"]["temp"])}°C',
+        f'💧{weather["main"]["humidity"]}%',
     ]
 
-    with open('/tmp/weather', 'w') as weather_file:
+    with open('/tmp/weather', 'w', encoding='utf-8') as weather_file:
         weather_file.write('  '.join(weather_status))
 
     return 0
