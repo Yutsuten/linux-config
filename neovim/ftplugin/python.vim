@@ -17,6 +17,5 @@ endfunction
 
 command! -nargs=0 Pydoc call s:Pydoc()
 
-nnoremap <leader>k :Pydoc<CR>
 noremap <leader>cc :s/\v^(\s*)(.+)/\1# \2/<CR>
 noremap <leader>cu :s/\v(\s*)# (.+)/\1\2/<CR>

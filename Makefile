@@ -46,6 +46,7 @@ user_neovim:
 	ln -snf $(CURDIR)/neovim/pack ~/.local/share/nvim/site/pack/all/start
 	ln -snf $(CURDIR)/neovim/plugin ~/.local/share/nvim/site/plugin
 	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
+	ln -snf $(CURDIR)/neovim/doc ~/.local/share/nvim/site/doc
 	@echo
 
 user_zsh:
