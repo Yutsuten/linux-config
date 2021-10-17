@@ -1,8 +1,8 @@
 [Unit]
-Description=random wallpaper using nitrogen
+Description=set random wallpaper
 
 [Service]
 Type=oneshot
 User=mateus
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/nitrogen --set-zoom-fill --random --save /home/mateus/Pictures/Wallpapers/Active
+ExecStart=/home/mateus/.local/bin/wallpaper --random
