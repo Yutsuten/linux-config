@@ -1,8 +1,8 @@
 [Unit]
-Description=random wallpaper using feh
+Description=random wallpaper using nitrogen
 
 [Service]
 Type=oneshot
 User=mateus
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/feh --bg-fill --recursive --randomize /home/mateus/Pictures/Wallpapers/Active
+ExecStart=/usr/bin/nitrogen --set-zoom-fill --random --save /home/mateus/Pictures/Wallpapers/Active

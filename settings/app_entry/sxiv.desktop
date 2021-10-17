@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=Feh
-Comment=Image viewer and cataloguer
+Name=Sxiv
+Comment=Simple X Image Viewer
 Categories=Graphics
-Exec=feh --scale-down
+Exec=sxiv -ba
 NoDisplay=true
 Terminal=false
