@@ -15,7 +15,11 @@ case $1 in
     xargs -0 xwallpaper --zoom < "${SAVED_WALLPAPER}"
     ;;
   --random)
-    random_image=$(printf '%s\n' "${WALLPAPER_DIR}"/* | shuf -n 1)
+    current_image=$(cat "${SAVED_WALLPAPER}")
+    random_image=${current_image}
+    while [[ "${random_image}" == "${current_image}" ]]; do
+      random_image=$(printf '%s\n' "${WALLPAPER_DIR}"/* | shuf -n 1)
+    done
     printf '%s' "${random_image}" > "${SAVED_WALLPAPER}"
     xwallpaper --zoom "${random_image}"
     ;;
