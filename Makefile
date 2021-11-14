@@ -19,6 +19,8 @@ user_desktop:
 	ln -sf $(CURDIR)/settings/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/settings/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/settings/desktop/dunstrc.conf ~/.config/dunst/dunstrc
+	rm -rf ~/.config/fcitx5
+	ln -sf $(CURDIR)/settings/desktop/fcitx5 ~/.config/fcitx5
 	@echo
 
 user_apps:
