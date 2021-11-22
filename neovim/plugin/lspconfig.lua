@@ -21,14 +21,21 @@ require('lspconfig').pylsp.setup{
 }
 
 -- diagnostics signs
-vim.cmd([[
-  highlight LspDiagnosticsLineNrError ctermfg=1 ctermbg=0
-  highlight LspDiagnosticsLineNrWarning ctermfg=3 ctermbg=0
-  highlight LspDiagnosticsLineNrInformation ctermfg=13 ctermbg=0
-  highlight LspDiagnosticsLineNrHint ctermfg=13 ctermbg=0
+local signs = {
+  Error = " ✗",
+  Warning = " ‼",
+  Information = " 𝒾",
+  Hint = " 𝒾",
+}
 
-  sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=LspDiagnosticsLineNrError
-  sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=LspDiagnosticsLineNrWarning
-  sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=LspDiagnosticsLineNrInformation
-  sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl= numhl=LspDiagnosticsLineNrHint
-]])
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl })
+end
+
+vim.cmd [[
+  highlight LspDiagnosticsSignError ctermfg=1 ctermbg=0
+  highlight LspDiagnosticsSignWarning ctermfg=3 ctermbg=0
+  highlight LspDiagnosticsSignInformation ctermfg=13 ctermbg=0
+  highlight LspDiagnosticsSignHint ctermfg=13 ctermbg=0
+]]

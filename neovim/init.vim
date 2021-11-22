@@ -26,14 +26,14 @@ nnoremap <leader>r :Make<CR>
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 
-noremap c/ :s/\v^(\s*)(.+)/\1\/\/ \2/<CR>
-noremap cu/ :s/\v(\s*)\/\/ (.+)/\1\2/<CR>
-noremap c# :s/\v^(\s*)(.+)/\1# \2/<CR>
-noremap cu# :s/\v(\s*)# (.+)/\1\2/<CR>
-noremap c" :s/\v^(\s*)(.+)/\1" \2/<CR>
-noremap cu" :s/\v(\s*)" (.+)/\1\2/<CR>
-noremap c- :s/\v^(\s*)(.+)/\1-- \2/<CR>
-noremap cu- :s/\v(\s*)-- (.+)/\1\2/<CR>
+noremap <leader>c/ :s/\v^(\s*)(.+)/\1\/\/ \2/<CR>
+noremap <leader>u/ :s/\v(\s*)\/\/ (.+)/\1\2/<CR>
+noremap <leader>c# :s/\v^(\s*)(.+)/\1# \2/<CR>
+noremap <leader>u# :s/\v(\s*)# (.+)/\1\2/<CR>
+noremap <leader>c" :s/\v^(\s*)(.+)/\1" \2/<CR>
+noremap <leader>u" :s/\v(\s*)" (.+)/\1\2/<CR>
+noremap <leader>c- :s/\v^(\s*)(.+)/\1-- \2/<CR>
+noremap <leader>u- :s/\v(\s*)-- (.+)/\1\2/<CR>
 
 " Triggers
 augroup autocompletion
