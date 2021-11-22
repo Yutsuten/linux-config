@@ -1,9 +1,6 @@
 [submodule "nvim/plugins/vim-colors-solarized"]
 	path = neovim/pack/vim-colors-solarized
 	url = git@github.com:altercation/vim-colors-solarized.git
-[submodule "nvim/plugins/vim-gitgutter"]
-	path = neovim/pack/vim-gitgutter
-	url = git@github.com:airblade/vim-gitgutter.git
 [submodule "nvim/plugins/vim-python-pep8-indent"]
 	path = neovim/pack/vim-python-pep8-indent
 	url = git@github.com:Vimjas/vim-python-pep8-indent.git
@@ -22,3 +19,9 @@
 [submodule "neovim/pack/lint"]
 	path = neovim/pack/lint
 	url = git@github.com:mfussenegger/nvim-lint.git
+[submodule "gitsigns"]
+	path = neovim/pack/gitsigns
+	url = git@github.com:lewis6991/gitsigns.nvim.git
+[submodule "neovim/pack/plenary"]
+	path = neovim/pack/plenary
+	url = git@github.com:nvim-lua/plenary.nvim.git
