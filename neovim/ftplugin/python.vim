@@ -1,11 +1,8 @@
 setlocal shiftwidth=4
 setlocal softtabstop=4
-setlocal colorcolumn=81
+setlocal colorcolumn=80
 
 highlight ColorColumn ctermbg=0
-
-let b:ale_linters = ['flake8', 'pylint', 'pylsp']
-let b:ale_fixers = ['isort', 'yapf']
 
 function! s:Pydoc()
   let iskeyword = &iskeyword
@@ -16,6 +13,3 @@ function! s:Pydoc()
 endfunction
 
 command! -nargs=0 Pydoc call s:Pydoc()
-
-noremap <leader>cc :s/\v^(\s*)(.+)/\1# \2/<CR>
-noremap <leader>cu :s/\v(\s*)# (.+)/\1\2/<CR>

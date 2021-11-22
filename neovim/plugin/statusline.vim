@@ -23,7 +23,7 @@ function s:ToggleFileInfo()
 endfunction
 
 function s:UpdateStatusLine()
-  if win_gettype() == 'popup'
+  if win_gettype() ==# 'popup'
     return
   endif
 
@@ -92,9 +92,6 @@ function GetCurrentMode()
 endfunction
 
 function LinterStatus()
-  if !luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
-    return ''
-  endif
   let l:error_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Error]])')
   let l:warning_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Warning]])')
   let l:info_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Information]])')
