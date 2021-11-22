@@ -6,7 +6,7 @@ command -nargs=0 ToggleFileInfo call s:ToggleFileInfo()
 " Triggers
 augroup statusline
   autocmd!
-  autocmd VimEnter,WinEnter,BufEnter,BufDelete,SessionLoadPost,FileChangedShellPost * call s:UpdateStatusLine()
+  autocmd VimEnter,WinEnter,BufEnter,SessionLoadPost,FileChangedShellPost * call s:UpdateStatusLine()
   autocmd VimEnter * highlight StatusLine ctermbg=0 ctermfg=14 cterm=NONE gui=NONE
   autocmd VimEnter * highlight StatusLineNC ctermbg=0 ctermfg=10 cterm=NONE gui=NONE
   autocmd VimEnter * highlight StatusLineSub ctermbg=11 ctermfg=0 cterm=NONE gui=NONE
@@ -23,6 +23,10 @@ function s:ToggleFileInfo()
 endfunction
 
 function s:UpdateStatusLine()
+  if win_gettype() == 'popup'
+    return
+  endif
+
   let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
   if s:show_file_info
@@ -88,15 +92,13 @@ function GetCurrentMode()
 endfunction
 
 function LinterStatus()
-  if !exists('*ale#linter#Get') || len(ale#linter#Get(&filetype)) == 0
+  if !luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
     return ''
   endif
-
-  let l:counts = ale#statusline#Count(bufnr())
-  let l:error_count = l:counts.error + l:counts.style_error
-  let l:warning_count = l:counts.warning + l:counts.style_warning
-
-  call SetSignColumn(l:counts.total > 0)
+  let l:error_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Error]])')
+  let l:warning_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Warning]])')
+  let l:info_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Information]])')
+  let l:hint_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Hint]])')
 
   if l:error_count > 0
     highlight StatusLineLinter ctermbg=1
@@ -104,18 +106,10 @@ function LinterStatus()
   elseif l:warning_count > 0
     highlight StatusLineLinter ctermbg=3
     return printf(' ‼%d ', l:warning_count)
-  elseif l:counts.info > 0
+  elseif l:info_count + l:hint_count > 0
     highlight StatusLineLinter ctermbg=13
-    return printf(' 𝒾%d ', l:counts.info)
+    return printf(' 𝒾%d ', l:info_count + l:hint_count)
   endif
   highlight StatusLineLinter ctermbg=2
   return ' ✓ '
-endfunction
-
-function SetSignColumn(visible)
-  if a:visible
-    let &signcolumn='auto:1'
-  else
-    let &signcolumn='no'
-  endif
 endfunction

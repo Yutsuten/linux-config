@@ -1,6 +1,3 @@
-[submodule "nvim/plugins/ale"]
-	path = neovim/pack/ale
-	url = git@github.com:dense-analysis/ale.git
 [submodule "nvim/plugins/vim-colors-solarized"]
 	path = neovim/pack/vim-colors-solarized
 	url = git@github.com:altercation/vim-colors-solarized.git
@@ -19,3 +16,9 @@
 [submodule "neovim/pack/nnn.vim"]
 	path = neovim/pack/nnn.vim
 	url = git@github.com:mcchrish/nnn.vim.git
+[submodule "neovim/pack/lspconfig"]
+	path = neovim/pack/lspconfig
+	url = git@github.com:neovim/nvim-lspconfig.git
+[submodule "neovim/pack/lint"]
+	path = neovim/pack/lint
+	url = git@github.com:mfussenegger/nvim-lint.git

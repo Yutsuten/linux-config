@@ -6,6 +6,7 @@ set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set nohlsearch
 set noshowmode
 set number
+set signcolumn=auto:1
 set shiftwidth=2
 set softtabstop=2
 set tabstop=4
