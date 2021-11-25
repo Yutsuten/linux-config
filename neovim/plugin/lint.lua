@@ -1,7 +1,7 @@
 require('lint').linters_by_ft = {
   javascript = {'eslint', 'jshint'},
   python = {'pylint', 'flake8'},
-  robot = {'rflint'},
+  robot = {'robocop'},
   sh = {'shellcheck'},
   vim = {'vint'},
 }
