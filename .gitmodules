@@ -25,3 +25,6 @@
 [submodule "neovim/pack/plenary"]
 	path = neovim/pack/plenary
 	url = git@github.com:nvim-lua/plenary.nvim.git
+[submodule "neovim/pack/robotframework"]
+	path = neovim/pack/robotframework
+	url = git@github.com:rasjani/robotframework-vim.git
