@@ -39,3 +39,6 @@ vim.cmd [[
   highlight LspDiagnosticsSignInformation ctermfg=13 ctermbg=0
   highlight LspDiagnosticsSignHint ctermfg=13 ctermbg=0
 ]]
+
+-- diagnostics virtual text
+vim.diagnostic.config({virtual_text = false})
