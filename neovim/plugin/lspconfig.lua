@@ -1,3 +1,9 @@
+-- setup lsp servers
+require('lspconfig').pylsp.setup{
+  settings = {pylsp = {configurationSources = {'flake8'}}}
+}
+require('lspconfig').robotframework_ls.setup{}
+
 -- omnifunc
 vim.api.nvim_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -10,15 +16,6 @@ vim.api.nvim_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>'
 vim.api.nvim_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<space>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-
--- setup lsp servers
-require('lspconfig').pylsp.setup{
-  settings = {
-    pylsp = {
-      configurationSources = {'flake8'}
-    }
-  }
-}
 
 -- diagnostics signs
 local signs = {
