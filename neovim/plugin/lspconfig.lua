@@ -2,7 +2,6 @@
 require('lspconfig').pylsp.setup{
   settings = {pylsp = {configurationSources = {'flake8'}}}
 }
-require('lspconfig').robotframework_ls.setup{}
 
 -- omnifunc
 vim.api.nvim_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
