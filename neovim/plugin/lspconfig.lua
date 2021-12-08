@@ -18,22 +18,22 @@ vim.api.nvim_set_keymap('n', '<space>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opt
 
 -- diagnostics signs
 local signs = {
-  Error = " ✗",
-  Warning = " ‼",
-  Information = " 𝒾",
-  Hint = " 𝒾",
+  Error = ' ✗',
+  Warn = ' ‼',
+  Info = ' 𝒾',
+  Hint = ' 𝒾',
 }
 
 for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl })
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, {text = icon, texthl = hl})
 end
 
 vim.cmd [[
-  highlight LspDiagnosticsSignError ctermfg=1 ctermbg=0
-  highlight LspDiagnosticsSignWarning ctermfg=3 ctermbg=0
-  highlight LspDiagnosticsSignInformation ctermfg=13 ctermbg=0
-  highlight LspDiagnosticsSignHint ctermfg=13 ctermbg=0
+  highlight DiagnosticSignError ctermfg=1 ctermbg=0
+  highlight DiagnosticSignWarn ctermfg=3 ctermbg=0
+  highlight DiagnosticSignInfo ctermfg=13 ctermbg=0
+  highlight DiagnosticSignHint ctermfg=13 ctermbg=0
 ]]
 
 -- diagnostics virtual text
