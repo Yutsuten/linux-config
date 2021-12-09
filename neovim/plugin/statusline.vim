@@ -7,11 +7,11 @@ command -nargs=0 ToggleFileInfo call s:ToggleFileInfo()
 augroup statusline
   autocmd!
   autocmd VimEnter,WinEnter,BufEnter,SessionLoadPost,FileChangedShellPost * call s:UpdateStatusLine()
-  autocmd VimEnter * highlight StatusLine ctermbg=0 ctermfg=14 cterm=NONE gui=NONE
-  autocmd VimEnter * highlight StatusLineNC ctermbg=0 ctermfg=10 cterm=NONE gui=NONE
-  autocmd VimEnter * highlight StatusLineSub ctermbg=11 ctermfg=0 cterm=NONE gui=NONE
-  autocmd VimEnter * highlight StatusLineMode ctermbg=4 ctermfg=0 cterm=NONE gui=NONE
-  autocmd VimEnter * highlight StatusLineLinter ctermbg=2 ctermfg=0 cterm=NONE gui=NONE
+  autocmd VimEnter * highlight StatusLine ctermbg=0 ctermfg=14 cterm=NONE
+  autocmd VimEnter * highlight StatusLineNC ctermbg=0 ctermfg=10 cterm=NONE
+  autocmd VimEnter * highlight StatusLineSub ctermbg=11 ctermfg=0 cterm=NONE
+  autocmd VimEnter * highlight StatusLineMode ctermbg=4 ctermfg=0 cterm=NONE
+  autocmd VimEnter * highlight StatusLineLinter ctermbg=2 ctermfg=0 cterm=NONE
 augroup end
 
 " Script
