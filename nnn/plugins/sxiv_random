@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+find . -maxdepth 1 -name '*' -type f -exec file {} \; \
+| grep -oP '^.+: \w+ image' \
+| cut -d ':' -f 1 \
+| shuf \
+| xargs -rd '\n' sxiv -abf &

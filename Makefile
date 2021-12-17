@@ -1,6 +1,6 @@
 .PHONY: user_all system_all user_environment user_desktop user_apps user_linters user_git user_neovim user_zsh user_appentries user_scripts system_env system_settings systemctl_settings
 
-user_all: user_environment user_desktop user_apps user_git user_neovim user_zsh user_linters user_appentries user_scripts
+user_all: user_environment user_desktop user_apps user_git user_neovim user_nnn user_zsh user_linters user_appentries user_scripts
 	@echo 'Done!'
 
 system_all: system_env system_settings systemctl_settings
@@ -50,6 +50,11 @@ user_neovim:
 	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
 	ln -snf $(CURDIR)/neovim/doc ~/.local/share/nvim/site/doc
 	@echo
+
+user_nnn:
+	@echo 'Nnn plugins'
+	rm -rf ~/.config/nnn/plugins
+	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
 user_zsh:
 	@echo '>> Zsh settings <<'

@@ -9,4 +9,4 @@ VISUAL=nvim
 EDITOR=nvim
 
 NNN_OPTS=eox
-NNN_PLUG=d:dragdrop
+NNN_PLUG=d:dragdrop;s:sxiv_random
