@@ -1,3 +1,9 @@
+nnn_prompt() {
+  if [[ -n ${nnn} ]]; then
+    echo -n "%B%F{4}[nnn]%f "
+  fi
+}
+
 git_prompt() {
   local branch
   branch=$(git symbolic-ref --quiet HEAD 2> /dev/null)
@@ -46,5 +52,5 @@ git_prompt() {
 local user_host="%B%F{13}%n@%m%b"
 local curdir="%F{14}%~%f"
 
-PROMPT="${user_host}:${curdir}\$(git_prompt)%f
+PROMPT="\$(nnn_prompt)${user_host}:${curdir}\$(git_prompt)%f
 %F{2}$%{$reset_color%} "
