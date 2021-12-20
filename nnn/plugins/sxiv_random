@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-find . -maxdepth 1 -name '*' -type f -exec file {} \; \
-| grep -oP '^.+: \w+ image' \
-| cut -d ':' -f 1 \
-| shuf \
-| xargs -rd '\n' sxiv -abf &
+find . -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' \) -print0 \
+| shuf --zero-terminated \
+| xargs --no-run-if-empty --null sxiv -abf > /dev/null 2>&1 &
