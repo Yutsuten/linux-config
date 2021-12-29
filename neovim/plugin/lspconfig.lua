@@ -37,4 +37,4 @@ vim.cmd [[
 ]]
 
 -- diagnostics virtual text
-vim.diagnostic.config({virtual_text = false})
+vim.diagnostic.config({virtual_text = false, severity_sort = true})
