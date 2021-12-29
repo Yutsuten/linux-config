@@ -30,12 +30,11 @@ function s:UpdateStatusLine()
   let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
   let l:statusline .= '%='
   if s:show_file_info
-    let l:statusline .= '[ind:%{&shiftwidth}] %y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
+    let l:statusline .= '%y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
   else
-    if (!empty(&fileencoding) && &fileencoding !=# 'utf-8') || &fileformat !=# 'unix'
-      let l:statusline .= '⚠  '
-    endif
+    let l:statusline .= '%{((!empty(&fileencoding) && &fileencoding !=# "utf-8") || &fileformat !=# "unix")?"⚠  ":""}'
   endif
+  let l:statusline .= '[ind:%{&shiftwidth}] '
 
   let l:active_statusline  = '%#StatusLineMode# %{GetCurrentMode()} '
   let l:active_statusline .= statusline
