@@ -91,10 +91,10 @@ function GetCurrentMode()
 endfunction
 
 function LinterStatus()
-  let l:error_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Error]])')
-  let l:warning_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Warning]])')
-  let l:info_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Information]])')
-  let l:hint_count = luaeval('vim.lsp.diagnostic.get_count(0, [[Hint]])')
+  let l:error_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.ERROR})')
+  let l:warning_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.WARN})')
+  let l:info_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.INFO})')
+  let l:hint_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.HINT})')
 
   if l:error_count > 0
     highlight StatusLineLinter ctermbg=1
