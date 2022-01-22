@@ -3,5 +3,5 @@ Type=Application
 Name=Osu!
 Comment=Rhythm is just a click away
 Categories=Game
-Exec=osu.AppImage
+Exec=env COMPlus_GCGen0MaxBudget=600000 osu.AppImage
 Terminal=false
