@@ -71,9 +71,7 @@ user_linters:
 user_appentries:
 	@echo '>> Application entries <<'
 	mkdir -p ~/.local/share/applications
-	ln -sf $(CURDIR)/settings/app_entry/osu.desktop ~/.local/share/applications/osu.desktop
-	ln -sf $(CURDIR)/settings/app_entry/sxiv.desktop ~/.local/share/applications/sxiv.desktop
-	ln -sf $(CURDIR)/settings/app_entry/anki.desktop ~/.local/share/applications/anki.desktop
+	ln -sf $(CURDIR)/settings/app_entry/*.desktop ~/.local/share/applications
 	@echo
 
 user_scripts:

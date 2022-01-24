@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Osu!
+Name=Osu!Lazer
 Comment=Rhythm is just a click away
 Categories=Game
-Exec=wine $HOME/Packages/Osu/osu!.exe
+Exec=env COMPlus_GCGen0MaxBudget=600000 osu.AppImage
 Terminal=false
