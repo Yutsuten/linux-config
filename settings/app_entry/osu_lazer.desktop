@@ -3,5 +3,5 @@ Type=Application
 Name=Osu!Lazer
 Comment=Rhythm is just a click away
 Categories=Game
-Exec=env COMPlus_GCGen0MaxBudget=600000 osu.AppImage
+Exec=osu.AppImage
 Terminal=false
