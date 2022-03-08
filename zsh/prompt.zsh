@@ -52,6 +52,6 @@ git_prompt() {
 local user_host="%B[%D{%Y/%m/%d %H:%M:%S}] %F{13}%n@%m%b"
 local curdir="%F{14}%~%f"
 
-PROMPT="
+PROMPT="%f
 \$(nnn_prompt)${user_host}:${curdir}\$(git_prompt)%f
 %F{2}%(!.#.$)%{$reset_color%} "
