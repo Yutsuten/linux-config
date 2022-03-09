@@ -49,7 +49,7 @@ git_prompt() {
   echo -n " ${color}(${title}${extra})%f"
 }
 
-local user_host="%B[%D{%Y/%m/%d %H:%M:%S}] %F{13}%n@%m%b"
+local user_host="%B[%D %*] %F{13}%n@%m%b"
 local curdir="%F{14}%~%f"
 
 PROMPT="%f
