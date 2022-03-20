@@ -56,6 +56,9 @@ def restore_wallpaper():
 
     Fallback to a random wallpaper if the last wallpaper is not available.
     '''
+    if not os.path.isfile(HISTORY_PATH):
+        return set_random_wallpaper()
+
     with open(HISTORY_PATH, 'r', encoding='utf-8') as history_file:
         wallpaper = history_file.readline().strip()
     wallpaper_path = os.path.join(DIRECTORY, wallpaper)
