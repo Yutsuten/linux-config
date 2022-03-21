@@ -19,7 +19,6 @@ while getopts ":r" opt; do
 done
 
 killall picom
-i3-msg -q bar mode invisible
 
 if (( RECORD )); then
   ffmpeg -f pulse -thread_queue_size 512 -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor \
@@ -32,5 +31,4 @@ else
   done
 fi
 
-i3-msg -q bar mode dock
 picom --daemon || true
