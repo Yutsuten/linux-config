@@ -1,43 +1,42 @@
 .PHONY: user_all system_all user_environment user_desktop user_apps user_linters user_git user_neovim user_zsh user_appentries user_scripts system_env system_settings systemctl_settings
 
+bold := $(shell tput bold)
+reset := $(shell tput sgr0)
+
 user_all: user_environment user_desktop user_apps user_git user_neovim user_nnn user_zsh user_linters user_appentries user_scripts
-	@echo 'Done!'
+	@echo '${bold}Done!${reset}'
 
 system_all: system_env system_settings systemctl_settings
-	@echo 'Done!'
+	@echo '${bold}Done!${reset}'
 
 
 user_environment:
-	@echo '>> Environment settings <<'
+	@echo '${bold}>> Environment settings <<${reset}'
 	ln -sf $(CURDIR)/settings/environment/pam_environment ~/.pam_environment
-	@echo
 
 user_desktop:
-	@echo '>> Desktop settings <<'
+	@echo '${bold}>> Desktop settings <<${reset}'
 	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst
 	ln -sf $(CURDIR)/settings/desktop/i3.conf ~/.config/i3/config
 	ln -sf $(CURDIR)/settings/desktop/i3status.conf ~/.config/i3status/config
 	ln -sf $(CURDIR)/settings/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/settings/desktop/dunstrc.conf ~/.config/dunst/dunstrc
-	@echo
 
 user_apps:
-	@echo '>> Application settings <<'
+	@echo '${bold}>> Application settings <<${reset}'
 	mkdir -p ~/.config/alacritty
 	ln -sf $(CURDIR)/settings/app/alacritty.yml ~/.config/alacritty/alacritty.yml
 	ln -sf $(CURDIR)/settings/app/mimeapps.list ~/.config/mimeapps.list
-	@echo
 
 user_git:
-	@echo '>> Git settings <<'
+	@echo '${bold}>> Git settings <<${reset}'
 	ln -sf $(CURDIR)/settings/app/gitignore ~/.gitignore
 	git config --global core.excludesfile ~/.gitignore
 	git config --global core.pager 'less -SXF'
 	git config --global core.editor 'nvim'
-	@echo
 
 user_neovim:
-	@echo '>> Neovim settings <<'
+	@echo '${bold}>> Neovim settings <<${reset}'
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
@@ -47,59 +46,51 @@ user_neovim:
 	ln -snf $(CURDIR)/neovim/plugin ~/.local/share/nvim/site/plugin
 	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
 	ln -snf $(CURDIR)/neovim/doc ~/.local/share/nvim/site/doc
-	@echo
 
 user_nnn:
-	@echo 'Nnn plugins'
+	@echo '${bold}>> Nnn plugins <<${reset}'
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
 user_zsh:
-	@echo '>> Zsh settings <<'
+	@echo '${bold}>> Zsh settings <<${reset}'
 	rm -f ~/.zshrc
 	ln -sf $(CURDIR)/zsh/run_commands.zsh ~/.zshrc
-	@echo
 
 user_linters:
-	@echo '>> Linter settings <<'
+	@echo '${bold}>> Linter settings <<${reset}'
 	mkdir -p ~/.config
 	ln -sf $(CURDIR)/settings/linter/flake8.conf ~/.config/flake8
 	ln -sf $(CURDIR)/settings/linter/pylint.conf ~/.config/pylintrc
 	ln -sf $(CURDIR)/settings/linter/jshint.json ~/.jshintrc
-	@echo
 
 user_appentries:
-	@echo '>> Application entries <<'
+	@echo '${bold}>> Application entries <<${reset}'
 	mkdir -p ~/.local/share/applications
 	ln -sf $(CURDIR)/settings/app_entry/*.desktop ~/.local/share/applications
-	@echo
 
 user_scripts:
-	@echo '>> Scripts symbolic links <<'
+	@echo '${bold}>> Scripts symbolic links <<${reset}'
 	mkdir -p ~/.local/bin ~/.task/hooks
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
 	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
 	ln -sf $(CURDIR)/scripts/screenshot.sh ~/.local/bin/screenshot
 	ln -sf $(CURDIR)/scripts/gamemode.sh ~/.local/bin/gamemode
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
-	@echo
 
 system_env:
-	@echo '>> System environment settings <<'
+	@echo '${bold}>> System environment settings <<${reset}'
 	cp -p $(CURDIR)/settings/environment/environment /etc/environment
-	@echo
 
 system_settings:
-	@echo '>> System settings <<'
+	@echo '${bold}>> System settings <<${reset}'
 	cp -p $(CURDIR)/settings/system/slick-greeter.conf /etc/lightdm/slick-greeter.conf
 	cp -p $(CURDIR)/settings/system/lightdm-display-setup.sh /etc/lightdm/lightdm-display-setup.sh
 	cp -p $(CURDIR)/settings/system/wacom-options.conf /etc/X11/xorg.conf.d/72-wacom-options.conf
-	@echo
 
 systemctl_settings:
-	@echo '>> Systemctl settings <<'
+	@echo '${bold}>> Systemctl settings <<${reset}'
 	cp -p $(CURDIR)/settings/systemctl/wallpaper.service /etc/systemd/system/wallpaper.service
 	cp -p $(CURDIR)/settings/systemctl/wallpaper.timer /etc/systemd/system/wallpaper.timer
 	cp -p $(CURDIR)/settings/systemctl/openweather.service /etc/systemd/system/openweather.service
 	cp -p $(CURDIR)/settings/systemctl/openweather.timer /etc/systemd/system/openweather.timer
-	@echo
