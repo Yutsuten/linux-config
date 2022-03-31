@@ -1,4 +1,4 @@
-.PHONY: user_all system_all user_environment user_desktop user_apps user_linters user_git user_neovim user_zsh user_appentries user_scripts system_env system_settings systemctl_settings
+.PHONY: user_all system_all user_environment user_desktop user_apps user_git user_neovim user_nnn user_zsh user_linters user_appentries user_scripts system_env system_settings systemctl_settings
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -8,7 +8,6 @@ user_all: user_environment user_desktop user_apps user_git user_neovim user_nnn 
 
 system_all: system_env system_settings systemctl_settings
 	@echo '${bold}Done!${reset}'
-
 
 user_environment:
 	@echo '${bold}>> Environment settings <<${reset}'
