@@ -16,7 +16,7 @@ git_prompt() {
   else
     local label=$(git for-each-ref --points-at=HEAD --count=1 --format='%(refname:short)' refs/tags 2> /dev/null)
     if [[ -n ${label} ]]; then
-      title="🏷 ${label}"
+      title="!${label}"
     else
       local commit_hash=$(git rev-parse --short HEAD 2> /dev/null) || return
       title="#${commit_hash}"
