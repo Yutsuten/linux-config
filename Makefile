@@ -92,6 +92,7 @@ system_env:
 system_settings:
 	@echo '>> System settings <<'
 	cp -p $(CURDIR)/settings/system/slick-greeter.conf /etc/lightdm/slick-greeter.conf
+	cp -p $(CURDIR)/settings/system/lightdm-display-setup.sh /etc/lightdm/lightdm-display-setup.sh
 	cp -p $(CURDIR)/settings/system/wacom-options.conf /etc/X11/xorg.conf.d/72-wacom-options.conf
 	@echo
 
