@@ -73,9 +73,10 @@ user_scripts:
 	@echo '${bold}>> Scripts symbolic links <<${reset}'
 	mkdir -p ~/.local/bin ~/.task/hooks
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
-	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
-	ln -sf $(CURDIR)/scripts/screenshot.sh ~/.local/bin/screenshot
 	ln -sf $(CURDIR)/scripts/gamemode.sh ~/.local/bin/gamemode
+	ln -sf $(CURDIR)/scripts/nsxiv.sh ~/.local/bin/nsxiv
+	ln -sf $(CURDIR)/scripts/screenshot.sh ~/.local/bin/screenshot
+	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 
 system_env:
