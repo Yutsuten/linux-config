@@ -71,12 +71,13 @@ user_appentries:
 
 user_scripts:
 	@echo '${bold}>> Scripts symbolic links <<${reset}'
-	mkdir -p ~/.local/bin ~/.task/hooks
+	mkdir -p ~/.local/bin ~/.task/hooks ~/.config/sxiv/exec
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
 	ln -sf $(CURDIR)/scripts/gamemode.sh ~/.local/bin/gamemode
 	ln -sf $(CURDIR)/scripts/nsxiv.sh ~/.local/bin/nsxiv
 	ln -sf $(CURDIR)/scripts/screenshot.sh ~/.local/bin/screenshot
 	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
+	ln -sf $(CURDIR)/scripts/sxiv-image-info.sh ~/.config/sxiv/exec/image-info
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 
 system_env:
