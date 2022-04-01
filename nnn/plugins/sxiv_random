@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 
-find . -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' \) -print0 \
-| shuf --zero-terminated \
-| xargs --no-run-if-empty --null sxiv -abf > /dev/null 2>&1 &
+printf 'Open images recursively? (y/N): '
+read -r resp
+
+if [ "${resp}" = "y" ]; then
+  find_option=""
+else
+  find_option="-maxdepth 1"
+fi
+
+find . ${find_option} -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' \) -print0 \
+  | shuf --zero-terminated \
+  | xargs --max-chars=2092210 --exit --no-run-if-empty --null sxiv -abf > /dev/null 2>&1 &
