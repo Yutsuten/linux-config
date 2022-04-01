@@ -26,6 +26,7 @@ user_apps:
 	mkdir -p ~/.config/alacritty
 	ln -sf $(CURDIR)/settings/app/alacritty.yml ~/.config/alacritty/alacritty.yml
 	ln -sf $(CURDIR)/settings/app/mimeapps.list ~/.config/mimeapps.list
+	ln -sf $(CURDIR)/settings/app/Xresources ~/.Xresources
 
 user_git:
 	@echo '${bold}>> Git settings <<${reset}'
