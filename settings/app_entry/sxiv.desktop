@@ -3,6 +3,6 @@ Type=Application
 Name=Sxiv
 Comment=Simple X Image Viewer
 Categories=Graphics
-Exec=nsxiv
+Exec=sxiv -ab
 NoDisplay=true
 Terminal=false

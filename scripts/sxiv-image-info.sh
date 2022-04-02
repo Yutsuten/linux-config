@@ -1,14 +1,13 @@
 #!/bin/sh
-# Called by sxiv(1) whenever an image gets loaded,
-# with the name of the image file as its first argument.
+# Called by sxiv(1) whenever an image gets loaded.
 # The output is displayed in sxiv's status bar.
+# Arguments:
+#   $1: path to image file
+#   $2: image width
+#   $3: image height
 
-s=" | "  # field separator
+filename=$(basename -- "$1")
+filesize=$(du -Hh -- "$1" | cut -f 1)
+geometry="${2}x${3}"
 
-filename=$(basename "$1")
-filesize=$(du -Hh "$1" | cut -f 1)
-
-# The '[0]' stands for the first frame of a multi-frame file, e.g. gif.
-geometry=$(identify -format '%wx%h' "$1[0]")
-
-echo "${filename}${s}${filesize}${s}${geometry}"
+echo "${filename} | ${geometry} | ${filesize}"
