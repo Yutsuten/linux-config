@@ -79,6 +79,7 @@ user_scripts:
 	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
 	ln -sf $(CURDIR)/scripts/sxiv-image-info.sh ~/.config/sxiv/exec/image-info
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
+	xrdb ~/.Xresources
 
 system_env:
 	@echo '${bold}>> System environment settings <<${reset}'
