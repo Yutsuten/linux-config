@@ -10,9 +10,6 @@
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
-[submodule "neovim/pack/nnn.vim"]
-	path = neovim/pack/nnn
-	url = git@github.com:mcchrish/nnn.vim.git
 [submodule "neovim/pack/lspconfig"]
 	path = neovim/pack/lspconfig
 	url = git@github.com:neovim/nvim-lspconfig.git
@@ -28,3 +25,6 @@
 [submodule "neovim/pack/robotframework"]
 	path = neovim/pack/robotframework
 	url = git@github.com:rasjani/robotframework-vim.git
+[submodule "neovim/pack/nnn"]
+	path = neovim/pack/nnn
+	url = git@github.com:luukvbaal/nnn.nvim.git
