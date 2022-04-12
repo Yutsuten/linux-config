@@ -10,7 +10,7 @@ is_img_extension() {
 }
 
 listfiles() {
-  find -L "///${1%/*}" -maxdepth 1 -type f -print |
+  find -L "${1%/*}" -maxdepth 1 -type f -exec basename -- '{}' ';' |
     is_img_extension | sort | tee "$tmp"
 }
 
@@ -18,7 +18,7 @@ open_img() {
   # only go through listfiles() if the file has a valid img extension
   if echo "$1" | is_img_extension >/dev/null 2>&1; then
     trap 'rm -f $tmp' EXIT
-    count="$(listfiles "$1" | grep -nF "$1")"
+    count="$(listfiles "$1" | grep -nF "$(basename -- "$1")")"
   fi
   if [ -n "$count" ]; then
     sxiv -ain "${count%%:*}" -- < "$tmp"
