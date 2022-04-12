@@ -21,7 +21,7 @@ open_img() {
     count="$(listfiles "$1" | grep -nF "$1")"
   fi
   if [ -n "$count" ]; then
-    sxiv -abin "${count%%:*}" -- < "$tmp"
+    sxiv -ain "${count%%:*}" -- < "$tmp"
   else
     # fallback incase file didn't have a valid extension, or we couldn't
     # find it inside the list

@@ -7,7 +7,7 @@
 #   $3: image height
 
 filename=$(basename -- "$1")
-filesize=$(du -Hh -- "$1" | cut -f 1)
+filesize=$(du -Hh --apparent-size -- "$1" | cut -f 1)
 geometry="${2}x${3}"
 
 echo "${filename} | ${geometry} | ${filesize}"
