@@ -1,7 +1,8 @@
 require('nnn').setup({
   picker = {
     style = { border = 'double' },
-  }
+  },
+  replace_netrw = 'picker'
 })
 
 local opts = { noremap=true, silent=true }
