@@ -48,9 +48,7 @@ def main():
         f'💧{weather["main"]["humidity"]}%',
     ]
 
-    with open('/tmp/weather', 'w', encoding='utf-8') as weather_file:
-        weather_file.write('  '.join(weather_status))
-
+    print('  '.join(weather_status))
     return 0
 
 

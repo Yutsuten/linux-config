@@ -15,9 +15,9 @@ user_environment:
 
 user_desktop:
 	@echo '${bold}>> Desktop settings <<${reset}'
-	mkdir -p ~/.config/i3 ~/.config/i3status ~/.config/picom ~/.config/dunst
+	mkdir -p ~/.config/i3 ~/.config/i3blocks ~/.config/picom ~/.config/dunst
 	ln -sf $(CURDIR)/settings/desktop/i3.conf ~/.config/i3/config
-	ln -sf $(CURDIR)/settings/desktop/i3status.conf ~/.config/i3status/config
+	ln -sf $(CURDIR)/settings/desktop/i3blocks.conf ~/.config/i3blocks/config
 	ln -sf $(CURDIR)/settings/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/settings/desktop/dunstrc.conf ~/.config/dunst/dunstrc
 
@@ -81,10 +81,6 @@ user_scripts:
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 	xrdb ~/.Xresources
 
-system_env:
-	@echo '${bold}>> System environment settings <<${reset}'
-	cp -p $(CURDIR)/settings/environment/environment /etc/environment
-
 system_settings:
 	@echo '${bold}>> System settings <<${reset}'
 	cp -p $(CURDIR)/settings/system/slick-greeter.conf /etc/lightdm/slick-greeter.conf
@@ -97,3 +93,8 @@ systemctl_settings:
 	cp -p $(CURDIR)/settings/systemctl/wallpaper.timer /etc/systemd/system/wallpaper.timer
 	cp -p $(CURDIR)/settings/systemctl/openweather.service /etc/systemd/system/openweather.service
 	cp -p $(CURDIR)/settings/systemctl/openweather.timer /etc/systemd/system/openweather.timer
+
+system_env:
+	@echo '${bold}>> System environment settings <<${reset}'
+	@echo 'Copy the contents below into /etc/environment'
+	@cat $(CURDIR)/settings/environment/environment
