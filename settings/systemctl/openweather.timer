@@ -1,9 +1,0 @@
-[Unit]
-Description=update weather information periodically
-
-[Timer]
-OnCalendar=*:0/6
-Persistent=true
-
-[Install]
-WantedBy=timers.target

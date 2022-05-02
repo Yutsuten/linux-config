@@ -91,8 +91,6 @@ systemctl_settings:
 	@echo '${bold}>> Systemctl settings <<${reset}'
 	cp -p $(CURDIR)/settings/systemctl/wallpaper.service /etc/systemd/system/wallpaper.service
 	cp -p $(CURDIR)/settings/systemctl/wallpaper.timer /etc/systemd/system/wallpaper.timer
-	cp -p $(CURDIR)/settings/systemctl/openweather.service /etc/systemd/system/openweather.service
-	cp -p $(CURDIR)/settings/systemctl/openweather.timer /etc/systemd/system/openweather.timer
 
 system_env:
 	@echo '${bold}>> System environment settings <<${reset}'
