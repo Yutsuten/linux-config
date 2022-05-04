@@ -8,9 +8,9 @@ set -u
 
 trap 'kill 0' SIGINT
 
-CLOUD_SYNC_DIRS='Documents Pictures Shared Videos'
-LOCAL_SYNC_DIRS='Documents Music Pictures Shared Videos'
-LOCAL_BKP_DIR="${HOME}/Mount"
+CLOUD_SYNC_DIRS='Documents Pictures Videos'
+LOCAL_SYNC_DIRS='Documents Music Pictures Videos'
+LOCAL_BKP_DIR="${HOME}/Mount1"
 
 BACKUP=1
 EXPORT_GPG=1
