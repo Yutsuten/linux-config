@@ -1,24 +1,19 @@
-.PHONY: user_all system_all user_environment user_desktop user_apps user_git user_neovim user_nnn user_zsh user_linters user_appentries user_scripts system_env system_settings systemctl_settings
+.PHONY: user_all system_all user_desktop user_apps user_git user_neovim user_nnn user_fish user_linters user_appentries user_scripts system_env system_settings systemctl_settings
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-user_all: user_environment user_desktop user_apps user_git user_neovim user_nnn user_zsh user_linters user_appentries user_scripts
+user_all: user_desktop user_apps user_git user_neovim user_nnn user_fish user_linters user_appentries user_scripts
 	@echo '${bold}Done!${reset}'
 
 system_all: system_env system_settings systemctl_settings
 	@echo '${bold}Done!${reset}'
 
-user_environment:
-	@echo '${bold}>> Environment settings <<${reset}'
-	ln -sf $(CURDIR)/settings/environment/pam_environment ~/.pam_environment
-
 user_desktop:
 	@echo '${bold}>> Desktop settings <<${reset}'
-	mkdir -p ~/.config/i3 ~/.config/i3blocks ~/.config/picom ~/.config/dunst
-	ln -sf $(CURDIR)/settings/desktop/i3.conf ~/.config/i3/config
+	mkdir -p ~/.config/sway ~/.config/i3blocks ~/.config/picom ~/.config/dunst
+	ln -sf $(CURDIR)/settings/desktop/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/settings/desktop/i3blocks.conf ~/.config/i3blocks/config
-	ln -sf $(CURDIR)/settings/desktop/picom.conf ~/.config/picom/picom.conf
 	ln -sf $(CURDIR)/settings/desktop/dunstrc.conf ~/.config/dunst/dunstrc
 
 user_apps:
@@ -26,7 +21,6 @@ user_apps:
 	mkdir -p ~/.config/alacritty
 	ln -sf $(CURDIR)/settings/app/alacritty.yml ~/.config/alacritty/alacritty.yml
 	ln -sf $(CURDIR)/settings/app/mimeapps.list ~/.config/mimeapps.list
-	ln -sf $(CURDIR)/settings/app/Xresources ~/.Xresources
 
 user_git:
 	@echo '${bold}>> Git settings <<${reset}'
@@ -52,10 +46,10 @@ user_nnn:
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
-user_zsh:
-	@echo '${bold}>> Zsh settings <<${reset}'
-	rm -f ~/.zshrc
-	ln -sf $(CURDIR)/zsh/run_commands.zsh ~/.zshrc
+user_fish:
+	@echo '${bold}>> Fish settings <<${reset}'
+	rm -f ~/.config/fish/config.fish
+	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 
 user_linters:
 	@echo '${bold}>> Linter settings <<${reset}'
@@ -71,15 +65,11 @@ user_appentries:
 
 user_scripts:
 	@echo '${bold}>> Scripts symbolic links <<${reset}'
-	mkdir -p ~/.local/bin ~/.task/hooks ~/.config/sxiv/exec
+	mkdir -p ~/.local/bin ~/.task/hooks
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
-	ln -sf $(CURDIR)/scripts/gamemode.sh ~/.local/bin/gamemode
-	ln -sf $(CURDIR)/scripts/nsxiv.sh ~/.local/bin/nsxiv
 	ln -sf $(CURDIR)/scripts/screenshot.sh ~/.local/bin/screenshot
 	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
-	ln -sf $(CURDIR)/scripts/sxiv-image-info.sh ~/.config/sxiv/exec/image-info
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
-	xrdb ~/.Xresources
 
 system_settings:
 	@echo '${bold}>> System settings <<${reset}'

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 '''
-Set wallpaper using xwallpaper.
+Set wallpaper in sway.
 '''
 
 import argparse
@@ -44,7 +44,10 @@ def set_random_wallpaper():
         history.pop()
 
     elected_path = os.path.join(DIRECTORY, elected)
-    subprocess.run(['xwallpaper', '--zoom', elected_path], check=True)
+    subprocess.run(
+        ['swaymsg', 'output', '*', 'bg', elected_path, 'fill'],
+        check=True
+    )
 
     with open(HISTORY_PATH, 'w', encoding='utf-8') as history_file:
         history_file.write('\n'.join(history))
@@ -66,13 +69,16 @@ def restore_wallpaper():
     if not os.path.isfile(wallpaper_path):
         return set_random_wallpaper()
 
-    subprocess.run(['xwallpaper', '--zoom', wallpaper_path], check=True)
+    subprocess.run(
+        ['swaymsg', 'output', '*', 'bg', wallpaper_path, 'fill'],
+        check=True
+    )
     return 0
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Set wallpaper using xwallpaper.')
+        description='Set wallpaper in sway.')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '--random', action='store_true',

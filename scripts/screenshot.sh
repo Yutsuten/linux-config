@@ -1,24 +1,29 @@
 #!/bin/bash
-# --------------------------------- #
-# Take screenshot using ImageMagick #
-# --------------------------------- #
+# ------------------------ #
+# Take screenshot in sway. #
+# ------------------------ #
 
 set -e
 set -u
 
 SCREENSHOT_DIR="${HOME}/Pictures/Screenshots"
-IMG_NAME="Screenshot_$(date '+%Y-%m-%d_%H-%M-%S-%N' | cut -b -23).png"
+IMG_NAME="$(date '+%Y%m%d-%H%M%S%N' | cut -b -18)_grim.png"
 
 case $1 in
   --full)
-    import -window root "${SCREENSHOT_DIR}/${IMG_NAME}"
+    grim "${SCREENSHOT_DIR}/${IMG_NAME}"
     ;;
   --active)
-    WIN_ID="$(xprop -root _NET_ACTIVE_WINDOW | cut -d ' ' -f 5)"
-    import -window "${WIN_ID}" "${SCREENSHOT_DIR}/${IMG_NAME}"
+    FOCUSED=$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?, .floating_nodes[]?) | select(.focused)')
+    GEOM=$(echo "$FOCUSED" | jq -r '.rect | "\(.x),\(.y) \(.width)x\(.height)"')
+    grim -g "${GEOM}" "${SCREENSHOT_DIR}/${IMG_NAME}"
     ;;
   --select)
-    import "${SCREENSHOT_DIR}/${IMG_NAME}"
+    GEOM=$(slurp)
+    if [[ -z "${GEOM}" ]]; then
+      exit 1
+    fi
+    grim -g "${GEOM}" "${SCREENSHOT_DIR}/${IMG_NAME}"
     ;;
   *)
     printf "Invalid option.\n" >&2
