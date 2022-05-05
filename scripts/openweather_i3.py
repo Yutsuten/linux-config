@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 """
-Get current weather information from OpenWeather API and integrate with
-i3status.
+Get weather information from OpenWeather API and integrate with i3blocks.
 """
 
+import json
 import os
 import sys
 import time
@@ -25,13 +25,25 @@ def main():
         sys.stderr.write(msg.format(','.join(missing_vars)))
         return 1
 
-    weather = get_current_weather(
-        os.environ['OPEN_WEATHER_KEY'],
-        os.environ['OPEN_WEATHER_LAT'],
-        os.environ['OPEN_WEATHER_LON'],
-    )
-
+    use_cache = False
     now = time.time()
+
+    if os.path.isfile('/tmp/openweather'):
+        with open('/tmp/openweather', 'r', encoding='utf-8') as openweather:
+            weather = json.loads(openweather.read())
+        if weather['timestamp'] + 600 > now:
+            use_cache = True
+
+    if not use_cache:
+        weather = get_current_weather(
+            os.environ['OPEN_WEATHER_KEY'],
+            os.environ['OPEN_WEATHER_LAT'],
+            os.environ['OPEN_WEATHER_LON'],
+        )
+        weather['timestamp'] = now
+        with open('/tmp/openweather', 'w', encoding='utf-8') as openweather:
+            openweather.write(json.dumps(weather))
+
     sunrise = weather['sys']['sunrise']
     sunset = weather['sys']['sunset']
     twilight = 1200
@@ -48,7 +60,7 @@ def main():
         f'💧{weather["main"]["humidity"]}%',
     ]
 
-    print('  '.join(weather_status))
+    print(' '.join(weather_status))
     return 0
 
 
