@@ -4,6 +4,7 @@ Description=change wallpaper periodically
 [Timer]
 OnStartupSec=2h
 OnUnitActiveSec=3h
+Unit=wallpaper.service
 
 [Install]
 WantedBy=timers.target

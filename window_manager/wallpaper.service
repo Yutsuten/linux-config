@@ -2,7 +2,7 @@
 Description=set random wallpaper
 
 [Service]
-Type=oneshot
-User=mateus
-Environment=DISPLAY=:0
 ExecStart=/home/mateus/.local/bin/wallpaper --random
+
+[Install]
+WantedBy=multi-user.target
