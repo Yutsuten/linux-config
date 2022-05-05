@@ -1,5 +1,6 @@
 if status is-interactive
-    # Commands to run in interactive sessions can go here
-    set -U fish_user_paths ~/.local/bin ~/.yarn/bin
-    set -g GPG_TTY $(tty)
+  set -U fish_user_paths ~/.local/bin ~/.yarn/bin
+  set -gx GPG_TTY $(tty)
+  set -gx NNN_OPTS eoxr
+  set -gx NNN_PLUG 'd:dragdrop;i:img_shuffle'
 end

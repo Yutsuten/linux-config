@@ -21,6 +21,7 @@ fish:
 	@echo '${bold}>> Fish settings <<${reset}'
 	rm -f ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
+	ln -sf $(CURDIR)/fish/sway.fish ~/.config/fish/conf.d/sway.fish
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'

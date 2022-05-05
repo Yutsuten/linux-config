@@ -12,7 +12,4 @@ PAGER="less -P?n -R"
 VISUAL=nvim
 EDITOR=nvim
 
-NNN_OPTS=eoxr
-NNN_PLUG=d:dragdrop;s:sxiv_random
-
 WINEDEBUG=fixme-all
