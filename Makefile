@@ -1,20 +1,19 @@
-.PHONY: user_all system_all user_desktop user_apps user_git user_neovim user_nnn user_fish user_linters user_appentries user_scripts system_env system_settings systemctl_settings
+.PHONY: wm user_apps git neovim nnn fish linters appentries scripts environment
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-user_all: user_desktop user_apps user_git user_neovim user_nnn user_fish user_linters user_appentries user_scripts
+all: wm user_apps git neovim nnn fish linters appentries scripts environment
 	@echo '${bold}Done!${reset}'
 
-system_all: system_env system_settings systemctl_settings
-	@echo '${bold}Done!${reset}'
-
-user_desktop:
-	@echo '${bold}>> Desktop settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/i3blocks ~/.config/picom ~/.config/dunst
-	ln -sf $(CURDIR)/settings/desktop/sway.conf ~/.config/sway/config
-	ln -sf $(CURDIR)/settings/desktop/i3blocks.conf ~/.config/i3blocks/config
-	ln -sf $(CURDIR)/settings/desktop/dunstrc.conf ~/.config/dunst/dunstrc
+wm:
+	@echo '${bold}>> Window manager settings <<${reset}'
+	mkdir -p ~/.config/sway ~/.config/i3blocks ~/.config/dunst ~/.config/systemd/user
+	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
+	ln -sf $(CURDIR)/window_manager/i3blocks.conf ~/.config/i3blocks/config
+	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
+	ln -sf $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
+	ln -sf $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 
 user_apps:
 	@echo '${bold}>> Application settings <<${reset}'
@@ -22,14 +21,14 @@ user_apps:
 	ln -sf $(CURDIR)/settings/app/alacritty.yml ~/.config/alacritty/alacritty.yml
 	ln -sf $(CURDIR)/settings/app/mimeapps.list ~/.config/mimeapps.list
 
-user_git:
+git:
 	@echo '${bold}>> Git settings <<${reset}'
 	ln -sf $(CURDIR)/settings/app/gitignore ~/.gitignore
 	git config --global core.excludesfile ~/.gitignore
 	git config --global core.pager 'less -SXF'
 	git config --global core.editor 'nvim'
 
-user_neovim:
+neovim:
 	@echo '${bold}>> Neovim settings <<${reset}'
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.local/share/nvim/site/*
@@ -41,29 +40,29 @@ user_neovim:
 	ln -snf $(CURDIR)/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
 	ln -snf $(CURDIR)/neovim/doc ~/.local/share/nvim/site/doc
 
-user_nnn:
+nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
-user_fish:
+fish:
 	@echo '${bold}>> Fish settings <<${reset}'
 	rm -f ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 
-user_linters:
+linters:
 	@echo '${bold}>> Linter settings <<${reset}'
 	mkdir -p ~/.config
 	ln -sf $(CURDIR)/settings/linter/flake8.conf ~/.config/flake8
 	ln -sf $(CURDIR)/settings/linter/pylint.conf ~/.config/pylintrc
 	ln -sf $(CURDIR)/settings/linter/jshint.json ~/.jshintrc
 
-user_appentries:
+appentries:
 	@echo '${bold}>> Application entries <<${reset}'
 	mkdir -p ~/.local/share/applications
 	ln -sf $(CURDIR)/settings/app_entry/*.desktop ~/.local/share/applications
 
-user_scripts:
+scripts:
 	@echo '${bold}>> Scripts symbolic links <<${reset}'
 	mkdir -p ~/.local/bin ~/.task/hooks
 	ln -sf $(CURDIR)/scripts/bkp_tool.sh ~/.local/bin/bkp_tool
@@ -71,18 +70,7 @@ user_scripts:
 	ln -sf $(CURDIR)/scripts/wallpaper.py ~/.local/bin/wallpaper
 	ln -sf $(CURDIR)/scripts/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 
-system_settings:
-	@echo '${bold}>> System settings <<${reset}'
-	cp -p $(CURDIR)/settings/system/slick-greeter.conf /etc/lightdm/slick-greeter.conf
-	cp -p $(CURDIR)/settings/system/lightdm-display-setup.sh /etc/lightdm/lightdm-display-setup.sh
-	cp -p $(CURDIR)/settings/system/wacom-options.conf /etc/X11/xorg.conf.d/72-wacom-options.conf
-
-systemctl_settings:
-	@echo '${bold}>> Systemctl settings <<${reset}'
-	cp -p $(CURDIR)/settings/systemctl/wallpaper.service /etc/systemd/system/wallpaper.service
-	cp -p $(CURDIR)/settings/systemctl/wallpaper.timer /etc/systemd/system/wallpaper.timer
-
-system_env:
-	@echo '${bold}>> System environment settings <<${reset}'
-	@echo 'Copy the contents below into /etc/environment'
+environment:
+	@echo '${bold}>> System environment <<${reset}'
+	@echo 'Append the contents below into /etc/environment'
 	@cat $(CURDIR)/settings/environment/environment
