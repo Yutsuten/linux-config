@@ -1,10 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/sh
 
 printf 'Open images recursively? (y/N): '
 read -r resp
 
 if [ "${resp}" = "y" ]; then
-  vimiv --shuffle --recursive > /dev/null 2>&1 &
+  find . -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' \) -print0 | \
+    xargs --max-chars=2092210 --exit --no-run-if-empty --null vimiv -s shuffle true > /dev/null 2>&1 &
 else
-  vimiv --shuffle ./* > /dev/null 2>&1 &
+  vimiv -s shuffle true ./* > /dev/null 2>&1 &
 fi
