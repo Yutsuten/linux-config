@@ -65,6 +65,7 @@ wm:
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/window_manager/i3blocks.conf ~/.config/i3blocks/config
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
+	ln -sf $(CURDIR)/window_manager/gtk3.ini ~/.config/gtk-3.0/settings.ini
 	ln -sf $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	ln -sf $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	ln -sf $(CURDIR)/window_manager/scripts/openweather.py ~/.local/bin/openweather
