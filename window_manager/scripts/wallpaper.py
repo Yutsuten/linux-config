@@ -43,14 +43,17 @@ def set_random_wallpaper():
     if len(history) > len(wallpaper_list) / 2 + 1:
         history.pop()
 
-    elected_path = os.path.join(DIRECTORY, elected)
-    subprocess.run(
-        ['swaymsg', 'output', '*', 'bg', elected_path, 'fill'],
-        check=True
-    )
-
     with open(HISTORY_PATH, 'w', encoding='utf-8') as history_file:
         history_file.write('\n'.join(history))
+
+    elected_path = os.path.join(DIRECTORY, elected)
+    try:
+        subprocess.run(
+            ['swaymsg', 'output', '*', 'bg', elected_path, 'fill'],
+            check=True
+        )
+    except subprocess.CalledProcessError:
+        print('Failed to apply wallpaper. Sway is not running.')
     return 0
 
 
