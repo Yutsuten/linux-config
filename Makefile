@@ -22,6 +22,7 @@ fish:
 	rm -f ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/prompt.fish ~/.config/fish/functions/fish_prompt.fish
+	ln -sf $(CURDIR)/fish/aurupdate.fish ~/.config/fish/functions/aurupdate.fish
 	ln -sf $(CURDIR)/fish/sway.fish ~/.config/fish/conf.d/sway.fish
 
 git:
