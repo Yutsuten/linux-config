@@ -34,3 +34,6 @@ colors:
 
 window:
   opacity: 0.9
+
+key_bindings:
+  - {key: Return, mods: Control, action: CreateNewWindow}
