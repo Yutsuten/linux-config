@@ -66,7 +66,8 @@ wm:
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/window_manager/i3blocks.conf ~/.config/i3blocks/config
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
-	ln -sf $(CURDIR)/window_manager/gtk3.ini ~/.config/gtk-3.0/settings.ini
+	ln -sf $(CURDIR)/window_manager/gtk/gtk2.ini ~/.gtkrc-2.0
+	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
 	ln -sf $(CURDIR)/window_manager/scripts/openweather.py ~/.local/bin/openweather
 	ln -sf $(CURDIR)/window_manager/scripts/screenshot.sh ~/.local/bin/screenshot
 	ln -sf $(CURDIR)/window_manager/scripts/wallpaper.py ~/.local/bin/wallpaper
