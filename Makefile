@@ -62,7 +62,7 @@ taskwarrior:
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/i3blocks ~/.config/dunst ~/.config/systemd/user ~/.local/bin
+	mkdir -p ~/.config/sway ~/.config/i3blocks ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.local/bin
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/window_manager/i3blocks.conf ~/.config/i3blocks/config
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
