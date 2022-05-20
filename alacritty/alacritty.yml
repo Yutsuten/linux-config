@@ -36,4 +36,7 @@ window:
   opacity: 0.9
 
 key_bindings:
-  - {key: Return, mods: Control, action: CreateNewWindow}
+  - { key: Return, mods: Control,                   action: CreateNewWindow }
+  - { key: 53,     mods: Shift,   mode: Vi|~Search, action: SearchBackward  }  # ?
+  - { key: 5,      mods: Shift,   mode: Vi|~Search, action: Last            }  # $
+  - { key: 6,      mods: Shift,   mode: Vi|~Search, action: Bracket         }  # %
