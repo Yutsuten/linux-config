@@ -27,7 +27,7 @@ function s:UpdateStatusLine()
     return
   endif
 
-  let l:statusline  = "%0* %<%{expand('%:t')} %m %h"
+  let l:statusline  = "%0* %<%{pathshorten(fnamemodify(expand('%'), ':~:.'))} %m %h"
   let l:statusline .= '%='
   if s:show_file_info
     let l:statusline .= '%y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
