@@ -23,8 +23,8 @@ command -nargs=1 Indent call s:SetIndent(<f-args>)
 command -nargs=0 ToggleIndent call s:ToggleIndent()
 
 " Shortcuts
-nnoremap <leader>r :Make<CR>
 nnoremap <leader>i :ToggleIndent<CR>
+nnoremap <leader>r :Make<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 
 noremap <leader>c/ :s/\v^(\s*)(.+)/\1\/\/ \2/<CR>

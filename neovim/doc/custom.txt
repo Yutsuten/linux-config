@@ -1,0 +1,50 @@
+custom.txt
+
+*custom*
+
+===============================================================
+
+*custom-commands*
+
+Custom commands:
+
+`:Indent`             Set custom indent
+`:Make`               Run `make` in the background
+`:MakeLog`            Open the log of the last `:Make`
+`:Pydoc`              Pydoc search word under cursor
+`:ToggleFileInfo`     Toggle file information from the statusline
+`:ToggleIndent`       Toggle 2-4 spaces indent
+
+===============================================================
+
+*custom-shortcuts*
+
+Commenting code:
+
+<leader>c/          Comment code using //
+<leader>c#          Comment code using #
+<leader>c"          Comment code using "
+<leader>c-          Comment code using --
+<leader>u/          Uncomment // code
+<leader>u#          Uncomment # code
+<leader>u"          Uncomment " code
+<leader>u-          Uncomment -- code
+
+Diagnostics:
+
+[d                  Move to the previous diagnostic
+]d                  Move to the next diagnostic
+<space>D            Jumps to the declaration of the symbol under the cursor
+<space>d            Jumps to the definition of the symbol under the cursor
+<space>r            Lists all the references to the symbol under the cursor in the quickfix window
+<space>e            Show diagnostics in a floating window
+<space>k            Displays hover information about the symbol under the cursor in a floating window
+
+Utils:
+
+<leader>i           Toggle 2-4 spaces indent
+<leader>r           Run `:Make`
+<leader>t           Rename current tab
+<leader>%           Copy current directory into the clipboard
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
