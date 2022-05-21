@@ -48,6 +48,8 @@ if [[ ${BACKUP} = 1 ]]; then
         echo "[Local sync] Syncing ${dir}"
         rsync --archive --update --delete --exclude 'gamemode*.mp4' "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
       done
+      echo '[Local sync] Backup osu!stable'
+      tar -czf "${LOCAL_BKP_DIR}/osu-stable.tgz" /usr/local/games/osu
       echo '[Local sync] Finish'
     } &
   fi
