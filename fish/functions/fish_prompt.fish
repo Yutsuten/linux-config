@@ -26,8 +26,9 @@ function fish_prompt --description 'Write out the prompt'
     set -l status_color (set_color $fish_color_status)
     set -l statusb_color (set_color $bold_flag $fish_color_status)
     set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
+    set -l nnn_shell (set -q nnn && echo -n -s (set_color magenta) '[nnn] ')
 
-    echo -n -s \n (set_color --bold) (date '+[%Y-%m-%d %H:%M:%S]') ' ' (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal ' ' $prompt_status \n $suffix " "
+    echo -n -s \n (set_color --bold) (date '+[%Y-%m-%d %H:%M:%S]') ' ' (prompt_login) ' ' $nnn_shell (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal ' ' $prompt_status \n $suffix " "
 end
 
 function prompt_login --description 'display user name for the prompt'
