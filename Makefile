@@ -58,7 +58,7 @@ nnn:
 taskwarrior:
 	@echo '${bold}>> Scripts symbolic links <<${reset}'
 	mkdir -p ~/.task/hooks
-	ln -sf $(CURDIR)/taskwarrior/tw-fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
+	ln -sf $(CURDIR)/taskwarrior/fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
