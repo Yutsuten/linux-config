@@ -1,7 +1,9 @@
 # linux-config
 
 Configure my linux environment.
-This configures some tools like Git, Neovim and Zsh.
+This configures some tools like Git, Neovim and Fish.
+
+It uses Sway as Window Manager.
 
 ## Usage
 
@@ -14,8 +16,7 @@ git clone --recurse-submodules git@github.com:Yutsuten/linux-config.git ~/.linux
 Apply the configuration:
 
 ```shell
-make user_all
-sudo make system_all
+make
 ```
 
 Install the language servers and linters for neovim and its done!
