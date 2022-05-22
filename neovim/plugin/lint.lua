@@ -1,5 +1,5 @@
 require('lint').linters_by_ft = {
-  javascript = {'eslint', 'jshint'},
+  javascript = {'eslint'},
   python = {'pylint'},
   robot = {'robocop'},
   sh = {'shellcheck'},

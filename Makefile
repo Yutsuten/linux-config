@@ -35,7 +35,6 @@ linters:
 	mkdir -p ~/.config
 	ln -sf $(CURDIR)/linters/flake8.conf ~/.config/flake8
 	ln -sf $(CURDIR)/linters/pylint.conf ~/.config/pylintrc
-	ln -sf $(CURDIR)/linters/jshint.json ~/.jshintrc
 
 neovim:
 	@echo '${bold}>> Neovim settings <<${reset}'
