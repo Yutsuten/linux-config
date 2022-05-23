@@ -1,22 +1,18 @@
 function aurupdate --description 'Update AUR packages'
-    cd "$HOME/Packages/aur"
-    set -l count $(ls -1 | wc -l)
+    set -l count $(ls -1 ~/.local/aur | wc -l)
     set -l cur 1
-    for package in *
-        cd "$package"
-
+    for aur_dir in ~/.local/aur/*
         set_color white
-        echo "[$cur/$count] Update $package"
+        echo "[$cur/$count] Update $(basename "$aur_dir")"
         echo '> git pull'
         set_color normal
-        git pull
+        git -C "$aur_dir" pull
 
         set_color white
         echo '> makepkg'
         set_color normal
-        makepkg -sic --needed --nocolor
+        fish -c "cd $aur_dir && makepkg -sic --needed --nocolor"
 
         set -l cur $(math $cur + 1)
-        cd ..
     end
 end
