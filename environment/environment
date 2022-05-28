@@ -12,5 +12,6 @@ ANKI_WAYLAND=1
 PAGER="less -P?n -R"
 VISUAL=nvim
 EDITOR=nvim
+BROWSER=firefox
 
 WINEDEBUG=fixme-all
