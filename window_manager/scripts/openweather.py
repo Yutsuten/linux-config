@@ -57,7 +57,6 @@ def main():
         weather_status = ['🌙']
     weather_status += [
         f'{round(weather["main"]["temp"])}°C',
-        f'💧{weather["main"]["humidity"]}%',
     ]
 
     print(' '.join(weather_status))
