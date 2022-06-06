@@ -18,9 +18,9 @@ vim.api.nvim_set_keymap('n', '<space>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opt
 
 -- diagnostics signs
 local signs = {
-  Error = '✗',
-  Warn = '‼',
-  Info = '𝒾',
+  Error = '●',
+  Warn = '●',
+  Info = '●',
   Hint = '●',
 }
 
@@ -33,7 +33,7 @@ vim.cmd [[
   highlight DiagnosticSignError ctermfg=1 ctermbg=0
   highlight DiagnosticSignWarn ctermfg=3 ctermbg=0
   highlight DiagnosticSignInfo ctermfg=4 ctermbg=0
-  highlight DiagnosticSignHint ctermfg=2 ctermbg=0
+  highlight DiagnosticSignHint ctermfg=13 ctermbg=0
 ]]
 
 -- diagnostics virtual text
