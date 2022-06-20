@@ -3,5 +3,5 @@ Type=Application
 Name=Anki
 Comment=Helps you remember facts (like words/phrases in a foreign language) efficiently
 Categories=Education
-Exec=env QTWEBENGINE_CHROMIUM_FLAGS=--no-sandbox anki -p Mateus
+Exec=env DISABLE_QT5_COMPAT=1 anki -p Mateus
 Terminal=false
