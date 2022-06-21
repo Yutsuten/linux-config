@@ -19,10 +19,12 @@ environment:
 
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
-	rm -rf ~/.config/fish/config.fish ~/.config/fish/functions
+	rm -rf ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/sway.fish ~/.config/fish/conf.d/sway.fish
-	ln -sf $(CURDIR)/fish/functions ~/.config/fish/functions
+	ln -sf $(CURDIR)/fish/functions/aurupdate.fish ~/.config/fish/functions/aurupdate.fish
+	ln -sf $(CURDIR)/fish/functions/fish_prompt.fish ~/.config/fish/functions/fish_prompt.fish
+	ln -sf $(CURDIR)/fish/functions/ll.fish ~/.config/fish/functions/ll.fish
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
