@@ -2,6 +2,14 @@
 require('lspconfig').pylsp.setup{
   settings = {pylsp = {configurationSources = {'flake8'}}}
 }
+require('lspconfig').robotframework_ls.setup{
+  settings = {
+    robot = {
+      variables = {execdir = ''}
+    },
+    lint = {robocop = {enabled = true}}
+  }
+}
 
 -- omnifunc
 vim.api.nvim_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
