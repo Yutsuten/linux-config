@@ -63,9 +63,10 @@ taskwarrior:
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/i3blocks ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.local/bin
+	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.local/bin
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
-	ln -sf $(CURDIR)/window_manager/i3blocks.conf ~/.config/i3blocks/config
+	ln -sf $(CURDIR)/window_manager/waybar/config.json ~/.config/waybar/config
+	ln -sf $(CURDIR)/window_manager/waybar/style.css ~/.config/waybar/style.css
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
 	ln -sf $(CURDIR)/window_manager/gtk/gtk2.ini ~/.gtkrc-2.0
 	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini

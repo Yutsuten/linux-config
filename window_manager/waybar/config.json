@@ -1,0 +1,59 @@
+{
+    "layer": "top",
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["custom/weather", "clock"],
+    "modules-right": ["pulseaudio", "memory", "memory#swap", "cpu", "temperature", "sway/language", "tray"],
+    "clock": {
+        "interval": 1,
+        "format": "{:%Y年%m月%d日 (%a)  %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y年 %B}</big>\n<tt>{calendar}</tt>",
+        "today-format": "<span background='#5294e2'><b>{}</b></span>",
+        "format-calendar-weekdays": "<u><b>{}</b></u>"
+    },
+    "custom/weather": {
+        "exec": "openweather",
+        "interval": 1800
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "memory": {
+        "format": " {used:0.1f}G / {total:0.1f}G",
+        "tooltip": false
+    },
+    "memory#swap": {
+        "format": " {swapUsed:0.1f}G / {swapTotal:0.1f}G",
+        "tooltip": false
+    },
+    "cpu": {
+        "format": " {load:0.2f}"
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["", "", ""],
+        "tooltip": false
+    },
+    "sway/language": {
+        "tooltip": false
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+}

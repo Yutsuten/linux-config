@@ -1,0 +1,65 @@
+* {
+    font-family: "FontAwesome", "Noto Sans CJK JP";
+    font-size: 15px;
+}
+
+tooltip label {
+    font-size: 16px;
+}
+
+window#waybar {
+    background: alpha(@theme_base_color, 0.85);
+    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    color: @theme_text_color;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces button {
+    padding: 3px 8px;
+    background-color: transparent;
+    color: @theme_text_color;
+    box-shadow: inset 0 -3px transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#workspaces button.focused {
+    background-color: #5294e2;
+    box-shadow: inset 0 -3px #3274c2;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#custom-weather,
+#clock,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#tray,
+#language,
+#mode {
+    padding: 0 12px;
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+#mode {
+    background-color: #5294e2;
+    box-shadow: inset 0 -3px #3274c2;
+}
