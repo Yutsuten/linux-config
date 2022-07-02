@@ -8,7 +8,7 @@ tooltip label {
 }
 
 window#waybar {
-    background: alpha(@theme_base_color, 0.85);
+    background: alpha(@theme_base_color, 0.9);
     border-bottom: 3px solid rgba(100, 114, 125, 0.5);
     color: @theme_text_color;
     transition-property: background-color;
