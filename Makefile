@@ -63,16 +63,16 @@ taskwarrior:
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.local/bin
+	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/window_manager/waybar/config.json ~/.config/waybar/config
 	ln -sf $(CURDIR)/window_manager/waybar/style.css ~/.config/waybar/style.css
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
 	ln -sf $(CURDIR)/window_manager/gtk/gtk2.ini ~/.gtkrc-2.0
 	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
-	ln -sf $(CURDIR)/window_manager/scripts/openweather.py ~/.local/bin/openweather
-	ln -sf $(CURDIR)/window_manager/scripts/screenshot.sh ~/.local/bin/screenshot
-	ln -sf $(CURDIR)/window_manager/scripts/wallpaper.py ~/.local/bin/wallpaper
 	ln -sf $(CURDIR)/window_manager/launchers/*.desktop ~/.local/share/applications
 	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
+	sudo cp -af $(CURDIR)/window_manager/scripts/screenshot.sh /usr/local/bin/screenshot
+	sudo cp -af $(CURDIR)/window_manager/scripts/openweather.py /usr/local/bin/openweather
+	sudo cp -af $(CURDIR)/window_manager/scripts/wallpaper.py /usr/local/bin/wallpaper
