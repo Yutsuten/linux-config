@@ -2,7 +2,7 @@
 Description=set random wallpaper
 
 [Service]
-ExecStart=/home/mateus/.local/bin/wallpaper --random
+ExecStart=/usr/local/bin/wallpaper --random
 
 [Install]
 WantedBy=multi-user.target

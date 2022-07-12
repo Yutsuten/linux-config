@@ -73,6 +73,8 @@ wm:
 	ln -sf $(CURDIR)/window_manager/launchers/*.desktop ~/.local/share/applications
 	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
-	sudo cp -af $(CURDIR)/window_manager/scripts/screenshot.sh /usr/local/bin/screenshot
-	sudo cp -af $(CURDIR)/window_manager/scripts/openweather.py /usr/local/bin/openweather
-	sudo cp -af $(CURDIR)/window_manager/scripts/wallpaper.py /usr/local/bin/wallpaper
+
+wm_system:
+	cp -af $(CURDIR)/window_manager/scripts/screenshot.sh /usr/local/bin/screenshot
+	cp -af $(CURDIR)/window_manager/scripts/openweather.py /usr/local/bin/openweather
+	cp -af $(CURDIR)/window_manager/scripts/wallpaper.py /usr/local/bin/wallpaper
