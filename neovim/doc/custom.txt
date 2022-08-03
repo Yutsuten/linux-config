@@ -8,12 +8,11 @@ custom.txt
 
 Custom commands:
 
-`:Indent`             Set custom indent
+`:Indent`             Set [1] indent size and [2:opt] type ([s]pace/[t]ab)
 `:Make`               Run `make` in the background
 `:MakeLog`            Open the log of the last `:Make`
 `:Pydoc`              Pydoc search word under cursor
 `:ToggleFileInfo`     Toggle file information from the statusline
-`:ToggleIndent`       Toggle 2-4 spaces indent
 
 ===============================================================
 
@@ -42,7 +41,6 @@ Diagnostics:
 
 Utils:
 
-<leader>i           Toggle 2-4 spaces indent
 <leader>r           Run `:Make`
 <leader>t           Rename current tab
 <leader>%           Copy current directory into the clipboard
