@@ -31,7 +31,7 @@ def main():
     if os.path.isfile('/tmp/openweather'):
         with open('/tmp/openweather', 'r', encoding='utf-8') as openweather:
             weather = json.loads(openweather.read())
-        if weather['timestamp'] + 600 > now:
+        if now < weather['timestamp'] + 900:
             use_cache = True
 
     if not use_cache:
@@ -44,22 +44,28 @@ def main():
         with open('/tmp/openweather', 'w', encoding='utf-8') as openweather:
             openweather.write(json.dumps(weather))
 
-    sunrise = weather['sys']['sunrise']
-    sunset = weather['sys']['sunset']
-    twilight = 1200
-    if sunrise - twilight <= now <= sunrise + twilight:
-        weather_status = ['🌅']
-    elif sunset - twilight <= now <= sunset + twilight:
-        weather_status = ['🌇']
-    elif sunrise <= now <= sunset:
-        weather_status = ['☀️']
-    else:
-        weather_status = ['🌙']
-    weather_status += [
-        f'{round(weather["main"]["temp"])}°C',
-    ]
+    # https://openweathermap.org/weather-conditions
+    icon_map = {
+        '01d': '☀️', '01n': '🌙',
+        '02d': '⛅️', '02n': '⛅',
+        '03d': '☁️', '03n': '☁️',
+        '04d': '☁️', '04n': '☁️',
+        '09d': '🌧️', '09n': '🌧️',
+        '10d': '🌦️', '10n': '🌦️',
+        '11d': '⛈️', '11n': '⛈️',
+        '13d': '❄️', '13n': '❄️',
+        '50d': '🌫', '50n': '🌫',
+    }
 
-    print(' '.join(weather_status))
+    icon = icon_map[weather['weather'][0]['icon']]
+    temperature = f'{round(weather["main"]["temp"])}°C'
+    humidity = f'💧{weather["main"]["humidity"]}%'
+    wind_speed = f'🎏 {weather["wind"]["speed"]}m/s'
+
+    print(json.dumps({
+        'text': f'{icon} {temperature}',
+        'tooltip': f'{humidity}  {wind_speed}',
+    }))
     return 0
 
 
