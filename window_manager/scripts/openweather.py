@@ -61,10 +61,11 @@ def main():
     temperature = f'{round(weather["main"]["temp"])}°C'
     humidity = f'💧{weather["main"]["humidity"]}%'
     wind_speed = f'🎏 {weather["wind"]["speed"]}m/s'
+    clouds = f'☁️ {weather["clouds"]["all"]}%'
 
     print(json.dumps({
         'text': f'{icon} {temperature}',
-        'tooltip': f'{humidity}  {wind_speed}',
+        'tooltip': f'{humidity}  {clouds}  {wind_speed}',
     }))
     return 0
 
