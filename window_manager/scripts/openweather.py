@@ -58,14 +58,19 @@ def main():
     }
 
     icon = icon_map[weather['weather'][0]['icon']]
-    temperature = f'{round(weather["main"]["temp"])}°C'
-    humidity = f'💧{weather["main"]["humidity"]}%'
-    wind_speed = f'🎏 {weather["wind"]["speed"]}m/s'
-    clouds = f'☁️ {weather["clouds"]["all"]}%'
+    tooltip = [
+        f'💧{weather["main"]["humidity"]}%',
+        f'🎏 {weather["wind"]["speed"]}m/s',
+        f'☁️ {weather["clouds"]["all"]}%',
+    ]
+    if 'rain' in weather:
+        tooltip.append(f'☔ {weather["rain"]["1h"]}mm (1h)')
+    if 'snow' in weather:
+        tooltip.append(f'☃️ {weather["snow"]["1h"]}mm (1h)')
 
     print(json.dumps({
-        'text': f'{icon} {temperature}',
-        'tooltip': f'{humidity}  {clouds}  {wind_speed}',
+        'text': f'{icon} {round(weather["main"]["temp"])}°C',
+        'tooltip': '  '.join(tooltip),
     }))
     return 0
 
