@@ -40,7 +40,7 @@ linters:
 
 neovim:
 	@echo '${bold}>> Neovim settings <<${reset}'
-	rm -f ~/.config/nvim/init.vim
+	rm -f ~/.config/nvim/init.vim ~/.config/nvim/*
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
 	ln -sf $(CURDIR)/neovim/init.vim ~/.config/nvim/init.vim
