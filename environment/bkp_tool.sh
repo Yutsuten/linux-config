@@ -50,8 +50,6 @@ if [[ ${BACKUP} = 1 ]]; then
       done
       echo '[Local sync] Backup osu!stable'
       tar --zstd -cf "${LOCAL_BKP_DIR}/osu-stable.tar.zst" -C /usr/local/games osu
-      echo '[Local sync] Backup 100% Orange Juice mods'
-      tar --zstd -cf "${LOCAL_BKP_DIR}/100oj-mods.tar.zst" -C "$HOME/.steam/steam/steamapps/common/100 Orange Juice" mods
       echo '[Local sync] Finish'
     } &
   fi
