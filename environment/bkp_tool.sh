@@ -13,12 +13,12 @@ LOCAL_SYNC_DIRS='Documents Music Pictures Videos'
 LOCAL_BKP_DIR="${HOME}/Mount1"
 
 BACKUP=1
-EXPORT_GPG=1
+EXPORT_GPG=0
 
 while getopts ":rg" opt; do
   case ${opt} in
     r) BACKUP=0 ;;
-    g) EXPORT_GPG=0 ;;
+    g) EXPORT_GPG=1 ;;
     *) echo "Usage: bkp_tool [-r|-g]"; exit 1 ;;
   esac
 done
