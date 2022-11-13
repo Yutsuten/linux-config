@@ -8,7 +8,7 @@ set -u
 
 trap 'kill 0' SIGINT
 
-CLOUD_SYNC_DIRS='Documents Pictures Videos'
+CLOUD_SYNC_DIRS='Documents Pictures'
 LOCAL_SYNC_DIRS='Documents Music Pictures Videos'
 LOCAL_BKP_DIR="${HOME}/Mount1"
 
