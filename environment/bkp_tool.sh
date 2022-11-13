@@ -48,6 +48,8 @@ if [[ ${BACKUP} = 1 ]]; then
         echo "[Local sync] Syncing ${dir}"
         rsync --archive --update --delete "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
       done
+      echo '[Local sync] Backup osu!lazer'
+      tar --zstd -cf "${LOCAL_BKP_DIR}/osu-lazer.tar.zst" -C ~/.local/share osu
       echo '[Local sync] Backup osu!stable'
       tar --zstd -cf "${LOCAL_BKP_DIR}/osu-stable.tar.zst" -C /usr/local/games osu
       echo '[Local sync] Finish'
