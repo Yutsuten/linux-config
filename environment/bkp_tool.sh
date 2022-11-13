@@ -36,7 +36,7 @@ if [[ ${BACKUP} = 1 ]]; then
     echo '[Cloud sync] Start'
     for dir in ${CLOUD_SYNC_DIRS}; do
       echo "[Cloud sync] Syncing ${dir}"
-      rclone sync --exclude '.*{/**,}' --exclude 'gamemode*.mp4' "${HOME}/${dir}/" "dropbox:/${dir}/"
+      rclone sync --exclude '.*{/**,}' "${HOME}/${dir}/" "dropbox:/${dir}/"
     done
     echo '[Cloud sync] Finish'
   } &
@@ -46,7 +46,7 @@ if [[ ${BACKUP} = 1 ]]; then
       echo '[Local sync] Start'
       for dir in ${LOCAL_SYNC_DIRS}; do
         echo "[Local sync] Syncing ${dir}"
-        rsync --archive --update --delete --exclude 'gamemode*.mp4' "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
+        rsync --archive --update --delete "${HOME}/${dir}/" "${LOCAL_BKP_DIR}/${dir}/"
       done
       echo '[Local sync] Backup osu!stable'
       tar --zstd -cf "${LOCAL_BKP_DIR}/osu-stable.tar.zst" -C /usr/local/games osu
