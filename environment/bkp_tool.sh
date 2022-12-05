@@ -10,7 +10,7 @@ trap 'kill 0' SIGINT
 
 CLOUD_SYNC_DIRS='Documents Pictures'
 LOCAL_SYNC_DIRS='Documents Music Pictures Videos'
-LOCAL_BKP_DIR="${HOME}/Mount1"
+LOCAL_BKP_DIR="/media/hdd1"
 
 BACKUP=1
 EXPORT_GPG=0
