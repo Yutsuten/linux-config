@@ -55,7 +55,6 @@ nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
-	ln -sf $(CURDIR)/nnn/mimeapps.list ~/.config/mimeapps.list
 
 taskwarrior:
 	@echo '${bold}>> Scripts symbolic links <<${reset}'
