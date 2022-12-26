@@ -26,6 +26,7 @@ fish:
 	ln -sf $(CURDIR)/fish/functions/fish_prompt.fish ~/.config/fish/functions/fish_prompt.fish
 	ln -sf $(CURDIR)/fish/functions/ll.fish ~/.config/fish/functions/ll.fish
 	ln -sf $(CURDIR)/fish/functions/nnn.fish ~/.config/fish/functions/nnn.fish
+	ln -sf $(CURDIR)/fish/functions/passgen.fish ~/.config/fish/functions/passgen.fish
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
