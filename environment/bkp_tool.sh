@@ -5,31 +5,37 @@
 
 set -e
 set -u
+set -o pipefail
 
 trap 'kill 0' SIGINT
 
 CLOUD_SYNC_DIRS='Documents Pictures'
 LOCAL_SYNC_DIRS='Documents Music Pictures Videos'
-LOCAL_BKP_DIR="/media/hdd1"
+LOCAL_BKP_DIR='/media/hdd1'
 
 BACKUP=1
 EXPORT_GPG=0
 
-while getopts ":rg" opt; do
+while getopts ':rg' opt; do
   case ${opt} in
     r) BACKUP=0 ;;
     g) EXPORT_GPG=1 ;;
-    *) echo "Usage: bkp_tool [-r|-g]"; exit 1 ;;
+    *) echo 'Usage: bkp_tool [-r|-g]' >&2; exit 1 ;;
   esac
 done
 
+if ! lsblk | grep -F "$LOCAL_BKP_DIR" > /dev/null 2>&1; then
+  echo 'FAIL: External drive not mounted.' >&2
+  exit 1
+fi
+
 if [[ ${BACKUP} = 1 ]]; then
   if [[ ${EXPORT_GPG} = 1 ]]; then
-    echo "> Export and encrypt GPG secret keys"
+    echo '> Export and encrypt GPG secret keys'
     gpg --armor --export-secret-keys 281E7046D5349560 | gpg --output "${HOME}/Documents/GPG/gpg-master-keys.asc.gpg" --yes --symmetric -
   fi
 
-  echo "> Export taskwarrior"
+  echo '> Export taskwarrior'
   task export > "${HOME}/Documents/taskwarrior.json"
 
   {
@@ -50,8 +56,6 @@ if [[ ${BACKUP} = 1 ]]; then
       done
       echo '[Local sync] Backup osu!lazer'
       tar --zstd -cf "${LOCAL_BKP_DIR}/osu-lazer.tar.zst" -C ~/.local/share osu
-      echo '[Local sync] Backup osu!stable'
-      tar --zstd -cf "${LOCAL_BKP_DIR}/osu-stable.tar.zst" -C /usr/local/games osu
       echo '[Local sync] Finish'
     } &
   fi
