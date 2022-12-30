@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Osu!
-Comment=Rhythm is just a click away
-Categories=Game
-Exec=wine /usr/local/games/osu/osu!.exe
-Terminal=false

@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Osu!Lazer
-Comment=Rhythm is just a click away
-Categories=Game
-Exec=/usr/local/games/osu.AppImage
-Terminal=false

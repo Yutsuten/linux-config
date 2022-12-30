@@ -71,7 +71,6 @@ wm:
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
 	ln -sf $(CURDIR)/window_manager/gtk/gtk2.ini ~/.gtkrc-2.0
 	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
-	ln -sf $(CURDIR)/window_manager/launchers/*.desktop ~/.local/share/applications
 	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 
