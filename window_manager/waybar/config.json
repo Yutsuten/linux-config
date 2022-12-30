@@ -33,7 +33,7 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol",
-        "ignored-sinks": ["Audio/Sink Recording"]
+        "ignored-sinks": ["Audio/Sink Recording", "NullSink Mix"]
     },
     "memory": {
         "format": "<span color='#5294e2'></span> {used:0.1f}G / {total:0.1f}G",
