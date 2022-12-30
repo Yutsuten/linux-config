@@ -24,7 +24,7 @@ while getopts ':rg' opt; do
   esac
 done
 
-if ! lsblk | grep -F "$LOCAL_BKP_DIR" > /dev/null 2>&1; then
+if ! lsblk | grep --fixed-strings --quiet "$LOCAL_BKP_DIR"; then
   echo 'FAIL: External drive not mounted.' >&2
   exit 1
 fi
