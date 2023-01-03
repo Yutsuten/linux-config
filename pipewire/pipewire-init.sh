@@ -1,4 +1,4 @@
 #!/usr/bin/sh
 
-sleep 0.3
-pactl set-default-sink alsa_output.pci-0000_2f_00.4.analog-stereo
+sleep 0.2
+pactl set-default-sink "$(pactl list short sinks | sed -nE 's/^.*(alsa_output.+analog-stereo[^\s\t]*).*$/\1/p')"
