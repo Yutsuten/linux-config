@@ -38,6 +38,12 @@ if [[ ${BACKUP} = 1 ]]; then
   echo '> Export taskwarrior'
   task export > "${HOME}/Documents/taskwarrior.json"
 
+  echo '> Backup 100% Orange juice save data'
+  mkdir /tmp/100OJ_Save_Data
+  cp -a ~/.steam/steam/steamapps/common/'100 Orange Juice'/user* /tmp/100OJ_Save_Data
+  tar --zstd -cf "${HOME}/Documents/100OJ_Save_Data.zst" -C /tmp 100OJ_Save_Data
+  rm -rf /tmp/100OJ_Save_Data
+
   {
     echo '[Cloud sync] Start'
     for dir in ${CLOUD_SYNC_DIRS}; do
