@@ -44,5 +44,5 @@ vim.cmd [[
   highlight DiagnosticSignHint ctermfg=13 ctermbg=0
 ]]
 
--- diagnostics virtual text
+-- diagnostics configuration
 vim.diagnostic.config({virtual_text = false, underline = false, severity_sort = true})

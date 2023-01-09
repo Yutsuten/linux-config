@@ -1,5 +1,5 @@
 if status is-interactive
-    fish_add_path ~/.local/bin ~/.yarn/bin
+    fish_add_path ~/.local/bin
 
     set -gx GPG_TTY (tty)
     set -g fish_color_user blue
