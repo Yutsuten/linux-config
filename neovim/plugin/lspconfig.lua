@@ -45,4 +45,4 @@ vim.cmd [[
 ]]
 
 -- diagnostics virtual text
-vim.diagnostic.config({virtual_text = false, severity_sort = true})
+vim.diagnostic.config({virtual_text = false, underline = false, severity_sort = true})
