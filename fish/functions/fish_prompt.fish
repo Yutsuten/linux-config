@@ -1,4 +1,8 @@
 function fish_prompt --description 'Write out the prompt'
+    if not set -q VIRTUAL_ENV_DISABLE_PROMPT
+        set -g VIRTUAL_ENV_DISABLE_PROMPT true
+    end
+
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
     set -l normal (set_color normal)
@@ -27,7 +31,30 @@ function fish_prompt --description 'Write out the prompt'
     set -l statusb_color (set_color $bold_flag $fish_color_status)
     set -l prompt_status (__fish_print_pipestatus '[' ']' '|' "$status_color" "$statusb_color" $last_pipestatus)
 
-    echo -n -s \n (prompt_jobs) (set_color --bold) (set -q nnn && echo [nnn:$nnn] || date '+[%Y-%m-%d %H:%M:%S]') ' ' (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal ' ' $prompt_status \n $suffix ' '
+    echo -n -s \n \
+      (prompt_jobs) (prompt_state) ' ' (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal ' ' $prompt_status \n \
+      $suffix ' '
+end
+
+function prompt_jobs --description 'Display number of running jobs'
+    set njobs (count (jobs -p))
+    if test $njobs -gt 0
+        echo (set_color --bold yellow)
+    else
+        echo (set_color green)
+    end
+    echo -n -s [$njobs] (set_color normal) ' '
+end
+
+function prompt_state
+    set_color --bold
+    if test -n "$VIRTUAL_ENV"
+        echo [(basename $VIRTUAL_ENV)]
+    else if set -q nnn
+        echo [nnn:$nnn]
+    else
+        date '+[%Y-%m-%d %H:%M:%S]'
+    end
 end
 
 function prompt_login --description 'display user name for the prompt'
@@ -57,14 +84,4 @@ function prompt_login --description 'display user name for the prompt'
     end
 
     echo -n -s (set_color $fish_color_user) "$USER" (set_color brblue) @ (set_color $color_host) (prompt_hostname) (set_color normal)
-end
-
-function prompt_jobs --description 'Display number of running jobs'
-    set njobs (count (jobs -p))
-    if test $njobs -gt 0
-        echo -n -s (set_color --bold yellow)
-    else
-        echo -n -s (set_color green)
-    end
-    echo -n -s [$njobs] (set_color normal) ' '
 end
