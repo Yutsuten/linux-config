@@ -35,12 +35,6 @@ git:
 	git config --global core.pager 'less -SXF'
 	git config --global core.editor 'nvim'
 
-linters:
-	@echo '${bold}>> Linter settings <<${reset}'
-	mkdir -p ~/.config
-	ln -sf $(CURDIR)/linters/flake8.conf ~/.config/flake8
-	ln -sf $(CURDIR)/linters/pylint.conf ~/.config/pylintrc
-
 neovim:
 	@echo '${bold}>> Neovim settings <<${reset}'
 	rm -f ~/.config/nvim/init.vim ~/.config/nvim/*
