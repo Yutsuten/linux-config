@@ -6,6 +6,7 @@ require('lint').linters_by_ft = {
   sh = {'shellcheck'},
   vim = {'vint'},
   lua = {'luacheck'},
+  yaml = {'yamllint'}
 }
 
 vim.cmd([[
