@@ -5,6 +5,7 @@ require('lint').linters_by_ft = {
   robot = {'robocop'},
   sh = {'shellcheck'},
   vim = {'vint'},
+  lua = {'luacheck'},
 }
 
 vim.cmd([[
