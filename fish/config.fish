@@ -5,6 +5,7 @@ if status is-interactive
     set -g fish_color_user blue
     set -g fish_color_host brmagenta
     set -g fish_color_host_remote yellow
+    set -g VIRTUAL_ENV_DISABLE_PROMPT true
 
     alias identify 'identify -precision 3'
     alias ssh 'env TERM=xterm-256color ssh'
