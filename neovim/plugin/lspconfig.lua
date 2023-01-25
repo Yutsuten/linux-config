@@ -15,18 +15,31 @@ require('lspconfig').robotframework_ls.setup{
   }
 }
 
--- omnifunc
-vim.api.nvim_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- diagnostics
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 
--- mappings
-local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+-- LSP features
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    -- omnifunc
+    vim.api.nvim_buf_set_option(args.buf, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- mappings
+    local bufopts = { noremap = true, silent = true, buffer = args.buf }
+    vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<space>d', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', '<space>E', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
+    vim.keymap.set('n', '<space>i', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<space>r', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<space>R', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<space>t', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<space>k', vim.lsp.buf.hover, bufopts)
+  end,
+})
 
 -- diagnostics signs
 local signs = {

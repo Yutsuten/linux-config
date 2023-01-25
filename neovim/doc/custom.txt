@@ -29,14 +29,18 @@ Commenting code:
 <leader>u"          Uncomment " code
 <leader>u-          Uncomment -- code
 
-Diagnostics:
+Language server:
 
 [d                  Move to the previous diagnostic
 ]d                  Move to the next diagnostic
-<space>D            Jumps to the declaration of the symbol under the cursor
-<space>d            Jumps to the definition of the symbol under the cursor
-<space>r            Lists all the references to the symbol under the cursor in the quickfix window
+<space>a            Selects a code action available at the current cursor position
+<space>d            Jumps to the declaration of the symbol under the cursor
 <space>e            Show diagnostics in a floating window
+<space>E            Displays signature information about the symbol under the cursor in a floating window
+<space>f            Formats a buffer
+<space>r            Lists all the references to the symbol under the cursor in the quickfix window
+<space>R            Renames all references to the symbol under the cursor
+<space>t            Jumps to the definition of the type of the symbol under the cursor
 <space>k            Displays hover information about the symbol under the cursor in a floating window
 
 Utils:

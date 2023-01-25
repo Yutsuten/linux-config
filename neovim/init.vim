@@ -1,7 +1,9 @@
 scriptencoding utf-8
 
 " Settings
+set completeopt-=preview
 set expandtab
+set fileencodings=ucs-bom,utf-8,sjis,latin1
 set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set nohlsearch
 set noshowmode
@@ -10,7 +12,6 @@ set signcolumn=auto:1
 set shiftwidth=2
 set softtabstop=2
 set tabstop=4
-set fileencodings=ucs-bom,utf-8,sjis,latin1
 set sessionoptions-=buffers
 set sessionoptions+=globals
 set wildignorecase
