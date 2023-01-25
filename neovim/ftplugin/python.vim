@@ -1,8 +1,5 @@
 setlocal shiftwidth=4
 setlocal softtabstop=4
-setlocal colorcolumn=80
-
-highlight ColorColumn ctermbg=0
 
 function! s:Pydoc()
   let iskeyword = &iskeyword
