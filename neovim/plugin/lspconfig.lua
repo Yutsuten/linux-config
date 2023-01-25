@@ -1,13 +1,17 @@
 -- setup lsp servers
 require('lspconfig').pylsp.setup{
-  settings = {pylsp = {configurationSources = {'flake8'}}}
+  settings = {
+    pylsp = {
+      configurationSources = {'ruff'},
+    }
+  }
 }
 require('lspconfig').robotframework_ls.setup{
   settings = {
     robot = {
-      variables = {execdir = ''}
+      lint = {robocop = {enabled = true}},
+      variables = {execdir = ''},
     },
-    lint = {robocop = {enabled = true}}
   }
 }
 
