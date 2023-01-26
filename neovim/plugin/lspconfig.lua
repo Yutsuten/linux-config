@@ -1,6 +1,7 @@
 -- setup lsp servers
 require('lspconfig').pyright.setup{}
 require('lspconfig').ruff_lsp.setup{}
+require('lspconfig').tsserver.setup{}
 require('lspconfig').robotframework_ls.setup{
   settings = {
     robot = {
