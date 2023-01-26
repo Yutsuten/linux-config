@@ -1,11 +1,6 @@
 -- setup lsp servers
-require('lspconfig').pylsp.setup{
-  settings = {
-    pylsp = {
-      configurationSources = {'ruff'},
-    }
-  }
-}
+require('lspconfig').pyright.setup{}
+require('lspconfig').ruff_lsp.setup{}
 require('lspconfig').robotframework_ls.setup{
   settings = {
     robot = {
