@@ -25,6 +25,7 @@ command -nargs=+ Indent call s:SetIndent(<f-args>)
 " Shortcuts
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>r :Make<CR>
+nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>% :let @+ = @%<CR>
 
 noremap <leader>c/ :s/\v^(\s*)(.+)/\1\/\/ \2/<CR>
