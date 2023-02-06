@@ -28,3 +28,6 @@
 [submodule "neovim/pack/fish"]
 	path = neovim/pack/fish
 	url = git@github.com:nickeb96/fish.vim.git
+[submodule "neovim/pack/jsx-pretty"]
+	path = neovim/pack/jsx-pretty
+	url = git@github.com:MaxMEllon/vim-jsx-pretty.git
