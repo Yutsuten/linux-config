@@ -5,7 +5,7 @@ function nnn --wraps=nnn --description 'The unorthodox terminal file manager.'
     end
     set -gx NNN_PLUG 'd:dragdrop;i:img_shuffle'
     set -gx NNN_BMS 'r:/mnt/hdd/recording;s:/mnt/sshfs'
-    command nnn -eorAT v $argv
+    command nnn -eorAuT v $argv
 
     if test -e $HOME/.config/nnn/.lastd
         source $HOME/.config/nnn/.lastd
