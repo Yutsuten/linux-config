@@ -4,7 +4,7 @@ printf 'Open images recursively? (y/N): '
 read -r resp
 
 if [ "${resp}" = "y" ]; then
-  find . -type f -exec vimiv -s shuffle true --command 'goto 1' '{}' '+' > /dev/null 2>&1 &
+  find . -type f -exec vimiv -s sort.shuffle true --command 'goto 1' '{}' '+' > /dev/null 2>&1 &
 else
-  vimiv -s shuffle true --command 'goto 1' ./* > /dev/null 2>&1 &
+  vimiv -s sort.shuffle true --command 'goto 1' ./* > /dev/null 2>&1 &
 fi
