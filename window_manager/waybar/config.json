@@ -17,7 +17,8 @@
         "format": "{}"
     },
     "custom/cursormove": {
-        "exec": "cat /tmp/cursor_move",
+        "exec": "echo ''",
+        "exec-if": "pgrep cursor_move",
         "interval": "once",
         "signal": 1
     },
