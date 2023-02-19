@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["custom/weather", "clock"],
+    "modules-center": ["custom/weather", "clock", "custom/cursormove"],
     "modules-right": ["pulseaudio", "memory", "memory#swap", "cpu", "temperature", "sway/language", "tray"],
     "clock": {
         "interval": 1,
@@ -15,6 +15,11 @@
         "interval": 30,
         "return-type": "json",
         "format": "{}"
+    },
+    "custom/cursormove": {
+        "exec": "cat /tmp/cursor_move",
+        "interval": "once",
+        "signal": 1
     },
     "pulseaudio": {
         "format": "<span color='#52c7e2'>{icon}</span> {volume}%",
