@@ -1,14 +1,13 @@
 {
     "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/mpris"],
     "modules-center": ["custom/weather", "clock", "custom/cursormove"],
     "modules-right": ["pulseaudio", "memory", "memory#swap", "cpu", "temperature", "sway/language", "tray"],
-    "clock": {
+    "custom/mpris": {
+        "exec": "playerctl -f ' {{status}} {{title}} ({{artist}})' metadata | sed -e 's/Playing/ /g' -e 's/Paused/ /g'",
         "interval": 1,
-        "format": "{:%Y年%m月%d日 (%a)  %H:%M:%S}",
-        "tooltip-format": "<big>{:%Y年 %B}</big>\n<tt>{calendar}</tt>",
-        "today-format": "<span background='#5294e2'><b>{}</b></span>",
-        "format-calendar-weekdays": "<u><b>{}</b></u>"
+        "signal": 2,
+        "tooltip": false
     },
     "custom/weather": {
         "exec": "openweather",
@@ -16,11 +15,19 @@
         "return-type": "json",
         "format": "{}"
     },
+    "clock": {
+        "interval": 1,
+        "format": "{:%Y年%m月%d日 (%a)  %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y年 %B}</big>\n<tt>{calendar}</tt>",
+        "today-format": "<span background='#5294e2'><b>{}</b></span>",
+        "format-calendar-weekdays": "<u><b>{}</b></u>"
+    },
     "custom/cursormove": {
         "exec": "echo ''",
         "exec-if": "pgrep cursor_move",
         "interval": "once",
-        "signal": 1
+        "signal": 1,
+        "tooltip": false
     },
     "pulseaudio": {
         "format": "<span color='#52c7e2'>{icon}</span> {volume}%",
