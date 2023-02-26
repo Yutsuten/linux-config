@@ -74,4 +74,3 @@ wm_system:
 	cp -af $(CURDIR)/window_manager/scripts/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/window_manager/scripts/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/window_manager/scripts/wallpaper.py /usr/local/bin/wallpaper
-	cp -af $(CURDIR)/window_manager/scripts/cursor_move.sh /usr/local/bin/cursor_move
