@@ -4,7 +4,7 @@
     "modules-center": ["custom/weather", "clock"],
     "modules-right": ["pulseaudio", "memory", "memory#swap", "cpu", "temperature", "sway/language", "tray"],
     "custom/mpris": {
-        "exec": "playerctl -f ' {{status}} {{title}}\n {{artist}}' metadata | sed -e 's/Playing/ /g' -e 's/Paused/ /g'",
+        "exec": "playerctl -f ' {{status}} {{title}}\n {{album}}   {{artist}}' metadata | sed -e 's/Playing/ /g' -e 's/Paused/ /g'",
         "interval": 1,
         "signal": 2
     },
