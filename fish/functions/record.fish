@@ -3,16 +3,19 @@ function record --description 'Record screen using wf-recorder'
     set exitcode $status
 
     if test $exitcode -ne 0 || test $_flag_h
-        echo 'Usage: record [options]' >&2
+        echo 'Usage: record [options] [name]' >&2
         echo '  -h, --help   Show list of command-line options'
         echo '  -m, --mix    Record mix.monitor (mic and speakers) audio source'
         echo '  -r, --rec    Record recording.monitor audio source'
         return 1
     end
 
-    set now (date '+%Y-%m-%d_%H-%M-%S')
-    echo "[INFO] Will record inside directory $now/"
-    mkdir $now
+    set folder_name (date '+%Y-%m-%d_%H-%M-%S')
+    if test (count $argv) -ge 1
+        set folder_name (string join _ $folder_name $argv)
+    end
+    echo "[INFO] Will record inside directory $folder_name/"
+    mkdir $folder_name
 
     if test $_flag_m
         echo '[AUDIO] Start redirect speakers and mic streams to mix sink'
@@ -24,18 +27,18 @@ function record --description 'Record screen using wf-recorder'
         pactl load-module module-loopback sink=mix source=$mic channels=2 channel_map=mono,mono
 
         echo '[AUDIO] Start recording "mix" source'
-        ffmpeg -loglevel warning -nostdin -f pulse -i mix.monitor -f s16le -acodec pcm_s16le -ac 2 $now/mix.raw &
+        ffmpeg -loglevel warning -nostdin -f pulse -i mix.monitor -f s16le -acodec pcm_s16le -ac 2 $folder_name/mix.raw &
         set mix_pid $last_pid
     end
 
     if test $_flag_r
         echo '[AUDIO] Start recording "recording" source'
-        ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -f s16le -acodec pcm_s16le -ac 2 $now/rec.raw &
+        ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -f s16le -acodec pcm_s16le -ac 2 $folder_name/rec.raw &
         set recording_pid $last_pid
     end
 
     echo '[VIDEO] Start recording wayland screen'
-    wf-recorder -c libx264rgb -p crf=0 -f $now/video.mp4
+    wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4
     echo '[VIDEO] Stop recording wayland screen'
 
     if test $_flag_m
