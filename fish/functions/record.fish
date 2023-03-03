@@ -24,15 +24,18 @@ function record --description 'Record screen using wf-recorder'
         echo "  Speakers  : $speakers"
         echo "  Microphone: $mic"
         pactl load-module module-loopback sink=mix source=$speakers
-        pactl load-module module-loopback sink=mix source=$mic channels=2 channel_map=mono,mono
+        pw-loopback --capture=$mic --capture-props='audio.position=[FL] stream.dont-remix=true' --playback=mix --playback-props='audio.position=[MONO]' &
+        set mic_loopback_pid $last_pid
 
         echo '[AUDIO] Start recording "mix" source'
+        pactl set-sink-volume mix 100%
         ffmpeg -loglevel warning -nostdin -f pulse -i mix.monitor -f s16le -acodec pcm_s16le -ac 2 $folder_name/mix.raw &
         set mix_pid $last_pid
     end
 
     if test $_flag_r
         echo '[AUDIO] Start recording "recording" source'
+        pactl set-sink-volume recording 100%
         ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -f s16le -acodec pcm_s16le -ac 2 $folder_name/rec.raw &
         set recording_pid $last_pid
     end
@@ -46,6 +49,7 @@ function record --description 'Record screen using wf-recorder'
         kill --verbose $mix_pid
         echo '[AUDIO] Stop redirect speakers and mic streams to mix sink'
         pactl unload-module module-loopback
+        kill --verbose $mic_loopback_pid
     end
 
     if test $_flag_r
