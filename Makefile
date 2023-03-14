@@ -60,13 +60,15 @@ taskwarrior:
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user
+	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/window_manager/waybar/config.json ~/.config/waybar/config
 	ln -sf $(CURDIR)/window_manager/waybar/style.css ~/.config/waybar/style.css
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
 	ln -sf $(CURDIR)/window_manager/gtk/gtk2.ini ~/.gtkrc-2.0
 	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
+	ln -sf $(CURDIR)/window_manager/wofi/config ~/.config/wofi/config
+	ln -sf $(CURDIR)/window_manager/wofi/style.css ~/.config/wofi/style.css
 	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 
