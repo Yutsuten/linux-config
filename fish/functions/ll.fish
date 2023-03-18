@@ -1,3 +1,3 @@
-function ll --wraps=exa --description 'List contents of directory using long format'
-    command exa -l --group-directories-first $argv
+function ll --wraps=ls --description 'List contents of directory using long format'
+    command ls -o --human-readable --literal --classify=auto --group-directories-first --sort=v --color=auto $argv
 end
