@@ -32,10 +32,3 @@ require('gitsigns').setup({
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 })
-
-vim.cmd([[
-  highlight! link SignColumn LineNr
-  highlight GitSignsAddNr ctermbg=0 ctermfg=2
-  highlight GitSignsChangeNr ctermbg=0 ctermfg=3
-  highlight GitSignsDeleteNr ctermbg=0 ctermfg=9
-]])

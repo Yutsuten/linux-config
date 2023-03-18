@@ -7,11 +7,8 @@ command -nargs=0 ToggleFileInfo call s:ToggleFileInfo()
 augroup statusline
   autocmd!
   autocmd VimEnter,WinEnter,BufEnter,SessionLoadPost,FileChangedShellPost * call s:UpdateStatusLine()
-  autocmd VimEnter * highlight StatusLine ctermbg=0 ctermfg=14 cterm=NONE
-  autocmd VimEnter * highlight StatusLineNC ctermbg=0 ctermfg=10 cterm=NONE
-  autocmd VimEnter * highlight StatusLineSub ctermbg=11 ctermfg=0 cterm=NONE
-  autocmd VimEnter * highlight StatusLineMode ctermbg=4 ctermfg=0 cterm=NONE
-  autocmd VimEnter * highlight StatusLineLinter ctermbg=2 ctermfg=0 cterm=NONE
+  autocmd VimEnter * highlight link StatusLineMode StatusLineBlue
+  autocmd VimEnter * highlight link StatusLineLinter StatusLineLinterGreen
 augroup end
 
 " Script
@@ -55,37 +52,37 @@ function GetCurrentMode()
   let l:current_mode = mode()
   if l:current_mode ==# 'n'
     let l:current_mode = 'NORMAL'
-    highlight StatusLineMode ctermbg=4
+    highlight link StatusLineMode StatusLineBlue
   elseif l:current_mode ==# 'i'
     let l:current_mode = 'INSERT'
-    highlight StatusLineMode ctermbg=2
+    highlight link StatusLineMode StatusLineGreen
   elseif l:current_mode ==# 'v'
     let l:current_mode = 'VISUAL'
-    highlight StatusLineMode ctermbg=5
+    highlight link StatusLineMode StatusLineMagenta
   elseif l:current_mode ==# 'V'
     let l:current_mode = 'V-LINE'
-    highlight StatusLineMode ctermbg=5
+    highlight link StatusLineMode StatusLineMagenta
   elseif l:current_mode ==# "\<C-v>"
     let l:current_mode = 'V-BLOCK'
-    highlight StatusLineMode ctermbg=5
+    highlight link StatusLineMode StatusLineMagenta
   elseif l:current_mode ==# 'R'
     let l:current_mode = 'REPLACE'
-    highlight StatusLineMode ctermbg=9
+    highlight link StatusLineMode StatusLineRed
   elseif l:current_mode ==# 'c'
     let l:current_mode = 'COMMAND'
-    highlight StatusLineMode ctermbg=3
+    highlight link StatusLineMode StatusLineYellow
   elseif l:current_mode ==# 't'
     let l:current_mode = 'TERMINAL'
-    highlight StatusLineMode ctermbg=3
+    highlight link StatusLineMode StatusLineYellow
   elseif l:current_mode ==# 's'
     let l:current_mode = 'SELECT'
-    highlight StatusLineMode ctermbg=9
+    highlight link StatusLineMode StatusLineRed
   elseif l:current_mode ==# 'S'
     let l:current_mode = 'S-LINE'
-    highlight StatusLineMode ctermbg=9
+    highlight link StatusLineMode StatusLineRed
   elseif l:current_mode ==# "\<C-s>"
     let l:current_mode = 'S-BLOCK'
-    highlight StatusLineMode ctermbg=9
+    highlight link StatusLineMode StatusLineRed
   endif
   return l:current_mode
 endfunction
@@ -97,15 +94,15 @@ function LinterStatus()
   let l:hint_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.HINT})')
 
   if l:error_count > 0
-    highlight StatusLineLinter ctermbg=1
+    highlight link StatusLineLinter StatusLineRed
     return printf(' ✗%d ‼%d ', l:error_count, l:warning_count)
   elseif l:warning_count > 0
-    highlight StatusLineLinter ctermbg=3
+    highlight link StatusLineLinter StatusLineYellow
     return printf(' ‼%d ', l:warning_count)
   elseif l:info_count + l:hint_count > 0
-    highlight StatusLineLinter ctermbg=13
+    highlight link StatusLineLinter StatusLineMag
     return printf(' 𝒾%d ', l:info_count + l:hint_count)
   endif
-  highlight StatusLineLinter ctermbg=2
+    highlight link StatusLineLinter StatusLineGreen
   return ' ✓ '
 endfunction

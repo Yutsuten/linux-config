@@ -50,12 +50,5 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, {text = icon, texthl = hl})
 end
 
-vim.cmd [[
-  highlight DiagnosticSignError ctermfg=1 ctermbg=0
-  highlight DiagnosticSignWarn ctermfg=3 ctermbg=0
-  highlight DiagnosticSignInfo ctermfg=4 ctermbg=0
-  highlight DiagnosticSignHint ctermfg=13 ctermbg=0
-]]
-
 -- diagnostics configuration
 vim.diagnostic.config({virtual_text = false, underline = false, severity_sort = true})

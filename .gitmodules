@@ -1,6 +1,3 @@
-[submodule "nvim/plugins/vim-colors-solarized"]
-	path = neovim/pack/colors-solarized
-	url = git@github.com:altercation/vim-colors-solarized.git
 [submodule "nvim/plugins/vim-python-pep8-indent"]
 	path = neovim/pack/python-pep8-indent
 	url = git@github.com:Vimjas/vim-python-pep8-indent.git
