@@ -1,21 +1,15 @@
-.PHONY: alacritty environment fish git linters neovim nnn taskwarrior wm
+.PHONY: alacritty fish git neovim nnn taskwarrior utilities wm
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-all: alacritty environment fish git linters neovim nnn taskwarrior wm
+all: alacritty fish git neovim nnn taskwarrior utilities wm
 	@echo '${bold}Done!${reset}'
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
 	mkdir -p ~/.config/alacritty
 	ln -sf $(CURDIR)/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-
-environment:
-	@echo '${bold}>> Environment settings <<${reset}'
-	@echo '⚠️ Append the contents of "$(CURDIR)/environment/environment" into /etc/environment'
-	mkdir -p ~/.local/bin
-	ln -sf $(CURDIR)/environment/bkp_tool.sh ~/.local/bin/bkp_tool
 
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
@@ -60,6 +54,14 @@ taskwarrior:
 	mkdir -p ~/.task/hooks
 	ln -sf $(CURDIR)/taskwarrior/fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 
+utilities:
+	@echo '${bold}>> Utilities <<${reset}'
+	mkdir -p ~/.local/bin
+	ln -sf $(CURDIR)/utilities/bkptool.sh ~/.local/bin/bkptool
+	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
+	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
+	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
+
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
 	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/
@@ -73,8 +75,3 @@ wm:
 	ln -sf $(CURDIR)/window_manager/wofi/style.css ~/.config/wofi/style.css
 	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
-
-wm_system:
-	cp -af $(CURDIR)/window_manager/scripts/screenshot.sh /usr/local/bin/screenshot
-	cp -af $(CURDIR)/window_manager/scripts/openweather.py /usr/local/bin/openweather
-	cp -af $(CURDIR)/window_manager/scripts/wallpaper.py /usr/local/bin/wallpaper
