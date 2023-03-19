@@ -58,6 +58,7 @@ utilities:
 	@echo '${bold}>> Utilities <<${reset}'
 	mkdir -p ~/.local/bin
 	ln -sf $(CURDIR)/utilities/bkptool.sh ~/.local/bin/bkptool
+	ln -sf $(CURDIR)/utilities/ffmeta.py ~/.local/bin/ffmeta
 	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
