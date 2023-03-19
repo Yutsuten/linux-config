@@ -25,6 +25,7 @@ fish:
 	ln -sf $(CURDIR)/fish/functions/aurupdate.fish ~/.config/fish/functions/aurupdate.fish
 	ln -sf $(CURDIR)/fish/functions/fish_prompt.fish ~/.config/fish/functions/fish_prompt.fish
 	ln -sf $(CURDIR)/fish/functions/ls.fish ~/.config/fish/functions/ls.fish
+	ln -sf $(CURDIR)/fish/functions/lo.fish ~/.config/fish/functions/lo.fish
 	ln -sf $(CURDIR)/fish/functions/ll.fish ~/.config/fish/functions/ll.fish
 	ln -sf $(CURDIR)/fish/functions/nnn.fish ~/.config/fish/functions/nnn.fish
 	ln -sf $(CURDIR)/fish/functions/passgen.fish ~/.config/fish/functions/passgen.fish
