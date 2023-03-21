@@ -24,14 +24,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         epilog='''You can set global and stream metadata.
         Ex: ffmeta title=GlobalTitle 0 title=Stream0Title 1 title=Stream1Title
-        input.ogg''',
+        input.webp''',
     )
-    parser.add_argument('-y', help='override original file', action='store_true')
+    parser.add_argument('-y', '--override', help='override original file', action='store_true')
+    parser.add_argument('-q', '--quiet', help='do not output metadata comparison', action='store_true')
     parser.add_argument('metadata', type=str, nargs='+')
     parser.add_argument('media_file', type=str)
     args = parser.parse_args()
 
-    ffmpeg_command = ['ffmpeg', '-i', args.media_file, '-codec', 'copy']
+    ffmpeg_command = ['ffmpeg', '-loglevel', 'fatal', '-i', args.media_file, '-codec', 'copy']
     stream = 'g'
 
     while args.metadata:
@@ -50,17 +51,19 @@ def main() -> int:
 
     new_media_file = f'new_{args.media_file}'
     ffmpeg_command += ['-y', new_media_file]
-    subprocess.run(ffmpeg_command, stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(ffmpeg_command, check=True)
 
-    print('Before:')
-    ffprobe(args.media_file)
-    print('\nAfter:')
-    ffprobe(new_media_file)
+    if not args.quiet:
+        print('Before:')
+        ffprobe(args.media_file)
+        print('\nAfter:')
+        ffprobe(new_media_file)
 
-    if args.y:
+    if args.override:
         shutil.move(new_media_file, args.media_file)
     else:
-        print('\nRemoving updated file...')
+        if not args.quiet:
+            print('\nRemoving updated file...')
         Path(new_media_file).unlink()
     return 0
 

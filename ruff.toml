@@ -5,6 +5,7 @@ ignore = [
   "D104",  # Missing docstring in public package
   "INP",   # Missing __init__.py for package
 ]
+line-length = 120
 
 [per-file-ignores]
 "utilities/ffmeta.py" = ["T20"]  # flake8-print
