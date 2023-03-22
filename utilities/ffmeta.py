@@ -26,13 +26,22 @@ def main() -> int:
         Ex: ffmeta title=GlobalTitle 0 title=Stream0Title 1 title=Stream1Title
         input.webp''',
     )
-    parser.add_argument('-y', '--override', help='override original file', action='store_true')
+    parser.add_argument('-c', '--clear', help='clear metadata', action='store_true')
+    parser.add_argument('-C', '--cover', help='add cover file', type=str)
     parser.add_argument('-q', '--quiet', help='do not output metadata comparison', action='store_true')
-    parser.add_argument('metadata', type=str, nargs='+')
+    parser.add_argument('-y', '--override', help='override original file', action='store_true')
+    parser.add_argument('metadata', type=str, nargs='*')
     parser.add_argument('media_file', type=str)
     args = parser.parse_args()
 
-    ffmpeg_command = ['ffmpeg', '-loglevel', 'fatal', '-i', args.media_file, '-codec', 'copy']
+    ffmpeg_command = ['ffmpeg', '-loglevel', 'fatal', '-i', args.media_file]
+    if args.cover:
+        ffmpeg_command += ['-i', args.cover, '-metadata:s:1', 'comment=Cover (front)']
+
+    ffmpeg_command += ['-codec', 'copy']
+    if args.clear:
+        ffmpeg_command += ['-map_metadata', '-1']
+
     stream = 'g'
 
     while args.metadata:
@@ -48,6 +57,9 @@ def main() -> int:
             stream = arg
             continue
         ffmpeg_command += [f'-metadata:s:{stream}', arg]
+
+    if args.cover:
+        ffmpeg_command += ['-map', '0', '-map', '1']
 
     new_media_file = f'new_{args.media_file}'
     ffmpeg_command += ['-y', new_media_file]
