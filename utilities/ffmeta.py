@@ -27,22 +27,33 @@ def main() -> int:
         input.webp''',
     )
     parser.add_argument('-c', '--clear', help='clear metadata', action='store_true')
-    parser.add_argument('-C', '--cover', help='add cover file', type=str)
+    parser.add_argument('-C', '--cover', help='add cover to music file', type=str)
     parser.add_argument('-q', '--quiet', help='do not output metadata comparison', action='store_true')
-    parser.add_argument('-y', '--override', help='override original file', action='store_true')
+    parser.add_argument('-x', '--delete', help='delete generated file', action='store_true')
     parser.add_argument('metadata', type=str, nargs='*')
     parser.add_argument('media_file', type=str)
     args = parser.parse_args()
 
-    ffmpeg_command = ['ffmpeg', '-loglevel', 'fatal', '-i', args.media_file]
+    media_path = Path(args.media_file)
+
+    ffmpeg_command = ['ffmpeg', '-loglevel', 'warning', '-i', args.media_file]
     if args.cover:
         ffmpeg_command += ['-i', args.cover, '-metadata:s:1', 'comment=Cover (front)']
+        if media_path.suffix == '.mp3':
+            ffmpeg_command += ['-codec', 'copy']
+        elif media_path.suffix == '.opus':
+            ffmpeg_command += ['-acodec', 'copy', '-q:v', '10']
+        else:
+            print('Unsupported file. Cannot add cover.')
+            return 1
+    else:
+        ffmpeg_command += ['-codec', 'copy']
 
-    ffmpeg_command += ['-codec', 'copy']
     if args.clear:
-        ffmpeg_command += ['-map_metadata', '-1']
+        ffmpeg_command += ['-map_metadata', '-1', '-map_metadata:s', '-1']
 
     stream = 'g'
+    same_ext = True
 
     while args.metadata:
         arg = args.metadata.pop(0)
@@ -58,10 +69,15 @@ def main() -> int:
             continue
         ffmpeg_command += [f'-metadata:s:{stream}', arg]
 
+    if args.cover and media_path.suffix == '.opus':
+        same_ext = False
+        new_media_file = str(Path(media_path.parent) / Path(f'{media_path.stem}.ogg'))
+    else:
+        new_media_file = f'new_{args.media_file}'
+
     if args.cover:
         ffmpeg_command += ['-map', '0', '-map', '1']
 
-    new_media_file = f'new_{args.media_file}'
     ffmpeg_command += ['-y', new_media_file]
     subprocess.run(ffmpeg_command, check=True)
 
@@ -71,12 +87,13 @@ def main() -> int:
         print('\nAfter:')
         ffprobe(new_media_file)
 
-    if args.override:
-        shutil.move(new_media_file, args.media_file)
-    else:
+    if args.delete:
         if not args.quiet:
             print('\nRemoving updated file...')
         Path(new_media_file).unlink()
+    elif same_ext:
+        shutil.move(new_media_file, args.media_file)
+
     return 0
 
 if __name__ == '__main__':
