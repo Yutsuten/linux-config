@@ -100,7 +100,7 @@ function LinterStatus()
     highlight link StatusLineLinter StatusLineYellow
     return printf(' ‼%d ', l:warning_count)
   elseif l:info_count + l:hint_count > 0
-    highlight link StatusLineLinter StatusLineMag
+    highlight link StatusLineLinter StatusLineBlue
     return printf(' 𝒾%d ', l:info_count + l:hint_count)
   endif
     highlight link StatusLineLinter StatusLineGreen
