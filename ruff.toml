@@ -9,6 +9,7 @@ line-length = 120
 
 [per-file-ignores]
 "utilities/ffmeta.py" = ["T20"]  # flake8-print
+"utilities/ffmeta_test.py" = ["PT", "D", "ANN10", "ANN401"]  # flake8-print
 
 [pydocstyle]
 convention = "google"

@@ -76,3 +76,6 @@ wm:
 	ln -sf $(CURDIR)/window_manager/wofi/style.css ~/.config/wofi/style.css
 	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
+
+test:
+	cd utilities/ && python -m unittest ffmeta_test
