@@ -44,7 +44,7 @@ def main(argv) -> int:
         if media_path.suffix == '.mp3':
             ffmpeg_command += ['-codec', 'copy']
         elif media_path.suffix == '.opus':
-            ffmpeg_command += ['-acodec', 'copy', '-q:v', '10']
+            ffmpeg_command += ['-acodec', 'copy', '-vcodec', 'theora', '-q:v', '10']
         else:
             print('Unsupported file. Cannot add cover.')
             return 1
@@ -55,7 +55,6 @@ def main(argv) -> int:
         ffmpeg_command += ['-map_metadata', '-1', '-map_metadata:s', '-1']
 
     stream = 'g'
-    same_ext = True
 
     while args.metadata:
         arg = args.metadata.pop(0)
@@ -71,12 +70,7 @@ def main(argv) -> int:
             continue
         ffmpeg_command += [f'-metadata:s:{stream}', arg]
 
-    if args.cover and media_path.suffix == '.opus':
-        same_ext = False
-        new_media_file = str(media_path.parent / Path(f'{media_path.stem}.ogg'))
-    else:
-        new_media_file = f'new_{args.media_file}'
-
+    new_media_file = f'new_{args.media_file}'
     if args.cover:
         ffmpeg_command += ['-map', '0', '-map', '1']
 
@@ -93,7 +87,7 @@ def main(argv) -> int:
         if not args.quiet:
             print('\nRemoving updated file...')
         Path(new_media_file).unlink()
-    elif same_ext:
+    else:
         shutil.move(new_media_file, args.media_file)
 
     return 0

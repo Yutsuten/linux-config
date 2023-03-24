@@ -76,10 +76,10 @@ class TestCover(TestCase):
         self.assertEqual(
             ffmpeg_call,
             (['ffmpeg', '-loglevel', 'warning', '-i', 'music.opus', '-i', 'Cover.jpg', '-metadata:s:1',
-              'comment=Cover (front)', '-acodec', 'copy', '-q:v', '10', '-map', '0', '-map', '1',
-              '-y', 'music.ogg'],),
+              'comment=Cover (front)', '-acodec', 'copy', '-vcodec', 'theora', '-q:v', '10',
+              '-map', '0', '-map', '1', '-y', 'new_music.opus'],),
         )
-        shutil.move.assert_not_called()
+        shutil.move.assert_called()
         self.assertEqual(bprint.call_count, 4)
 
 
