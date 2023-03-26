@@ -1,0 +1,7 @@
+#!/usr/bin/sh
+
+if [ -d "${nnn}" ]; then
+  find "${nnn}" -type f -exec vimiv -s sort.shuffle true --command 'goto 1' '{}' '+' > /dev/null 2>&1 &
+else
+  vimiv -s sort.shuffle true --command 'goto 1' ./* > /dev/null 2>&1 &
+fi

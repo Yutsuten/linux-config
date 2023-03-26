@@ -1,0 +1,7 @@
+#!/usr/bin/sh
+
+if [ -d "${nnn}" ]; then
+    find "${nnn}" -type f -not '(' -name '*.lrc' -or -name '*.jpg' -or -name '*.png' ')' -exec mpv --profile=music {} + &
+else
+    mpv --profile=music "${nnn}" &
+fi

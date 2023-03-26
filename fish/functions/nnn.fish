@@ -3,7 +3,7 @@ function nnn --wraps=nnn --description 'The unorthodox terminal file manager.'
         echo 'nnn is already running'
         return
     end
-    set -gx NNN_PLUG 'c:-!wl-copy "$nnn"*;d:dragdrop;i:img_shuffle;p:-!&mpv --profile=music "$nnn"'
+    set -gx NNN_PLUG 'c:-!wl-copy "$nnn"*;d:dragdrop;i:-vimiv;p:-mpv'
     set -gx NNN_BMS 'm:/media;h:/mnt/hdd'
     set -gx NNN_TRASH 1
     command nnn -eorAuT v $argv
