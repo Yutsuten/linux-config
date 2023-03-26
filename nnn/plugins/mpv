@@ -3,7 +3,7 @@
 if [ -d "${nnn}" ]; then
     find "${nnn}" -type f \
       -not -path '*/.*' \
-      -not '(' -name '*.lrc' -or -name '*.jpg' -or -name '*.png' ')' \
+      -not '(' -iname '*.lrc' -or -iname '*.jpg' -or -iname '*.png' ')' \
       -exec mpv --profile=music '{}' '+' &
 else
     mpv --profile=music "${nnn}" &
