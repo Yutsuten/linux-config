@@ -1,10 +1,10 @@
 #!/usr/bin/sh
 
 if [ -d "${nnn}" ]; then
-    find "${nnn}" -type f \
-      -not -path '*/.*' \
-      '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
-      -exec mpv --profile=music '{}' '+' &
+  find "${nnn}" -type f \
+    -not -path '*/.*' \
+    '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
+    -exec mpv --profile=music '{}' '+' &
 else
-    mpv --profile=music "${nnn}" &
+  mpv --profile=music "${nnn}" &
 fi
