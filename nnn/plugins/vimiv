@@ -3,6 +3,7 @@
 if [ -d "${nnn}" ]; then
   find "${nnn}" -type f \
     -not -path '*/.*' \
+    '(' -iname '*.jpg' -or -iname '*.jpeg' -or -iname '*.png' -or -iname '*.gif' -or -iname '*.webp' -or -iname '*.svg' -or -iname '*.bmp' ')' \
     -exec vimiv -s sort.shuffle true --command 'goto 1' '{}' '+' > /dev/null 2>&1 &
 else
   vimiv -s sort.shuffle true --command 'goto 1' ./* > /dev/null 2>&1 &
