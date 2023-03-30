@@ -21,6 +21,7 @@ let g:mapleader = '\'
 
 " Commands
 command -nargs=+ Indent call s:SetIndent(<f-args>)
+command -nargs=? Terminal call s:Terminal(<f-args>)
 
 " Shortcuts
 nnoremap <leader>i :ToggleIndent<CR>
@@ -56,4 +57,9 @@ function s:SetIndent(size, ...)
   let &softtabstop = a:size
   let &tabstop = a:size
   let &shiftwidth = a:size
+endfunction
+
+function s:Terminal(...)
+  let l:height = a:0 >= 1 ? a:1 : 12
+  execute printf('bot %ssplit +set\ winfixheight\ |\ startinsert term://fish', l:height)
 endfunction
