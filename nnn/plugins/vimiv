@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 if [ -d "${nnn}" ]; then
-  find "${nnn}" -type f \
+  find "${nnn}" -type f -maxdepth 2 \
     -not -path '*/.*' \
     '(' -iname '*.jpg' -or -iname '*.jpeg' -or -iname '*.png' -or -iname '*.gif' -or -iname '*.webp' -or -iname '*.svg' -or -iname '*.bmp' ')' \
     -exec vimiv -s sort.shuffle true --command 'goto 1' '{}' '+' > /dev/null 2>&1 &
