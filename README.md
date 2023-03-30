@@ -19,4 +19,7 @@ Apply the configuration:
 make
 ```
 
-Install the language servers and linters for neovim and its done!
+Then install the required applications.
+
+- Neovim: language servers and linters
+- MPV: [UOSC](https://github.com/tomasklaen/uosc)

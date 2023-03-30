@@ -1,10 +1,11 @@
-.PHONY: alacritty fish git neovim nnn taskwarrior utilities wm
+.PHONY: alacritty fish git mpv neovim nnn taskwarrior utilities system_utilities wm test
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-all: alacritty fish git neovim nnn taskwarrior utilities wm
+all: alacritty fish git mpv neovim nnn taskwarrior utilities wm
 	@echo '${bold}Done!${reset}'
+	@echo ' Install system utilities with: `sudo make system_utilities`'
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -31,6 +32,13 @@ git:
 	git config --global core.excludesfile $(CURDIR)/git/gitignore
 	git config --global core.pager 'less -SXF'
 	git config --global core.editor 'nvim'
+
+mpv:
+	@echo '${bold}>> MPV settings <<${reset}'
+	mkdir -p ~/.config/mpv/script-opts
+	ln -sf $(CURDIR)/mpv/mpv.conf ~/.config/mpv/mpv.conf
+	ln -sf $(CURDIR)/mpv/input.conf ~/.config/mpv/input.conf
+	ln -sf $(CURDIR)/mpv/uosc.conf ~/.config/mpv/script-opts/uosc.conf
 
 neovim:
 	@echo '${bold}>> Neovim settings <<${reset}'
@@ -59,6 +67,8 @@ utilities:
 	mkdir -p ~/.local/bin
 	ln -sf $(CURDIR)/utilities/bkptool.sh ~/.local/bin/bkptool
 	ln -sf $(CURDIR)/utilities/ffmeta.py ~/.local/bin/ffmeta
+
+system_utilities:
 	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
