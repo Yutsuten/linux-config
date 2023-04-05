@@ -72,11 +72,13 @@ system_utilities:
 	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
+	cp -af $(CURDIR)/utilities/system.sh /usr/local/bin/system
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/
+	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
+	ln -sf $(CURDIR)/window_manager/swaylock.conf ~/.config/swaylock/config
 	ln -sf $(CURDIR)/window_manager/waybar/config.json ~/.config/waybar/config
 	ln -sf $(CURDIR)/window_manager/waybar/style.css ~/.config/waybar/style.css
 	ln -sf $(CURDIR)/window_manager/dunstrc.conf ~/.config/dunst/dunstrc
