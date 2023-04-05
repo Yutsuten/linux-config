@@ -1,6 +1,6 @@
-#!/usr/bin/sh
+#!/bin/bash
 
-if [ -d "${nnn}" ]; then
+if [[ -d "${nnn}" ]]; then
   find "${nnn}" -type f -maxdepth 2 \
     -not -path '*/.*' \
     '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \

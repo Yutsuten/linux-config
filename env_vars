@@ -13,5 +13,3 @@ PAGER="less -P?n -R"
 VISUAL=nvim
 EDITOR=nvim
 BROWSER=firefox
-
-WINEDEBUG=fixme-all
