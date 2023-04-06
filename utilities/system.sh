@@ -27,7 +27,6 @@ case ${option} in
     systemctl poweroff
     ;;
   *)
-    printf "Invalid option.\n" >&2
     exit 1
     ;;
 esac
