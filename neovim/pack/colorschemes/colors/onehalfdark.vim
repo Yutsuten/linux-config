@@ -34,6 +34,7 @@ let s:comment_fg  = { 'gui': '#5c6370', 'cterm': '241' }
 let s:gutter_bg   = { 'gui': '#313640', 'cterm': '8' }
 let s:gutter_fg   = { 'gui': '#919baa', 'cterm': '7' }
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }
+let s:warning_fg  = { 'gui': '#af8700', 'cterm': '136'  }
 
 let s:cursor_line = { 'gui': '#313640', 'cterm': '8' }
 let s:color_col   = { 'gui': '#313640', 'cterm': '8' }
@@ -232,6 +233,10 @@ endif
 " }
 
 " Diagnostics {
+call s:h('DiagnosticError', s:red, '', '')
+call s:h('DiagnosticWarn', s:warning_fg, '', '')
+call s:h('DiagnosticInfo', s:blue, '', '')
+call s:h('DiagnosticHint', s:cyan, '', '')
 call s:h('DiagnosticSignError', s:red, s:gutter_bg, '')
 call s:h('DiagnosticSignWarn', s:yellow, s:gutter_bg, '')
 call s:h('DiagnosticSignInfo', s:blue, s:gutter_bg, '')
