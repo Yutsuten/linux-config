@@ -1,9 +1,9 @@
-.PHONY: alacritty fish git mpv neovim nnn taskwarrior utilities system_utilities wm test
+.PHONY: alacritty fish git mpv neovim nnn utilities system_utilities wm test
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-all: alacritty fish git mpv neovim nnn taskwarrior utilities wm
+all: alacritty fish git mpv neovim nnn utilities wm
 	@echo '${bold}Done!${reset}'
 	@echo ' Install system utilities with: `sudo make system_utilities`'
 
@@ -56,11 +56,6 @@ nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
-
-taskwarrior:
-	@echo '${bold}>> Scripts symbolic links <<${reset}'
-	mkdir -p ~/.task/hooks
-	ln -sf $(CURDIR)/taskwarrior/fellow-hook.sh ~/.task/hooks/on-exit-fellow-taskdone.sh
 
 utilities:
 	@echo '${bold}>> Utilities <<${reset}'
