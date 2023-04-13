@@ -10,7 +10,7 @@ It uses Sway as Window Manager.
 Clone the repository:
 
 ```shell
-git clone --recurse-submodules git@github.com:Yutsuten/linux-config.git ~/.linux_config
+git clone --recurse-submodules git@github.com:Yutsuten/linux-config.git ~/.config/linux
 ```
 
 Apply the configuration:
