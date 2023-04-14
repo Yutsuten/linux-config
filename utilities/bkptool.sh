@@ -35,9 +35,6 @@ if [[ ${BACKUP} = 1 ]]; then
     gpg --armor --export-secret-keys 281E7046D5349560 | gpg --output "${HOME}/Documents/GPG/gpg-master-keys.asc.gpg" --yes --symmetric -
   fi
 
-  echo '> Export taskwarrior'
-  task export > "${HOME}/Documents/taskwarrior.json"
-
   echo '> Backup 100% Orange juice save data'
   mkdir /tmp/100OJ_Save_Data
   cp -a ~/.steam/steam/steamapps/common/'100 Orange Juice'/user* /tmp/100OJ_Save_Data
