@@ -1,0 +1,9 @@
+[Unit]
+Description=clear old trash files
+
+[Service]
+Type=oneshot
+ExecStart=trash-empty 30
+
+[Install]
+WantedBy=multi-user.target
