@@ -71,7 +71,7 @@ system_utilities:
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/
+	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d
 	ln -sf $(CURDIR)/window_manager/sway.conf ~/.config/sway/config
 	ln -sf $(CURDIR)/window_manager/swaylock.conf ~/.config/swaylock/config
 	ln -sf $(CURDIR)/window_manager/waybar/config.json ~/.config/waybar/config
@@ -85,6 +85,7 @@ wm:
 	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af $(CURDIR)/window_manager/trash.service ~/.config/systemd/user/trash.service
 	cp -af $(CURDIR)/window_manager/trash.timer ~/.config/systemd/user/trash.timer
+	bash window_manager/pipewire/config.sh
 
 test:
 	cd utilities/ && python -m unittest ffmeta_test
