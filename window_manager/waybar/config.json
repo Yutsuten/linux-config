@@ -7,7 +7,8 @@
         "exec": "playerctl -f ' {{status}} {{trunc(title, 50)}}\n {{album}}   {{artist}}' metadata | sed -e 's/Playing/ /g' -e 's/Paused/ /g'",
         "interval": 1,
         "signal": 2,
-        "on-click": "playerctl play-pause"
+        "on-click": "playerctl play-pause",
+        "escape": true
     },
     "custom/weather": {
         "exec": "openweather",
