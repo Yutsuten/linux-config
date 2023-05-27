@@ -18,6 +18,7 @@
     "clock": {
         "interval": 1,
         "format": "{:%Y年%m月%d日 (%a)  %H:%M:%S}",
+        "format-alt": "{:%EY%m月%d日 (%a)  %H:%M:%S}",
         "tooltip-format": "<big>{:%Y年 %B}</big>\n<tt>{calendar}</tt>",
         "today-format": "<span background='#5294e2'><b>{}</b></span>",
         "format-calendar-weekdays": "<u><b>{}</b></u>"
