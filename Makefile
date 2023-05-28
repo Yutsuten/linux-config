@@ -39,6 +39,7 @@ mpv:
 	ln -sf $(CURDIR)/mpv/mpv.conf ~/.config/mpv/mpv.conf
 	ln -sf $(CURDIR)/mpv/input.conf ~/.config/mpv/input.conf
 	ln -sf $(CURDIR)/mpv/uosc.conf ~/.config/mpv/script-opts/uosc.conf
+	bash mpv/install_plugins.sh
 
 neovim:
 	@echo '${bold}>> Neovim settings <<${reset}'
