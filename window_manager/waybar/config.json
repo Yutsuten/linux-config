@@ -1,14 +1,18 @@
 {
     "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/mpris"],
-    "modules-center": ["custom/weather", "clock"],
+    "modules-left": ["sway/workspaces", "sway/mode", "mpris"],
+    "modules-center": ["clock", "custom/weather"],
     "modules-right": ["pulseaudio", "memory", "memory#swap", "cpu", "temperature", "sway/language", "tray"],
-    "custom/mpris": {
-        "exec": "playerctl -f ' {{status}} {{trunc(title, 50)}}\n {{album}}   {{artist}}' metadata | sed -e 's/Playing/ /g' -e 's/Paused/ /g'",
-        "interval": 1,
-        "signal": 2,
-        "on-click": "playerctl play-pause",
-        "escape": true
+    "mpris": {
+        "format": "{status_icon} {title}",
+        "max-length": 60,
+        "tooltip-format": " {album}   {artist}",
+        "status-icons": {
+            "playing": " ",
+            "paused": " ",
+            "stopped": " "
+        },
+        "ignored-players": ["firefox"]
     },
     "custom/weather": {
         "exec": "openweather",

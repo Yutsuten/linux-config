@@ -47,6 +47,7 @@ window#waybar {
 #pulseaudio,
 #tray,
 #language,
+#mpris,
 #mode {
     padding: 0 12px;
 }
