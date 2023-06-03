@@ -20,9 +20,22 @@
         "interval": 1,
         "format": "{:%Y年%m月%d日 (%a)  %H:%M:%S}",
         "format-alt": "{:%EY%m月%d日 (%a)  %H:%M:%S}",
-        "tooltip-format": "<big>{:%Y年 %B}</big>\n<tt>{calendar}</tt>",
-        "today-format": "<span background='#5294e2'><b>{}</b></span>",
-        "format-calendar-weekdays": "<u><b>{}</b></u>"
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": -1,
+            "format": {
+                "months": "<b>{}</b>",
+                "weekdays": "<u><b>{}</b></u>",
+                "today": "<span background='#5294e2'><b>{}</b></span>"
+            }
+        },
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
     "pulseaudio": {
         "format": "<span color='#52c7e2'>{icon}</span> {volume}%",
