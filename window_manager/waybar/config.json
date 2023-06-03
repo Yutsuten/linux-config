@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode", "mpris"],
     "modules-center": ["clock", "custom/weather"],
-    "modules-right": ["pulseaudio", "memory", "memory#swap", "cpu", "temperature", "sway/language", "tray"],
+    "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "tray", "sway/language"],
     "mpris": {
         "format": "{status_icon} {title}",
         "max-length": 60,
@@ -62,11 +62,7 @@
     },
     "memory": {
         "format": "<span color='#5294e2'></span> {used:0.1f}G / {total:0.1f}G",
-        "tooltip": false
-    },
-    "memory#swap": {
-        "format": "<span color='#e2e052'></span> {swapUsed:0.1f}G / {swapTotal:0.1f}G",
-        "tooltip": false
+        "tooltip-format": " {swapUsed:0.1f}G / {swapTotal:0.1f}G ({swapPercentage}%)"
     },
     "cpu": {
         "format": "<span color='#55c15c'></span> {load:0.2f}"
@@ -74,11 +70,11 @@
     "temperature": {
         "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
         "format": "<span color='#e2528f'>{icon}</span> {temperatureC}°C",
-        "format-icons": ["", "", ""],
-        "tooltip": false
+        "format-icons": ["", "", ""]
     },
     "sway/language": {
-        "tooltip": false
+        "format": "{flag}",
+        "tooltip-format": "{long}"
     },
     "tray": {
         "icon-size": 21,
