@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode", "mpris"],
     "modules-center": ["clock", "custom/weather"],
-    "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "tray", "sway/language"],
+    "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "sway/language", "tray"],
     "mpris": {
         "format": "{status_icon} {title}",
         "max-length": 60,
