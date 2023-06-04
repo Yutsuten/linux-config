@@ -6,7 +6,7 @@
     "mpris": {
         "format": "{status_icon} {title}",
         "max-length": 60,
-        "tooltip-format": " {album}   {artist}",
+        "tooltip-format": " {artist}\n {album}",
         "status-icons": {
             "playing": " ",
             "paused": " ",
