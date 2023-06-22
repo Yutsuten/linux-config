@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode", "mpris"],
+    "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock", "custom/weather"],
     "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "sway/language", "tray"],
     "mpris": {
