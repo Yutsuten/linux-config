@@ -14,7 +14,7 @@ function record --description 'Record screen using wf-recorder'
     if test (count $argv) -ge 1
         set folder_name (string join _ $folder_name $argv)
     end
-    echo "[INFO] Will record inside directory $folder_name/"
+    echo "[INFO] Will record in directory $folder_name/"
     mkdir $folder_name
 
     if test $_flag_m
@@ -23,10 +23,10 @@ function record --description 'Record screen using wf-recorder'
         set mic (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p')
         echo "  Speakers  : $speakers"
         echo "  Microphone: $mic"
-        pactl load-module module-loopback sink=mix source=$speakers
+        pw-loopback --capture=$speakers --capture-props='stream.capture.sink=true' --playback=mix &
+        set speakers_loopback_pid $last_pid
         pw-loopback --capture=$mic --capture-props='audio.position=[FL] stream.dont-remix=true' --playback=mix --playback-props='audio.position=[MONO]' &
         set mic_loopback_pid $last_pid
-
         echo '[AUDIO] Start recording "mix" source'
         pactl set-sink-volume mix 100%
         ffmpeg -loglevel warning -nostdin -f pulse -i mix.monitor -f s16le -acodec pcm_s16le -ac 2 $folder_name/mix.raw &
@@ -48,7 +48,7 @@ function record --description 'Record screen using wf-recorder'
         echo '[AUDIO] Stop recording "mix" source'
         kill --verbose $mix_pid
         echo '[AUDIO] Stop redirect speakers and mic streams to mix sink'
-        pactl unload-module module-loopback
+        kill --verbose $speakers_loopback_pid
         kill --verbose $mic_loopback_pid
     end
 
