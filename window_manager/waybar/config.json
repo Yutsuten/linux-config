@@ -58,6 +58,8 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol",
+        "on-scroll-up": "wp-volume 1%+",
+        "on-scroll-down": "wp-volume 1%-",
         "ignored-sinks": ["Audio/Sink Recording", "NullSink Mix", "Navi 21/23 HDMI/DP Audio Controller デジタルステレオ (HDMI)"]
     },
     "memory": {

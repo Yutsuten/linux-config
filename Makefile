@@ -69,6 +69,7 @@ system_utilities:
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
 	cp -af $(CURDIR)/utilities/system.sh /usr/local/bin/system
+	cp -af $(CURDIR)/utilities/wp-volume.sh /usr/local/bin/wp-volume
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
