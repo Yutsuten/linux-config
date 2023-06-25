@@ -4,15 +4,19 @@ set -e
 set -u
 set -o pipefail
 
-if [[ "$#" -ne 1 ]] || [[ $1 == -h ]]; then
+show_help() {
   echo "Usage: $0 [toggle-mute|VOL[%][-/+]]" >&2
   exit 1
+}
+
+if [[ "$#" -ne 1 ]] || [[ $1 == -h ]]; then
+  show_help
 fi
 
 if [[ $1 == toggle-mute ]]; then
   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 else
-  wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
+  wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1" > /dev/null 2>&1 || show_help
 fi
 
 read -ra state < <(wpctl get-volume @DEFAULT_AUDIO_SINK@)
