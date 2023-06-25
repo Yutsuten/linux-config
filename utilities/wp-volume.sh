@@ -4,7 +4,7 @@ set -e
 set -u
 set -o pipefail
 
-if [[ "$#" -ne 1 ]]; then
+if [[ "$#" -ne 1 ]] || [[ $1 == -h ]]; then
   echo "Usage: $0 [toggle-mute|VOL[%][-/+]]" >&2
   exit 1
 fi
