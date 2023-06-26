@@ -1,9 +1,9 @@
-.PHONY: alacritty fish git mpv neovim nnn utilities system_utilities wm test
+.PHONY: alacritty fish git mpv neovim nnn utilities system_utilities vimiv wm test
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-all: alacritty fish git mpv neovim nnn utilities wm
+all: alacritty fish git mpv neovim nnn utilities vimiv wm
 	@echo '${bold}Done!${reset}'
 	@echo ' Install system utilities with: `sudo make system_utilities`'
 
@@ -14,7 +14,7 @@ alacritty:
 
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
-	rm -rf ~/.config/fish/config.fish
+	rm -f ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/sway.fish ~/.config/fish/conf.d/sway.fish
 	ln -sf $(CURDIR)/fish/functions/aurupdate.fish ~/.config/fish/functions/aurupdate.fish
@@ -70,6 +70,13 @@ system_utilities:
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
 	cp -af $(CURDIR)/utilities/system.sh /usr/local/bin/system
 	cp -af $(CURDIR)/utilities/wp-volume.sh /usr/local/bin/wp-volume
+
+vimiv:
+	@echo '${bold}>> Vimiv settings <<${reset}'
+	mkdir -p ~/.config/vimiv
+	rm -f ~/.config/vimiv/vimiv.conf ~/.config/vimiv/keys.conf
+	ln -sf $(CURDIR)/vimiv/vimiv.conf ~/.config/vimiv/vimiv.conf
+	ln -sf $(CURDIR)/vimiv/keys.conf ~/.config/vimiv/keys.conf
 
 wm:
 	@echo '${bold}>> Window manager settings <<${reset}'
