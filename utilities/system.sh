@@ -5,25 +5,25 @@ option=$(echo ' Lock
  Sleep
  Hibernate
  Reboot
- Poweroff' | wofi --dmenu --prompt '' --cache-file /dev/null)
+ Poweroff' | wofi --dmenu --prompt '' --cache-file /dev/null | cut -d ' ' -f 2)
 
 case ${option} in
-  ' Lock')
+  'Lock')
     swaylock
     ;;
-  ' Logout')
+  'Logout')
     swaymsg exit
     ;;
-  ' Sleep')
+  'Sleep')
     systemctl suspend
     ;;
-  ' Hibernate')
+  'Hibernate')
     systemctl hibernate
     ;;
-  ' Reboot')
+  'Reboot')
     systemctl reboot
     ;;
-  ' Poweroff')
+  'Poweroff')
     systemctl poweroff
     ;;
   *)
