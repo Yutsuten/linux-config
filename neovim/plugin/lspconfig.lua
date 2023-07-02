@@ -1,7 +1,16 @@
 -- setup lsp servers
 require('lspconfig').pyright.setup{}
 require('lspconfig').ruff_lsp.setup{}
-require('lspconfig').tsserver.setup{}
+
+local vite_config_file = io.open('vite.config.ts', 'r')
+if vite_config_file ~= nil and io.close(vite_config_file) then
+  require('lspconfig').volar.setup{
+    filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+  }
+else
+  require('lspconfig').tsserver.setup{}
+end
+
 require('lspconfig').robotframework_ls.setup{
   settings = {
     robot = {
