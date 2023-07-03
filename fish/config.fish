@@ -4,6 +4,7 @@ if status is-interactive
     set -g fish_color_user blue
     set -g fish_color_host brmagenta
     set -g fish_color_host_remote yellow
+    set -g fish_color_autosuggestion white
     set -g VIRTUAL_ENV_DISABLE_PROMPT true
 
     alias identify 'identify -precision 3'

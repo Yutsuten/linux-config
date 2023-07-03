@@ -3,13 +3,10 @@ font:
     family: Source Code Pro
   size: 10.0
 
-colors:
+colors:  # One Half
   primary:
     background: '#282C34'
     foreground: '#DCDFE4'
-
-  cursor:
-    cursor: '#DCDFE4'
 
   normal:
     black: '#282C34'
@@ -22,7 +19,7 @@ colors:
     white: '#919BAA'
 
   bright:
-    black: '#313640'
+    black: '#5C6370'
     red: '#E06C75'
     green: '#98C379'
     yellow: '#E5C07B'
