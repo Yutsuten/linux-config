@@ -1,6 +1,11 @@
 # Vim / Neovim
 Session.vim
 
+# Neovim LSP
+.lsp-vue
+.lsp-typescript
+.lsp-robotframework
+
 # Ctags
 tags
 

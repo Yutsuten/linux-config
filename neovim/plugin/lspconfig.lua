@@ -1,30 +1,55 @@
--- setup lsp servers
+-- Configure LSP servers
+
+--- Alyways enabled (used in single file scripts)
 require('lspconfig').pyright.setup{}
 require('lspconfig').ruff_lsp.setup{}
 
-local vite_config_file = io.open('vite.config.ts', 'r')
-if vite_config_file ~= nil and io.close(vite_config_file) then
+--- Conditionally enabled (used only in projects)
+local lsp_file
+
+lsp_file = io.open('.lsp-vue', 'r')
+if lsp_file ~= nil and io.close(lsp_file) then
   require('lspconfig').volar.setup{
     filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
   }
 else
-  require('lspconfig').tsserver.setup{}
+  lsp_file = io.open('lsp-typescript', 'r')
+  if lsp_file ~= nil and io.close(lsp_file) then
+    require('lspconfig').tsserver.setup{}
+  end
 end
 
-require('lspconfig').robotframework_ls.setup{
-  settings = {
-    robot = {
-      lint = {robocop = {enabled = true}},
-      variables = {execdir = ''},
-    },
+lsp_file = io.open('.lsp-robotframework', 'r')
+if lsp_file ~= nil and io.close(lsp_file) then
+  require('lspconfig').robotframework_ls.setup{
+    settings = {
+      robot = {
+        lint = {robocop = {enabled = true}},
+        variables = {execdir = os.getenv('PWD')},
+      },
+    }
   }
-}
+end
 
--- diagnostics
+-- Diagnostics
+vim.diagnostic.config({virtual_text = false, underline = false, severity_sort = true})
+
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+
+local signs = {
+  Error = '●',
+  Warn = '●',
+  Info = '●',
+  Hint = '●',
+}
+
+for type, icon in pairs(signs) do
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, {text = icon, texthl = hl})
+end
 
 -- LSP features
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -45,19 +70,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>k', vim.lsp.buf.hover, bufopts)
   end,
 })
-
--- diagnostics signs
-local signs = {
-  Error = '●',
-  Warn = '●',
-  Info = '●',
-  Hint = '●',
-}
-
-for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, {text = icon, texthl = hl})
-end
-
--- diagnostics configuration
-vim.diagnostic.config({virtual_text = false, underline = false, severity_sort = true})
