@@ -18,29 +18,37 @@ let g:colors_name='onehalfdark'
 let colors_name='onehalfdark'
 
 
-let s:black       = { 'gui': '#282c34', 'cterm': '0'  }
-let s:red         = { 'gui': '#e06c75', 'cterm': '1'  }
-let s:green       = { 'gui': '#98c379', 'cterm': '2'  }
-let s:yellow      = { 'gui': '#e5c07b', 'cterm': '3'  }
-let s:blue        = { 'gui': '#61afef', 'cterm': '4'  }
-let s:purple      = { 'gui': '#c678dd', 'cterm': '5'  }
-let s:cyan        = { 'gui': '#56b6c2', 'cterm': '6'  }
-let s:white       = { 'gui': '#dcdfe4', 'cterm': '15' }
+let s:black       = { 'gui': '#282C34', 'cterm': '0'  }
+let s:red         = { 'gui': '#E06C75', 'cterm': '1'  }
+let s:green       = { 'gui': '#98C379', 'cterm': '2'  }
+let s:yellow      = { 'gui': '#E5C07B', 'cterm': '3'  }
+let s:blue        = { 'gui': '#61AFEF', 'cterm': '4'  }
+let s:magenta     = { 'gui': '#C678DD', 'cterm': '5'  }
+let s:cyan        = { 'gui': '#56B6C2', 'cterm': '6'  }
+let s:white       = { 'gui': '#919BAA', 'cterm': '7'  }
+let s:brblack     = { 'gui': '#5C6370', 'cterm': '8'  }
+let s:brred       = { 'gui': '#E06C75', 'cterm': '9'  }
+let s:brgreen     = { 'gui': '#98C379', 'cterm': '10' }
+let s:bryellow    = { 'gui': '#E5C07B', 'cterm': '11' }
+let s:brblue      = { 'gui': '#61AFEF', 'cterm': '12' }
+let s:brmagenta   = { 'gui': '#C678DD', 'cterm': '13' }
+let s:brcyan      = { 'gui': '#56B6C2', 'cterm': '14' }
+let s:brwhite     = { 'gui': '#DCDFE4', 'cterm': '15' }
 
-let s:fg          = s:white
+let s:fg          = s:brwhite
 let s:bg          = s:black
 
-let s:comment_fg  = { 'gui': '#5c6370', 'cterm': '8' }
+let s:comment_fg  = s:brblack
 let s:gutter_bg   = { 'gui': '#313640', 'cterm': '237' }
-let s:gutter_fg   = { 'gui': '#919baa', 'cterm': '7' }
+let s:gutter_fg   = s:white
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }
-let s:warning_fg  = { 'gui': '#af8700', 'cterm': '136'  }
+let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
 
-let s:cursor_line = { 'gui': '#313640', 'cterm': '8' }
-let s:color_col   = { 'gui': '#313640', 'cterm': '8' }
+let s:cursor_line = s:brblack
+let s:color_col   = s:brblack
 
-let s:selection   = { 'gui': '#474e5d', 'cterm': '239' }
-let s:vertsplit   = { 'gui': '#282c34', 'cterm': '0' }
+let s:selection   = { 'gui': '#474E5D', 'cterm': '239' }
+let s:vertsplit   = s:black
 
 
 function! s:h(group, fg, bg, attr)
@@ -68,8 +76,6 @@ call s:h('Normal', s:fg, '', '')
 call s:h('Cursor', s:bg, s:blue, '')
 call s:h('CursorColumn', '', s:cursor_line, '')
 call s:h('CursorLine', '', s:cursor_line, '')
-
-call s:h('LineNr', s:gutter_fg, s:gutter_bg, '')
 call s:h('CursorLineNr', s:fg, '', '')
 
 call s:h('DiffAdd', s:green, '', '')
@@ -84,7 +90,7 @@ call s:h('ErrorMsg', s:fg, '', '')
 call s:h('ModeMsg', s:fg, '', '')
 call s:h('MoreMsg', s:fg, '', '')
 call s:h('WarningMsg', s:red, '', '')
-call s:h('Question', s:purple, '', '')
+call s:h('Question', s:magenta, '', '')
 
 call s:h('Pmenu', s:bg, s:fg, '')
 call s:h('PmenuSel', s:fg, s:blue, '')
@@ -96,12 +102,6 @@ call s:h('SpellCap', s:yellow, '', '')
 call s:h('SpellLocal', s:yellow, '', '')
 call s:h('SpellRare', s:yellow, '', '')
 
-call s:h('StatusLine', s:blue, s:cursor_line, '')
-call s:h('StatusLineNC', s:comment_fg, s:cursor_line, '')
-call s:h('TabLine', s:comment_fg, s:cursor_line, '')
-call s:h('TabLineFill', s:comment_fg, s:cursor_line, '')
-call s:h('TabLineSel', s:fg, s:bg, '')
-
 call s:h('Visual', '', s:selection, '')
 call s:h('VisualNOS', '', s:selection, '')
 
@@ -111,7 +111,7 @@ call s:h('Directory', s:blue, '', '')
 call s:h('VertSplit', s:vertsplit, s:vertsplit, '')
 call s:h('Folded', s:fg, '', '')
 call s:h('FoldColumn', s:fg, '', '')
-call s:h('SignColumn', s:fg, '', '')
+call s:h('LineNr', s:gutter_fg, s:gutter_bg, '')
 
 call s:h('MatchParen', s:blue, '', 'underline')
 call s:h('SpecialKey', s:fg, '', '')
@@ -123,7 +123,7 @@ call s:h('WildMenu', s:fg, '', '')
 " Syntax colors {
 " Whitespace is defined in Neovim, not Vim.
 " See :help hl-Whitespace and :help hl-SpecialKey
-call s:h('Whitespace', s:gutter_fg, '', '')
+call s:h('Whitespace', s:white, '', '')
 call s:h('NonText', s:non_text, '', '')
 call s:h('Comment', s:comment_fg, '', 'italic')
 call s:h('Constant', s:cyan, '', '')
@@ -135,19 +135,19 @@ call s:h('Float', s:yellow, '', '')
 
 call s:h('Identifier', s:red, '', '')
 call s:h('Function', s:blue, '', '')
-call s:h('Statement', s:purple, '', '')
+call s:h('Statement', s:magenta, '', '')
 
-call s:h('Conditional', s:purple, '', '')
-call s:h('Repeat', s:purple, '', '')
-call s:h('Label', s:purple, '', '')
+call s:h('Conditional', s:magenta, '', '')
+call s:h('Repeat', s:magenta, '', '')
+call s:h('Label', s:magenta, '', '')
 call s:h('Operator', s:fg, '', '')
 call s:h('Keyword', s:red, '', '')
-call s:h('Exception', s:purple, '', '')
+call s:h('Exception', s:magenta, '', '')
 
 call s:h('PreProc', s:yellow, '', '')
-call s:h('Include', s:purple, '', '')
-call s:h('Define', s:purple, '', '')
-call s:h('Macro', s:purple, '', '')
+call s:h('Include', s:magenta, '', '')
+call s:h('Define', s:magenta, '', '')
+call s:h('Macro', s:magenta, '', '')
 call s:h('PreCondit', s:yellow, '', '')
 
 call s:h('Type', s:yellow, '', '')
@@ -164,7 +164,7 @@ call s:h('Debug', s:fg, '', '')
 call s:h('Underlined', s:fg, '', '')
 call s:h('Ignore', s:fg, '', '')
 call s:h('Error', s:red, s:gutter_bg, '')
-call s:h('Todo', s:purple, '', '')
+call s:h('Todo', s:magenta, '', '')
 " }
 
 
@@ -183,7 +183,7 @@ call s:h('GitSignsAddNr', s:green, s:gutter_bg, '')
 call s:h('GitSignsChangeNr', s:yellow, s:gutter_bg, '')
 call s:h('GitSignsDeleteNr', s:red, s:gutter_bg, '')
 " Nnn
-call s:h('NnnBorder', s:gutter_fg, '', '')
+call s:h('NnnBorder', s:white, '', '')
 " }
 
 
@@ -191,7 +191,7 @@ call s:h('NnnBorder', s:gutter_fg, '', '')
 call s:h('gitcommitComment', s:comment_fg, '', '')
 call s:h('gitcommitUnmerged', s:red, '', '')
 call s:h('gitcommitOnBranch', s:fg, '', '')
-call s:h('gitcommitBranch', s:purple, '', '')
+call s:h('gitcommitBranch', s:magenta, '', '')
 call s:h('gitcommitDiscardedType', s:red, '', '')
 call s:h('gitcommitSelectedType', s:green, '', '')
 call s:h('gitcommitHeader', s:fg, '', '')
@@ -216,17 +216,17 @@ if has('nvim')
   let g:terminal_color_2 = s:green.gui
   let g:terminal_color_3 = s:yellow.gui
   let g:terminal_color_4 = s:blue.gui
-  let g:terminal_color_5 = s:purple.gui
+  let g:terminal_color_5 = s:magenta.gui
   let g:terminal_color_6 = s:cyan.gui
   let g:terminal_color_7 = s:white.gui
-  let g:terminal_color_8 = s:black.gui
-  let g:terminal_color_9 = s:red.gui
-  let g:terminal_color_10 = s:green.gui
-  let g:terminal_color_11 = s:yellow.gui
-  let g:terminal_color_12 = s:blue.gui
-  let g:terminal_color_13 = s:purple.gui
-  let g:terminal_color_14 = s:cyan.gui
-  let g:terminal_color_15 = s:white.gui
+  let g:terminal_color_8 = s:brblack.gui
+  let g:terminal_color_9 = s:brred.gui
+  let g:terminal_color_10 = s:brgreen.gui
+  let g:terminal_color_11 = s:bryellow.gui
+  let g:terminal_color_12 = s:brblue.gui
+  let g:terminal_color_13 = s:brmagenta.gui
+  let g:terminal_color_14 = s:brcyan.gui
+  let g:terminal_color_15 = s:brwhite.gui
   let g:terminal_color_background = s:bg.gui
   let g:terminal_color_foreground = s:fg.gui
 endif
@@ -243,13 +243,19 @@ call s:h('DiagnosticSignInfo', s:blue, s:gutter_bg, '')
 call s:h('DiagnosticSignHint', s:cyan, s:gutter_bg, '')
 " }
 
+" TabLine {
+call s:h('TabLine', s:white, s:gutter_bg, '')
+call s:h('TabLineFill', s:white, s:gutter_bg, '')
+call s:h('TabLineSel', s:brwhite, s:blue, '')
+" }
+
 " StatusLine {
-call s:h('StatusLine', s:white, s:gutter_bg, '')
-call s:h('StatusLineNC', s:gutter_fg, s:gutter_bg, '')
-call s:h('StatusLineSub', s:gutter_bg, s:gutter_fg, '')
+call s:h('StatusLine', s:brwhite, s:gutter_bg, '')
+call s:h('StatusLineNC', s:white, s:gutter_bg, '')
+call s:h('StatusLineSub', s:gutter_bg, s:white, '')
 call s:h('StatusLineRed', s:gutter_bg, s:red, '')
 call s:h('StatusLineGreen', s:gutter_bg, s:green, '')
 call s:h('StatusLineYellow', s:gutter_bg, s:yellow, '')
 call s:h('StatusLineBlue', s:gutter_bg, s:blue, '')
-call s:h('StatusLineMagenta', s:gutter_bg, s:purple, '')
+call s:h('StatusLineMagenta', s:gutter_bg, s:magenta, '')
 " }

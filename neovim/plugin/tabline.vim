@@ -39,7 +39,7 @@ function UpdateTabLine()
     else
       let tabline .= '%#TabLine#'
     endif
-    let tabline .= ' %{GetTabLabel(' . tabnum . ')} '
+    let tabline .= ' [%{GetTabLabel(' . tabnum . ')}] '
   endfor
   let tabline .= '%#TabLineFill#%T'
   return tabline
