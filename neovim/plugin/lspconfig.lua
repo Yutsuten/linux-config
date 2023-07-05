@@ -13,7 +13,7 @@ if lsp_file ~= nil and io.close(lsp_file) then
     filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
   }
 else
-  lsp_file = io.open('lsp-typescript', 'r')
+  lsp_file = io.open('.lsp-typescript', 'r')
   if lsp_file ~= nil and io.close(lsp_file) then
     require('lspconfig').tsserver.setup{}
   end
