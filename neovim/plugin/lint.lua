@@ -3,6 +3,7 @@ require('lint').linters_by_ft = {
   javascriptreact = {'eslint'},
   typescript = {'eslint'},
   typescriptreact = {'eslint'},
+  vue = {'eslint'},
   sh = {'shellcheck'},
   vim = {'vint'},
   lua = {'luacheck'},
