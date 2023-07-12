@@ -2,4 +2,3 @@ insensitive=true
 allow_images=true
 no_actions=true
 columns=2
-drun-print_command=true
