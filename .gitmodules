@@ -28,3 +28,6 @@
 [submodule "neovim/pack/jsx-pretty"]
 	path = neovim/pack/jsx-pretty
 	url = git@github.com:MaxMEllon/vim-jsx-pretty.git
+[submodule "neovim/pack/vue"]
+	path = neovim/pack/vue
+	url = git@github.com:leafOfTree/vim-vue-plugin.git
