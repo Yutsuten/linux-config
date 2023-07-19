@@ -13,6 +13,8 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=4
 set sessionoptions-=buffers
+set sessionoptions-=folds
+set sessionoptions-=help
 set sessionoptions+=globals
 set wildignorecase
 
