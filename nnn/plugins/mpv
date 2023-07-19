@@ -1,10 +1,31 @@
 #!/bin/bash
 
+set -e
+set -u
+set -o pipefail
+
+echo -n "Play '${nnn}' with MPV. Shuffle (y/N)? "
+read -r shuffle
+
 if [[ -d "${nnn}" ]]; then
-  find "${nnn}" -type f -maxdepth 2 \
-    -not -path '*/.*' \
-    '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
-    -exec mpv --profile=music '{}' '+' &
+  if [[ "${shuffle}" == [yY] ]]; then
+    find "${nnn}" -type f -maxdepth 2 \
+      -not -path '*/.*' \
+      '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
+      -exec mpv --profile=music --shuffle --loop-playlist '{}' '+' &
+  else
+    find "${nnn}" -type f -maxdepth 2 \
+      -not -path '*/.*' \
+      '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
+      -print0 \
+        | sort -nz \
+        | xargs -0 mpv --profile=music &
+  fi
 else
-  mpv --profile=music "${nnn}" &
+  if [[ "${shuffle}" == [yY] ]]; then
+    mpv --profile=music --shuffle --loop-playlist "${nnn}" &
+  else
+    mpv --profile=music "${nnn}" &
+  fi
 fi
+
