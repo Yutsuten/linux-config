@@ -9,13 +9,11 @@ read -r shuffle
 
 if [[ -d "${nnn}" ]]; then
   if [[ "${shuffle}" == [yY] ]]; then
-    find "${nnn}" -type f -maxdepth 2 \
-      -not -path '*/.*' \
+    find "${nnn}" -maxdepth 2 -type f -not -path '*/.*' \
       '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
       -exec mpv --profile=music --shuffle --loop-playlist '{}' '+' &
   else
-    find "${nnn}" -type f -maxdepth 2 \
-      -not -path '*/.*' \
+    find "${nnn}" -maxdepth 2 -type f -not -path '*/.*' \
       '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
       -print0 \
         | sort -nz \
@@ -28,4 +26,3 @@ else
     mpv --profile=music "${nnn}" &
   fi
 fi
-
