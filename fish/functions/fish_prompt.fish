@@ -49,7 +49,7 @@ function prompt_state
     else if set -q nnn
         echo [nnn:$nnn]
     else
-        date '+[%F_%T]'
+        date '+[%H:%M]'
     end
 end
 

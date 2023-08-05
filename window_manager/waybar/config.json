@@ -21,9 +21,9 @@
         "format": "{}"
     },
     "clock": {
-        "interval": 1,
-        "format": "{:%Y年%m月%d日 (%a)  %H:%M:%S}",
-        "format-alt": "{:%EY%m月%d日 (%a)  %H:%M:%S}",
+        "interval": 60,
+        "format": "{:%Y年%m月%d日 (%a)  %H:%M}",
+        "format-alt": "{:%EY%m月%d日 (%a)  %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "calendar": {
             "mode": "month",
