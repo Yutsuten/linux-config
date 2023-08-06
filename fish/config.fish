@@ -10,6 +10,7 @@ if status is-interactive
     alias identify 'identify -precision 3'
     alias ssh 'env TERM=xterm-256color ssh'
     alias vimiv 'vimiv --log-level error'
+    alias clear 'clear && neofetch'
 
     fish_add_path ~/.local/bin $PYENV_ROOT/bin
     pyenv init - | source
