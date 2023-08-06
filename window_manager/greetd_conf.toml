@@ -1,0 +1,8 @@
+/etc/greetd/config.toml
+
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --time --time-format '%Y-%m-%d %H:%M' --remember --asterisks --cmd sway"
+user = "greeter"

@@ -90,10 +90,11 @@ wm:
 	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
 	ln -sf $(CURDIR)/window_manager/wofi/config ~/.config/wofi/config
 	ln -sf $(CURDIR)/window_manager/wofi/style.css ~/.config/wofi/style.css
-	cp -af $(CURDIR)/window_manager/wallpaper.service ~/.config/systemd/user/wallpaper.service
-	cp -af $(CURDIR)/window_manager/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
-	cp -af $(CURDIR)/window_manager/trash.service ~/.config/systemd/user/trash.service
-	cp -af $(CURDIR)/window_manager/trash.timer ~/.config/systemd/user/trash.timer
+	cp -af $(CURDIR)/window_manager/systemd/wallpaper.service ~/.config/systemd/user/wallpaper.service
+	cp -af $(CURDIR)/window_manager/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
+	cp -af $(CURDIR)/window_manager/systemd/trash.service ~/.config/systemd/user/trash.service
+	cp -af $(CURDIR)/window_manager/systemd/trash.timer ~/.config/systemd/user/trash.timer
+	cp -af $(CURDIR)/window_manager/greetd_conf.toml /etc/greetd/config.toml
 	bash window_manager/pipewire/config.sh
 
 test:
