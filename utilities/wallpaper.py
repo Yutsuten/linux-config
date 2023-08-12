@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-'''
-Set wallpaper in sway.
-'''
+"""Set wallpaper in sway."""
 
 import argparse
 import os
@@ -9,12 +7,12 @@ import random
 import subprocess
 import sys
 
-DIRECTORY = os.path.expanduser('~/Pictures/Wallpapers/Active')
+DIRECTORY = os.path.expanduser('~/Pictures/Images/Wallpapers/Active')
 HISTORY_PATH = os.path.expanduser('~/.cache/wallpaper')
 
 
 def main(**argv):
-    '''Main function of wallpaper.py'''
+    """Main function."""
     if argv['random']:
         result = set_random_wallpaper()
     elif argv['restore']:
@@ -23,7 +21,7 @@ def main(**argv):
 
 
 def set_random_wallpaper():
-    '''Change to a random wallpaper.'''
+    """Change to a random wallpaper."""
     wallpaper_list = os.listdir(DIRECTORY)
     if not wallpaper_list:
         return 1
@@ -58,10 +56,10 @@ def set_random_wallpaper():
 
 
 def restore_wallpaper():
-    '''Restore the last wallpaper used.
+    """Restore the last wallpaper used.
 
     Fallback to a random wallpaper if the last wallpaper is not available.
-    '''
+    """
     if not os.path.isfile(HISTORY_PATH):
         return set_random_wallpaper()
 
