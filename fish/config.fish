@@ -11,6 +11,8 @@ if status is-interactive
     alias ssh 'env TERM=xterm-256color ssh'
     alias vimiv 'vimiv --log-level error'
     alias clear 'clear && neofetch'
+    alias ffmpeg 'ffmpeg -hide_banner'
+    alias ffprobe 'ffprobe -hide_banner'
 
     fish_add_path ~/.local/bin $PYENV_ROOT/bin
     pyenv init - | source
