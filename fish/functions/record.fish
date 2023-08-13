@@ -29,14 +29,14 @@ function record --description 'Record screen using wf-recorder'
         set mic_loopback_pid $last_pid
         echo '[AUDIO] Start recording "mix" source'
         pactl set-sink-volume mix 100%
-        ffmpeg -loglevel warning -nostdin -f pulse -i mix.monitor $folder_name/mix.flac &
+        command ffmpeg -loglevel warning -nostdin -f pulse -i mix.monitor $folder_name/mix.flac &
         set mix_pid $last_pid
     end
 
     if test $_flag_r
         echo '[AUDIO] Start recording "recording" source'
         pactl set-sink-volume recording 100%
-        ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor $folder_name/rec.flac &
+        command ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor $folder_name/rec.flac &
         set recording_pid $last_pid
     end
 
