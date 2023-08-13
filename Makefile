@@ -26,6 +26,7 @@ fish:
 	ln -sf $(CURDIR)/fish/functions/passgen.fish ~/.config/fish/functions/passgen.fish
 	ln -sf $(CURDIR)/fish/functions/record.fish ~/.config/fish/functions/record.fish
 	ln -sf $(CURDIR)/fish/functions/clicker.fish ~/.config/fish/functions/clicker.fish
+	ln -sf $(CURDIR)/fish/functions/bkptool.fish ~/.config/fish/functions/bkptool.fish
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
@@ -61,7 +62,6 @@ nnn:
 utilities:
 	@echo '${bold}>> Utilities <<${reset}'
 	mkdir -p ~/.local/bin
-	ln -sf $(CURDIR)/utilities/bkptool.sh ~/.local/bin/bkptool
 	ln -sf $(CURDIR)/utilities/ffmeta.py ~/.local/bin/ffmeta
 
 system_utilities:
