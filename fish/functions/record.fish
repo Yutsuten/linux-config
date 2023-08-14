@@ -58,5 +58,5 @@ function record --description 'Record screen using wf-recorder'
     end
 
     echo 'Finish!'
-    sleep 0.1
+    sleep 0.2
 end
