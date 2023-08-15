@@ -27,6 +27,7 @@ fish:
 	ln -sf $(CURDIR)/fish/functions/record.fish ~/.config/fish/functions/record.fish
 	ln -sf $(CURDIR)/fish/functions/clicker.fish ~/.config/fish/functions/clicker.fish
 	ln -sf $(CURDIR)/fish/functions/bkptool.fish ~/.config/fish/functions/bkptool.fish
+	ln -sf $(CURDIR)/fish/functions/process_photos.fish ~/.config/fish/functions/process_photos.fish
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
