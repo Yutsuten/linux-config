@@ -31,7 +31,7 @@ function bkptool --description 'Backup and restore tool'
         echo 'Generate 100% Orange Juice save data backup'
         mkdir /tmp/100OJ_Save_Data
         cp -a ~/.steam/steam/steamapps/common/'100 Orange Juice'/user* /tmp/100OJ_Save_Data
-        tar --zstd -cf "$HOME/Documents/100OJ_Save_Data.zst" -C /tmp 100OJ_Save_Data
+        tar --zstd -cf "$HOME/Documents/Games/100OJ/100OJ_Save_Data.zst" -C /tmp 100OJ_Save_Data
         rm -rf /tmp/100OJ_Save_Data
 
         for dir in $sync_dirs
