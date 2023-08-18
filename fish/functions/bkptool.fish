@@ -8,7 +8,7 @@ function bkptool --description 'Backup and restore tool'
     end
 
     set bkp_dir '/media/hdd1'
-    set sync_dirs Documents Music Pictures Videos
+    set sync_dirs Desktop Documents Music Pictures Videos
 
     if not lsblk | grep --fixed-strings --quiet $bkp_dir
         echo 'FAIL: External drive not mounted.' >&2
