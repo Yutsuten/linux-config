@@ -7,13 +7,13 @@ function phonesync
     set options --inplace --omit-dir-times --no-perms --update --recursive --delete
 
     echo 'Sync notes to phone'
-    rsync $options ~/Documents/Notes/ /media/mtp/SDカード/Documents/Notes/
+    rsync $options ~/Documents/Notes/ /media/mtp/SDカード/Documents/
 
     echo 'Sync photos to phone'
-    rsync $options ~/Pictures/Photos/ /media/mtp/SDカード/DCIM/Camera/
+    rsync $options ~/Pictures/Photos/ /media/mtp/SDカード/DCIM/Camera/Photos/
 
     echo 'Sync videos to phone'
-    rsync $options ~/Videos/Camera/ /media/mtp/SDカード/Movies/
+    rsync $options ~/Videos/Camera/ /media/mtp/SDカード/DCIM/Camera/Videos/
 
     echo 'Finish!'
 end
