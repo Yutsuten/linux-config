@@ -1,9 +1,9 @@
 function bkptool --description 'Backup and restore tool'
-    argparse --stop-nonopt 'h/help' 'r/restore' 'g/gpg' -- $argv
+    argparse --stop-nonopt 'h/help' 'r/restore' 'g/gpg' 'o/osu' -- $argv
     or return
 
     if set -ql _flag_help
-        echo 'Usage: bkptool [-h|--help] [-r|--restore] [-g|--gpg]' >&2
+        echo 'Usage: bkptool [-h|--help] [-r|--restore] [-g|--gpg] [-o|--osu]' >&2
         return 0
     end
 
@@ -39,8 +39,10 @@ function bkptool --description 'Backup and restore tool'
             rsync --archive --update --delete "$HOME/$dir/" "$bkp_dir/$dir/"
         end
 
-        echo 'Backup osu!lazer'
-        tar --zstd -cf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share osu
+        if set -ql _flag_osu
+            echo 'Backup osu!lazer'
+            tar --zstd -cf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share osu
+        end
     end
     echo 'Finish!'
 end
