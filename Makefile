@@ -61,11 +61,6 @@ nnn:
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
-utilities:
-	@echo '${bold}>> Utilities <<${reset}'
-	mkdir -p ~/.local/bin
-	ln -sf $(CURDIR)/utilities/ffmeta.py ~/.local/bin/ffmeta
-
 system_utilities:
 	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
