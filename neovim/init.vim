@@ -15,7 +15,6 @@ set tabstop=4
 set sessionoptions-=buffers
 set sessionoptions-=folds
 set sessionoptions-=help
-set sessionoptions+=globals
 set wildignorecase
 
 let g:netrw_banner=0
