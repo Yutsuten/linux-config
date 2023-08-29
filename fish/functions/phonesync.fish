@@ -23,13 +23,13 @@ function phonesync
             set cmd:fail-exit true;
             open -p $argv[2] -u $argv[3] $argv[1];
             echo '> Syncing notes';
-            mirror --reverse --parallel=10 --only-newer --delete --no-perms --verbose ~/Documents/Notes/ /Documents;
+            mirror --reverse --parallel=10 --ignore-time --delete --no-perms --verbose ~/Documents/Notes/ /Documents;
             echo '> Syncing musics';
-            mirror --reverse --parallel=10 --only-newer --delete --no-perms --verbose ~/Music/ /Music;
+            mirror --reverse --parallel=10 --ignore-time --delete --no-perms --verbose ~/Music/ /Music;
             echo '> Syncing photos';
-            mirror --reverse --parallel=10 --only-newer --delete --no-perms --verbose ~/Pictures/Photos/ /DCIM/Camera/Photos;
+            mirror --reverse --parallel=10 --ignore-time --delete --no-perms --verbose ~/Pictures/Photos/ /DCIM/Camera/Photos;
             echo '> Syncing videos';
-            mirror --reverse --parallel=10 --only-newer --delete --no-perms --verbose ~/Videos/Camera/ /DCIM/Camera/Videos;
+            mirror --reverse --parallel=10 --ignore-time --delete --no-perms --verbose ~/Videos/Camera/ /DCIM/Camera/Videos;
         "
         echo 'Finish!'
         return 0
