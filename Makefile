@@ -1,11 +1,11 @@
-.PHONY: alacritty fish git mpv neovim nnn utilities system_utilities vimiv wm test
+.PHONY: alacritty fish git mpv neovim nnn utilities system vimiv wm test
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
 all: alacritty fish git mpv neovim nnn utilities vimiv wm
 	@echo '${bold}Done!${reset}'
-	@echo ' Install system utilities with: `sudo make system_utilities`'
+	@echo ' Add system settings with: `sudo make system`'
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -61,12 +61,13 @@ nnn:
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
-system_utilities:
+system:
 	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
 	cp -af $(CURDIR)/utilities/system.sh /usr/local/bin/system
 	cp -af $(CURDIR)/utilities/wp-volume.sh /usr/local/bin/wp-volume
+	cp -af $(CURDIR)/window_manager/greetd_conf.toml /etc/greetd/config.toml
 
 vimiv:
 	@echo '${bold}>> Vimiv settings <<${reset}'
@@ -91,7 +92,6 @@ wm:
 	cp -af $(CURDIR)/window_manager/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af $(CURDIR)/window_manager/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af $(CURDIR)/window_manager/systemd/trash.timer ~/.config/systemd/user/trash.timer
-	cp -af $(CURDIR)/window_manager/greetd_conf.toml /etc/greetd/config.toml
 	bash window_manager/pipewire/config.sh
 
 test:
