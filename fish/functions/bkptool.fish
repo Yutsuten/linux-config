@@ -1,9 +1,9 @@
 function bkptool --description 'Backup and restore tool'
-    argparse --stop-nonopt 'h/help' 'r/restore' 'g/gpg' 'o/osu' -- $argv
+    argparse --stop-nonopt 'h/help' 'r/restore' 'o/osu' -- $argv
     or return
 
     if set -ql _flag_help
-        echo 'Usage: bkptool [-h|--help] [-r|--restore] [-g|--gpg] [-o|--osu]' >&2
+        echo 'Usage: bkptool [-h|--help] [-r|--restore] [-o|--osu]' >&2
         return 0
     end
 
@@ -23,10 +23,6 @@ function bkptool --description 'Backup and restore tool'
         end
     else
         echo 'Start backup'
-        if set -ql _flag_gpg
-            echo 'Generate GPG secret keys backup'
-            gpg --armor --export-secret-keys 281E7046D5349560 | gpg --output "$HOME/Documents/GPG/gpg-master-keys.asc.gpg" --yes --symmetric -
-        end
 
         echo 'Generate 100% Orange Juice save data backup'
         mkdir /tmp/100OJ_Save_Data
