@@ -20,6 +20,7 @@ case ${option} in
     systemctl suspend
     ;;
   'Hibernate')
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 50%
     systemctl hibernate
     ;;
   'Reboot')
