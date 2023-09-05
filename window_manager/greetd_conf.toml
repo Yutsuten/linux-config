@@ -1,5 +1,3 @@
-/etc/greetd/config.toml
-
 [terminal]
 vt = 1
 
