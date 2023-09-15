@@ -23,13 +23,6 @@ function bkptool --description 'Backup and restore tool'
         end
     else
         echo 'Start backup'
-
-        echo 'Generate 100% Orange Juice save data backup'
-        mkdir /tmp/100OJ_Save_Data
-        cp -a ~/.steam/steam/steamapps/common/'100 Orange Juice'/user* /tmp/100OJ_Save_Data
-        tar --zstd -cf "$HOME/Documents/Games/100OJ/100OJ_Save_Data.zst" -C /tmp 100OJ_Save_Data
-        rm -rf /tmp/100OJ_Save_Data
-
         for dir in $sync_dirs
             echo "Syncing $dir"
             rsync --archive --update --delete "$HOME/$dir/" "$bkp_dir/$dir/"
@@ -39,6 +32,15 @@ function bkptool --description 'Backup and restore tool'
             echo 'Backup osu!lazer'
             tar --zstd -cf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share osu
         end
+
+        echo 'Backup thunderbird'
+        tar --zstd -cf "$bkp_dir/thunderbird.tar.zst" -C ~ .thunderbird
+
+        echo 'Backup 100% Orange Juice'
+        mkdir /tmp/100OJ_Save_Data
+        cp -a ~/.steam/steam/steamapps/common/'100 Orange Juice'/user* /tmp/100OJ_Save_Data
+        tar --zstd -cf "$bkp_dir/100OJ_Save_Data.tar.zst" -C /tmp 100OJ_Save_Data
+        rm -rf /tmp/100OJ_Save_Data
     end
     echo 'Finish!'
 end
