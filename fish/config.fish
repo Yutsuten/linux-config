@@ -7,6 +7,7 @@ if status is-interactive
     set -g fish_color_autosuggestion white
     set -g VIRTUAL_ENV_DISABLE_PROMPT true
 
+    alias notes 'nvim -S ~/Desktop/Session.vim'
     alias identify 'identify -precision 3'
     alias ssh 'env TERM=xterm-256color ssh'
     alias vimiv 'vimiv --log-level error'
