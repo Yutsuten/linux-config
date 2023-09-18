@@ -25,7 +25,7 @@ def main(**argv: bool) -> Literal[0, 1]:
 
 
 def set_wallpaper(wallpaper_path: Path) -> None:
-    """Set wallpaper and lock image."""
+    """Set wallpaper to specified image."""
     try:
         subprocess.run(
             ['/usr/bin/swaymsg', 'output', '*', 'bg', wallpaper_path, 'fill'],  # noqa: S603
@@ -33,17 +33,6 @@ def set_wallpaper(wallpaper_path: Path) -> None:
         )
     except subprocess.CalledProcessError:
         print('Failed to apply wallpaper. Sway is not running.')  # noqa: T201
-
-    if str(wallpaper_path).lower().endswith('.png'):
-        subprocess.run(
-            ['/usr/bin/cp', wallpaper_path, WALLPAPERS_PATH / Path('Swaylock/image.png')],  # noqa: S603
-            check=True,
-        )
-    else:
-        subprocess.run(
-            ['/usr/bin/convert', wallpaper_path, WALLPAPERS_PATH / Path('Swaylock/image.png')],  # noqa: S603
-            check=True,
-        )
 
 
 def set_random_wallpaper() -> Literal[0, 1]:
