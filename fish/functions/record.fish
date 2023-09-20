@@ -41,7 +41,7 @@ function record --description 'Record screen using wf-recorder'
     end
 
     echo '[VIDEO] Start recording wayland screen'
-    wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4
+    nice -n -5 wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4
     echo '[VIDEO] Stop recording wayland screen'
 
     if test $_flag_m
