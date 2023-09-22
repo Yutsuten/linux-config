@@ -29,6 +29,7 @@ fish:
 	ln -sf $(CURDIR)/fish/functions/bkptool.fish ~/.config/fish/functions/bkptool.fish
 	ln -sf $(CURDIR)/fish/functions/process_photos.fish ~/.config/fish/functions/process_photos.fish
 	ln -sf $(CURDIR)/fish/functions/phonesync.fish ~/.config/fish/functions/phonesync.fish
+	ln -sf $(CURDIR)/fish/functions/tts.fish ~/.config/fish/functions/tts.fish
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
