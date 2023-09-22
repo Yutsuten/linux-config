@@ -1,6 +1,5 @@
 function aurupdate --description 'Update AUR packages'
     echo ':: Update AUR packages'
-    pyenv global system
     set -l count $(ls -1 ~/.local/aur | wc -l)
     set -l cur 1
     for aur_dir in ~/.local/aur/*

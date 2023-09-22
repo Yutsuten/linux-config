@@ -1,6 +1,5 @@
 if status is-interactive
     set -gx GPG_TTY (tty)
-    set -gx PYENV_ROOT $HOME/.cache/pyenv
     set -g fish_color_user blue
     set -g fish_color_host brmagenta
     set -g fish_color_host_remote yellow
@@ -15,8 +14,7 @@ if status is-interactive
     alias ffmpeg 'ffmpeg -hide_banner'
     alias ffprobe 'ffprobe -hide_banner'
 
-    fish_add_path ~/.local/bin $PYENV_ROOT/bin
-    pyenv init - | source
+    fish_add_path ~/.local/bin
 end
 
 function fish_greeting
