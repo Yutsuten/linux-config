@@ -1,9 +1,9 @@
 function tts --description 'Text-to-Speech using Google API'
-    argparse --min-args 1 'h/help' 'b/boy' 'g/girl' -- $argv
+    argparse --min-args 1 'h/help' 'g/girl' -- $argv
     or return
 
     if set -ql _flag_help
-        echo 'Usage: tts [-h|--help] [-b|--boy] [-g|--girl] TEXT' >&2
+        echo 'Usage: tts [-h|--help] [-g|--girl] TEXT' >&2
         return 0
     end
 
@@ -13,6 +13,11 @@ function tts --description 'Text-to-Speech using Google API'
         set voice ja-JP-Wavenet-C
     end
     set filename {$voice}_{$argv}.ogg
+
+    if test -f $filename
+        echo "$filename already exists!" >&2
+        return 1
+    end
 
     curl --silent -X POST -H 'Content-Type:application/json' \
       -d '{"audioConfig": {"audioEncoding": "OGG_OPUS"}, "input": {"ssml": "<speak>'"$argv"'</speak>"}, "voice": {"languageCode": "ja-JP", "name": "'$voice'"}}' \
