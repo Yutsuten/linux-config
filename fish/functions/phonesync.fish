@@ -23,7 +23,7 @@ function phonesync
         echo 'Finish!'
         return 0
     else if test (count $argv) -eq 3
-        set options --reverse --parallel=3 --ignore-time --delete --no-perms --exclude-glob='.*/' --verbose
+        set options --reverse --no-symlinks --ignore-time --delete --no-perms --exclude-glob='.*/' --verbose
         echo "Accessing $argv[3]@$argv[1]:$argv[2]"
         lftp -c "
             set cmd:fail-exit true;
