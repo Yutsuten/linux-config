@@ -1,8 +1,14 @@
 -- Configure LSP servers
+local cur_dir = os.getenv('PWD')
+local is_local = not string.match(cur_dir, '^/media/sshfs/')
 
 --- Alyways enabled (used in single file scripts)
-require('lspconfig').pyright.setup{}
-require('lspconfig').ruff_lsp.setup{}
+require('lspconfig').pyright.setup{
+  autostart = is_local,
+}
+require('lspconfig').ruff_lsp.setup{
+  autostart = is_local,
+}
 
 --- Conditionally enabled (used only in projects)
 local lsp_file
@@ -10,24 +16,29 @@ local lsp_file
 lsp_file = io.open('.lsp-vue', 'r')
 if lsp_file ~= nil and io.close(lsp_file) then
   require('lspconfig').volar.setup{
-    filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+    autostart = is_local,
+    filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
   }
 else
   lsp_file = io.open('.lsp-typescript', 'r')
   if lsp_file ~= nil and io.close(lsp_file) then
-    require('lspconfig').tsserver.setup{}
+    require('lspconfig').tsserver.setup{
+      autostart = is_local,
+      filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
+    }
   end
 end
 
 lsp_file = io.open('.lsp-robotframework', 'r')
 if lsp_file ~= nil and io.close(lsp_file) then
   require('lspconfig').robotframework_ls.setup{
+    autostart = is_local,
     settings = {
       robot = {
         lint = {robocop = {enabled = true}},
-        variables = {execdir = os.getenv('PWD')},
+        variables = {execdir = cur_dir},
       },
-    }
+    },
   }
 end
 
