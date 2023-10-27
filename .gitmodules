@@ -19,9 +19,6 @@
 [submodule "neovim/pack/robotframework"]
 	path = neovim/pack/opt/robotframework
 	url = git@github.com:rasjani/robotframework-vim.git
-[submodule "neovim/pack/nnn"]
-	path = neovim/pack/start/nnn
-	url = git@github.com:luukvbaal/nnn.nvim.git
 [submodule "neovim/pack/fish"]
 	path = neovim/pack/start/fish
 	url = git@github.com:nickeb96/fish.vim.git
