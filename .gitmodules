@@ -1,33 +1,33 @@
 [submodule "nvim/plugins/vim-python-pep8-indent"]
-	path = neovim/pack/python-pep8-indent
+	path = neovim/pack/start/python-pep8-indent
 	url = git@github.com:Vimjas/vim-python-pep8-indent.git
 [submodule "nvim/pack/vim-fugitive"]
-	path = neovim/pack/fugitive
+	path = neovim/pack/opt/fugitive
 	url = git@github.com:tpope/vim-fugitive.git
 [submodule "neovim/pack/lspconfig"]
-	path = neovim/pack/lspconfig
+	path = neovim/pack/start/lspconfig
 	url = git@github.com:neovim/nvim-lspconfig.git
 [submodule "neovim/pack/lint"]
-	path = neovim/pack/lint
+	path = neovim/pack/start/lint
 	url = git@github.com:mfussenegger/nvim-lint.git
 [submodule "gitsigns"]
-	path = neovim/pack/gitsigns
+	path = neovim/pack/start/gitsigns
 	url = git@github.com:lewis6991/gitsigns.nvim.git
 [submodule "neovim/pack/plenary"]
-	path = neovim/pack/plenary
+	path = neovim/pack/start/plenary
 	url = git@github.com:nvim-lua/plenary.nvim.git
 [submodule "neovim/pack/robotframework"]
-	path = neovim/pack/robotframework
+	path = neovim/pack/opt/robotframework
 	url = git@github.com:rasjani/robotframework-vim.git
 [submodule "neovim/pack/nnn"]
-	path = neovim/pack/nnn
+	path = neovim/pack/start/nnn
 	url = git@github.com:luukvbaal/nnn.nvim.git
 [submodule "neovim/pack/fish"]
-	path = neovim/pack/fish
+	path = neovim/pack/start/fish
 	url = git@github.com:nickeb96/fish.vim.git
 [submodule "neovim/pack/jsx-pretty"]
-	path = neovim/pack/jsx-pretty
+	path = neovim/pack/start/jsx-pretty
 	url = git@github.com:MaxMEllon/vim-jsx-pretty.git
 [submodule "neovim/pack/vue"]
-	path = neovim/pack/vue
+	path = neovim/pack/opt/vue
 	url = git@github.com:leafOfTree/vim-vue-plugin.git
