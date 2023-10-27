@@ -17,7 +17,8 @@ set sessionoptions-=folds
 set sessionoptions-=help
 set wildignorecase
 
-let g:netrw_banner=0
+let g:loaded_netrwPlugin = 1
+let g:netrw_banner = 0
 let g:mapleader = '\'
 
 " Commands
