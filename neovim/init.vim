@@ -29,6 +29,7 @@ command -nargs=? Terminal call s:Terminal(<f-args>)
 nnoremap <leader>i :ToggleIndent<CR>
 nnoremap <leader>r :Make<CR>
 nnoremap <leader>s :syntax sync fromstart<CR>
+nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>
 
 vnoremap <leader>c/ :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0\/\/ /', indent(getpos('v')[1]))<CR>
