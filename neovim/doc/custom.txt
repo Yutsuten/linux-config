@@ -18,17 +18,6 @@ Custom commands:
 
 *custom-shortcuts*
 
-Commenting code:
-
-<leader>c/          Comment code using //
-<leader>c#          Comment code using #
-<leader>c"          Comment code using "
-<leader>c-          Comment code using --
-<leader>u/          Uncomment // code
-<leader>u#          Uncomment # code
-<leader>u"          Uncomment " code
-<leader>u-          Uncomment -- code
-
 Language server:
 
 [d                  Move to the previous diagnostic
@@ -43,10 +32,19 @@ Language server:
 <space>t            Jumps to the definition of the type of the symbol under the cursor
 <space>k            Displays hover information about the symbol under the cursor in a floating window
 
+Commenting code:
+
+<leader>c/          Comment code using //
+<leader>c#          Comment code using #
+<leader>c"          Comment code using "
+<leader>c-          Comment code using --
+<leader>u/          Uncomment // code
+<leader>u#          Uncomment # code
+<leader>u"          Uncomment " code
+<leader>u-          Uncomment -- code
+
 Utils:
 
-<leader>r           Run `:Make`
-<leader>t           Rename current tab
 <leader>s           Synchronize syntax highlight
 <leader>w           Strip all trailing whitespace
 <leader>%           Copy current directory into the clipboard
