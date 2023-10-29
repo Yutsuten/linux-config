@@ -43,24 +43,12 @@ if lsp_file ~= nil and io.close(lsp_file) then
 end
 
 -- Diagnostics
-vim.diagnostic.config({virtual_text = false, underline = false, severity_sort = true})
+vim.diagnostic.config({virtual_text = false, underline = true, severity_sort = true})
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-
-local signs = {
-  Error = '●',
-  Warn = '●',
-  Info = '●',
-  Hint = '●',
-}
-
-for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, {text = icon, texthl = hl})
-end
 
 -- LSP features
 vim.api.nvim_create_autocmd('LspAttach', {
