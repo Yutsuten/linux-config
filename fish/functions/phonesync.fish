@@ -5,21 +5,21 @@ function phonesync
     set documents ~/Documents/ Documents/
     set music ~/Music/ Music/
     set pictures ~/Pictures/ Pictures/
-    set videos ~/Videos/ Movies/
+    set videos ~/Videos/ Videos/
 
     if findmnt --types fuse.aft-mtp-mount | grep --fixed-strings --quiet /media/mtp
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
         echo -s $bold '> Syncing documents' $reset
-        rsync $options $documents[1] /media/mtp/SDカード/$documents[2]
+        rsync $options $documents[1] /media/mtp/SDカード/Sync/$documents[2]
         echo
         echo -s $bold '> Syncing musics' $reset
-        rsync $options $music[1] /media/mtp/SDカード/$music[2]
+        rsync $options $music[1] /media/mtp/SDカード/Sync/$music[2]
         echo
         echo -s $bold '> Syncing pictures' $reset
-        rsync $options $pictures[1] /media/mtp/SDカード/$pictures[2]
+        rsync $options $pictures[1] /media/mtp/SDカード/Sync/$pictures[2]
         echo
         echo -s $bold '> Syncing videos' $reset
-        rsync $options $videos[1] /media/mtp/SDカード/$videos[2]
+        rsync $options $videos[1] /media/mtp/SDカード/Sync/$videos[2]
         echo 'Finish!'
         return 0
     else if test (count $argv) -eq 3
