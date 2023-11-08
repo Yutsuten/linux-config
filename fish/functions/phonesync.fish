@@ -2,7 +2,7 @@ function phonesync
     set bold (tput bold)
     set reset (tput sgr0)
 
-    set documents ~/Documents/ Documents/
+    set documents ~/Documents/Notes/ Notes/
     set music ~/Music/ Music/
     set pictures ~/Pictures/ Pictures/
     set videos ~/Videos/ Videos/
@@ -10,6 +10,8 @@ function phonesync
     if findmnt --types fuse.aft-mtp-mount | grep --fixed-strings --quiet /media/mtp
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
         echo -s $bold '> Syncing documents' $reset
+        tar --zstd --directory ~ --create Documents/ \
+            | gpg --encrypt --default-recipient-self > /media/mtp/SDカード/Sync/Documents.tar.zst.gpg
         rsync $options $documents[1] /media/mtp/SDカード/Sync/$documents[2]
         echo
         echo -s $bold '> Syncing musics' $reset
