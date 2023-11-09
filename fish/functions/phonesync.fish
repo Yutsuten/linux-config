@@ -2,6 +2,14 @@ function phonesync
     set bold (tput bold)
     set reset (tput sgr0)
 
+    argparse --max-args 3 'h/help' 'd/documents' -- $argv
+    or return
+
+    if set -ql _flag_help
+        echo 'Usage: phonesync [-h|--help] [-d|--documents]' >&2
+        return 0
+    end
+
     set documents ~/Documents/Notes/ Notes/
     set music ~/Music/ Music/
     set pictures ~/Pictures/ Pictures/
@@ -10,8 +18,10 @@ function phonesync
     if findmnt --types fuse.aft-mtp-mount | grep --fixed-strings --quiet /media/mtp
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
         echo -s $bold '> Syncing documents' $reset
-        tar --zstd --directory ~ --create Documents/ \
-            | gpg --encrypt --default-recipient-self > /media/mtp/SDカード/Sync/Documents.tar.zst.gpg
+        if set -ql _flag_documents
+            tar --zstd --directory ~ --create Documents/ \
+                | gpg --encrypt --default-recipient-self > /media/mtp/SDカード/Sync/Documents.tar.zst.gpg
+        end
         rsync $options $documents[1] /media/mtp/SDカード/Sync/$documents[2]
         echo
         echo -s $bold '> Syncing musics' $reset

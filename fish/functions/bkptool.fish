@@ -1,5 +1,5 @@
 function bkptool --description 'Backup and restore tool'
-    argparse --stop-nonopt 'h/help' 'r/restore' 'o/osu' -- $argv
+    argparse --max-args 0 'h/help' 'r/restore' 'o/osu' -- $argv
     or return
 
     if set -ql _flag_help
