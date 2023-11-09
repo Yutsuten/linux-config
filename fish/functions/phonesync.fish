@@ -16,22 +16,28 @@ function phonesync
     set videos ~/Videos/ Videos/
 
     if findmnt --types fuse.aft-mtp-mount | grep --fixed-strings --quiet /media/mtp
+        set fusedir /media/mtp/SDカード/Sync
+    else if findmnt --types fuse | grep --fixed-strings --quiet /media/ftp
+        set fusedir /media/ftp
+    end
+
+    if set -ql fusedir
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
         echo -s $bold '> Syncing documents' $reset
         if set -ql _flag_documents
             tar --zstd --directory ~ --create Documents/ \
-                | gpg --encrypt --default-recipient-self > /media/mtp/SDカード/Sync/Documents.tar.zst.gpg
+                | gpg --encrypt --default-recipient-self > $fusedir/Documents.tar.zst.gpg
         end
-        rsync $options $documents[1] /media/mtp/SDカード/Sync/$documents[2]
+        rsync $options $documents[1] $fusedir/$documents[2]
         echo
         echo -s $bold '> Syncing musics' $reset
-        rsync $options $music[1] /media/mtp/SDカード/Sync/$music[2]
+        rsync $options $music[1] $fusedir/$music[2]
         echo
         echo -s $bold '> Syncing pictures' $reset
-        rsync $options $pictures[1] /media/mtp/SDカード/Sync/$pictures[2]
+        rsync $options $pictures[1] $fusedir/$pictures[2]
         echo
         echo -s $bold '> Syncing videos' $reset
-        rsync $options $videos[1] /media/mtp/SDカード/Sync/$videos[2]
+        rsync $options $videos[1] $fusedir/$videos[2]
         echo 'Finish!'
         return 0
     else if test (count $argv) -eq 3
