@@ -17,8 +17,8 @@ function phonesync
 
     if findmnt --types fuse.aft-mtp-mount | grep --fixed-strings --quiet /media/mtp
         set fusedir /media/mtp/SDカード/Sync
-    else if findmnt --types fuse | grep --fixed-strings --quiet /media/ftp
-        set fusedir /media/ftp
+    else if findmnt --types fuse.sshfs | grep --fixed-strings --quiet /media/sshfs/android
+        set fusedir /media/sshfs/android
     end
 
     if set -ql fusedir
@@ -47,13 +47,13 @@ function phonesync
             set cmd:fail-exit true;
             open -p $argv[2] -u $argv[3] $argv[1];
             echo '> Syncing documents';
-            mirror $options $documents[1] /$documents[2];
+            mirror $options $documents[1] $documents[2];
             echo '> Syncing music';
-            mirror $options $music[1] /$music[2];
+            mirror $options $music[1] $music[2];
             echo '> Syncing pictures';
-            mirror $options $pictures[1] /$pictures[2];
+            mirror $options $pictures[1] $pictures[2];
             echo '> Syncing videos';
-            mirror $options $videos[1] /$videos[2];
+            mirror $options $videos[1] $videos[2];
         "
         echo 'Finish!'
         return 0
