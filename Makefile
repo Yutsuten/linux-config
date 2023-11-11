@@ -17,19 +17,7 @@ fish:
 	rm -f ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/sway.fish ~/.config/fish/conf.d/sway.fish
-	ln -sf $(CURDIR)/fish/functions/aurupdate.fish ~/.config/fish/functions/aurupdate.fish
-	ln -sf $(CURDIR)/fish/functions/fish_prompt.fish ~/.config/fish/functions/fish_prompt.fish
-	ln -sf $(CURDIR)/fish/functions/ls.fish ~/.config/fish/functions/ls.fish
-	ln -sf $(CURDIR)/fish/functions/lo.fish ~/.config/fish/functions/lo.fish
-	ln -sf $(CURDIR)/fish/functions/ll.fish ~/.config/fish/functions/ll.fish
-	ln -sf $(CURDIR)/fish/functions/nnn.fish ~/.config/fish/functions/nnn.fish
-	ln -sf $(CURDIR)/fish/functions/passgen.fish ~/.config/fish/functions/passgen.fish
-	ln -sf $(CURDIR)/fish/functions/record.fish ~/.config/fish/functions/record.fish
-	ln -sf $(CURDIR)/fish/functions/clicker.fish ~/.config/fish/functions/clicker.fish
-	ln -sf $(CURDIR)/fish/functions/bkptool.fish ~/.config/fish/functions/bkptool.fish
-	ln -sf $(CURDIR)/fish/functions/process_photos.fish ~/.config/fish/functions/process_photos.fish
-	ln -sf $(CURDIR)/fish/functions/phonesync.fish ~/.config/fish/functions/phonesync.fish
-	ln -sf $(CURDIR)/fish/functions/tts.fish ~/.config/fish/functions/tts.fish
+	ln -sf $(CURDIR)/fish/functions ~/.config/fish/functions
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
