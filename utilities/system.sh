@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o pipefail
+
 option=$(echo 'img:/usr/share/icons/Arc/panel/22/nm-vpn-standalone-lock.svg:text:Lock
 img:/usr/share/icons/Arc/panel/22/avatar-default.svg:text:Logout
 img:/usr/share/icons/Arc/panel/22/user-status-pending.svg:text:Sleep
@@ -20,6 +22,10 @@ case ${option} in
     systemctl suspend
     ;;
   'Hibernate')
+    if findmnt --output TARGET --noheadings --raw | grep --quiet '^/media'; then
+      echo 'Cannot hibernate with media mounted.' >&2
+      exit 1
+    fi
     wpctl set-volume @DEFAULT_AUDIO_SINK@ 50%
     systemctl hibernate
     ;;
