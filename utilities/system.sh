@@ -16,6 +16,7 @@ want_to() {
     notify-send --app-name system --icon dialog-warning --urgency critical \
       "CANNOT $1" \
       "There is media mounted at \n$(findmnt --output TARGET --noheadings --raw | grep '^/media')"
+    pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
     exit 1
   fi
 }
