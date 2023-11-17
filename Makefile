@@ -23,6 +23,7 @@ git:
 	@echo '${bold}>> Git settings <<${reset}'
 	git config --global core.excludesfile $(CURDIR)/git/gitignore
 	git config --global core.pager 'less -+XF -S'
+	git config --global pager.branch false
 	git config --global core.editor 'nvim'
 
 mpv:
