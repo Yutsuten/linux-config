@@ -11,16 +11,6 @@ img:/usr/share/icons/Arc/panel/22/system-devices-panel.svg:text:Poweroff' \
   | wofi --dmenu --prompt '' --cache-file /dev/null \
   | cut -d ':' -f 4)
 
-want_to() {
-  if findmnt --output TARGET --noheadings --raw | grep --quiet '^/media'; then
-    notify-send --app-name system --icon dialog-warning --urgency critical \
-      "CANNOT $1" \
-      "There is media mounted at \n$(findmnt --output TARGET --noheadings --raw | grep '^/media')"
-    pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
-    exit 1
-  fi
-}
-
 case ${option} in
   'Lock')
     swaylock --image ~/Pictures/Wallpapers/"$(head -n 1 ~/.cache/wallpaper)"
@@ -29,11 +19,16 @@ case ${option} in
     swaymsg exit
     ;;
   'Sleep')
-    want_to SLEEP
     systemctl suspend
     ;;
   'Hibernate')
-    want_to HIBERNATE
+    if findmnt --output TARGET --noheadings --raw | grep --quiet '^/media'; then
+      notify-send --app-name system --icon dialog-warning --urgency critical \
+        "CANNOT HIBERNATE" \
+        "There is media mounted at \n$(findmnt --output TARGET --noheadings --raw | grep '^/media')"
+      pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
+      exit 1
+    fi
     wpctl set-volume @DEFAULT_AUDIO_SINK@ 50%
     systemctl hibernate
     ;;
