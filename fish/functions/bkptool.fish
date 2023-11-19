@@ -26,6 +26,19 @@ function bkptool --description 'Backup and restore tool'
         echo 'Restore thunderbird'
         tar --zstd -xf "$bkp_dir/thunderbird.tar.zst" -C ~
     else
+        # Check for empty directories
+        set empty 0
+        for dir in $sync_dirs
+            test -z (find "$dir" -maxdepth 0 -empty) || set empty 1
+        end
+        test -z (find ~/.local/share/osu -maxdepth 0 -empty) || set empty 1
+        test -z (find ~/.steam/steam/steamapps/common/'100 Orange Juice' -maxdepth 0 -empty) || set empty 1
+        if test $empty -eq 1
+            echo 'There is empty directory. Abort.' >&2
+            return 1
+        end
+
+        # Start backup
         for dir in $sync_dirs
             echo "Backup $dir"
             rsync --archive --update --delete "$HOME/$dir/" "$bkp_dir/$dir/"
