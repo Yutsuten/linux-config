@@ -15,6 +15,7 @@ alacritty:
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
 	rm -f ~/.config/fish/config.fish
+	rm -rf ~/.config/fish/functions
 	ln -sf $(CURDIR)/fish/config.fish ~/.config/fish/config.fish
 	ln -sf $(CURDIR)/fish/sway.fish ~/.config/fish/conf.d/sway.fish
 	ln -sf $(CURDIR)/fish/functions ~/.config/fish/functions
@@ -49,6 +50,7 @@ neovim:
 
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
+	mkdir -p ~/.config/nnn
 	rm -rf ~/.config/nnn/plugins
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
