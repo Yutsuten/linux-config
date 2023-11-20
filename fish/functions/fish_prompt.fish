@@ -43,14 +43,24 @@ function prompt_jobs --description 'Display number of running jobs'
 end
 
 function prompt_state
+    set states
     set_color --bold
-    if test -n "$VIRTUAL_ENV"
-        echo [(basename $VIRTUAL_ENV)]
-    else if set -q nnn
-        echo [nnn:$nnn]
-    else
-        date '+[%H:%M]'
+    if test -n "$fish_private_mode"
+        set --append states 'private'
     end
+    if test -n "$VIRTUAL_ENV"
+        set --append states 'venv'
+    end
+    if set -q nnn
+        set --append states "nnn"
+    end
+
+    if test "$states"
+        set text (string join ':' $states)
+    else
+        set text (date '+%H:%M')
+    end
+    echo "[$text]"
 end
 
 function prompt_login --description 'display user name for the prompt'
