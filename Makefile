@@ -61,6 +61,7 @@ system:
 	cp -af $(CURDIR)/utilities/system.sh /usr/local/bin/system
 	cp -af $(CURDIR)/utilities/wp-volume.sh /usr/local/bin/wp-volume
 	cp -af $(CURDIR)/window_manager/greetd_conf.toml /etc/greetd/config.toml
+	cp -af $(CURDIR)/window_manager/cursor.theme /usr/share/icons/default/index.theme
 
 vimiv:
 	@echo '${bold}>> Vimiv settings <<${reset}'
