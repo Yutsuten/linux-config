@@ -10,7 +10,6 @@ function phonesync
         return 0
     end
 
-    set documents ~/Documents/Notes/ Notes/
     set music ~/Music/ Music/
     set pictures ~/Pictures/ Pictures/
     set videos ~/Videos/ Videos/
@@ -23,12 +22,11 @@ function phonesync
 
     if set -ql fusedir
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
-        echo -s $bold '> Syncing documents' $reset
         if set -ql _flag_documents
+            echo -s $bold '> Syncing documents' $reset
             tar --zstd --directory ~ --create Documents/ \
                 | gpg --encrypt --default-recipient-self > $fusedir/Documents.tar.zst.gpg
         end
-        rsync $options $documents[1] $fusedir/$documents[2]
         echo
         echo -s $bold '> Syncing musics' $reset
         rsync $options $music[1] $fusedir/$music[2]
@@ -46,8 +44,6 @@ function phonesync
         lftp -c "
             set cmd:fail-exit true;
             open -p $argv[2] -u $argv[3] $argv[1];
-            echo '> Syncing documents';
-            mirror $options $documents[1] $documents[2];
             echo '> Syncing music';
             mirror $options $music[1] $music[2];
             echo '> Syncing pictures';
