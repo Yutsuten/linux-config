@@ -26,6 +26,7 @@ git:
 	git config --global core.pager 'less -+XF -S'
 	git config --global pager.branch false
 	git config --global core.editor 'nvim'
+	git config --global commit.gpgsign true
 
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
