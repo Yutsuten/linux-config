@@ -82,11 +82,12 @@ wm:
 	ln -sf $(CURDIR)/window_manager/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
 	ln -sf $(CURDIR)/window_manager/wofi/config ~/.config/wofi/config
 	ln -sf $(CURDIR)/window_manager/wofi/style.css ~/.config/wofi/style.css
+	ln -sf $(CURDIR)/window_manager/pipewire/10-remap-sink.conf ~/.config/pipewire/pipewire-pulse.conf.d/10-remap-sink.conf
 	cp -af $(CURDIR)/window_manager/systemd/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/window_manager/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af $(CURDIR)/window_manager/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af $(CURDIR)/window_manager/systemd/trash.timer ~/.config/systemd/user/trash.timer
-	bash window_manager/pipewire/config.sh
+	bash window_manager/pipewire/90-init.sh
 
 test:
 	cd utilities/ && python -m unittest ffmeta_test
