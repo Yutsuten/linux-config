@@ -56,6 +56,9 @@ nnn:
 	ln -sf $(CURDIR)/nnn/plugins ~/.config/nnn/plugins
 
 system:
+	cp -af $(CURDIR)/console/arc.vga /etc/vtrgb
+	cp -af $(CURDIR)/console/install.sh /etc/initcpio/install/setvtrgb
+	cp -af $(CURDIR)/console/hook.sh /etc/initcpio/hooks/setvtrgb
 	cp -af $(CURDIR)/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/utilities/wallpaper.py /usr/local/bin/wallpaper
