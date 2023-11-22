@@ -10,16 +10,16 @@ It uses Sway as Window Manager.
 Clone the repository:
 
 ```shell
-git clone --recurse-submodules git@github.com:Yutsuten/linux-config.git ~/.config/linux
+git clone git@github.com:Yutsuten/linux-config.git ~/.config/linux
+git submodule update --init
 ```
 
 Apply the configuration:
 
 ```shell
 make
+sudo make system
 ```
 
-Then install the required applications.
-
-- Neovim: language servers and linters
-- MPV: [UOSC](https://github.com/tomasklaen/uosc)
+This only places the configuration files.
+The installation of the applications should be done separately.
