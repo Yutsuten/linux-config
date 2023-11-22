@@ -8,13 +8,14 @@ set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set nohlsearch
 set noshowmode
 set number
-set signcolumn=no
-set shiftwidth=2
-set softtabstop=2
-set tabstop=4
 set sessionoptions-=buffers
 set sessionoptions-=folds
 set sessionoptions-=help
+set shada=
+set shiftwidth=2
+set signcolumn=no
+set softtabstop=2
+set tabstop=4
 set wildignorecase
 
 let g:loaded_netrwPlugin = 1
@@ -26,6 +27,7 @@ command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=? Terminal call s:Terminal(<f-args>)
 
 " Shortcuts
+nnoremap <leader>g :cex system('git grep --column -n ""')
 nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>

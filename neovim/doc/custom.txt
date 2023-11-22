@@ -45,6 +45,7 @@ Commenting code:
 
 Utils:
 
+<leader>g           Git grep
 <leader>s           Synchronize syntax highlight
 <leader>w           Strip all trailing whitespace
 <leader>%           Copy current directory into the clipboard
