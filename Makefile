@@ -27,9 +27,9 @@ desktop:
 	bash desktop/pipewire/90-init.sh
 
 system:
-	cp -af $(CURDIR)/system/console/arc.vga /etc/vtrgb
-	cp -af $(CURDIR)/system/console/install.sh /etc/initcpio/install/setvtrgb
-	cp -af $(CURDIR)/system/console/hook.sh /etc/initcpio/hooks/setvtrgb
+	cp -af $(CURDIR)/system/setvtrgb/arc.vga /etc/vtrgb
+	cp -af $(CURDIR)/system/setvtrgb/install.sh /etc/initcpio/install/setvtrgb
+	cp -af $(CURDIR)/system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
 	cp -af $(CURDIR)/system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af $(CURDIR)/system/utilities/openweather.py /usr/local/bin/openweather
 	cp -af $(CURDIR)/system/utilities/wallpaper.py /usr/local/bin/wallpaper
