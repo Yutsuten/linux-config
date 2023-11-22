@@ -20,8 +20,14 @@ function bkptool --description 'Backup and restore tool'
             echo "Restore $dir"
             rsync --archive --update --delete "$bkp_dir/$dir/" "$HOME/$dir/"
         end
+        echo 'Restore anki'
+        tar --zstd -xf "$bkp_dir/anki.tar.zst" -C ~/.local/share
+        echo 'Restore fcitx5'
+        tar --zstd -xf "$bkp_dir/fcitx5.tar.zst" -C ~/.config
+        echo 'Restore local environment variables'
+        cp -a "$bkp_dir/environment" ~/.local/environment
         echo 'Restore osu!lazer'
-        mkdir -p ~/.local/share
+        mkdir -p ~/.local/share ~/.config
         tar --zstd -xf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share
         echo 'Restore thunderbird'
         tar --zstd -xf "$bkp_dir/thunderbird.tar.zst" -C ~
@@ -29,7 +35,7 @@ function bkptool --description 'Backup and restore tool'
         # Check for empty directories
         set empty 0
         for dir in $sync_dirs
-            test -z (find "$dir" -maxdepth 0 -empty) || set empty 1
+            test -z (find "$HOME/$dir" -maxdepth 0 -empty) || set empty 1
         end
         test -z (find ~/.local/share/osu -maxdepth 0 -empty) || set empty 1
         test -z (find ~/.steam/steam/steamapps/common/'100 Orange Juice' -maxdepth 0 -empty) || set empty 1
@@ -43,6 +49,12 @@ function bkptool --description 'Backup and restore tool'
             echo "Backup $dir"
             rsync --archive --update --delete "$HOME/$dir/" "$bkp_dir/$dir/"
         end
+        echo 'Backup anki'
+        tar --zstd -cf "$bkp_dir/anki.tar.zst" -C ~/.local/share Anki2
+        echo 'Backup fcitx5'
+        tar --zstd -cf "$bkp_dir/fcitx5.tar.zst" -C ~/.config fcitx5
+        echo 'Backup local environment variables'
+        cp -a ~/.local/environment "$bkp_dir/environment"
         if set -ql _flag_osu
             echo 'Backup osu!lazer'
             tar --zstd -cf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share osu
