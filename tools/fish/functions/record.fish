@@ -20,18 +20,18 @@ function record --description 'Record screen using wf-recorder'
 
     if set --query --local _flag_mic
         echo '[AUDIO] Start recording mic'
-        command ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') $folder_name/mic.flac &
+        command ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') -ac 1 $folder_name/mic.flac &
         set mic_pid $last_pid
     end
     if set --query --local _flag_rec
         echo '[AUDIO] Start recording "recording" source'
         pactl set-sink-volume recording 100%
-        command ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor $folder_name/rec.flac &
+        command ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -ac 2 $folder_name/rec.flac &
         set rec_pid $last_pid
     end
     if set --query --local _flag_speakers
         echo '[AUDIO] Start recording speakers'
-        command ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') $folder_name/speakers.flac &
+        command ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') -ac 2 $folder_name/speakers.flac &
         set speakers_pid $last_pid
     end
 
@@ -56,9 +56,7 @@ function record --description 'Record screen using wf-recorder'
     if set --query --local _flag_mic && set --query --local _flag_speakers
         echo '[AUDIO] Mixing mic and speakers'
         nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac \
-          -filter_complex \
-           '[0:a][0:a]amerge=inputs=2[0a];
-            [0a][1:a]amerge=inputs=2[outa]' -map '[outa]' -ac 2 \
+          -filter_complex '[0:a][1:a]amerge=inputs=2[outa]' -map '[outa]' -ac 2 \
           $folder_name/mix.flac
     end
     echo 'Finish!'
