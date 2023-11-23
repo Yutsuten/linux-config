@@ -16,18 +16,20 @@ function bkptool --description 'Backup and restore tool'
     end
 
     if set -ql _flag_restore
+        mkdir -p ~/.local/share ~/.local/aur ~/.config
         for dir in $sync_dirs
             echo "Restore $dir"
             rsync --archive --update --delete "$bkp_dir/$dir/" "$HOME/$dir/"
         end
         echo 'Restore anki'
         tar --zstd -xf "$bkp_dir/anki.tar.zst" -C ~/.local/share
+        echo 'Restore aur packages list'
+        cp -a "$bkp_dir/aur_packages" ~/.local/aur/packages
         echo 'Restore fcitx5'
         tar --zstd -xf "$bkp_dir/fcitx5.tar.zst" -C ~/.config
         echo 'Restore local environment variables'
         cp -a "$bkp_dir/environment" ~/.local/environment
         echo 'Restore osu!lazer'
-        mkdir -p ~/.local/share ~/.config
         tar --zstd -xf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share
         echo 'Restore thunderbird'
         tar --zstd -xf "$bkp_dir/thunderbird.tar.zst" -C ~
@@ -37,7 +39,10 @@ function bkptool --description 'Backup and restore tool'
         for dir in $sync_dirs
             test -z (find "$HOME/$dir" -maxdepth 0 -empty) || set empty 1
         end
+        test -z (find ~/.local/share/Anki2 -maxdepth 0 -empty) || set empty 1
+        test -z (find ~/.config/fcitx5 -maxdepth 0 -empty) || set empty 1
         test -z (find ~/.local/share/osu -maxdepth 0 -empty) || set empty 1
+        test -z (find ~/.thunderbird -maxdepth 0 -empty) || set empty 1
         test -z (find ~/.steam/steam/steamapps/common/'100 Orange Juice' -maxdepth 0 -empty) || set empty 1
         if test $empty -eq 1
             echo 'There is empty directory. Abort.' >&2
@@ -51,6 +56,8 @@ function bkptool --description 'Backup and restore tool'
         end
         echo 'Backup anki'
         tar --zstd -cf "$bkp_dir/anki.tar.zst" -C ~/.local/share Anki2
+        echo 'Backup aur packages list'
+        cp -a ~/.local/aur/packages "$bkp_dir/aur_packages"
         echo 'Backup fcitx5'
         tar --zstd -cf "$bkp_dir/fcitx5.tar.zst" -C ~/.config fcitx5
         echo 'Backup local environment variables'
