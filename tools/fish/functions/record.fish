@@ -58,7 +58,7 @@ function record --description 'Record screen using wf-recorder'
         nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac \
           -filter_complex \
            '[0:a][0:a]amerge=inputs=2[0a];
-            [0a][1:a]amerge=inputs=2[outa]' -map '[outa]' \
+            [0a][1:a]amerge=inputs=2[outa]' -map '[outa]' -ac 2 \
           $folder_name/mix.flac
     end
     echo 'Finish!'
