@@ -55,9 +55,7 @@ function record --description 'Record screen using wf-recorder'
     sleep 0.2
     if set --query --local _flag_mic && set --query --local _flag_speakers
         echo '[AUDIO] Mixing mic and speakers'
-        nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac \
-          -filter_complex '[0:a][1:a]amerge=inputs=2[outa]' -map '[outa]' -ac 2 \
-          $folder_name/mix.flac
+        nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac -filter_complex 'amerge=inputs=2' -ac 2 $folder_name/mix.flac
     end
     echo 'Finish!'
 end
