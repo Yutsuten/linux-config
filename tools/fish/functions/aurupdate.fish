@@ -1,14 +1,33 @@
 function aurupdate --description 'Update AUR packages'
     echo ':: Update AUR packages'
-    set -l count $(ls -1 ~/.local/aur | wc -l)
-    set -l cur 1
-    for aur_dir in ~/.local/aur/*
-        echo "($cur/$count) Check updates for $(basename $aur_dir)"
-        echo 'git pull'
-        git -C "$aur_dir" pull
-        echo 'makepkg'
-        fish -c "cd $aur_dir && makepkg -sic --needed --nocolor"
-        echo
-        set -l cur $(math $cur + 1)
+    set packages
+    set pids
+    set cur 1
+
+    # Clone/pull
+    while read --line package_url
+        echo $package_url | sed -nE 's#^https://aur\.archlinux\.org/([^.]+)\.git$#\1#p' | read package
+        set --append packages $package
+        if test -d ~/.local/aur/$package
+            git -C ~/.local/aur/$package pull --quiet &
+        else
+            git -C ~/.local/aur clone --quiet $package_url &
+        end
+        set --append pids $last_pid
+    end < ~/.local/aur/packages
+    set packages_count (count $packages)
+    wait $pids
+
+    # Makepkg
+    for package_dir in ~/.local/aur/*/
+        echo $package_dir | sed -nE 's#^.+/aur/([^/]+)/$#\1#p' | read package
+        if contains $package $packages
+            echo "($cur/$packages_count) AUR update $package"
+            fish --command "cd $package_dir && makepkg -sic --needed --nocolor"
+            set cur (math $cur + 1)
+        else
+            echo "⚠️ Remove unused $package"
+            rm --recursive --force "$package_dir"
+        end
     end
 end
