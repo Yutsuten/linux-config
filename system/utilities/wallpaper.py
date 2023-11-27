@@ -11,20 +11,21 @@ import sys
 from pathlib import Path
 from typing import Literal
 
-WALLPAPERS_PATH = Path.expanduser(Path('~/Pictures/Wallpapers'))
 HISTORY_FILE_PATH = Path.expanduser(Path('~/.cache/wallpaper'))
 
 
-def main(**argv: bool) -> Literal[0, 1]:
+def main(args: argparse.Namespace) -> Literal[0, 1]:
     """Main function."""
-    if argv['random']:
+    if args.random:
         return set_random_wallpaper()
-    if argv['restore']:
+    if args.restore:
         return restore_wallpaper()
+    if args.set:
+        return set_wallpaper(args.set)
     return 1
 
 
-def set_wallpaper(wallpaper_path: Path) -> None:
+def set_wallpaper(wallpaper_path: Path) -> Literal[0, 1]:
     """Set wallpaper to specified image."""
     try:
         subprocess.run(
@@ -32,13 +33,16 @@ def set_wallpaper(wallpaper_path: Path) -> None:
             check=True,
         )
     except subprocess.CalledProcessError:
-        print('Failed to apply wallpaper. Sway is not running.')  # noqa: T201
+        print('Failed to apply wallpaper.')  # noqa: T201
+        return 1
+    return 0
 
 
 def set_random_wallpaper() -> Literal[0, 1]:
     """Change to a random wallpaper."""
-    wallpapers = os.listdir(WALLPAPERS_PATH)
-    wallpapers = [wallpaper for wallpaper in wallpapers if Path.is_file(WALLPAPERS_PATH / Path(wallpaper))]
+    wallpapers_path = Path.expanduser(Path(os.environ['WALLPAPERS_PATH']))
+    wallpapers = os.listdir(wallpapers_path)
+    wallpapers = [wallpaper for wallpaper in wallpapers if Path.is_file(wallpapers_path / Path(wallpaper))]
     if not wallpapers:
         return 1
 
@@ -60,9 +64,7 @@ def set_random_wallpaper() -> Literal[0, 1]:
     with Path.open(HISTORY_FILE_PATH, 'w', encoding='utf-8') as history_file:
         history_file.write('\n'.join(history))
 
-    wallpaper_path = WALLPAPERS_PATH / Path(elected)
-    set_wallpaper(wallpaper_path)
-    return 0
+    return set_wallpaper(wallpapers_path / Path(elected))
 
 
 def restore_wallpaper() -> Literal[0, 1]:
@@ -75,13 +77,13 @@ def restore_wallpaper() -> Literal[0, 1]:
 
     with Path.open(HISTORY_FILE_PATH, 'r', encoding='utf-8') as history_file:
         wallpaper = history_file.readline().strip()
-    wallpaper_path = WALLPAPERS_PATH / Path(wallpaper)
+
+    wallpapers_path = Path.expanduser(Path(os.environ['WALLPAPERS_PATH']))
+    wallpaper_path = wallpapers_path / Path(wallpaper)
 
     if not Path.is_file(wallpaper_path):
         return set_random_wallpaper()
-
-    set_wallpaper(wallpaper_path)
-    return 0
+    return set_wallpaper(wallpaper_path)
 
 
 if __name__ == '__main__':
@@ -89,5 +91,5 @@ if __name__ == '__main__':
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--random', action='store_true', help='Change to a random wallpaper.')
     group.add_argument('--restore', action='store_true', help='Restore the last wallpaper used.')
-    args = parser.parse_args()
-    sys.exit(main(**vars(args)))
+    group.add_argument('-s', '--set', type=Path, help='Temporarily set an arbitrary wallpaper.')
+    sys.exit(main(parser.parse_args()))
