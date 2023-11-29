@@ -5,4 +5,5 @@ function process_photos --description 'Process photos from phone'
             convert "$photo" -resize '2000x2000>' -define webp:method=6 "$newname"
         end
     end
+    trash-put *.jpg
 end
