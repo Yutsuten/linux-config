@@ -4,6 +4,5 @@ if test (tty) = '/dev/tty1'
     gsettings set org.gnome.desktop.interface font-name 'Noto Sans 12'
     gsettings set org.gnome.desktop.interface cursor-theme 'Vimix-cursors'
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    source ~/.local/environment
     exec sway
 end
