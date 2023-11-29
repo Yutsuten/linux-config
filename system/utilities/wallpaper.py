@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Literal
 
 HISTORY_FILE_PATH = Path.expanduser(Path('~/.cache/wallpaper'))
+UPDATE_PENDING = Path.expanduser(Path('~/.cache/wallpaper_update_pending'))
 
 
 def main(args: argparse.Namespace) -> Literal[0, 1]:
@@ -33,14 +34,19 @@ def set_wallpaper(wallpaper_path: Path) -> Literal[0, 1]:
             check=True,
         )
     except subprocess.CalledProcessError:
-        print('Failed to apply wallpaper.')  # noqa: T201
+        print('Failed to apply wallpaper.', file=sys.stderr)  # noqa: T201
         return 1
     return 0
 
 
 def set_random_wallpaper() -> Literal[0, 1]:
     """Change to a random wallpaper."""
-    wallpapers_path = Path.expanduser(Path(os.environ['WALLPAPERS_PATH']))
+    try:
+        wallpapers_path = Path.expanduser(Path(os.environ['WALLPAPERS_PATH']))
+    except KeyError:
+        print('Environment variable WALLPAPERS_PATH is not set.', file=sys.stderr)  # noqa: T201
+        return 1
+
     wallpapers = os.listdir(wallpapers_path)
     wallpapers = [wallpaper for wallpaper in wallpapers if Path.is_file(wallpapers_path / Path(wallpaper))]
     if not wallpapers:
@@ -64,21 +70,35 @@ def set_random_wallpaper() -> Literal[0, 1]:
     with Path.open(HISTORY_FILE_PATH, 'w', encoding='utf-8') as history_file:
         history_file.write('\n'.join(history))
 
-    return set_wallpaper(wallpapers_path / Path(elected))
+    if set_wallpaper(wallpapers_path / Path(elected)):
+        print('Wallpaper update is pending.', file=sys.stderr)  # noqa: T201
+        with Path.open(UPDATE_PENDING, 'a'):
+            os.utime(UPDATE_PENDING, None)
+    return 0
 
 
 def restore_wallpaper() -> Literal[0, 1]:
     """Restore the last wallpaper used.
 
-    Fallback to a random wallpaper if the last wallpaper is not available.
+    Fallback to a random wallpaper either if the last wallpaper is not available or if the last call
+    with --random failed.
     """
     if not Path.is_file(HISTORY_FILE_PATH):
         return set_random_wallpaper()
 
+    if Path.is_file(UPDATE_PENDING):
+        UPDATE_PENDING.unlink()
+        return set_random_wallpaper()
+
+    try:
+        wallpapers_path = Path.expanduser(Path(os.environ['WALLPAPERS_PATH']))
+    except KeyError:
+        print('Environment variable WALLPAPERS_PATH is not set.', file=sys.stderr)  # noqa: T201
+        return 1
+
     with Path.open(HISTORY_FILE_PATH, 'r', encoding='utf-8') as history_file:
         wallpaper = history_file.readline().strip()
 
-    wallpapers_path = Path.expanduser(Path(os.environ['WALLPAPERS_PATH']))
     wallpaper_path = wallpapers_path / Path(wallpaper)
 
     if not Path.is_file(wallpaper_path):
