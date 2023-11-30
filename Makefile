@@ -50,7 +50,6 @@ fish:
 	rm -f ~/.config/fish/config.fish
 	rm -rf ~/.config/fish/functions
 	ln -sf $(CURDIR)/tools/fish/config.fish ~/.config/fish/config.fish
-	ln -sf $(CURDIR)/tools/fish/sway.fish ~/.config/fish/conf.d/sway.fish
 	ln -sf $(CURDIR)/tools/fish/functions ~/.config/fish/functions
 
 git:
