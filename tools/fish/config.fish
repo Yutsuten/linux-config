@@ -1,5 +1,3 @@
-source ~/.local/environment.fish
-
 if status is-interactive
     set -gx GPG_TTY (tty)
     set -g fish_color_user blue

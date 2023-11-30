@@ -28,7 +28,7 @@ function bkptool --description 'Backup and restore tool'
         echo 'Restore fcitx5'
         tar --zstd -xf "$bkp_dir/fcitx5.tar.zst" -C ~/.config
         echo 'Restore local environment variables'
-        cp -a "$bkp_dir/environment.fish" ~/.local/environment.fish
+        cp -a "$bkp_dir/environment" ~/.local/environment
         echo 'Restore osu!lazer'
         tar --zstd -xf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share
         echo 'Restore thunderbird'
@@ -61,7 +61,7 @@ function bkptool --description 'Backup and restore tool'
         echo 'Backup fcitx5'
         tar --zstd -cf "$bkp_dir/fcitx5.tar.zst" -C ~/.config fcitx5
         echo 'Backup local environment variables'
-        cp -a ~/.local/environment.fish "$bkp_dir/environment.fish"
+        cp -a ~/.local/environment "$bkp_dir/environment"
         if set -ql _flag_osu
             echo 'Backup osu!lazer'
             tar --zstd -cf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share osu

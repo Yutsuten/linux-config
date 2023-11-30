@@ -20,10 +20,10 @@ desktop:
 	ln -sf $(CURDIR)/desktop/wofi/config ~/.config/wofi/config
 	ln -sf $(CURDIR)/desktop/wofi/style.css ~/.config/wofi/style.css
 	ln -sf $(CURDIR)/desktop/pipewire/10-remap-sink.conf ~/.config/pipewire/pipewire-pulse.conf.d/10-remap-sink.conf
-	cp -af $(CURDIR)/desktop/systemd/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af $(CURDIR)/desktop/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af $(CURDIR)/desktop/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af $(CURDIR)/desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
+	bash desktop/systemd/wallpaper.service.sh
 	bash desktop/pipewire/90-init.sh
 
 system:

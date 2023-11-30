@@ -1,9 +1,0 @@
-[Unit]
-Description=set random wallpaper
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/wallpaper --random
-
-[Install]
-WantedBy=multi-user.target
