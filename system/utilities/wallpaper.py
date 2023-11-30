@@ -12,7 +12,6 @@ from pathlib import Path
 from typing import Literal
 
 HISTORY_FILE_PATH = Path.expanduser(Path('~/.cache/wallpaper'))
-UPDATE_PENDING = Path.expanduser(Path('~/.cache/wallpaper_update_pending'))
 
 
 def main(args: argparse.Namespace) -> Literal[0, 1]:
@@ -70,10 +69,7 @@ def set_random_wallpaper() -> Literal[0, 1]:
     with Path.open(HISTORY_FILE_PATH, 'w', encoding='utf-8') as history_file:
         history_file.write('\n'.join(history))
 
-    if set_wallpaper(wallpapers_path / Path(elected)):
-        print('Wallpaper update is pending.', file=sys.stderr)  # noqa: T201
-        with Path.open(UPDATE_PENDING, 'a'):
-            os.utime(UPDATE_PENDING, None)
+    set_wallpaper(wallpapers_path / Path(elected))
     return 0
 
 
@@ -84,10 +80,6 @@ def restore_wallpaper() -> Literal[0, 1]:
     with --random failed.
     """
     if not Path.is_file(HISTORY_FILE_PATH):
-        return set_random_wallpaper()
-
-    if Path.is_file(UPDATE_PENDING):
-        UPDATE_PENDING.unlink()
         return set_random_wallpaper()
 
     try:
