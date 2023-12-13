@@ -28,5 +28,5 @@ if status is-interactive
     alias ffmpeg 'ffmpeg -hide_banner'
     alias ffprobe 'ffprobe -hide_banner'
 
-    fish_add_path ~/.local/bin
+    fish_add_path $HOME/.local/bin
 end
