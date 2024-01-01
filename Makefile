@@ -1,4 +1,4 @@
-.PHONY: desktop system tools alacritty fish git mpv neovim nnn utilities vimiv
+.PHONY: desktop system tools alacritty fish git mpv nvim nnn utilities vimiv
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -38,7 +38,7 @@ system:
 	cp -af $(CURDIR)/system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af $(CURDIR)/system/cursor.theme /usr/share/icons/default/index.theme
 
-tools: alacritty fish git mpv neovim nnn vimiv
+tools: alacritty fish git mpv nvim nnn vimiv
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -68,18 +68,18 @@ mpv:
 	ln -sf $(CURDIR)/tools/mpv/uosc.conf ~/.config/mpv/script-opts/uosc.conf
 	bash tools/mpv/install_plugins.sh
 
-neovim:
+nvim:
 	@echo '${bold}>> Neovim settings <<${reset}'
 	rm -f ~/.config/nvim/init.vim ~/.config/nvim/*
 	rm -rf ~/.local/share/nvim/site/*
 	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
-	ln -sf $(CURDIR)/tools/neovim/init.vim ~/.config/nvim/init.vim
-	ln -sf $(CURDIR)/tools/neovim/ginit.vim ~/.config/nvim/ginit.vim
-	ln -snf $(CURDIR)/tools/neovim/pack/start ~/.local/share/nvim/site/pack/all/start
-	ln -snf $(CURDIR)/tools/neovim/pack/opt ~/.local/share/nvim/site/pack/all/opt
-	ln -snf $(CURDIR)/tools/neovim/plugin ~/.local/share/nvim/site/plugin
-	ln -snf $(CURDIR)/tools/neovim/ftplugin ~/.local/share/nvim/site/ftplugin
-	ln -snf $(CURDIR)/tools/neovim/doc ~/.local/share/nvim/site/doc
+	ln -sf $(CURDIR)/tools/nvim/init.vim ~/.config/nvim/init.vim
+	ln -sf $(CURDIR)/tools/nvim/ginit.vim ~/.config/nvim/ginit.vim
+	ln -snf $(CURDIR)/tools/nvim/pack/start ~/.local/share/nvim/site/pack/all/start
+	ln -snf $(CURDIR)/tools/nvim/pack/opt ~/.local/share/nvim/site/pack/all/opt
+	ln -snf $(CURDIR)/tools/nvim/plugin ~/.local/share/nvim/site/plugin
+	ln -snf $(CURDIR)/tools/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
+	ln -snf $(CURDIR)/tools/nvim/doc ~/.local/share/nvim/site/doc
 
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
