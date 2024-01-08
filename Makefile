@@ -43,7 +43,7 @@ tools: alacritty fish git mpv nvim nnn vimiv
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
 	mkdir -p ~/.config/alacritty
-	ln -sf $(CURDIR)/tools/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+	ln -sf $(CURDIR)/tools/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
