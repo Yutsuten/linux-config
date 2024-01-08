@@ -10,9 +10,6 @@
 [submodule "gitsigns"]
 	path = tools/nvim/pack/start/gitsigns
 	url = git@github.com:lewis6991/gitsigns.nvim.git
-[submodule "neovim/pack/plenary"]
-	path = tools/nvim/pack/start/plenary
-	url = git@github.com:nvim-lua/plenary.nvim.git
 [submodule "neovim/pack/robotframework"]
 	path = tools/nvim/pack/opt/robotframework
 	url = git@github.com:rasjani/robotframework-vim.git
