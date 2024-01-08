@@ -1,0 +1,58 @@
+[colors.bright]
+black = "#5C6370"
+blue = "#61AFEF"
+cyan = "#56B6C2"
+green = "#98C379"
+magenta = "#C678DD"
+red = "#E06C75"
+white = "#DCDFE4"
+yellow = "#E5C07B"
+
+[colors.normal]
+black = "#282C34"
+blue = "#61AFEF"
+cyan = "#56B6C2"
+green = "#98C379"
+magenta = "#C678DD"
+red = "#E06C75"
+white = "#919BAA"
+yellow = "#E5C07B"
+
+[colors.primary]
+background = "#282C34"
+foreground = "#DCDFE4"
+
+[font]
+size = 10.0
+
+[font.normal]
+family = "Source Code Pro"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "Return"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "SearchBackward"
+key = 53
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "Last"
+key = 5
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "Bracket"
+key = 6
+mode = "Vi|~Search"
+mods = "Shift"
+
+[mouse]
+hide_when_typing = true
+
+[window]
+opacity = 0.9
