@@ -54,11 +54,12 @@ fish:
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
+	git config --global commit.gpgsign true
+	git config --global core.editor 'nvim'
 	git config --global core.excludesfile $(CURDIR)/tools/git/gitignore
 	git config --global core.pager 'less -+XF -S'
+	git config --global init.defaultBranch main
 	git config --global pager.branch false
-	git config --global core.editor 'nvim'
-	git config --global commit.gpgsign true
 
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
