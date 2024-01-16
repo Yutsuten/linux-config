@@ -26,6 +26,5 @@ function tts --description 'Text-to-Speech using Google API'
         | base64 --decode > $filename
 
     echo "Output: $filename"
-    mpv --really-quiet $filename &
-    disown $last_pid
+    mpv --really-quiet $filename
 end
