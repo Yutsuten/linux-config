@@ -88,11 +88,6 @@ function GetCurrentMode()
 endfunction
 
 function LinterStatus()
-  let l:client_count = luaeval('#vim.lsp.get_active_clients()')
-  if l:client_count == 0
-    return ''
-  endif
-
   let l:error_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.ERROR})')
   let l:warning_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.WARN})')
   let l:info_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.INFO})')
