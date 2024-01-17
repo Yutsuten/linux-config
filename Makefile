@@ -38,7 +38,8 @@ system:
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 
-tools: alacritty fish git mpv nvim nnn vimiv
+tools: alacritty fish git nvim nnn vimiv
+	@echo 'Add mpv settings with `make mpv`'
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -82,7 +83,7 @@ nvim:
 	ln -srnf tools/nvim/plugin ~/.local/share/nvim/site/plugin
 	ln -srnf tools/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
 	ln -srnf tools/nvim/doc ~/.local/share/nvim/site/doc
-	nvim --cmd ':helptags ALL | :q'
+	nvim --cmd ':helptags ALL | :q' --headless
 
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
