@@ -4,8 +4,8 @@ bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
 all: desktop tools
-	@echo '${bold}Done!${reset}'
 	@echo ' Add system settings with: `sudo make system`'
+	@echo '${bold}Done!${reset}'
 
 desktop:
 	@echo '${bold}>> Desktop environment settings <<${reset}'
@@ -39,7 +39,7 @@ system:
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 
 tools: alacritty fish git nvim nnn vimiv
-	@echo 'Add mpv settings with `make mpv`'
+	@echo ' Add mpv settings with `make mpv`'
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
