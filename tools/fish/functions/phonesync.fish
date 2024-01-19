@@ -10,8 +10,9 @@ function phonesync
         return 0
     end
 
-    set backup ~/Documents/Backup/ Backup/
+    set backup ~/Documents/Backup/Phone/ Backup/
     set music ~/Music/ Music/
+    set notes ~/Documents/Notes/ Notes/
     set pictures ~/Pictures/ Pictures/
     set videos ~/Videos/ Videos/
 
@@ -23,22 +24,25 @@ function phonesync
 
     if set -ql fusedir
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
-        echo -s $bold '> Syncing backup' $reset
+        echo -s $bold '(Phone > PC) Syncing backup' $reset
         rsync $options $fusedir/$backup[2] $backup[1]
         echo
         if set -ql _flag_documents
-            echo -s $bold '> Syncing documents' $reset
+            echo -s $bold '(PC > Phone) Syncing documents' $reset
             tar --zstd --directory ~ --create Documents/ \
                 | gpg --encrypt --default-recipient-self > $fusedir/Documents.tar.zst.gpg
         end
         echo
-        echo -s $bold '> Syncing musics' $reset
+        echo -s $bold '(PC > Phone) Syncing musics' $reset
         rsync $options $music[1] $fusedir/$music[2]
         echo
-        echo -s $bold '> Syncing pictures' $reset
+        echo -s $bold '(PC > Phone) Syncing notes' $reset
+        rsync $options $notes[1] $fusedir/$notes[2]
+        echo
+        echo -s $bold '(PC > Phone) Syncing pictures' $reset
         rsync $options $pictures[1] $fusedir/$pictures[2]
         echo
-        echo -s $bold '> Syncing videos' $reset
+        echo -s $bold '(PC > Phone) Syncing videos' $reset
         rsync $options $videos[1] $fusedir/$videos[2]
         echo 'Finish!'
         return 0
@@ -48,13 +52,15 @@ function phonesync
         lftp -c "
             set cmd:fail-exit true;
             open -p $argv[2] -u $argv[3] $argv[1];
-            echo '> Syncing backup';
+            echo '(Phone > PC) Syncing backup';
             mirror $options $backup[2] $backup[1];
-            echo '> Syncing music';
+            echo '(PC > Phone) Syncing music';
             mirror $options --reverse $music[1] $music[2];
-            echo '> Syncing pictures';
+            echo '(PC > Phone) Syncing notes';
+            mirror $options --reverse $notes[1] $notes[2];
+            echo '(PC > Phone) Syncing pictures';
             mirror $options --reverse $pictures[1] $pictures[2];
-            echo '> Syncing videos';
+            echo '(PC > Phone) Syncing videos';
             mirror $options --reverse $videos[1] $videos[2];
         "
         echo 'Finish!'
