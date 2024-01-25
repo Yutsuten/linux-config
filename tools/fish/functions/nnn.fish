@@ -5,7 +5,7 @@ function nnn --wraps=nnn --description 'The unorthodox terminal file manager.'
     end
     set shortcuts
     set -a shortcuts 'd:dragdrop'
-    set -a shortcuts 'g:-!gpg -d "$nnn" | less -N*'
+    set -a shortcuts 'g:-!gpg -d "$nnn"'
     set -a shortcuts 'i:-vimiv'
     set -a shortcuts 'p:-mpv'
     set -a shortcuts 'y:-!wl-copy "$nnn"*'
