@@ -1,28 +1,69 @@
-#!/bin/bash
+#!/usr/bin/fish
 
-set -e
-set -u
-set -o pipefail
+set music .mp3 .m4a .ogg .opus .flac
+set video .mp4 .mkv .webm .3gp .ogv
 
-echo -n "Play '${nnn}' with MPV. Shuffle (y/N)? "
-read -r shuffle
+set music_regex (string join '|' $music'$')
+set video_regex (string join '|' $video'$')
 
-if [[ -d "${nnn}" ]]; then
-  if [[ "${shuffle}" == [yY] ]]; then
-    find "${nnn}" -maxdepth 2 -type f -not -path '*/.*' \
-      '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
-      -exec mpv --profile=music --shuffle --loop-playlist '{}' '+' &
-  else
-    find "${nnn}" -maxdepth 2 -type f -not -path '*/.*' \
-      '(' -iname '*.mp3' -or -iname '*.m4a' -or -iname '*.ogg' -or -iname '*.opus' -or -iname '*.flac' ')' \
-      -print0 \
-        | sort -nz \
-        | xargs -0 mpv --profile=music &
-  fi
+if test (string match -qr '.m3u8$' $nnn)
+    mpv --profile=music --shuffle --loop-playlist $nnn &
+else if test -d $nnn
+    set category
+    for file in $nnn/**/*
+        if string match -qr $music_regex $file
+            set category music
+            break
+        else if string match -qr $video_regex $file
+            set category video
+            break
+        end
+    end
+    if test -z "$category"
+        echo 'There is no media file in this directory' >&2
+        exit 1
+    end
+    set params -maxdepth 2 -type f -not -path '*/.*' '('
+    if test $category = music
+        for extension in $music
+            set -a params -iname '*'$extension -or
+        end
+    else
+        for extension in $video
+            set -a params -iname '*'$extension -or
+        end
+    end
+    set params[-1] ')'
+    set -a params -exec mpv --no-terminal --shuffle
+    if test $category = music
+        set -a params --profile=music --loop-playlist
+    end
+    find $nnn $params '{}' '+' &
 else
-  if [[ "${shuffle}" == [yY] ]]; then
-    mpv --profile=music --shuffle --loop-playlist "${nnn}" &
-  else
-    mpv --profile=music "${nnn}" &
-  fi
-fi
+    set category
+    if string match -qr $music_regex $nnn
+        set category music
+    else if string match -qr $video_regex $nnn
+        set category video
+    end
+    if test -z "$category"
+        echo 'Current file is not media' >&2
+        exit 1
+    end
+    set params -maxdepth 1 -type f -not -path '*/.*' '('
+    if test $category = music
+        for extension in $music
+            set -a params -iname '*'$extension -or
+        end
+    else
+        for extension in $video
+            set -a params -iname '*'$extension -or
+        end
+    end
+    set params[-1] ')'
+    set -a params -exec mpv --no-terminal --shuffle
+    if test $category = music
+        set -a params --profile=music --loop-playlist
+    end
+    find . $params '{}' '+' &
+end
