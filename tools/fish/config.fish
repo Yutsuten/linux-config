@@ -13,6 +13,8 @@ end
 
 if status is-interactive
     set -gx GPG_TTY (tty)
+    set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
+    set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
     set -g fish_color_user blue
     set -g fish_color_host brmagenta
     set -g fish_color_host_remote yellow
