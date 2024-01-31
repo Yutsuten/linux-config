@@ -10,7 +10,8 @@ function phonesync
         return 0
     end
 
-    set backup ~/Documents/Backup/Phone/ Backup/
+    set backup_phone ~/Documents/Backup/Phone/ Backup/Phone/
+    set backup_computer ~/Documents/Backup/Computer/ Backup/Computer/
     set music ~/Music/ Music/
     set notes ~/Documents/Notes/ Notes/
     set pictures ~/Pictures/ Pictures/
@@ -25,7 +26,10 @@ function phonesync
     if set -ql fusedir
         set options --recursive --inplace --size-only --delete --omit-dir-times --no-perms --exclude='.*/' --verbose
         echo -s $bold '(Phone > PC) Syncing backup' $reset
-        rsync $options $fusedir/$backup[2] $backup[1]
+        rsync $options $fusedir/$backup_phone[2] $backup_phone[1]
+        echo
+        echo -s $bold '(PC > Phone) Syncing backup' $reset
+        rsync $options $backup_computer[1] $fusedir/$backup_computer[2]
         echo
         if set -ql _flag_documents
             echo -s $bold '(PC > Phone) Syncing documents' $reset
@@ -53,7 +57,9 @@ function phonesync
             set cmd:fail-exit true;
             open -p $argv[2] -u $argv[3] $argv[1];
             echo '(Phone > PC) Syncing backup';
-            mirror $options $backup[2] $backup[1];
+            mirror $options $backup_phone[2] $backup_phone[1];
+            echo '(PC > Phone) Syncing backup';
+            mirror $options --reverse $backup_computer[1] $backup_computer[2];
             echo '(PC > Phone) Syncing music';
             mirror $options --reverse $music[1] $music[2];
             echo '(PC > Phone) Syncing notes';
