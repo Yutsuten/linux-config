@@ -15,7 +15,15 @@ window#waybar {
     transition-duration: .5s;
 }
 
-#workspaces button {
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-left #workspaces {
+    margin: 0 4px;
+}
+
+.modules-left #workspaces button {
     padding: 3px 8px;
     background-color: transparent;
     color: @theme_text_color;
@@ -24,47 +32,43 @@ window#waybar {
     border-radius: 0;
 }
 
-#workspaces button:hover {
+.modules-left #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 -3px @theme_text_color;
 }
 
-#workspaces button.focused {
+.modules-left #workspaces button.focused {
     background-color: #5294e2;
     box-shadow: inset 0 -3px #3274c2;
 }
 
-#workspaces button.urgent {
+.modules-left #workspaces button.urgent {
     background-color: #eb4d4b;
     box-shadow: inset 0 -3px #b3403f;
 }
 
-#custom-weather,
-#clock,
-#cpu,
-#memory,
-#temperature,
-#pulseaudio,
-#tray,
-#mpris,
-#mode {
+.modules-left #mode {
+    background-color: #5294e2;
+    box-shadow: inset 0 -3px #3274c2;
     padding: 0 12px;
 }
 
-#language {
-    padding-left: 12px;
+.modules-center #clock {
+    padding-right: 24px;
 }
 
-#window,
-#workspaces {
-    margin: 0 4px;
+.modules-right #pulseaudio,
+.modules-right #memory,
+.modules-right #cpu,
+.modules-right #temperature {
+    padding-right: 24px;
 }
 
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
+.modules-right #language,
+.modules-right #tray {
+    padding-right: 12px;
 }
 
-#mode {
-    background-color: #5294e2;
-    box-shadow: inset 0 -3px #3274c2;
+.modules-right #language {
+    padding-top: 2px;
 }
