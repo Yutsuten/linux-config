@@ -50,12 +50,11 @@ function phonesync
         rsync $options $videos[1] $fusedir/$videos[2]
         echo 'Finish!'
         return 0
-    else if test (count $argv) -eq 3
+    else if test -n "$argv"
         set options --no-symlinks --ignore-time --delete --no-perms --exclude-glob='.*/' --verbose
-        echo "Accessing $argv[3]@$argv[1]:$argv[2]"
         lftp -c "
             set cmd:fail-exit true;
-            open -p $argv[2] -u $argv[3] $argv[1];
+            open $argv;
             echo '(Phone > PC) Syncing backup';
             mirror $options $backup_phone[2] $backup_phone[1];
             echo '(PC > Phone) Syncing backup';
@@ -73,6 +72,6 @@ function phonesync
         return 0
     end
     echo 'FAIL: Phone not accessible.' >&2
-    echo 'If using FTP, call with arguments: IP_ADDRESS PORT USER.' >&2
+    echo 'If using FTP or SFTP, add the correct arguments for lftp.' >&2
     return 1
 end
