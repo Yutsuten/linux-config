@@ -1,19 +1,25 @@
 function passgen --argument-names ALLOWED_CHARS LENGTH --description 'Generate random passwords'
     argparse --max-args 2 'h/help' -- $argv
-    or return
-
-    set DEFAULT_ALLOWED_CHARS '!-~'
-    set DEFAULT_LENGTH 25
+    set exitcode $status
 
     function help --argument-names ALLOWED_CHARS LENGTH
         echo 'Usage: passgen [-h|--help] [ALLOWED_CHARS] [LENGTH]' >&2
         echo >&2
-        echo '  Defaults:' >&2
-        echo "  - ALLOWED_CHARS: '$ALLOWED_CHARS' (all characters, numbers and symbols)" >&2
-        echo "  - LENGTH: $LENGTH" >&2
+        echo '  Synopsis:' >&2
+        echo '    Generate random passwords.' >&2
+        echo >&2
+        echo '  Options:' >&2
+        echo '    -h, --help      Show list of command-line options' >&2
+        echo >&2
+        echo '  Arguments:' >&2
+        echo "    ALLOWED_CHARS: Default to '$ALLOWED_CHARS' (all letters, numbers and symbols)" >&2
+        echo "    LENGTH: Default to $LENGTH" >&2
     end
 
-    if set --query --local _flag_help
+    set DEFAULT_ALLOWED_CHARS '!-~'
+    set DEFAULT_LENGTH 25
+
+    if test $exitcode -ne 0 || set --query --local _flag_help
         help $DEFAULT_ALLOWED_CHARS $DEFAULT_LENGTH
         return 1
     end

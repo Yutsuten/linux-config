@@ -1,13 +1,23 @@
 function tts --description 'Text-to-Speech using Google API'
-    argparse --min-args 1 'h/help' 'g/girl' -- $argv
-    or return
+    argparse 'h/help' 'g/girl' -- $argv
+    set exitcode $status
 
-    if set -ql _flag_help
-        echo 'Usage: tts [-h|--help] [-g|--girl] TEXT' >&2
-        return 0
+    if test $exitcode -ne 0 || set --query --local _flag_help
+        echo 'Usage: tts [options] TEXT' >&2
+        echo >&2
+        echo '  Synopsis:' >&2
+        echo '    Text-to-Speech using Google API.' >&2
+        echo >&2
+        echo '  Options:' >&2
+        echo '    -h, --help      Show list of command-line options' >&2
+        echo '    -g, --girl      Use woman voice instead' >&2
+        echo >&2
+        echo '  Positional arguments:' >&2
+        echo '    TEXT: Used to generate the audio' >&2
+        return 1
     end
 
-    if set -ql _flag_girl
+    if set --query --local _flag_girl
         set voice ja-JP-Wavenet-B
     else
         set voice ja-JP-Wavenet-C
@@ -27,4 +37,5 @@ function tts --description 'Text-to-Speech using Google API'
 
     echo "Output: $filename"
     mpv --really-quiet $filename
+    return 0
 end
