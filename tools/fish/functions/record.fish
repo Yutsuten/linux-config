@@ -4,10 +4,10 @@ function record --description 'Record screen using wf-recorder'
 
     if test $exitcode -ne 0 || set --query --local _flag_help
         echo 'Usage: record [options] [name]' >&2
-        echo '  -h, --help      Show list of command-line options'
-        echo '  -m, --mic       Record mic'
-        echo '  -r, --rec       Record recording.monitor audio source'
-        echo '  -s, --speakers  Record speakers'
+        echo '  -h, --help      Show list of command-line options' >&2
+        echo '  -m, --mic       Record mic' >&2
+        echo '  -r, --rec       Record recording.monitor audio source' >&2
+        echo '  -s, --speakers  Record speakers' >&2
         return 1
     end
 
