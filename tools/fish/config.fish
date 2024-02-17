@@ -13,13 +13,15 @@ end
 
 if status is-interactive
     set -gx GPG_TTY (tty)
-    set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
     set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
-    set -g fish_color_user blue
+    set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
+
+    set -g CDPATH . $HOME $HOME/Projects
+    set -g VIRTUAL_ENV_DISABLE_PROMPT true
+    set -g fish_color_autosuggestion white
     set -g fish_color_host brmagenta
     set -g fish_color_host_remote yellow
-    set -g fish_color_autosuggestion white
-    set -g VIRTUAL_ENV_DISABLE_PROMPT true
+    set -g fish_color_user blue
 
     alias fish_greeting 'neofetch'
     alias notes 'nvim -S ~/Desktop/Session.vim'
