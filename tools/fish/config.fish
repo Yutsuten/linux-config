@@ -23,14 +23,15 @@ if status is-interactive
     set -g fish_color_host_remote yellow
     set -g fish_color_user blue
 
-    alias fish_greeting 'neofetch'
-    alias notes 'nvim -S ~/Desktop/Session.vim'
-    alias identify 'identify -precision 3'
-    alias ssh 'env TERM=xterm-256color ssh'
-    alias vimiv 'vimiv --log-level error'
     alias clear 'clear && neofetch'
     alias ffmpeg 'ffmpeg -hide_banner'
     alias ffprobe 'ffprobe -hide_banner'
+    alias fish_greeting 'neofetch'
+    alias identify 'identify -precision 3'
+    alias n 'nnn'
+    alias notes 'nvim -S ~/Desktop/Session.vim'
+    alias ssh 'env TERM=xterm-256color ssh'
+    alias vimiv 'vimiv --log-level error'
 
     fish_add_path $HOME/.local/bin
 end
