@@ -1,0 +1,2 @@
+set cmd:prompt \n \033[1mlftp@\h\nlocal \033[0m \033[36m\l\033[0m\n\033[1mremote\033[0m \033[32m\w\033[0m\n\>\ 
+set xfer:clobber on

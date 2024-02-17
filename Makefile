@@ -1,4 +1,4 @@
-.PHONY: desktop system tools alacritty fish git mpv nvim nnn utilities vimiv
+.PHONY: desktop system tools alacritty fish git lftp mpv nvim nnn utilities vimiv
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -38,7 +38,7 @@ system:
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 
-tools: alacritty fish git nvim nnn vimiv
+tools: alacritty fish git lftp nvim nnn vimiv
 	@echo ' Add mpv settings with `make mpv`'
 
 alacritty:
@@ -62,6 +62,10 @@ git:
 	git config --global init.defaultBranch main
 	git config --global pager.branch false
 	git config --global push.autoSetupRemote true
+
+lftp:
+	@echo '${bold}>> LFTP settings <<${reset}'
+	ln -srf tools/lftp/lftp.rc ~/.config/lftp/rc
 
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
