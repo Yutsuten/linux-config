@@ -70,7 +70,8 @@
         "format": "<span color='#55c15c'></span> {load:0.2f}"
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+        "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+        "input-filename": "temp1_input",
         "format": "<span color='#e2528f'>{icon}</span> {temperatureC}°C",
         "format-icons": ["", "", ""]
     },
