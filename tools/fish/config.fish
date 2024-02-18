@@ -26,7 +26,6 @@ if status is-interactive
     alias clear 'clear && neofetch'
     alias ffmpeg 'ffmpeg -hide_banner'
     alias ffprobe 'ffprobe -hide_banner'
-    alias fish_greeting 'neofetch'
     alias identify 'identify -precision 3'
     alias n 'nnn'
     alias notes 'nvim -S ~/Desktop/Session.vim'
@@ -34,4 +33,10 @@ if status is-interactive
     alias vimiv 'vimiv --log-level error'
 
     fish_add_path $HOME/.local/bin
+end
+
+function fish_greeting
+    if test -z "$NNNLVL"
+        neofetch
+    end
 end
