@@ -38,7 +38,7 @@ let s:brwhite     = { 'gui': '#DCDFE4', 'cterm': '15' }
 let s:fg          = s:brwhite
 let s:bg          = s:black
 
-let s:comment_fg  = s:brblack
+let s:comment_fg  = s:white
 let s:gutter_bg   = ''
 let s:gutter_fg   = s:white
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }

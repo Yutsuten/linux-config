@@ -32,6 +32,19 @@ Language server:
 <space>t            Jumps to the definition of the type of the symbol under the cursor
 <space>k            Displays hover information about the symbol under the cursor in a floating window
 
+Gitsigns:
+
+<leader>hs          Stage hunk
+<leader>hr          Reset hunk
+<leader>hu          Undo stage hunk
+<leader>hp          Preview hunk
+<leader>hS          Stage buffer
+<leader>hR          Reset buffer
+<leader>hb          Blame line
+<leader>hd          Diff this
+<leader>hD          Diff this
+<leader>td          Toggle deleted
+
 Commenting code:
 
 <leader>c/          Comment code using //
