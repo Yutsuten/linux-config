@@ -26,7 +26,7 @@ let s:blue        = { 'gui': '#61AFEF', 'cterm': '4'  }
 let s:magenta     = { 'gui': '#C678DD', 'cterm': '5'  }
 let s:cyan        = { 'gui': '#56B6C2', 'cterm': '6'  }
 let s:white       = { 'gui': '#919BAA', 'cterm': '7'  }
-let s:brblack     = { 'gui': '#5C6370', 'cterm': '8'  }
+let s:brblack     = { 'gui': '#474E5D', 'cterm': '8'  }
 let s:brred       = { 'gui': '#E06C75', 'cterm': '9'  }
 let s:brgreen     = { 'gui': '#98C379', 'cterm': '10' }
 let s:bryellow    = { 'gui': '#E5C07B', 'cterm': '11' }
@@ -47,7 +47,7 @@ let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
 let s:cursor_line = s:brblack
 let s:color_col   = s:brblack
 
-let s:selection   = { 'gui': '#474E5D', 'cterm': '239' }
+let s:selection   = s:brblack
 let s:vertsplit   = s:brblack
 
 

@@ -1,13 +1,3 @@
-[colors.bright]
-black = "#5C6370"
-blue = "#61AFEF"
-cyan = "#56B6C2"
-green = "#98C379"
-magenta = "#C678DD"
-red = "#E06C75"
-white = "#DCDFE4"
-yellow = "#E5C07B"
-
 [colors.normal]
 black = "#282C34"
 blue = "#61AFEF"
@@ -18,15 +8,31 @@ red = "#E06C75"
 white = "#919BAA"
 yellow = "#E5C07B"
 
+[colors.bright]
+black = "#474E5D"
+blue = "#61AFEF"
+cyan = "#56B6C2"
+green = "#98C379"
+magenta = "#C678DD"
+red = "#E06C75"
+white = "#DCDFE4"
+yellow = "#E5C07B"
+
 [colors.primary]
 background = "#282C34"
 foreground = "#DCDFE4"
+
+[window]
+opacity = 0.96
 
 [font]
 size = 10.0
 
 [font.normal]
 family = "Source Code Pro"
+
+[mouse]
+hide_when_typing = true
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"
@@ -50,9 +56,3 @@ action = "Bracket"
 key = 6
 mode = "Vi|~Search"
 mods = "Shift"
-
-[mouse]
-hide_when_typing = true
-
-[window]
-opacity = 0.96
