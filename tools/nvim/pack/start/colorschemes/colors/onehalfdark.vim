@@ -39,7 +39,7 @@ let s:fg          = s:brwhite
 let s:bg          = s:black
 
 let s:comment_fg  = s:brblack
-let s:gutter_bg   = { 'gui': '#313640', 'cterm': '237' }
+let s:gutter_bg   = ''
 let s:gutter_fg   = s:white
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }
 let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
@@ -48,7 +48,7 @@ let s:cursor_line = s:brblack
 let s:color_col   = s:brblack
 
 let s:selection   = { 'gui': '#474E5D', 'cterm': '239' }
-let s:vertsplit   = s:black
+let s:vertsplit   = s:brblack
 
 
 function! s:h(group, fg, bg, attr)
@@ -237,25 +237,25 @@ call s:h('DiagnosticError', s:red, '', '')
 call s:h('DiagnosticWarn', s:warning_fg, '', '')
 call s:h('DiagnosticInfo', s:blue, '', '')
 call s:h('DiagnosticHint', s:cyan, '', '')
-call s:h('DiagnosticSignError', s:red, s:gutter_bg, '')
-call s:h('DiagnosticSignWarn', s:yellow, s:gutter_bg, '')
-call s:h('DiagnosticSignInfo', s:blue, s:gutter_bg, '')
-call s:h('DiagnosticSignHint', s:cyan, s:gutter_bg, '')
+call s:h('DiagnosticSignError', s:red, s:brblack, '')
+call s:h('DiagnosticSignWarn', s:yellow, s:brblack, '')
+call s:h('DiagnosticSignInfo', s:blue, s:brblack, '')
+call s:h('DiagnosticSignHint', s:cyan, s:brblack, '')
 " }
 
 " TabLine {
-call s:h('TabLine', s:white, s:gutter_bg, '')
-call s:h('TabLineFill', s:white, s:gutter_bg, '')
-call s:h('TabLineSel', s:brwhite, s:blue, '')
+call s:h('TabLine', s:brwhite, s:brblack, '')
+call s:h('TabLineFill', s:white, s:brblack, '')
+call s:h('TabLineSel', s:black, s:blue, '')
 " }
 
 " StatusLine {
-call s:h('StatusLine', s:brwhite, s:gutter_bg, '')
-call s:h('StatusLineNC', s:white, s:gutter_bg, '')
-call s:h('StatusLineSub', s:gutter_bg, s:white, '')
-call s:h('StatusLineRed', s:gutter_bg, s:red, '')
-call s:h('StatusLineGreen', s:gutter_bg, s:green, '')
-call s:h('StatusLineYellow', s:gutter_bg, s:yellow, '')
-call s:h('StatusLineBlue', s:gutter_bg, s:blue, '')
-call s:h('StatusLineMagenta', s:gutter_bg, s:magenta, '')
+call s:h('StatusLine', s:brwhite, s:brblack, '')
+call s:h('StatusLineNC', s:white, s:black, '')
+call s:h('StatusLineSub', s:black, s:white, '')
+call s:h('StatusLineRed', s:black, s:red, '')
+call s:h('StatusLineGreen', s:black, s:green, '')
+call s:h('StatusLineYellow', s:black, s:yellow, '')
+call s:h('StatusLineBlue', s:black, s:blue, '')
+call s:h('StatusLineMagenta', s:black, s:magenta, '')
 " }
