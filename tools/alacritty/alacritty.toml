@@ -1,3 +1,16 @@
+[window]
+opacity = 0.96
+
+[font]
+size = 10.0
+
+[font.normal]
+family = "Source Code Pro"
+
+[colors.primary]
+background = "#282C34"
+foreground = "#DCDFE4"
+
 [colors.normal]
 black = "#282C34"
 red = "#E06C75"
@@ -18,41 +31,13 @@ magenta = "#C678DD"
 cyan = "#56B6C2"
 white = "#DCDFE4"
 
-[colors.primary]
-background = "#282C34"
-foreground = "#DCDFE4"
-
-[window]
-opacity = 0.96
-
-[font]
-size = 10.0
-
-[font.normal]
-family = "Source Code Pro"
-
 [mouse]
 hide_when_typing = true
 
-[[keyboard.bindings]]
-action = "CreateNewWindow"
-key = "Return"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "SearchBackward"
-key = 53
-mode = "Vi|~Search"
-mods = "Shift"
-
-[[keyboard.bindings]]
-action = "Last"
-key = 5
-mode = "Vi|~Search"
-mods = "Shift"
-
-[[keyboard.bindings]]
-action = "Bracket"
-key = 6
-mode = "Vi|~Search"
-mods = "Shift"
+[keyboard]
+bindings = [
+  { key = "Return", mods = "Control",                      action = "CreateNewWindow" },
+  { key = 5,        mods = "Shift",   mode = "Vi|~Search", action = "Last"            },
+  { key = 6,        mods = "Shift",   mode = "Vi|~Search", action = "Bracket"         },
+  { key = 53,       mods = "Shift",   mode = "Vi|~Search", action = "SearchBackward"  },
+]
