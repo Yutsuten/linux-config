@@ -15,7 +15,7 @@ function record --description 'Record screen and audio on wayland'
         echo '    -s, --speakers  Record speakers' >&2
         echo >&2
         echo '  Positional arguments:' >&2
-        echo "    NAME: Appended to the output's folder name, which starts with a timestamp" >&2
+        echo "    NAME            Appended to the output's folder name, which starts with a timestamp" >&2
         return 1
     end
 

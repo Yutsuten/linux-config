@@ -13,7 +13,7 @@ function share --description 'Share screen or phone camera using v4l2loopback'
         echo '    -f, --flip      Apply horizontal flip' >&2
         echo >&2
         echo '  Positional arguments:' >&2
-        echo "    TARGET: Either 'camera' or 'screen'" >&2
+        echo "    TARGET          Either 'camera' or 'screen'" >&2
     end
 
     if test $exitcode -ne 0 || set --query --local _flag_help

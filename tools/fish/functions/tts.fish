@@ -13,7 +13,7 @@ function tts --description 'Text-to-Speech using Google API'
         echo '    -g, --girl      Use woman voice instead' >&2
         echo >&2
         echo '  Positional arguments:' >&2
-        echo '    TEXT: Used to generate the audio' >&2
+        echo '    TEXT            Used to generate the audio' >&2
         return 1
     end
 
