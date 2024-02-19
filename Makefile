@@ -65,6 +65,7 @@ git:
 
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'
+	mkdir -p ~/.config/lftp
 	ln -srf tools/lftp/lftp.rc ~/.config/lftp/rc
 
 mpv:
