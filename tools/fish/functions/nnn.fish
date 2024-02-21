@@ -8,6 +8,7 @@ function nnn --wraps=nnn --description 'The unorthodox terminal file manager.'
     set --append shortcuts 'i:-vimiv'
     set --append shortcuts 'l:-!less -N "$nnn"*'
     set --append shortcuts 'p:-mpv'
+    set --append shortcuts 'x:rm'
     set --append shortcuts 'y:-!wl-copy "$nnn"*'
     set --export NNN_PLUG (string join ';' $shortcuts)
 
