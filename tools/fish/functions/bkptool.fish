@@ -32,11 +32,11 @@ function bkptool --description 'Backup and restore user files'
             rsync --archive --update --delete --verbose "$bkp_dir/$dir/" "$HOME/$dir/"
         end
 
-        echo $bold"Restore LinuxConfigBackup.tar.zst.gpg"$reset
-        tar --zstd -xf "$bkp_dir/LinuxConfigBackup.tar.zst.gpg" -C ~
+        echo $bold"Restore ConfigBackup.tar.zst.gpg"$reset
+        tar --zstd -xf "$bkp_dir/ConfigBackup.tar.zst.gpg" -C ~
 
-        echo $bold"Restore LinuxDataBackup.tar.zst.gpg"$reset
-        tar --zstd -xf "$bkp_dir/LinuxDataBackup.tar.zst.gpg" -C ~
+        echo $bold"Restore DataBackup.tar.zst.gpg"$reset
+        tar --zstd -xf "$bkp_dir/DataBackup.tar.zst.gpg" -C ~
     else
         # Sync - Check for empty directories
         set empty 0
@@ -67,18 +67,18 @@ function bkptool --description 'Backup and restore user files'
 
         echo $bold'Generate encrypted backup of config'$reset
         tar --create --zstd --directory ~ $bkp_config \
-          | gpg -e --default-recipient-self > LinuxConfigBackup.tar.zst.gpg
+          | gpg -e --default-recipient-self > ConfigBackup.tar.zst.gpg
 
         echo $bold'Generate encrypted backup of data'$reset
         tar --create --zstd --directory ~ $bkp_data \
-          | gpg -e --default-recipient-self > LinuxDataBackup.tar.zst.gpg
+          | gpg -e --default-recipient-self > DataBackup.tar.zst.gpg
 
         # Compressed encrypted backup - Perform backup
-        echo $bold'Backup LinuxConfigBackup.tar.zst.gpg'$reset
-        cp -a LinuxConfigBackup.tar.zst.gpg "$bkp_dir/LinuxConfigBackup.tar.zst.gpg"
+        echo $bold'Backup ConfigBackup.tar.zst.gpg'$reset
+        cp -a ConfigBackup.tar.zst.gpg "$bkp_dir/ConfigBackup.tar.zst.gpg"
 
-        echo $bold'Backup LinuxDataBackup.tar.zst.gpg'$reset
-        cp -a LinuxDataBackup.tar.zst.gpg "$bkp_dir/LinuxDataBackup.tar.zst.gpg"
+        echo $bold'Backup DataBackup.tar.zst.gpg'$reset
+        cp -a DataBackup.tar.zst.gpg "$bkp_dir/DataBackup.tar.zst.gpg"
     end
     echo $bold'Finish!'$reset
     return 0
