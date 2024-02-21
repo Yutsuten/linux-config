@@ -1,5 +1,5 @@
 function bkptool --description 'Backup and restore user files'
-    argparse --max-args 0 'h/help' 'r/restore' 'o/osu' -- $argv
+    argparse --max-args 0 'h/help' 'r/restore' -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
@@ -11,7 +11,6 @@ function bkptool --description 'Backup and restore user files'
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
         echo '    -r, --restore   Restore files from backup' >&2
-        echo '    -o, --osu       Include osu!lazer data to backup' >&2
         return 1
     end
 
@@ -32,58 +31,54 @@ function bkptool --description 'Backup and restore user files'
             echo $bold"Restore $dir"$reset
             rsync --archive --update --delete --verbose "$bkp_dir/$dir/" "$HOME/$dir/"
         end
-        echo $bold'Restore anki'$reset
-        tar --zstd -xf "$bkp_dir/anki.tar.zst" -C ~/.local/share
-        echo $bold'Restore aur packages list'$reset
-        cp -a "$bkp_dir/aur_packages" ~/.local/aur/packages
-        echo $bold'Restore fcitx5'$reset
-        tar --zstd -xf "$bkp_dir/fcitx5.tar.zst" -C ~/.config
-        echo $bold'Restore local environment variables'$reset
-        cp -a "$bkp_dir/environment" ~/.local/environment
-        echo $bold'Restore osu!lazer'$reset
-        tar --zstd -xf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share
-        echo $bold'Restore thunderbird'$reset
-        tar --zstd -xf "$bkp_dir/thunderbird.tar.zst" -C ~
+
+        echo $bold"Restore LinuxConfigBackup.tar.zst.gpg"$reset
+        tar --zstd -xf "$bkp_dir/LinuxConfigBackup.tar.zst.gpg" -C ~
+
+        echo $bold"Restore LinuxDataBackup.tar.zst.gpg"$reset
+        tar --zstd -xf "$bkp_dir/LinuxDataBackup.tar.zst.gpg" -C ~
     else
-        # Check for empty directories
+        # Sync - Check for empty directories
         set empty 0
         for dir in $sync_dirs
             test -z (find "$HOME/$dir" -maxdepth 0 -empty) || set empty 1
         end
-        test -z (find ~/.local/share/Anki2 -maxdepth 0 -empty) || set empty 1
-        test -z (find ~/.config/fcitx5 -maxdepth 0 -empty) || set empty 1
-        test -z (find ~/.local/share/osu -maxdepth 0 -empty) || set empty 1
-        test -z (find ~/.thunderbird -maxdepth 0 -empty) || set empty 1
-        test -z (find ~/.steam/steam/steamapps/common/'100 Orange Juice' -maxdepth 0 -empty) || set empty 1
         if test $empty -eq 1
-            echo 'There is empty directory. Abort.' >&2
+            echo 'Will not backup empty directory. Abort.' >&2
             return 1
         end
 
-        # Start backup
+        # Sync - Perform backup
         for dir in $sync_dirs
             echo $bold"Backup $dir"$reset
             rsync --archive --update --delete --verbose "$HOME/$dir/" "$bkp_dir/$dir/"
         end
-        echo $bold'Backup anki'$reset
-        tar --zstd -cf "$bkp_dir/anki.tar.zst" -C ~/.local/share Anki2
-        echo $bold'Backup aur packages list'$reset
-        cp -a ~/.local/aur/packages "$bkp_dir/aur_packages"
-        echo $bold'Backup fcitx5'$reset
-        tar --zstd -cf "$bkp_dir/fcitx5.tar.zst" -C ~/.config fcitx5
-        echo $bold'Backup local environment variables'$reset
-        cp -a ~/.local/environment "$bkp_dir/environment"
-        if set --query --local _flag_osu
-            echo $bold'Backup osu!lazer'$reset
-            tar --zstd -cf "$bkp_dir/osu-lazer.tar.zst" -C ~/.local/share osu
-        end
-        echo $bold'Backup thunderbird'$reset
-        tar --zstd -cf "$bkp_dir/thunderbird.tar.zst" -C ~ .thunderbird
-        echo $bold'Backup 100% Orange Juice'$reset
-        mkdir /tmp/100OJ_Save_Data
-        cp -a ~/.steam/steam/steamapps/common/'100 Orange Juice'/user* /tmp/100OJ_Save_Data
-        tar --zstd -cf "$bkp_dir/100OJ_Save_Data.tar.zst" -C /tmp 100OJ_Save_Data
-        rm -rf /tmp/100OJ_Save_Data
+
+        # Compressed encrypted backup - Generate files
+        set bkp_config .config/backup_config
+        while read --line target
+            set --append bkp_config $target
+        end < ~/.config/backup_config
+
+        set bkp_data .config/backup_data
+        while read --line target
+            set --append bkp_data $target
+        end < ~/.config/backup_data
+
+        echo $bold'Generate encrypted backup of config'$reset
+        tar --create --zstd --directory ~ $bkp_config \
+          | gpg -e --default-recipient-self > LinuxConfigBackup.tar.zst.gpg
+
+        echo $bold'Generate encrypted backup of data'$reset
+        tar --create --zstd --directory ~ $bkp_data \
+          | gpg -e --default-recipient-self > LinuxDataBackup.tar.zst.gpg
+
+        # Compressed encrypted backup - Perform backup
+        echo $bold'Backup LinuxConfigBackup.tar.zst.gpg'$reset
+        cp -a LinuxConfigBackup.tar.zst.gpg "$bkp_dir/LinuxConfigBackup.tar.zst.gpg"
+
+        echo $bold'Backup LinuxDataBackup.tar.zst.gpg'$reset
+        cp -a LinuxDataBackup.tar.zst.gpg "$bkp_dir/LinuxDataBackup.tar.zst.gpg"
     end
     echo $bold'Finish!'$reset
     return 0
