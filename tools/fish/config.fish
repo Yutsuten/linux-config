@@ -24,6 +24,7 @@ if status is-interactive
     set -g fish_color_user blue
 
     alias clear 'clear && neofetch'
+    alias diskusage "lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'"
     alias ffmpeg 'ffmpeg -hide_banner'
     alias ffprobe 'ffprobe -hide_banner'
     alias identify 'identify -precision 3'
