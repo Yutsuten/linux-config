@@ -10,12 +10,9 @@ else
     set target_files $nnn
 end
 
-# Clear selection
-printf '-' > $NNN_PIPE
-
 # User interaction
 echo
-echo 'Type YES to permanently REMOVE the following:'
+echo "Type YES to permanently REMOVE the following $(count $target_files) item(s):"
 echo
 set num 1
 for target in $target_files
@@ -28,4 +25,7 @@ read --prompt-str 'Proceed? ' answer
 # Remove execution
 if test "$answer" = "YES"
     rm -rf -- $target_files
+
+    # Clear selection
+    printf '-' > $NNN_PIPE
 end
