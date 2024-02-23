@@ -12,7 +12,6 @@ desktop:
 	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d
 	ln -srf desktop/sway.conf ~/.config/sway/config
 	ln -srf desktop/swaylock.conf ~/.config/swaylock/config
-	ln -srf desktop/waybar/config.json ~/.config/waybar/config
 	ln -srf desktop/waybar/style.css ~/.config/waybar/style.css
 	ln -srf desktop/dunstrc.conf ~/.config/dunst/dunstrc
 	ln -srf desktop/gtk/gtk2.ini ~/.gtkrc-2.0
@@ -23,8 +22,9 @@ desktop:
 	cp -af desktop/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af desktop/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
-	bash desktop/systemd/wallpaper.service.sh
 	bash desktop/pipewire/90-init.sh
+	bash desktop/systemd/wallpaper.service.sh
+	fish desktop/waybar/configure.fish
 
 system:
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb
