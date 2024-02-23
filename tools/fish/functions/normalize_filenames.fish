@@ -13,6 +13,10 @@ function normalize_filenames --description 'Increase compatibility of file names
         return 1
     end
 
+    set bold (tput bold)
+    set reset (tput sgr0)
+
+    set count 0
     for file in **/*
         if not test -f $file
             continue
@@ -21,9 +25,11 @@ function normalize_filenames --description 'Increase compatibility of file names
         set normalized_dir (dirname "$normalized")
         if test "$file" != "$normalized"
             mkdir -p "$normalized_dir"
-            mv -v $file "$normalized"
+            mv $file "$normalized"
+            set count (math $count + 1)
         end
     end
     find . -type d -empty -delete
+    echo $bold"Renamed $count files!"$reset
     return 0
 end
