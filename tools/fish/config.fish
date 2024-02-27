@@ -28,7 +28,6 @@ if status is-interactive
     alias ffmpeg 'ffmpeg -hide_banner'
     alias ffprobe 'ffprobe -hide_banner'
     alias identify 'identify -precision 3'
-    alias n 'nnn'
     alias notes 'nvim -S ~/Desktop/Session.vim'
     alias ssh 'env TERM=xterm-256color ssh'
     alias vimiv 'vimiv --log-level error'
