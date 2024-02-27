@@ -40,7 +40,7 @@ function bkptool --description 'Backup and restore user files'
         for dir in $sync_dirs
             if test -z (find "$HOME/$dir" -maxdepth 0 -empty)
                 echo $bold"Backup $dir"$reset
-                rsync --archive --update --delete --verbose "$HOME/$dir/" "$bkp_dir/$dir/"
+                rsync --archive --update --copy-links --delete --verbose "$HOME/$dir/" "$bkp_dir/$dir/"
             else
                 echo $bold"Skip empty $dir"$reset
             end
