@@ -26,15 +26,15 @@ function s:UpdateStatusLine()
 
   let l:statusline  = "%0* %<%{pathshorten(expand('%:~:.'))} %m %h"
   let l:statusline .= '%='
-  if s:show_file_info
-    let l:statusline .= '%y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
-  else
-    let l:statusline .= '%{((!empty(&fileencoding) && &fileencoding !=# "utf-8") || &fileformat !=# "unix")?"⚠  ":""}'
-  endif
-  let l:statusline .= '[ind:%{&shiftwidth}] '
 
   let l:active_statusline  = '%#StatusLineMode# %{GetCurrentMode()} '
   let l:active_statusline .= statusline
+  if s:show_file_info
+    let l:active_statusline .= '%y [%{!empty(&fileencoding)?&fileencoding:&encoding}] [%{&fileformat}] '
+  else
+    let l:active_statusline .= '%{((!empty(&fileencoding) && &fileencoding !=# "utf-8") || &fileformat !=# "unix")?"⚠  ":""}'
+  endif
+  let l:active_statusline .= '[ind:%{&shiftwidth}] '
   let l:active_statusline .= '%#StatusLineSub# %2l,%-2c '
   let l:active_statusline .= '%#StatusLineLinter#%{LinterStatus()}'
 

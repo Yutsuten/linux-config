@@ -5,6 +5,7 @@ set completeopt-=preview
 set expandtab
 set fileencodings=ucs-bom,utf-8,sjis,latin1
 set list listchars=tab:›\ ,trail:˽,nbsp:˲
+set mouse=nv
 set nohlsearch
 set noshowmode
 set number
