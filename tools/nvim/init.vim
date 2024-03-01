@@ -26,7 +26,7 @@ let g:mapleader = '\'
 " Commands
 command -nargs=+ Ggrep cex system('git grep --line-number --column ' .. <q-args>)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
-command -nargs=? Terminal call s:Terminal(<f-args>)
+command -nargs=0 Terminal bot 12split +terminal | set winfixheight | startinsert
 
 " Shortcuts
 nnoremap <leader>s :syntax sync fromstart<CR>
@@ -61,9 +61,4 @@ function s:SetIndent(size, ...)
   let &softtabstop = a:size
   let &tabstop = a:size
   let &shiftwidth = a:size
-endfunction
-
-function s:Terminal(...)
-  let l:height = a:0 >= 1 ? a:1 : 12
-  execute printf('bot %ssplit +set\ winfixheight\ |\ startinsert term://fish', l:height)
 endfunction

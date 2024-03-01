@@ -36,7 +36,7 @@ if status is-interactive
 end
 
 function fish_greeting
-    if test -z "$NNNLVL"
+    if test -z "$NNNLVL" -a -z "$NVIM"
         neofetch
     end
 end
