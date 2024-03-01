@@ -24,11 +24,11 @@ let g:netrw_banner = 0
 let g:mapleader = '\'
 
 " Commands
+command -nargs=+ Ggrep cex system('git grep --line-number --column ' .. <q-args>)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=? Terminal call s:Terminal(<f-args>)
 
 " Shortcuts
-nnoremap <leader>g :cex system('git grep --column -n ""')
 nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>
