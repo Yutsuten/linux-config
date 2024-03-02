@@ -4,6 +4,7 @@ scriptencoding utf-8
 set completeopt-=preview
 set expandtab
 set fileencodings=ucs-bom,utf-8,sjis,latin1
+set grepprg=grep\ -In\ $*\ /dev/null
 set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set mouse=nv
 set nohlsearch
@@ -24,7 +25,7 @@ let g:netrw_banner = 0
 let g:mapleader = '\'
 
 " Commands
-command -nargs=+ Ggrep cex system('git grep --line-number --column ' .. <q-args>)
+command -nargs=+ Ggrep cex system('git grep -In --column --untracked ' .. <q-args>)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=0 Terminal bot 12split +terminal | set winfixheight | startinsert
 
