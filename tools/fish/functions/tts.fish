@@ -31,7 +31,7 @@ function tts --description 'Text-to-Speech using Google API'
 
     curl --silent -X POST -H 'Content-Type:application/json' \
       -d '{"audioConfig": {"audioEncoding": "OGG_OPUS"}, "input": {"ssml": "<speak>'"$argv"'</speak>"}, "voice": {"languageCode": "ja-JP", "name": "'$voice'"}}' \
-      "https://texttospeech.googleapis.com/v1/text:synthesize?key=$GOOGLE_API_KEY" \
+      "https://texttospeech.googleapis.com/v1/text:synthesize?key=$GOOGLE_TTS_API_KEY" \
         | jq -r .audioContent \
         | base64 --decode > $filename
 
