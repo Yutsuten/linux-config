@@ -41,6 +41,7 @@ Gitsigns:
 <leader>hS          Stage buffer
 <leader>hR          Reset buffer
 <leader>hb          Blame line
+<leader>tb          Toggle current line blame
 <leader>hd          Diff this
 <leader>hD          Diff this
 <leader>td          Toggle deleted
