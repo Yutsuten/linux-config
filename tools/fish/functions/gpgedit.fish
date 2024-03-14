@@ -30,7 +30,6 @@ function gpgedit --argument-names FILE --description 'Edit gpg files using nvim'
     if not gpg --decrypt $argv[1] > $temp_file
         echo "$argv[1] is not a gpg file" >&2
         rm -f $temp_file
-        help
         return 1
     end
     set before_shasum "$(shasum $temp_file)"
@@ -38,7 +37,7 @@ function gpgedit --argument-names FILE --description 'Edit gpg files using nvim'
     if test $before_shasum = "$(shasum $temp_file)"
         echo "File was not edited." >&2
         rm -f $temp_file
-        return 1
+        return 0
     end
     gpg --encrypt --default-recipient-self --output - $temp_file > $argv[1] && rm -f $temp_file
 end
