@@ -36,6 +36,10 @@ function bkptool --description 'Backup and restore user files'
         gpg --decrypt "$bkp_dir/Linux.tar.zst.gpg" \
             | tar --extract --zstd --directory ~
     else
+        # Pacman backup
+        pacman -Qqe > ~/Documents/Backup/Computer/pacman_(date '+%Y-%m-%d').list
+        groups (whoami) > ~/Documents/Backup/Computer/groups.list
+
         # Sync backup
         for dir in $sync_dirs
             if test -z (find "$HOME/$dir" -maxdepth 0 -empty)
