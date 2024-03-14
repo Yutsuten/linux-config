@@ -13,7 +13,7 @@ set number
 set sessionoptions-=buffers
 set sessionoptions-=folds
 set sessionoptions-=help
-set shada=
+set shada=\"0,'0,/10,:10,@0,f0,h,s4
 set shiftwidth=2
 set signcolumn=no
 set softtabstop=2
