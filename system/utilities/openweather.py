@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""
-Get weather information from OpenWeather API and integrate with i3blocks.
-"""
+"""Get weather information from OpenWeather API and integrate with i3blocks."""
 
 import json
 import os
@@ -10,7 +8,6 @@ import time
 
 import requests
 from urllib3.util.retry import Retry
-
 
 WEATHER_API = 'https://api.openweathermap.org/data/2.5/weather'
 
@@ -60,7 +57,7 @@ def main():
     icon = icon_map[weather['weather'][0]['icon']]
     tooltip = [
         f'💧{weather["main"]["humidity"]}%',
-        f'🎏 {weather["wind"]["speed"]}m/s',
+        f'🎏 {weather["wind"]["speed"] * 3.6:.0f}km/h',
         f'☁️ {weather["clouds"]["all"]}%',
     ]
     if 'rain' in weather:
