@@ -22,13 +22,13 @@
     },
     "clock": {
         "interval": 60,
-        "format": "{:%Y年%m月%d日 (%a)  %H:%M}",
-        "format-alt": "{:%EY%m月%d日 (%a)  %H:%M}",
+        "format": "{:L%x (%a)  %H:%M}",
+        "format-alt": "{:L%Ex (%a)  %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "calendar": {
             "mode": "month",
             "mode-mon-col": 3,
-            "on-scroll": -1,
+            "on-scroll": 1,
             "format": {
                 "months": "<b>{}</b>",
                 "weekdays": "<u><b>{}</b></u>",
