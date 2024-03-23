@@ -9,6 +9,7 @@ function nnn --wraps=nnn --description 'The unorthodox terminal file manager.'
     set --append shortcuts 'l:-!less -N "$nnn"*'
     set --append shortcuts 'p:-mpv'
     set --append shortcuts 'x:rm'
+    set --append shortcuts 'Y:-!wl-copy "$(pwd)/$nnn"*'
     set --append shortcuts 'y:-!wl-copy "$nnn"*'
     set --export NNN_PLUG (string join ';' $shortcuts)
 
