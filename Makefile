@@ -78,16 +78,14 @@ mpv:
 
 nvim:
 	@echo '${bold}>> Neovim settings <<${reset}'
-	rm -f ~/.config/nvim/init.vim ~/.config/nvim/*
-	rm -rf ~/.local/share/nvim/site/*
-	mkdir -p ~/.config/nvim ~/.local/share/nvim/site/pack/all
+	rm -rf ~/.config/nvim ~/.local/share/nvim/site
+	mkdir -p ~/.config/nvim/after ~/.local/share/nvim/site/pack/all
 	ln -srf tools/nvim/init.vim ~/.config/nvim/init.vim
-	ln -srf tools/nvim/ginit.vim ~/.config/nvim/ginit.vim
+	ln -srnf tools/nvim/doc ~/.config/nvim/doc
+	ln -srnf tools/nvim/plugin ~/.config/nvim/after/plugin
+	ln -srnf tools/nvim/ftplugin ~/.config/nvim/after/ftplugin
 	ln -srnf tools/nvim/pack/start ~/.local/share/nvim/site/pack/all/start
 	ln -srnf tools/nvim/pack/opt ~/.local/share/nvim/site/pack/all/opt
-	ln -srnf tools/nvim/plugin ~/.local/share/nvim/site/plugin
-	ln -srnf tools/nvim/ftplugin ~/.local/share/nvim/site/ftplugin
-	ln -srnf tools/nvim/doc ~/.local/share/nvim/site/doc
 	nvim --cmd ':helptags ALL | :q' --headless
 
 nnn:
