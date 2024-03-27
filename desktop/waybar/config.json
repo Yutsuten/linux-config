@@ -28,7 +28,7 @@
         "calendar": {
             "mode": "month",
             "mode-mon-col": 3,
-            "on-scroll": 1,
+            "on-scroll": -1,
             "format": {
                 "months": "<b>{}</b>",
                 "weekdays": "<u><b>{}</b></u>",
