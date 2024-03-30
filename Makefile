@@ -1,4 +1,4 @@
-.PHONY: desktop system tools alacritty fish git lftp mpv neomutt nvim nnn utilities vimiv
+.PHONY: desktop system tools alacritty fish git lftp mpv neomutt nnn nvim utilities vimiv
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -38,7 +38,7 @@ system:
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 
-tools: alacritty fish git lftp neomutt nvim nnn vimiv
+tools: alacritty fish git lftp neomutt nnn nvim vimiv
 	@echo ' Add mpv settings with `make mpv`'
 
 alacritty:
@@ -81,6 +81,12 @@ neomutt:
 	mkdir -p ~/.config/neomutt
 	ln -srf tools/neomutt/neomuttrc ~/.config/neomutt/neomuttrc
 
+nnn:
+	@echo '${bold}>> Nnn plugins <<${reset}'
+	mkdir -p ~/.config/nnn
+	rm -rf ~/.config/nnn/plugins
+	ln -srf tools/nnn/plugins ~/.config/nnn/plugins
+
 nvim:
 	@echo '${bold}>> Neovim settings <<${reset}'
 	rm -rf ~/.config/nvim ~/.local/share/nvim/site
@@ -92,12 +98,6 @@ nvim:
 	ln -srnf tools/nvim/pack/start ~/.local/share/nvim/site/pack/all/start
 	ln -srnf tools/nvim/pack/opt ~/.local/share/nvim/site/pack/all/opt
 	nvim --cmd ':helptags ALL | :q' --headless
-
-nnn:
-	@echo '${bold}>> Nnn plugins <<${reset}'
-	mkdir -p ~/.config/nnn
-	rm -rf ~/.config/nnn/plugins
-	ln -srf tools/nnn/plugins ~/.config/nnn/plugins
 
 vimiv:
 	@echo '${bold}>> Vimiv settings <<${reset}'
