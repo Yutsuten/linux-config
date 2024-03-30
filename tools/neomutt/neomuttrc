@@ -1,0 +1,168 @@
+set abort_noattach          = ask-yes
+set abort_noattach_regex    = 'attach|添付'
+set attach_format           = '%3n [%I] %T%d %> [%sB, %.7m/%.10M, %.6e%<C?, %C>] '
+set attribution_intro       = '%{%x(%a) %H:%M} %f:'
+set browser_sort_dirs_first = yes
+set compose_format          = '【メール作成中】添付%aつ (%lB)'
+set confirm_append          = no
+set copy                    = no
+set date_format             = '%Y-%m-%d %H:%M'
+set delete                  = yes
+set envelope_from           = yes
+set fast_reply              = yes
+set folder_format           = '%5C  %D  %F  %5s  %t %i'
+set forward_format          = 'Fwd: %s'
+set index_format            = '%Z  %D | %-28.28L | %s'
+set markers                 = no
+set pager_format            = ' [%S] [%D] %L: %s %> %P '
+set pager_stop              = yes
+set pipe_decode             = yes
+set postpone                = no
+set record                  = ''
+set send_charset            = 'utf-8'
+set sidebar_format          = '%D%* %<N?%N>'
+set sidebar_visible         = yes
+set sidebar_width           = 20
+set size_show_bytes         = yes
+set sleep_time              = 0
+set sort                    = reverse-date
+set status_format           = ' [%r] %f: 全%m件%<V? "%V" 表示中%M件>%<u? 新%u件>%<F? 重要%F件>%<d? 削除%d件>%<t? 選択中%t件>'
+set ts_enabled              = yes
+set ts_status_format        = 'NeoMutt %f%<b? (%b)>'
+set use_from                = yes
+set wait_key                = no
+
+# Colors
+color attachment bold yellow default
+color error red default
+color header bold default default
+color index bold blue default ~N
+color index bold default default ~T
+color index bold red default ~D
+color index bold yellow default ~F
+color index_flags bold default brightblack
+color quoted blue default
+color sidebar_highlight black white
+color sidebar_new bold blue default
+color sidebar_unread bold default default
+color stripe_even bold green default
+color stripe_odd bold default default
+
+# Cache
+set certificate_file = ~/.cache/neomutt/certificates
+set header_cache     = ~/.cache/neomutt/headers
+set message_cachedir = ~/.cache/neomutt/bodies
+
+# Keybindings
+unbind *
+bind  generic,pager        ?               help
+bind  generic,pager        :               enter-command
+bind  generic,pager        <PageUp>        previous-page
+bind  generic,pager        <PageDown>      next-page
+bind  generic              <Up>            previous-entry
+bind  generic              <Down>          next-entry
+bind  generic              k               previous-entry
+bind  generic              j               next-entry
+bind  generic              \#              jump
+bind  generic              g               first-entry
+bind  generic              G               last-entry
+bind  generic              H               top-page
+bind  generic              M               middle-page
+bind  generic              L               bottom-page
+bind  index                q               quit
+
+## Sidebar
+bind  index,pager          \Ck             sidebar-prev
+bind  index,pager          \Cj             sidebar-next
+bind  index,pager          \Cl             sidebar-open
+
+## Managing e-mails
+bind  index,pager          n               mark-as-new
+bind  index,pager          m               mail
+bind  index,pager,attach   r               reply
+bind  index,pager,attach   R               group-reply
+bind  index,pager,attach   f               forward-message
+bind  index,pager          d               delete-message
+bind  index,pager          u               undelete-message
+bind  index,pager          v               view-attachments
+macro index,pager          V               '<view-attachments><search>html<enter><view-attach><exit><exit>'
+bind  index,pager          e               imap-fetch-mail
+bind  index,pager          w               sync-mailbox
+bind  index,pager          !               flag-message
+bind  index,pager          x               set-flag
+bind  index,pager          c               clear-flag
+macro index,pager          y               '<change-folder>?<change-dir><enter>'
+macro index,pager          s               '<save-message>?'
+bind  index                A               tag-prefix
+bind  index,browser        <Space>         tag-entry
+bind  index,browser        t               tag-entry
+bind  index,browser        \#              jump
+bind  index                T               tag-pattern
+bind  index                Z               untag-pattern
+bind  index                D               delete-pattern
+bind  index                U               undelete-pattern
+bind  index                F               limit
+bind  index                <Right>         display-message
+bind  index                <Return>        display-message
+bind  index                <KeypadEnter>   display-message
+bind  index                l               display-message
+bind        pager          <Up>            previous-line
+bind        pager          <Down>          next-line
+bind        pager          <Left>          exit
+bind        pager          <Home>          top
+bind        pager          <End>           bottom
+bind        pager          k               previous-line
+bind        pager          j               next-line
+bind        pager          h               exit
+bind        pager          g               top
+bind        pager          G               bottom
+macro       pager          p               '<pipe-message>less<enter>'
+bind        pager,attach   i               exit
+
+## Search
+bind  compose,pager        /               search
+bind  compose,pager        n               search-next
+bind  compose,pager        N               search-opposite
+
+## Editor
+bind  editor               <Left>          backward-char
+bind  editor               <Right>         forward-char
+bind  editor               <Up>            history-up
+bind  editor               <Down>          history-down
+bind  editor               <BackSpace>     backspace
+bind  editor               <Delete>        delete-char
+bind  editor               <Home>          bol
+bind  editor               <End>           eol
+bind  editor               <Tab>           complete
+bind  editor               \Cu             kill-line
+bind  editor               \Ck             kill-eol
+
+## Attachment
+bind  compose,attach       <Return>        view-attach
+bind  compose,attach       <KeypadEnter>   view-attach
+bind  compose,attach       T               view-text
+bind          attach       s               save-entry
+
+## Composing
+bind  compose              y               send-message
+bind  compose              f               edit-from
+bind  compose              t               edit-to
+bind  compose              c               edit-cc
+bind  compose              b               edit-bcc
+bind  compose              s               edit-subject
+bind  compose              e               edit-message
+macro compose              a               '<attach-file>?'
+bind  compose              d               detach-file
+bind  compose              E               edit-file
+bind  compose              r               rename-attachment
+bind  compose              \Ck             move-up
+bind  compose              \Cj             move-down
+bind          browser      <Right>         descend-directory
+bind          browser      <Left>          goto-parent
+bind          browser      l               descend-directory
+bind          browser      h               goto-parent
+bind          browser      v               view-file
+bind  compose,browser      i               exit
+
+# Load accounts
+source ~/.config/neomutt/accounts.rc

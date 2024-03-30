@@ -1,4 +1,4 @@
-.PHONY: desktop system tools alacritty fish git lftp mpv nvim nnn utilities vimiv
+.PHONY: desktop system tools alacritty fish git lftp mpv neomutt nvim nnn utilities vimiv
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -38,7 +38,7 @@ system:
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 
-tools: alacritty fish git lftp nvim nnn vimiv
+tools: alacritty fish git lftp neomutt nvim nnn vimiv
 	@echo ' Add mpv settings with `make mpv`'
 
 alacritty:
@@ -75,6 +75,11 @@ mpv:
 	ln -srf tools/mpv/input.conf ~/.config/mpv/input.conf
 	ln -srf tools/mpv/uosc.conf ~/.config/mpv/script-opts/uosc.conf
 	bash tools/mpv/install_plugins.sh
+
+neomutt:
+	@echo '${bold}>> Neomutt settings <<${reset}'
+	mkdir -p ~/.config/neomutt
+	ln -srf tools/neomutt/neomuttrc ~/.config/neomutt/neomuttrc
 
 nvim:
 	@echo '${bold}>> Neovim settings <<${reset}'
