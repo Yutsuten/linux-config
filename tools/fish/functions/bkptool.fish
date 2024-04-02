@@ -40,6 +40,19 @@ function bkptool --description 'Backup and restore user files'
         pacman -Qqe > ~/Documents/Backup/Computer/pacman_(date '+%Y-%m-%d').list
         groups (whoami) > ~/Documents/Backup/Computer/groups.list
 
+        function trim_old_backup
+            set keep_count $argv[1]
+            set cur 0
+            printf '%s\0' $argv[2..] | sort --zero-terminated --reverse | while read --null filename
+                set cur (math $cur + 1)
+                if test $cur -gt $keep_count
+                    rm -fv $filename
+                end
+            end
+        end
+
+        trim_old_backup 10 ~/Documents/Backup/Computer/pacman_*.list
+
         # Sync backup
         for dir in $sync_dirs
             if test -z (find "$HOME/$dir" -maxdepth 0 -empty)
