@@ -22,6 +22,7 @@ if status is-interactive
     set -g fish_color_host brmagenta
     set -g fish_color_host_remote yellow
     set -g fish_color_user blue
+    set -g fish_history_max 1500
 
     alias clear 'clear && neofetch'
     alias diskusage "lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'"
@@ -33,6 +34,14 @@ if status is-interactive
     alias vimiv 'vimiv --log-level error'
 
     fish_add_path $HOME/.local/bin
+
+    # Fish history cleanup
+    set remainder (math $fish_history_max - (count $history))
+    if test $remainder -lt 0
+        for cmd in $history[-1..$remainder]
+            history delete --exact --case-sensitive -- "$cmd"
+        end
+    end
 end
 
 function fish_greeting
