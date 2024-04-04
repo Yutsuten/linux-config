@@ -61,6 +61,7 @@ git:
 	git config --global core.pager 'less -+XF -S'
 	git config --global init.defaultBranch main
 	git config --global pager.branch false
+	git config --global pager.stash false
 	git config --global push.autoSetupRemote true
 
 lftp:

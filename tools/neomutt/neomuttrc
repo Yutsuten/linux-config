@@ -28,7 +28,7 @@ set sleep_time              = 0
 set sort                    = reverse-date
 set status_format           = ' [%r] %f: 全%m件%<V? "%V" 表示中%M件>%<u? 新%u件>%<F? 重要%F件>%<d? 削除%d件>%<t? 選択中%t件>'
 set ts_enabled              = yes
-set ts_status_format        = 'NeoMutt %f%<b? (%b)>'
+set ts_status_format        = 'NeoMutt%<b?*>%<n? (%n)>'
 set use_from                = yes
 set wait_key                = no
 
