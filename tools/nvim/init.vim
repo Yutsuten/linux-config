@@ -30,6 +30,7 @@ command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=0 Terminal bot 12split +terminal | set winfixheight | startinsert
 
 " Shortcuts
+nnoremap <C-s> :update<CR>
 nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>
