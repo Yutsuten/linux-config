@@ -29,7 +29,7 @@ function process_media --description 'Process photos and music using its metadat
             continue
         end
         set ffprobe_out (mktemp)
-        ffprobe $music 2>&1 | sed -e "s/'/_/g" -e 's/"//g' > $ffprobe_out
+        ffprobe $music 2>&1 | sed -e "s/'/_/g" -e 's/"//g' -e 's#/#／#g' > $ffprobe_out
 
         set disc   (sed -nE 's/^\s*disc\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)
         set track  (sed -nE 's/^\s*track\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)

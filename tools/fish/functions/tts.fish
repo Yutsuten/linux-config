@@ -35,7 +35,7 @@ function tts --description 'Text-to-Speech using Google API'
         | jq -r .audioContent \
         | base64 --decode > $filename
 
-    echo "Output: $filename"
+    echo "$filename"
     mpv --really-quiet --volume=100 $filename
     return 0
 end

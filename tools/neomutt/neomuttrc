@@ -12,6 +12,7 @@ set envelope_from           = yes
 set fast_reply              = yes
 set folder_format           = '%5C  %D  %F  %5s  %t %i'
 set forward_format          = 'Fwd: %s'
+set imap_keep_alive         = 120
 set index_format            = '%Z  %D | %-28.28L | %s'
 set markers                 = no
 set pager_format            = ' [%S] [%D] %L: %s %> %P '
