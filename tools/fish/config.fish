@@ -24,14 +24,17 @@ if status is-interactive
     set -g fish_color_user blue
     set -g fish_history_max 1500
 
-    alias clear 'clear && neofetch'
-    alias diskusage "lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'"
-    alias ffmpeg 'ffmpeg -hide_banner'
-    alias ffprobe 'ffprobe -hide_banner'
-    alias identify 'identify -precision 3'
-    alias notes 'nvim -S ~/Desktop/Session.vim'
-    alias ssh 'env TERM=xterm-256color ssh'
-    alias vimiv 'vimiv --log-level error'
+    abbr --add diskusage lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'
+    abbr --add ffmpeg ffmpeg -hide_banner
+    abbr --add ffprobe ffprobe -hide_banner
+    abbr --add identify identify -precision 3
+    abbr --add l1 ls -N1 --sort=v --group-directories-first
+    abbr --add ll ls -Nlh --sort=v --group-directories-first
+    abbr --add lo ls -Noh --sort=v --group-directories-first
+    abbr --add ls ls -N --sort=v --group-directories-first
+    abbr --add notes nvim -S ~/Desktop/Notes.vim
+    abbr --add ssh env TERM=xterm-256color ssh
+    abbr --add vimiv vimiv --log-level error
 
     fish_add_path $HOME/.local/bin
 
