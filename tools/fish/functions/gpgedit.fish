@@ -26,7 +26,7 @@ function gpgedit --argument-names FILE --description 'Edit gpg files using nvim'
         return 1
     end
 
-    set temp_file (mktemp --tmpdir $argv[1].XXXXXXX)
+    set temp_file (mktemp --tmpdir (path basename $argv[1]).XXXXXXX)
     if not gpg --decrypt $argv[1] > $temp_file
         echo "$argv[1] is not a gpg file" >&2
         rm -f $temp_file
