@@ -37,6 +37,5 @@ hide_when_typing = true
 [keyboard]
 bindings = [
   { key = "Return", mods = "Control",       action = "CreateNewWindow" },
-  { key = "C",      mods = "Control|Shift", action = "None" },
   { key = "X",      mods = "Control|Shift", action = "Copy" },
 ]
