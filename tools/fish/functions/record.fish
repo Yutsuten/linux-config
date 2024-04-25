@@ -31,18 +31,18 @@ function record --description 'Record screen and audio on wayland'
 
     if set --query --local _flag_mic
         echo $bold'[AUDIO] Start recording mic'$reset
-        command ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') -ac 1 $folder_name/mic.flac &
+        nice -n -5 ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') -ac 1 $folder_name/mic.flac &
         set mic_pid $last_pid
     end
     if set --query --local _flag_rec
         echo $bold'[AUDIO] Start recording "recording" source'$reset
         pactl set-sink-volume recording 100%
-        command ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -ac 2 $folder_name/rec.flac &
+        nice -n -5 ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -ac 2 $folder_name/rec.flac &
         set rec_pid $last_pid
     end
     if set --query --local _flag_speakers
         echo $bold'[AUDIO] Start recording speakers'$reset
-        command ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') -ac 2 $folder_name/speakers.flac &
+        nice -n -5 ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') -ac 2 $folder_name/speakers.flac &
         set speakers_pid $last_pid
     end
 
