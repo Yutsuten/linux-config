@@ -1,6 +1,4 @@
-if test -f ~/.local/environment
-    export (grep -E '^[^#;].+=.*' ~/.local/environment | xargs -L 1)
-end
+test -f ~/.local/environment.fish && source ~/.local/environment.fish
 
 if test (tty) = '/dev/tty1'
     gsettings set org.gnome.desktop.interface gtk-theme 'Arc'
