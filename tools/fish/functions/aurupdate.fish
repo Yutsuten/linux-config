@@ -10,7 +10,7 @@ function aurupdate --description 'Update AUR packages'
         echo >&2
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
-        return 1
+        return 0
     end
 
     set bold (tput bold)

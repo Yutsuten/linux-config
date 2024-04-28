@@ -21,7 +21,7 @@ function passgen --argument-names ALLOWED_CHARS LENGTH --description 'Generate r
 
     if test $exitcode -ne 0 || set --query --local _flag_help
         help $DEFAULT_ALLOWED_CHARS $DEFAULT_LENGTH
-        return 1
+        return $exitcode
     end
 
     if not test "$ALLOWED_CHARS"

@@ -10,7 +10,7 @@ function clicker --description 'Auto clicker for Sway'
         echo >&2
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
-        return 1
+        return $exitcode
     end
 
     sleep $argv[1] || return

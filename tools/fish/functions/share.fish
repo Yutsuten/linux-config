@@ -18,7 +18,7 @@ function share --description 'Share screen or phone camera using v4l2loopback'
 
     if test $exitcode -ne 0 || set --query --local _flag_help
         help
-        return 1
+        return $exitcode
     end
 
     set flip

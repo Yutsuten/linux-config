@@ -11,7 +11,7 @@ function bkptool --description 'Backup and restore user files'
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
         echo '    -r, --restore   Restore files from backup' >&2
-        return 1
+        return $exitcode
     end
 
     set bold (tput bold)

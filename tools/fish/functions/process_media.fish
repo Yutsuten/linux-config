@@ -10,7 +10,7 @@ function process_media --description 'Process photos and music using its metadat
         echo >&2
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
-        return 1
+        return $exitcode
     end
 
     for photo in *.jpg

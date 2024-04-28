@@ -10,7 +10,7 @@ function normalize_filenames --description 'Increase compatibility of file names
         echo >&2
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
-        return 1
+        return $exitcode
     end
 
     set bold (tput bold)

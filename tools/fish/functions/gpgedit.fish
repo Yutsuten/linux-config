@@ -17,7 +17,7 @@ function gpgedit --argument-names FILE --description 'Edit gpg files using nvim'
 
     if test $exitcode -ne 0 || set --query --local _flag_help
         help
-        return 1
+        return $exitcode
     end
 
     if not test -f $argv[1]

@@ -14,7 +14,7 @@ function tts --description 'Text-to-Speech using Google API'
         echo >&2
         echo '  Positional arguments:' >&2
         echo '    TEXT            Used to generate the audio' >&2
-        return 1
+        return $exitcode
     end
 
     if set --query --local _flag_girl
