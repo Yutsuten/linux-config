@@ -19,11 +19,11 @@ desktop:
 	ln -srf desktop/wofi/config ~/.config/wofi/config
 	ln -srf desktop/wofi/style.css ~/.config/wofi/style.css
 	ln -srf desktop/pipewire/10-remap-sink.conf ~/.config/pipewire/pipewire-pulse.conf.d/10-remap-sink.conf
+	cp -af desktop/systemd/wallpaper.service ~/.config/systemd/user/wallpaper.service
 	cp -af desktop/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af desktop/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
 	bash desktop/pipewire/90-init.sh
-	bash desktop/systemd/wallpaper.service.sh
 	fish desktop/waybar/configure.fish
 
 system:
@@ -32,7 +32,7 @@ system:
 	cp -af system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
 	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af system/utilities/openweather.py /usr/local/bin/openweather
-	cp -af system/utilities/wallpaper.py /usr/local/bin/wallpaper
+	cp -af system/utilities/wallpaper.fish /usr/local/bin/wallpaper
 	cp -af system/utilities/system.sh /usr/local/bin/system
 	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
