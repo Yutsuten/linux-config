@@ -15,6 +15,7 @@ set sessionoptions-=folds
 set sessionoptions-=help
 set shada=\"0,'0,/100,:100,@0,f0,h,s4
 set shiftwidth=2
+set showtabline=2
 set signcolumn=no
 set softtabstop=2
 set tabstop=4
