@@ -15,6 +15,6 @@ function UpdateTabLine()
     endif
     let tabline .= ' [' . tabnum . '] '
   endfor
-  let tabline .= '%#TabLineFill#%T'
+  let tabline .= '%#TabLineFill#%T %= %{fnamemodify(getcwd(), ":~")} '
   return tabline
 endfunction

@@ -24,7 +24,7 @@ function s:UpdateStatusLine()
     return
   endif
 
-  let l:statusline  = "%0* %<%{pathshorten(expand('%:~:.'))} %m %h"
+  let l:statusline  = "%0* %t %m %h"
   let l:statusline .= '%='
 
   let l:active_statusline  = '%#StatusLineMode# %{GetCurrentMode()} '

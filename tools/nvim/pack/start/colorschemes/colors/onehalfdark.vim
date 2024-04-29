@@ -245,7 +245,7 @@ call s:h('DiagnosticSignHint', s:cyan, s:brblack, '')
 
 " TabLine {
 call s:h('TabLine', s:brwhite, s:brblack, '')
-call s:h('TabLineFill', s:white, s:brblack, '')
+call s:h('TabLineFill', s:brwhite, s:brblack, '')
 call s:h('TabLineSel', s:black, s:blue, '')
 " }
 

@@ -13,7 +13,7 @@ set number
 set sessionoptions-=buffers
 set sessionoptions-=folds
 set sessionoptions-=help
-set shada=\"0,'0,/10,:10,@0,f0,h,s4
+set shada=\"0,'0,/100,:100,@0,f0,h,s4
 set shiftwidth=2
 set signcolumn=no
 set softtabstop=2
@@ -34,6 +34,7 @@ nnoremap <C-s> :update<CR>
 nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>
+nnoremap <leader>$ :let @+ = fnamemodify(getcwd(), ':~')<CR>
 
 vnoremap <leader>c/ :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0\/\/ /', indent(getpos('v')[1]))<CR>
 vnoremap <leader>u/ :s/\v(\s*)\/\/ (.*)/\1\2/<CR>
