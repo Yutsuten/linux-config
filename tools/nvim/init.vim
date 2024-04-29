@@ -27,7 +27,7 @@ let g:mapleader = '\'
 " Commands
 command -nargs=+ Ggrep cex system('git grep -In --column --untracked ' .. <q-args>)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
-command -nargs=0 Terminal bot 12split +terminal | set winfixheight | startinsert
+command -nargs=0 Terminal bot 10split +terminal | set winfixheight | startinsert
 
 " Shortcuts
 nnoremap <C-s> :update<CR>
