@@ -29,7 +29,7 @@ function fish_prompt --description 'Write out the prompt'
 
     echo -n -s \n \
       (prompt_jobs) (prompt_state) (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (string match -qr '^/media/sshfs/' $PWD || fish_vcs_prompt) $normal $prompt_status \n \
-      $suffix ' '
+      (string repeat -n $SHLVL $suffix) ' '
 end
 
 function prompt_jobs --description 'Display number of running jobs'
@@ -43,24 +43,17 @@ function prompt_jobs --description 'Display number of running jobs'
 end
 
 function prompt_state
-    set states
     set_color --bold
+    echo "[$(date '+%H:%M')] "
     if test -n "$fish_private_mode"
-        set --append states 'private'
+        echo '[private] '
     end
     if test -n "$VIRTUAL_ENV"
-        set --append states 'venv'
+        echo '[venv] '
     end
     if set -q nnn
-        set --append states "nnn"
+        echo '[nnn] '
     end
-
-    if test "$states"
-        set text (string join ':' $states)
-    else
-        set text (date '+%H:%M')
-    end
-    echo "[$text]"
 end
 
 function prompt_login --description 'display user name for the prompt'
@@ -89,5 +82,5 @@ function prompt_login --description 'display user name for the prompt'
         set color_host $fish_color_host_remote
     end
 
-    echo -n -s ' ' (set_color $fish_color_user) "$USER" (set_color brblue) @ (set_color $color_host) (prompt_hostname) (set_color normal)
+    echo -n -s (set_color $fish_color_user) "$USER" (set_color brblue) @ (set_color $color_host) (prompt_hostname) (set_color normal)
 end
