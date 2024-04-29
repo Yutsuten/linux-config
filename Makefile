@@ -85,12 +85,7 @@ neomutt:
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	rm -rf ~/.config/nnn/plugins
-	mkdir -p ~/.config/nnn/plugins
-	ln -srf tools/nnn/mpv ~/.config/nnn/plugins/mpv
-	ln -srf tools/nnn/rm ~/.config/nnn/plugins/rm
-	ln -srf tools/nnn/vimiv ~/.config/nnn/plugins/vimiv
-	curl -Lso ~/.config/nnn/plugins/dragdrop "https://raw.githubusercontent.com/jarun/nnn/master/plugins/dragdrop"
-	chmod u+x ~/.config/nnn/plugins/dragdrop
+	ln -srnf tools/nnn ~/.config/nnn/plugins
 
 nvim:
 	@echo '${bold}>> Neovim settings <<${reset}'

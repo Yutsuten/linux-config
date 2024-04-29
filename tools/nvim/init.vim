@@ -31,6 +31,16 @@ command -nargs=0 Terminal bot 12split +terminal | set winfixheight | startinsert
 
 " Shortcuts
 nnoremap <C-s> :update<CR>
+nnoremap <silent> <C-1> :tabnext 1<CR>
+nnoremap <silent> <C-2> :tabnext 2<CR>
+nnoremap <silent> <C-3> :tabnext 3<CR>
+nnoremap <silent> <C-4> :tabnext 4<CR>
+nnoremap <silent> <C-5> :tabnext 5<CR>
+nnoremap <silent> <C-6> :tabnext 6<CR>
+nnoremap <silent> <C-7> :tabnext 7<CR>
+nnoremap <silent> <C-8> :tabnext 8<CR>
+nnoremap <silent> <C-9> :tabnext 9<CR>
+nnoremap <silent> <C-0> :tabnext 10<CR>
 nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>

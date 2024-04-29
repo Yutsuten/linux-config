@@ -1,13 +1,10 @@
-#!/bin/bash
+#!/usr/bin/fish
 
-set -e
-set -u
-set -o pipefail
-
-if [[ -d "${nnn}" ]]; then
-  find "${nnn}" -maxdepth 2 -type f -not -path '*/.*' \
-    '(' -iname '*.jpg' -or -iname '*.jpeg' -or -iname '*.png' -or -iname '*.gif' -or -iname '*.webp' -or -iname '*.svg' -or -iname '*.bmp' ')' \
-    -exec vimiv -s sort.shuffle true --command 'goto 1' '{}' '+' > /dev/null 2>&1 &
+set find_options '(' -iname '*.jpg' -or -iname '*.jpeg' -or -iname '*.png' -or -iname '*.gif' -or -iname '*.webp' -or -iname '*.svg' -or -iname '*.bmp' ')'
+if test -d $nnn
+    find $nnn -maxdepth 2 -type f -not -path '*/.*' $find_options \
+        -exec vimiv --log-level error -s sort.shuffle true --command 'goto 1' '{}' '+' &
 else
-  vimiv -s sort.shuffle true --command 'goto 1' ./* > /dev/null 2>&1 &
-fi
+    find . -maxdepth 1 -type f $find_options \
+        -exec vimiv --log-level error -s sort.shuffle true --command 'goto 1' '{}' '+' &
+end

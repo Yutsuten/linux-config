@@ -1,0 +1,7 @@
+#!/usr/bin/fish
+
+if test -s ~/.config/nnn/.selection
+    path basename --null-in --null-out < ~/.config/nnn/.selection | xargs --null dragon-drop --all &
+else
+    dragon-drop $nnn &
+end
