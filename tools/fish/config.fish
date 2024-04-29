@@ -13,6 +13,7 @@ if status is-interactive
     set -gx GPG_TTY (tty)
     set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
     set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
+    set -gx LANG en_US.UTF-8
 
     set -g CDPATH . $HOME $HOME/Projects
     set -g VIRTUAL_ENV_DISABLE_PROMPT true
@@ -22,17 +23,17 @@ if status is-interactive
     set -g fish_color_user blue
     set -g fish_history_max 1500
 
-    abbr --add diskusage lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'
-    abbr --add ffmpeg ffmpeg -hide_banner
-    abbr --add ffprobe ffprobe -hide_banner
-    abbr --add identify identify -precision 3
-    abbr --add l1 ls -N1 --sort=v --group-directories-first
-    abbr --add ll ls -Nlh --sort=v --group-directories-first
-    abbr --add lo ls -Noh --sort=v --group-directories-first
-    abbr --add ls ls -N --sort=v --group-directories-first
-    abbr --add notes nvim -S ~/Desktop/Notes.vim
-    abbr --add ssh env TERM=xterm-256color ssh
-    abbr --add vimiv vimiv --log-level error
+    abbr --add cpwd      -- 'wl-copy (string replace --regex "^$HOME" \~ $PWD)'
+    abbr --add diskusage -- "lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'"
+    abbr --add ffmpeg    -- 'ffmpeg -hide_banner'
+    abbr --add ffprobe   -- 'ffprobe -hide_banner'
+    abbr --add identify  -- 'identify -precision 3'
+    abbr --add l1        -- 'ls -N1 --sort=v --group-directories-first'
+    abbr --add ll        -- 'ls -Nlh --sort=v --group-directories-first'
+    abbr --add lo        -- 'ls -Noh --sort=v --group-directories-first'
+    abbr --add ls        -- 'ls -N --sort=v --group-directories-first'
+    abbr --add ssh       -- 'env TERM=xterm-256color ssh'
+    abbr --add vimiv     -- 'vimiv --log-level error'
 
     fish_add_path $HOME/.local/bin
 
