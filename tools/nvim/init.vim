@@ -19,6 +19,8 @@ set showtabline=2
 set signcolumn=no
 set softtabstop=2
 set tabstop=4
+set title
+set titlestring=NeoVim
 set wildignorecase
 
 let g:loaded_netrwPlugin = 1
