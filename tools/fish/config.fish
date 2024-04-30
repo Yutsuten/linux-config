@@ -50,3 +50,7 @@ function fish_greeting
         neofetch
     end
 end
+
+function fish_title
+    echo "Fish $(prompt_pwd)"
+end
