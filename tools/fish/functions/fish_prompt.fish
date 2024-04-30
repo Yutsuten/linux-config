@@ -14,10 +14,6 @@ function fish_prompt --description 'Write out the prompt'
         end
         set suffix '#'
     end
-    set -l fish_lvl $SHLVL
-    if test -n "$NVIM"
-        set fish_lvl (math $SHLVL - 1)
-    end
 
     # Write pipestatus
     # If the status was carried over (if no command is issued or if `set` leaves the status untouched), don't bold it.
@@ -33,7 +29,7 @@ function fish_prompt --description 'Write out the prompt'
 
     echo -n -s \n \
       (prompt_jobs) (prompt_state) (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (string match -qr '^/media/sshfs/' $PWD || fish_vcs_prompt) $normal $prompt_status \n \
-      (string repeat -n $fish_lvl $suffix) ' '
+      (string repeat -n $SHLVL $suffix) ' '
 end
 
 function prompt_jobs --description 'Display number of running jobs'
