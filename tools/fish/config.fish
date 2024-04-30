@@ -52,5 +52,9 @@ function fish_greeting
 end
 
 function fish_title
-    echo "Fish $(prompt_pwd)"
+    if set -q SSH_TTY
+        echo "Fish $hostname $(prompt_pwd)"
+    else
+        echo "Fish $(prompt_pwd)"
+    end
 end
