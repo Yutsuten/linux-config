@@ -44,6 +44,8 @@ nnoremap <silent> <C-7> :tabnext 7<CR>
 nnoremap <silent> <C-8> :tabnext 8<CR>
 nnoremap <silent> <C-9> :tabnext 9<CR>
 nnoremap <silent> <C-0> :tabnext 10<CR>
+nnoremap <silent> <C-S-PageUp> :-tabmove<CR>
+nnoremap <silent> <C-S-PageDown> :+tabmove<CR>
 nnoremap <leader>s :syntax sync fromstart<CR>
 nnoremap <leader>w :%s/\s\+$//g<CR>
 nnoremap <leader>% :let @+ = expand('%:~:.')<CR>
@@ -57,6 +59,11 @@ vnoremap <leader>c" :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0" /', indent(getp
 vnoremap <leader>u" :s/\v(\s*)" (.*)/\1\2/<CR>
 vnoremap <leader>c- :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0-- /', indent(getpos('v')[1]))<CR>
 vnoremap <leader>u- :s/\v(\s*)-- (.*)/\1\2/<CR>
+
+" F9 Build and Run; C-F9 Build; C-F10 Run
+nnoremap <F9>  :tabe term://make<CR>a
+nnoremap <F33> :tabe term://make build<CR>a
+nnoremap <F34> :tabe term://make run<CR>a
 
 " Triggers
 augroup autocompletion
