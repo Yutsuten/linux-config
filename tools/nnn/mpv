@@ -6,7 +6,7 @@ set video .mp4 .mkv .webm .3gp .ogv
 set music_regex (string join '|' $music'$')
 set video_regex (string join '|' $video'$')
 
-if test (string match -qr '.m3u8$' $nnn)
+if string match -qr '.m3u8?$' $nnn
     mpv --profile=music --shuffle --loop-playlist $nnn &
 else if test -d $nnn
     set category
