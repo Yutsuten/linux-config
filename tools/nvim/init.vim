@@ -60,10 +60,10 @@ vnoremap <leader>u" :s/\v(\s*)" (.*)/\1\2/<CR>
 vnoremap <leader>c- :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0-- /', indent(getpos('v')[1]))<CR>
 vnoremap <leader>u- :s/\v(\s*)-- (.*)/\1\2/<CR>
 
-" F9 Build and Run; C-F9 Build; C-F10 Run
-nnoremap <F9>  :tabe term://make<CR>a
-nnoremap <F33> :tabe term://make build<CR>a
-nnoremap <F34> :tabe term://make run<CR>a
+" F9 Build & Run; C-F9 Build; C-F10 Run
+nnoremap <F9>  :tabe term://fish -c 'source .nvim-actions/build && source .nvim-actions/run'<CR>a
+nnoremap <F33> :tabe term://fish .nvim-actions/build<CR>a
+nnoremap <F34> :tabe term://fish .nvim-actions/run<CR>a
 
 " Triggers
 augroup autocompletion

@@ -18,7 +18,7 @@ require('lspconfig').robotframework_ls.setup{
 --- Conditionally enabled
 local lsp_file
 
-lsp_file = io.open('.lsp-vue', 'r')
+lsp_file = io.open('.nvim-lsp-vue', 'r')
 if lsp_file ~= nil and io.close(lsp_file) then
   require('lspconfig').volar.setup{
     autostart = is_local,
