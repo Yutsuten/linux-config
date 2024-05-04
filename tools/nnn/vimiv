@@ -3,8 +3,8 @@
 set find_options '(' -iname '*.jpg' -or -iname '*.jpeg' -or -iname '*.png' -or -iname '*.gif' -or -iname '*.webp' -or -iname '*.svg' -or -iname '*.bmp' ')'
 if test -d $nnn
     find $nnn -maxdepth 2 -type f -not -path '*/.*' $find_options \
-        -exec vimiv --log-level error -s sort.shuffle true --command 'goto 1' '{}' '+' &
+        -exec nohup vimiv --log-level critical -s sort.shuffle true --command 'goto 1' '{}' '+' &> /dev/null &
 else
     find . -maxdepth 1 -type f $find_options \
-        -exec vimiv --log-level error -s sort.shuffle true --command 'goto 1' '{}' '+' &
+        -exec nohup vimiv --log-level critical -s sort.shuffle true --command 'goto 1' '{}' '+' &> /dev/null &
 end
