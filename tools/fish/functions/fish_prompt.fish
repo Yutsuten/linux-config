@@ -51,7 +51,7 @@ function prompt_state
     if test -n "$VIRTUAL_ENV"
         echo '[venv] '
     end
-    if set -q nnn
+    if test -n "$NNNLVL" -a "$NNNLVL" -ge 1
         echo '[nnn] '
     end
 end
