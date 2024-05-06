@@ -38,7 +38,7 @@ end
 
 function fish_greeting
     if test -z "$NNNLVL" -a -z "$NVIM"
-        neofetch
+        fastfetch
     end
 end
 
