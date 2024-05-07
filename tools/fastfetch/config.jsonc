@@ -5,6 +5,7 @@
         "separator",
         "bios",
         "os",
+        "host",
         "kernel",
         "wm",
         {
