@@ -1,4 +1,4 @@
-.PHONY: desktop system tools alacritty fish git lftp mpv neomutt nnn nvim utilities vimiv
+.PHONY: desktop system tools alacritty fastfetch fish git lftp mpv neomutt nnn nvim utilities vimiv
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -39,13 +39,18 @@ system:
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 
-tools: alacritty fish git lftp neomutt nnn nvim vimiv
+tools: alacritty fastfetch fish git lftp neomutt nnn nvim vimiv
 	@echo ' Add mpv settings with `make mpv`'
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
 	mkdir -p ~/.config/alacritty
 	ln -srf tools/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+
+fastfetch:
+	@echo '${bold}>> Fastfetch settings <<${reset}'
+	mkdir -p ~/.config/fastfetch
+	ln -srf tools/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc
 
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
