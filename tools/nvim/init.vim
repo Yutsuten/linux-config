@@ -34,7 +34,7 @@ command -nargs=0 Terminal bot 10split +terminal | set winfixheight
 
 " Shortcuts
 nnoremap <silent> <C-s> :update<CR>
-nnoremap <silent> <C-S-t> :tabnew<CR>:terminal<CR>
+nnoremap <silent> <C-S-Return> :tabnew<CR>:terminal<CR>
 nnoremap <silent> <C-1> :tabnext 1<CR>
 nnoremap <silent> <C-2> :tabnext 2<CR>
 nnoremap <silent> <C-3> :tabnext 3<CR>
@@ -62,9 +62,9 @@ vnoremap <leader>c- :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0-- /', indent(get
 vnoremap <leader>u- :s/\v(\s*)-- (.*)/\1\2/<CR>
 
 " F9 Build & Run; C-F9 Build; C-F10 Run
-nnoremap <silent> <F9>  :tabnew<CR>:terminal fish -c 'source .nvim-actions/build && source .nvim-actions/run'<CR>
-nnoremap <silent> <F33> :tabnew<CR>:terminal fish .nvim-actions/build<CR>
-nnoremap <silent> <F34> :tabnew<CR>:terminal fish .nvim-actions/run<CR>
+nnoremap <silent> <F9>  :tabnew<CR>:terminal $SHELL -c 'source .nvim-actions/build && source .nvim-actions/run'<CR>
+nnoremap <silent> <F33> :tabnew<CR>:terminal $SHELL .nvim-actions/build<CR>
+nnoremap <silent> <F34> :tabnew<CR>:terminal $SHELL .nvim-actions/run<CR>
 
 " Triggers
 augroup autocompletion
