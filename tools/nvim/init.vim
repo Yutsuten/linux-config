@@ -36,7 +36,7 @@ command -nargs=0 Terminal bot 10split +terminal | set winfixheight
 
 " Shortcuts
 nnoremap <silent> <C-s> :update<CR>
-nnoremap <silent> <C-S-Return> :tabnew<CR>:terminal<CR>
+nnoremap <silent> <C-S-Return> :tabnew +terminal<CR>
 nnoremap <silent> <C-1> :tabnext 1<CR>
 nnoremap <silent> <C-2> :tabnext 2<CR>
 nnoremap <silent> <C-3> :tabnext 3<CR>
