@@ -13,6 +13,7 @@ set number
 set sessionoptions-=buffers
 set sessionoptions-=folds
 set sessionoptions-=help
+set sessionoptions-=tabpages
 set sessionoptions-=terminal
 set shada=\"0,'0,/100,:100,@0,f0,h,s4
 set shiftwidth=2
