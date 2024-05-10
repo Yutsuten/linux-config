@@ -64,9 +64,9 @@ vnoremap <leader>c- :<c-u>execute printf(':''<,''>s/\v\s{%d}/\0-- /', indent(get
 vnoremap <leader>u- :s/\v(\s*)-- (.*)/\1\2/<CR>
 
 " F9 Build & Run; C-F9 Build; C-F10 Run
-nnoremap <silent> <F9>  :tabnew<CR>:terminal $SHELL -c 'source .nvim-actions/build && source .nvim-actions/run'<CR>
-nnoremap <silent> <F33> :tabnew<CR>:terminal $SHELL .nvim-actions/build<CR>
-nnoremap <silent> <F34> :tabnew<CR>:terminal $SHELL .nvim-actions/run<CR>
+nnoremap <silent> <F9>  :tabnew<Bar>:terminal $SHELL -c 'source .nvim-actions/build && source .nvim-actions/run'<CR>
+nnoremap <silent> <F33> :tabnew<Bar>:terminal $SHELL .nvim-actions/build<CR>
+nnoremap <silent> <F34> :tabnew<Bar>:terminal $SHELL .nvim-actions/run<CR>
 
 " Triggers
 augroup autocompletion
