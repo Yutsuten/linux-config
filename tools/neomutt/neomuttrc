@@ -32,6 +32,9 @@ set ts_status_format        = 'NeoMutt%<b?*>%<n? (%n)>'
 set use_from                = yes
 set wait_key                = no
 
+# Remove extra whitespace from the beginning of bad subjects
+subjectrx '^\s+' '%R'
+
 # Colors
 color attachment bold yellow default
 color error red default
@@ -49,8 +52,8 @@ color stripe_even bold green default
 color stripe_odd bold default default
 
 # Cache
-set certificate_file = ~/.cache/neomutt/certificates
-set header_cache     = ~/.cache/neomutt/headers
+ifdef gnutls "set certificate_file = ~/.cache/neomutt/certificates"
+ifdef hcache "set header_cache = ~/.cache/neomutt/headers"
 set message_cachedir = ~/.cache/neomutt/bodies
 
 # Keybindings
