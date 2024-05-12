@@ -85,6 +85,7 @@ bind  index,pager          m               mail
 bind  index,pager,attach   r               reply
 bind  index,pager,attach   R               group-reply
 bind  index,pager,attach   f               forward-message
+bind  index,pager          b               bounce-message
 bind  index,pager          d               delete-message
 bind  index,pager          u               undelete-message
 bind  index,pager          v               view-attachments
@@ -160,6 +161,7 @@ bind  compose              E               edit-file
 bind  compose              r               rename-attachment
 bind  compose              \Ck             move-up
 bind  compose              \Cj             move-down
+bind  compose              p               pgp-menu
 bind          browser      <Right>         descend-directory
 bind          browser      <Left>          goto-parent
 bind          browser      l               descend-directory
