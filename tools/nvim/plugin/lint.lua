@@ -9,7 +9,6 @@ require('lint').linters_by_ft = {
   vim = {'vint'},
   lua = {'luacheck'},
   yaml = {'yamllint'},
-  css = {'stylelint'},
 }
 
 vim.cmd([[
