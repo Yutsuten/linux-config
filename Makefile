@@ -85,7 +85,7 @@ mpv:
 
 neomutt:
 	@echo '${bold}>> Neomutt settings <<${reset}'
-	mkdir -p ~/.config/neomutt
+	mkdir -p ~/.config/neomutt ~/.cache/neomutt/headers ~/.cache/neomutt/bodies
 	ln -srf tools/neomutt/neomuttrc ~/.config/neomutt/neomuttrc
 
 nnn:
