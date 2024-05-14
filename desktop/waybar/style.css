@@ -53,6 +53,10 @@ window#waybar {
     padding: 0 12px;
 }
 
+.modules-left #mpris {
+    padding: 7px 12px 5px;
+}
+
 .modules-center #clock {
     padding-right: 24px;
 }

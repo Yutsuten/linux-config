@@ -1,16 +1,16 @@
 {
     "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "mpris", "sway/mode"],
     "modules-center": ["clock", "custom/weather"],
     "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "sway/language", "tray"],
     "mpris": {
-        "format": "{status_icon} {title}",
+        "format": "{status_icon}",
         "max-length": 60,
-        "tooltip-format": " {artist}\n {album}",
+        "tooltip-format": " {title}\n {artist}\n {album}",
         "status-icons": {
-            "playing": " ",
-            "paused": " ",
-            "stopped": " "
+            "playing": "",
+            "paused": "",
+            "stopped": ""
         },
         "ignored-players": ["firefox"]
     },
