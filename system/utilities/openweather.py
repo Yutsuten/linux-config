@@ -57,8 +57,8 @@ def main():
     icon = icon_map[weather['weather'][0]['icon']]
     tooltip = [
         f'💧{weather["main"]["humidity"]}%',
-        f'🎏 {weather["wind"]["speed"] * 3.6:.0f}km/h',
-        f'☁️ {weather["clouds"]["all"]}%',
+        f'🎏{weather["wind"]["speed"] * 3.6:.0f}km/h',
+        f'☁️{weather["clouds"]["all"]}%',
     ]
     if 'rain' in weather:
         tooltip.append(f'☔ {weather["rain"]["1h"]}mm (1h)')
