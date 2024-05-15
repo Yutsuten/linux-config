@@ -30,7 +30,7 @@ let g:netrw_banner = 0
 let g:mapleader = '\'
 
 " Commands
-command -nargs=+ Ggrep cex system('git grep -In --column --untracked ' .. <q-args>)
+command -nargs=+ -complete=file Ggrep cex system('git grep -In --column --untracked ' .. <q-args>)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=0 Terminal bot 10split +terminal | set winfixheight
 
