@@ -79,7 +79,6 @@ mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
 	mkdir -p ~/.config/mpv/script-opts
 	ln -srf tools/mpv/mpv.conf ~/.config/mpv/mpv.conf
-	ln -srf tools/mpv/input.conf ~/.config/mpv/input.conf
 	ln -srf tools/mpv/osc.conf ~/.config/mpv/script-opts/osc.conf
 
 neomutt:
