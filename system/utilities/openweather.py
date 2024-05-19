@@ -61,9 +61,9 @@ def main():
         f'☁️{weather["clouds"]["all"]}%',
     ]
     if 'rain' in weather:
-        tooltip.append(f'☔ {weather["rain"]["1h"]}mm (1h)')
+        tooltip.append(f'☔{weather["rain"]["1h"]}mm (1h)')
     if 'snow' in weather:
-        tooltip.append(f'☃️ {weather["snow"]["1h"]}mm (1h)')
+        tooltip.append(f'☃️{weather["snow"]["1h"]}mm (1h)')
 
     print(json.dumps({
         'text': f'{icon} {round(weather["main"]["temp"])}°C',
