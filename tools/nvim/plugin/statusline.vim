@@ -14,12 +14,12 @@ augroup end
 " Script
 let s:show_file_info = 0
 
-function s:ToggleFileInfo()
+function s:ToggleFileInfo() abort
   let s:show_file_info = !s:show_file_info
   call s:UpdateStatusLine()
 endfunction
 
-function s:UpdateStatusLine()
+function s:UpdateStatusLine() abort
   if win_gettype() ==# 'popup'
     return
   endif
@@ -48,7 +48,7 @@ function s:UpdateStatusLine()
   endfor
 endfunction
 
-function GetCurrentMode()
+function GetCurrentMode() abort
   let l:current_mode = mode()
   if l:current_mode ==# 'n'
     let l:current_mode = 'NORMAL'
@@ -87,7 +87,7 @@ function GetCurrentMode()
   return l:current_mode
 endfunction
 
-function LinterStatus()
+function LinterStatus() abort
   let l:error_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.ERROR})')
   let l:warning_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.WARN})')
   let l:info_count = luaeval('#vim.diagnostic.get(0, {severity=vim.diagnostic.severity.INFO})')

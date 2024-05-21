@@ -4,7 +4,7 @@ scriptencoding utf-8
 set tabline=%!UpdateTabLine()
 
 " Script
-function UpdateTabLine()
+function UpdateTabLine() abort
   let tabline = ''
   for i in range(tabpagenr('$'))
     let tabnum = i + 1

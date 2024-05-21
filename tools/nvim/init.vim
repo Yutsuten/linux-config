@@ -32,6 +32,7 @@ let g:mapleader = '\'
 " Commands
 command -nargs=+ -complete=file Ggrep cex system('git grep -In --column --untracked ' .. <q-args>)
 command -nargs=1 -complete=file MvTo call s:MoveFile(@%, <q-args>)
+command -nargs=0 RmCur call s:RemoveFile(@%)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=0 Terminal bot 10split +terminal | set winfixheight
 
@@ -81,7 +82,7 @@ augroup terminal
 augroup end
 
 " Script
-function s:SetIndent(size, ...)
+function s:SetIndent(size, ...) abort
   " Indent with [s]pace/[t]ab, default to space
   let &expandtab = (a:0 >= 1 ? a:1 : 'space') !~? '^t'
   " Indent size
@@ -90,7 +91,7 @@ function s:SetIndent(size, ...)
   let &shiftwidth = a:size
 endfunction
 
-function s:MoveFile(src, dest)
+function s:MoveFile(src, dest) abort
   if &modified
     echo 'There are unsaved changes'
     return
@@ -100,4 +101,14 @@ function s:MoveFile(src, dest)
     execute 'edit ' .. a:dest
     execute 'bdelete ' .. a:src
   endif
+endfunction
+
+function s:RemoveFile(src) abort
+  if &modified
+    echo 'There are unsaved changes'
+    return
+  endif
+  enew
+  call system(['rm', '-f', a:src])
+  execute 'bdelete ' .. a:src
 endfunction

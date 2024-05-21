@@ -51,7 +51,7 @@ let s:selection   = s:brblack
 let s:vertsplit   = s:brblack
 
 
-function! s:h(group, fg, bg, attr)
+function s:h(group, fg, bg, attr) abort
   if type(a:fg) == type({})
     exec 'hi ' . a:group . ' guifg=' . a:fg.gui . ' ctermfg=' . a:fg.cterm
   else
@@ -178,7 +178,7 @@ call s:h('GitGutterChangeDelete', s:red, s:gutter_bg, '')
 call s:h('diffAdded', s:green, '', '')
 call s:h('diffRemoved', s:red, '', '')
 " GitSigns
-highlight! link SignColumn LineNr
+highlight link SignColumn LineNr
 call s:h('GitSignsAddNr', s:green, s:gutter_bg, '')
 call s:h('GitSignsChangeNr', s:yellow, s:gutter_bg, '')
 call s:h('GitSignsDeleteNr', s:red, s:gutter_bg, '')
