@@ -31,6 +31,7 @@ let g:mapleader = '\'
 
 " Commands
 command -nargs=+ -complete=file Ggrep cex system('git grep -In --column --untracked ' .. <q-args>)
+command -nargs=1 -complete=file MvTo call s:MoveFile(@%, <q-args>)
 command -nargs=+ Indent call s:SetIndent(<f-args>)
 command -nargs=0 Terminal bot 10split +terminal | set winfixheight
 
@@ -87,4 +88,16 @@ function s:SetIndent(size, ...)
   let &softtabstop = a:size
   let &tabstop = a:size
   let &shiftwidth = a:size
+endfunction
+
+function s:MoveFile(src, dest)
+  if &modified
+    echo 'There are unsaved changes'
+    return
+  endif
+  if a:src !=# a:dest
+    call system(['mv', a:src, a:dest])
+    execute 'edit ' .. a:dest
+    execute 'bdelete ' .. a:src
+  endif
 endfunction
