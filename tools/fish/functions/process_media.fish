@@ -13,6 +13,10 @@ function process_media --description 'Process photos and music using its metadat
         return $exitcode
     end
 
+    set bold (tput bold)
+    set reset (tput sgr0)
+    set count 0
+
     for photo in *.jpg
         if not test -f $photo
             continue
@@ -21,6 +25,7 @@ function process_media --description 'Process photos and music using its metadat
         if test -n "$newname" -a "$photo" != "$newname"
             convert "$photo" -resize '2000x2000>' -define webp:method=6 "$newname"
             trash-put "$photo"
+            set count (math $count + 1)
         end
     end
 
@@ -40,6 +45,8 @@ function process_media --description 'Process photos and music using its metadat
         mkdir -p "$album"
         mv $music "$album"/(printf '%02d' $disc)_(printf '%02d' $track)_"$title".$ext
         rm $ffprobe_out
+        set count (math $count + 1)
     end
+    echo $bold"Processed $count media files!"$reset
     return 0
 end

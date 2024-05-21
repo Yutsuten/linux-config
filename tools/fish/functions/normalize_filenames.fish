@@ -15,8 +15,8 @@ function normalize_filenames --description 'Increase compatibility of file names
 
     set bold (tput bold)
     set reset (tput sgr0)
-
     set count 0
+
     for file in **/*
         if not test -f $file
             continue
