@@ -104,11 +104,7 @@ function s:MoveFile(src, dest) abort
 endfunction
 
 function s:RemoveFile(src) abort
-  if &modified
-    echo 'There are unsaved changes'
-    return
-  endif
   enew
   call system(['rm', '-f', a:src])
-  execute 'bdelete ' .. a:src
+  execute 'bdelete! ' .. a:src
 endfunction
