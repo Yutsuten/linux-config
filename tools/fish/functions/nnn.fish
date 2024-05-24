@@ -1,3 +1,7 @@
 function nnn --wraps=nnn --description 'The unorthodox terminal file manager.'
-    test -f ~/.local/bin/nnn && ~/.local/bin/nnn $argv || command nnn $argv
+    if test -f ~/.local/bin/nnn
+        source ~/.local/bin/nnn $argv
+    else
+        command nnn $argv
+    end
 end
