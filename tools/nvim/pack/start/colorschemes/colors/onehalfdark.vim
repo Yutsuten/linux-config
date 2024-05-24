@@ -39,7 +39,7 @@ let s:fg          = s:brwhite
 let s:bg          = s:black
 
 let s:comment_fg  = s:white
-let s:gutter_bg   = ''
+let s:gutter_bg   = s:black
 let s:gutter_fg   = s:white
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }
 let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
@@ -48,24 +48,23 @@ let s:cursor_line = s:brblack
 let s:color_col   = s:brblack
 
 let s:selection   = s:brblack
-let s:vertsplit   = s:brblack
 
 
 function s:h(group, fg, bg, attr) abort
   if type(a:fg) == type({})
-    exec 'hi ' . a:group . ' guifg=' . a:fg.gui . ' ctermfg=' . a:fg.cterm
+    execute 'highlight ' .. a:group .. ' guifg=' .. a:fg.gui .. ' ctermfg=' .. a:fg.cterm
   else
-    exec 'hi ' . a:group . ' guifg=NONE cterm=NONE'
+    execute 'highlight ' .. a:group .. ' guifg=NONE cterm=NONE'
   endif
   if type(a:bg) == type({})
-    exec 'hi ' . a:group . ' guibg=' . a:bg.gui . ' ctermbg=' . a:bg.cterm
+    execute 'highlight ' .. a:group .. ' guibg=' .. a:bg.gui .. ' ctermbg=' .. a:bg.cterm
   else
-    exec 'hi ' . a:group . ' guibg=NONE ctermbg=NONE'
+    execute 'highlight ' .. a:group .. ' guibg=NONE ctermbg=NONE'
   endif
   if a:attr !=# ''
-    exec 'hi ' . a:group . ' gui=' . a:attr . ' cterm=' . a:attr
+    execute 'highlight ' .. a:group .. ' gui=' .. a:attr .. ' cterm=' .. a:attr
   else
-    exec 'hi ' . a:group . ' gui=NONE cterm=NONE'
+    execute 'highlight ' .. a:group .. ' gui=NONE cterm=NONE'
   endif
 endfun
 
@@ -108,7 +107,7 @@ call s:h('VisualNOS', '', s:selection, '')
 call s:h('ColorColumn', '', s:color_col, '')
 call s:h('Conceal', s:fg, '', '')
 call s:h('Directory', s:blue, '', '')
-call s:h('VertSplit', s:vertsplit, s:vertsplit, '')
+call s:h('WinSeparator', s:brblack, s:black, '')
 call s:h('Folded', s:fg, '', '')
 call s:h('FoldColumn', s:fg, '', '')
 call s:h('LineNr', s:gutter_fg, s:gutter_bg, '')
@@ -167,48 +166,6 @@ call s:h('Error', s:red, s:gutter_bg, '')
 call s:h('Todo', s:magenta, '', '')
 " }
 
-
-" Plugins {
-" GitGutter
-call s:h('GitGutterAdd', s:green, s:gutter_bg, '')
-call s:h('GitGutterDelete', s:red, s:gutter_bg, '')
-call s:h('GitGutterChange', s:yellow, s:gutter_bg, '')
-call s:h('GitGutterChangeDelete', s:red, s:gutter_bg, '')
-" Fugitive
-call s:h('diffAdded', s:green, '', '')
-call s:h('diffRemoved', s:red, '', '')
-" GitSigns
-highlight link SignColumn LineNr
-call s:h('GitSignsAddNr', s:green, s:gutter_bg, '')
-call s:h('GitSignsChangeNr', s:yellow, s:gutter_bg, '')
-call s:h('GitSignsDeleteNr', s:red, s:gutter_bg, '')
-" Nnn
-call s:h('NnnBorder', s:white, '', '')
-" }
-
-
-" Git {
-call s:h('gitcommitComment', s:comment_fg, '', '')
-call s:h('gitcommitUnmerged', s:red, '', '')
-call s:h('gitcommitOnBranch', s:fg, '', '')
-call s:h('gitcommitBranch', s:magenta, '', '')
-call s:h('gitcommitDiscardedType', s:red, '', '')
-call s:h('gitcommitSelectedType', s:green, '', '')
-call s:h('gitcommitHeader', s:fg, '', '')
-call s:h('gitcommitUntrackedFile', s:cyan, '', '')
-call s:h('gitcommitDiscardedFile', s:red, '', '')
-call s:h('gitcommitSelectedFile', s:green, '', '')
-call s:h('gitcommitUnmergedFile', s:yellow, '', '')
-call s:h('gitcommitFile', s:fg, '', '')
-hi link gitcommitNoBranch gitcommitBranch
-hi link gitcommitUntracked gitcommitComment
-hi link gitcommitDiscarded gitcommitComment
-hi link gitcommitSelected gitcommitComment
-hi link gitcommitDiscardedArrow gitcommitDiscardedFile
-hi link gitcommitSelectedArrow gitcommitSelectedFile
-hi link gitcommitUnmergedArrow gitcommitUnmergedFile
-" }
-
 " Colors in neovim terminal buffers {
 if has('nvim')
   let g:terminal_color_0 = s:black.gui
@@ -258,4 +215,13 @@ call s:h('StatusLineGreen', s:black, s:green, '')
 call s:h('StatusLineYellow', s:black, s:yellow, '')
 call s:h('StatusLineBlue', s:black, s:blue, '')
 call s:h('StatusLineMagenta', s:black, s:magenta, '')
+" }
+
+
+" Plugins {
+" GitSigns
+highlight link SignColumn LineNr
+call s:h('GitSignsAddNr', s:green, s:gutter_bg, '')
+call s:h('GitSignsChangeNr', s:yellow, s:gutter_bg, '')
+call s:h('GitSignsDeleteNr', s:red, s:gutter_bg, '')
 " }
