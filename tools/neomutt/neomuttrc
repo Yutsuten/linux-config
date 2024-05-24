@@ -36,20 +36,21 @@ set wait_key                = no
 subjectrx '^\s+' '%R'
 
 # Colors
-color attachment bold yellow default
-color error red default
-color header bold default default
-color index bold blue default ~N
-color index bold default default ~T
-color index bold red default ~D
-color index bold yellow default ~F
-color index_flags bold default brightblack
-color quoted blue default
-color sidebar_highlight black white
-color sidebar_new bold blue default
-color sidebar_unread bold default default
-color stripe_even bold green default
-color stripe_odd bold default default
+color attachment        bold  yellow  default
+color error                   red     default
+color header            bold  default default
+color index             bold  blue    default  ~N
+color index             bold  default default  ~T
+color index             bold  red     default  ~D
+color index             bold  yellow  default  ~F
+color index_flags       bold  default color8
+color quoted                  blue    default
+color sidebar_divider         color8  default
+color sidebar_highlight       black   white
+color sidebar_new       bold  blue    default
+color sidebar_unread    bold  default default
+color stripe_even       bold  green   default
+color stripe_odd        bold  default default
 
 # Cache
 ifdef gnutls "set certificate_file = ~/.cache/neomutt/certificates"
