@@ -9,13 +9,13 @@ all: desktop tools
 
 desktop:
 	@echo '${bold}>> Desktop environment settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d
+	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d
 	ln -srf desktop/sway.conf ~/.config/sway/config
 	ln -srf desktop/swaylock.conf ~/.config/swaylock/config
 	ln -srf desktop/waybar/style.css ~/.config/waybar/style.css
 	ln -srf desktop/dunstrc.conf ~/.config/dunst/dunstrc
-	ln -srf desktop/gtk/gtk2.ini ~/.gtkrc-2.0
 	ln -srf desktop/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
+	ln -srf desktop/gtk/gtk3.ini ~/.config/gtk-4.0/settings.ini
 	ln -srf desktop/wofi/config ~/.config/wofi/config
 	ln -srf desktop/wofi/style.css ~/.config/wofi/style.css
 	ln -srf desktop/pipewire/10-remap-sink.conf ~/.config/pipewire/pipewire-pulse.conf.d/10-remap-sink.conf
