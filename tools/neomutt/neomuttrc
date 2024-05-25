@@ -30,6 +30,7 @@ set status_format           = ' [%r] %f: 全%m件%<V? "%V" 表示中%M件>%<u? �
 set ts_enabled              = yes
 set ts_status_format        = 'NeoMutt%<b?*>%<n? (%n)>'
 set use_from                = yes
+set user_agent              = yes
 set wait_key                = no
 
 # Remove extra whitespace from the beginning of bad subjects
