@@ -1,6 +1,7 @@
 scriptencoding utf-8
 
 " Settings
+set cdpath=,~,~/Projects
 set completeopt-=preview
 set expandtab
 set fileencodings=ucs-bom,utf-8,sjis,latin1
@@ -10,6 +11,7 @@ set mouse=nv
 set nohlsearch
 set noshowmode
 set number
+set path=.,$NOTES_PATH
 set sessionoptions-=buffers
 set sessionoptions-=folds
 set sessionoptions-=help
