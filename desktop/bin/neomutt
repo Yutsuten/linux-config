@@ -1,0 +1,7 @@
+#!/usr/bin/fish
+
+if not set --query GPG_TTY
+    set -gx GPG_TTY (tty)
+end
+gpg --quiet --encrypt --default-recipient-self < /dev/null | gpg --quiet --decrypt > /dev/null
+/usr/bin/neomutt $argv
