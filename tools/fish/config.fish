@@ -11,8 +11,8 @@ end
 
 if status is-interactive
     set -gx GPG_TTY (tty)
-    set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
-    set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
+    set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish -- %s %s'
+    set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish -- %s'
 
     set -g CDPATH . $HOME $HOME/Projects
     set -g VIRTUAL_ENV_DISABLE_PROMPT true
