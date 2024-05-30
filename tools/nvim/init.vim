@@ -40,6 +40,7 @@ command -nargs=+ Indent call s:SetIndent(<f-args>)
 " Shortcuts
 nnoremap <silent> <C-s> :update<CR>
 nnoremap <silent> <C-Return> :tabnew +terminal<CR>
+nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> <C-1> :tabnext 1<CR>
 nnoremap <silent> <C-2> :tabnext 2<CR>
 nnoremap <silent> <C-3> :tabnext 3<CR>
