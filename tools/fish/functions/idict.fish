@@ -36,7 +36,7 @@ function idict --description 'Interactive dictionary'
             case quit
                 break
             case '*'
-                dict -d $cur_dict $user_input
+                dict -d $cur_dict -- $user_input
                 echo
         end
     end
