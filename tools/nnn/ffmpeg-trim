@@ -1,0 +1,29 @@
+#!/usr/bin/fish
+
+echo "[ffmpeg-trim] Going to trim selected video"
+read --line --prompt-str 'From > ' from
+read --line --prompt-str 'Until> ' until
+
+set options
+if test -n $from
+    set --append options -ss $from
+end
+if test -n $until
+    set --append options -to $until
+end
+if test -z "$options"
+    return 0
+end
+
+ffmpeg -loglevel warning $options -i $nnn -codec copy -avoid_negative_ts make_zero -y trim-$nnn || return
+
+echo '[ffmpeg-trim] Preview result...'
+mpv --really-quiet trim-$nnn
+
+read --line --prompt-str 'Replace original? [y/N] ' replace
+if string match --quiet --regex '^[Yy]$' $replace
+    trash-put $nnn
+    mv trim-$nnn $nnn
+else
+    rm -f trim-$nnn
+end
