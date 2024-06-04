@@ -1,11 +1,22 @@
 test -f ~/.local/environment.fish && source ~/.local/environment.fish
 
 if test (tty) = '/dev/tty1' -a -z "$DISPLAY"
+    # Gnome
     gsettings set org.gnome.desktop.interface gtk-theme 'Arc'
     gsettings set org.gnome.desktop.interface icon-theme 'Arc'
     gsettings set org.gnome.desktop.interface font-name 'Noto Sans 12'
     gsettings set org.gnome.desktop.interface cursor-theme 'Vimix-cursors'
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    # QT
+    set -gx QT_QPA_PLATFORM wayland
+    set -gx QT_QPA_PLATFORMTHEME qt5ct
+    # Input Method
+    set -gx GTK_IM_MODULE fcitx
+    set -gx QT_IM_MODULE fcitx
+    set -gx XMODIFIERS @im=fcitx
+    # Apps
+    set -gx ANKI_WAYLAND 1
+    # Window Manager
     exec sway
 end
 
