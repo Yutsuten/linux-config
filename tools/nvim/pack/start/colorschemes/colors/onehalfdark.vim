@@ -42,12 +42,8 @@ let s:comment_fg  = s:white
 let s:gutter_bg   = s:black
 let s:gutter_fg   = s:white
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }
-let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
-
-let s:cursor_line = s:brblack
-let s:color_col   = s:brblack
-
 let s:selection   = s:brblack
+let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
 
 
 function s:h(group, fg, bg, attr) abort
@@ -73,9 +69,9 @@ endfun
 call s:h('Normal', s:fg, '', '')
 
 call s:h('Cursor', s:bg, s:blue, '')
-call s:h('CursorColumn', '', s:cursor_line, '')
-call s:h('CursorLine', '', s:cursor_line, '')
-call s:h('CursorLineNr', s:fg, '', '')
+call s:h('CursorColumn', '', '', '')
+call s:h('CursorLine', '', '', '')
+call s:h('CursorLineNr', s:fg, s:gutter_bg, '')
 
 call s:h('DiffAdd', s:green, '', '')
 call s:h('DiffChange', s:yellow, '', '')
@@ -104,7 +100,7 @@ call s:h('SpellRare', s:yellow, '', '')
 call s:h('Visual', '', s:selection, '')
 call s:h('VisualNOS', '', s:selection, '')
 
-call s:h('ColorColumn', '', s:color_col, '')
+call s:h('ColorColumn', '', s:brblack, '')
 call s:h('Conceal', s:fg, '', '')
 call s:h('Directory', s:blue, '', '')
 call s:h('WinSeparator', s:brblack, s:black, '')

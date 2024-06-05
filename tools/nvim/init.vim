@@ -83,6 +83,12 @@ augroup terminal
   autocmd TermOpen * setlocal bufhidden=hide nonumber | startinsert
 augroup end
 
+augroup cursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave                      * setlocal nocursorline
+augroup end
+
 " Script
 function s:SetIndent(size, ...) abort
   " Indent with [s]pace/[t]ab, default to space
