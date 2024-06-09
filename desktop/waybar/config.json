@@ -24,7 +24,7 @@
         "interval": 60,
         "format": "{:L%x (%a)  %H:%M}",
         "format-alt": "{:L%Ex (%a)  %H:%M}",
-        "tooltip-format": "<tt>{calendar}</tt>",
+        "tooltip-format": "{calendar}",
         "calendar": {
             "mode": "month",
             "mode-mon-col": 3,
