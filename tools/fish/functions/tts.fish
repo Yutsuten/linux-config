@@ -22,7 +22,7 @@ function tts --description 'Text-to-Speech using Google API'
     else
         set voice ja-JP-Wavenet-C
     end
-    set filename {$voice}_{$argv}.ogg
+    set filename (echo {$voice}_{$argv}.ogg | tr -d '|?*<":>+[]\'\\\\' | tr ' ' '_')
 
     if test -f $filename
         echo "$filename already exists!" >&2
