@@ -5,7 +5,7 @@
 
 tooltip label {
     font-size: 16px;
-    font-family: "Noto Sans Mono", "monospace";
+    font-family: "Source Code Pro", "monospace";
 }
 
 window#waybar {
