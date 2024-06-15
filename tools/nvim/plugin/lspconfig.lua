@@ -2,7 +2,6 @@
 local cur_dir = os.getenv('PWD')
 local is_local = not string.match(cur_dir, '^/media/sshfs/')
 
---- Alyways enabled
 require('lspconfig').pyright.setup{autostart = is_local}
 require('lspconfig').ruff_lsp.setup{autostart = is_local}
 require('lspconfig').robotframework_ls.setup{
@@ -14,22 +13,20 @@ require('lspconfig').robotframework_ls.setup{
     },
   },
 }
-
---- Conditionally enabled
-local lsp_file
-
-lsp_file = io.open('.nvim-lsp-vue', 'r')
-if lsp_file ~= nil and io.close(lsp_file) then
-  require('lspconfig').volar.setup{
-    autostart = is_local,
-    filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
-  }
-else
-  require('lspconfig').tsserver.setup{
-    autostart = is_local,
-    filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
-  }
-end
+require('lspconfig').volar.setup{autostart = is_local}
+require('lspconfig').tsserver.setup{
+  autostart = is_local,
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = './node_modules/@vue/typescript-plugin',
+        languages = {'javascript', 'typescript', 'vue'},
+      },
+    },
+  },
+  filetypes = {'javascript', 'typescript', 'vue'},
+}
 
 -- Diagnostics
 vim.diagnostic.config({virtual_text = false, underline = true, severity_sort = true})
