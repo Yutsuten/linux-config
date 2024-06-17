@@ -1,6 +1,5 @@
 # Vim / Neovim
 /.nvim-actions/
-/.nvim-lsp-*
 Session.vim
 
 # Ctags
