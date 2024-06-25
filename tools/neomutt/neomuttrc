@@ -41,6 +41,7 @@ color attachment        bold  yellow  default
 color error                   red     default
 color header            bold  default default
 color index             bold  blue    default  ~N
+color index             bold  blue    default  ~O
 color index             bold  default default  ~T
 color index             bold  red     default  ~D
 color index             bold  yellow  default  ~F
