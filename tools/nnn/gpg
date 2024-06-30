@@ -1,0 +1,10 @@
+#!/usr/bin/fish
+
+if string match --quiet --regex '.gpg$' $nnn
+    set out_file (string replace --regex '\.gpg$' '' $nnn)
+    gpg --output $out_file --decrypt $nnn || return
+    touch --reference $nnn $out_file
+else
+    gpg --output $nnn.gpg --encrypt --default-recipient-self $nnn || return
+    touch --reference $nnn $nnn.gpg
+end
