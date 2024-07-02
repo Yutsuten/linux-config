@@ -1,21 +1,21 @@
 #!/usr/bin/fish
 
 # Get selected files
-set target_files
+set selected_files
 if test -s ~/.config/nnn/.selection
-    while read --null target
-        set --append target_files $target
+    while read --null selection
+        set --append selected_files $selection
     end < ~/.config/nnn/.selection
 else
-    set target_files $nnn
+    set selected_files $nnn
 end
 
 # User interaction
 echo
-echo "Type YES to permanently REMOVE the following $(count $target_files) item(s):"
+echo "Type YES to permanently REMOVE the following $(count $selected_files) item(s):"
 echo
 set num 1
-for target in $target_files
+for target in $selected_files
     echo "$num: $target"
     set num (math $num + 1)
 end
@@ -24,7 +24,7 @@ read --prompt-str 'Proceed? ' answer
 
 # Remove execution
 if test "$answer" = "YES"
-    rm -rf -- $target_files
+    rm -rf -- $selected_files
 
     # Clear selection
     printf '-' > $NNN_PIPE

@@ -1,10 +1,30 @@
 #!/usr/bin/fish
 
-if string match --quiet --regex '\.gpg$' $nnn
-    set out_file (string replace --regex '\.gpg$' '' $nnn)
-    gpg --output $out_file --decrypt $nnn || return
-    touch --reference $nnn $out_file
+# Get selected files
+set selected_files
+if test -s ~/.config/nnn/.selection
+    while read --null selection
+        set --append selected_files $selection
+    end < ~/.config/nnn/.selection
 else
-    gpg --output $nnn.gpg --encrypt --default-recipient-self $nnn || return
-    touch --reference $nnn $nnn.gpg
+    set selected_files $nnn
+end
+
+# GPG execution
+for selection in $selected_files
+    if test -f $selection
+        switch $selection
+        case '*.tar.zst.gpg'    # Decrypt directory
+            gpg --decrypt $selection | tar --zstd --extract
+        case '*.gpg'            # Decrypt file
+            set out_file (string replace --regex '\.gpg$' '' $selection)
+            gpg --output $out_file --decrypt $selection || continue
+            touch --reference $selection $out_file
+        case '*'                # Encrypt file
+            gpg --output $selection.gpg --encrypt --default-recipient-self $selection || continue
+            touch --reference $selection $selection.gpg
+        end
+    else if test -d $selection  # Encrypt directory
+        tar --zstd --create $selection | gpg --output $selection.tar.zst.gpg --encrypt --default-recipient-self
+    end
 end
