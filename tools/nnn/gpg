@@ -15,7 +15,7 @@ for selection in $selected_files
     if test -f $selection
         switch $selection
         case '*.tar.zst.gpg'    # Decrypt directory
-            gpg --decrypt $selection | tar --zstd --extract
+            gpg --decrypt $selection | tar --zstd --extract || continue
         case '*.gpg'            # Decrypt file
             set out_file (string replace --regex '\.gpg$' '' $selection)
             gpg --output $out_file --decrypt $selection || continue
