@@ -46,7 +46,7 @@ function bkptool --description 'Backup and restore user files'
             printf '%s\0' $argv[2..] | sort --zero-terminated --reverse | while read --null filename
                 set cur (math $cur + 1)
                 if test $cur -gt $keep_count
-                    rm -fv $filename
+                    rm --force --verbose -- $filename
                 end
             end
         end

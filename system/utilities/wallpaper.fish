@@ -27,7 +27,7 @@ function random_wallpaper
     cd $WALLPAPERS_PATH
     printf '%s\n' *.* > $tmp_all_wallpapers
     if not test -s $tmp_all_wallpapers
-        rm -f $tmp_all_wallpapers
+        rm --force -- $tmp_all_wallpapers
         echo "No wallpapers found at WALLPAPERS_PATH '$WALLPAPERS_PATH'." >&2
         return 1
     end
@@ -38,7 +38,7 @@ function random_wallpaper
     set elected $candidates[(random 1 (count $candidates))]
     sed "1i $elected" $tmp_new_history > $history_file_path
     swaymsg output '*' bg $WALLPAPERS_PATH/$elected fill
-    rm -f $tmp_all_wallpapers $tmp_new_history
+    rm --force -- $tmp_all_wallpapers $tmp_new_history
 end
 
 if set --query --local _flag_random

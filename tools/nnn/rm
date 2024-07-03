@@ -12,7 +12,7 @@ end
 
 # User interaction
 echo
-echo "Type YES to permanently REMOVE the following $(count $selected_files) item(s):"
+echo "Will permanently REMOVE the following $(count $selected_files) item(s):"
 echo
 set num 1
 for target in $selected_files
@@ -20,11 +20,11 @@ for target in $selected_files
     set num (math $num + 1)
 end
 echo
-read --prompt-str 'Proceed? ' answer
+read --line --prompt-str 'Are you sure? [y/N] ' answer
 
 # Remove execution
-if test "$answer" = "YES"
-    rm -rf -- $selected_files
+if string match --quiet --regex '^[Yy]$' $answer
+    rm --recursive --force -- $selected_files
 
     # Clear selection
     printf '-' > $NNN_PIPE

@@ -7,6 +7,6 @@ switch $argv[1]
         if test -s $tempfile
             echo $tempfile
         else
-            rm -f -- $tempfile
+            rm --force -- $tempfile
         end
 end

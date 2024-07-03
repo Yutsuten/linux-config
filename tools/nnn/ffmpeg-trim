@@ -26,5 +26,5 @@ if string match --quiet --regex '^[Yy]$' $replace
     trash-put $nnn
     mv trim-$nnn $nnn
 else
-    rm -f trim-$nnn
+    rm --force -- trim-$nnn
 end

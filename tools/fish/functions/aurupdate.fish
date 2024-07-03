@@ -44,7 +44,7 @@ function aurupdate --description 'Update AUR packages'
             set cur (math $cur + 1)
         else
             echo $bold"⚠️ Remove unused $package"$reset
-            rm --recursive --force "$package_dir"
+            rm --recursive --force -- "$package_dir"
         end
     end
     echo $bold'Finish!'$reset
