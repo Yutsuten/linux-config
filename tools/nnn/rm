@@ -12,7 +12,7 @@ end
 
 # User interaction
 echo
-echo "Will permanently REMOVE the following $(count $selected_files) item(s):"
+echo "Will REMOVE the following $(count $selected_files) item(s):"
 echo
 set num 1
 for target in $selected_files
