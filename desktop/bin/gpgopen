@@ -31,23 +31,28 @@ if not string match --quiet --regex '\.gpg$' $argv[1]
     return 1
 end
 
-set cache_dir ~/.cache/gpgopen
-set out_file $cache_dir/(string replace --regex '\.gpg$' '' (path basename $argv[1]))
+set decrypted_file /tmp/(string replace --regex '\.gpg$' '' (path basename $argv[1]))
 
-mkdir --parents $cache_dir
-if not gpg --output $out_file --decrypt $argv[1]
-    echo "$argv[1] is not a gpg file" >&2
-    return 1
+# Skip decrypt if opening twice
+if not test -f $decrypted_file
+    if not gpg --output $decrypted_file --decrypt $argv[1]
+        echo "$argv[1] is not a gpg file" >&2
+        return 1
+    end
+    touch --reference $argv[1] $decrypted_file
 end
-touch --reference $argv[1] $out_file
 
-set before_shasum "$(shasum $out_file)"
-xdg-open $out_file
+set before_shasum (sha512sum $decrypted_file)
+xdg-open $decrypted_file
 
-if test $before_shasum = "$(shasum $out_file)"
+if test (sha512sum $decrypted_file) = $before_shasum
     echo "File was not edited." >&2
-    shred --remove $out_file
+    # Workaround: PDFs opening in existing browser exit before being fully loaded
+    if test (path extension $decrypted_file) = .pdf
+        sleep 3s
+    end
+    rm --force -- $decrypted_file
     return 0
 end
 
-gpg --output $argv[1] --encrypt --default-recipient-self $out_file && shred --remove $out_file
+gpg --output - --encrypt --default-recipient-self $decrypted_file > $argv[1] && rm --force -- $decrypted_file
