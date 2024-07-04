@@ -15,10 +15,12 @@ if test -z "$options"
     return 0
 end
 
+echo '[ffmpeg-trim] Processing...'
 ffmpeg -loglevel warning $options -i $nnn -codec copy -avoid_negative_ts make_zero -y trim-$nnn || return
 touch --reference $nnn trim-$nnn
 
-echo '[ffmpeg-trim] Preview result...'
+echo "[ffmpeg-trim] Before : $(du -h $nnn | cut -f 1)"
+echo "[ffmpeg-trim] After  : $(du -h trim-$nnn | cut -f 1)"
 mpv --really-quiet trim-$nnn
 
 read --line --prompt-str 'Replace original? [y/N] ' replace
