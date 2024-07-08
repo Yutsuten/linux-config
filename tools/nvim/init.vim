@@ -94,9 +94,8 @@ function s:SetIndent(size, ...) abort
   " Indent with [s]pace/[t]ab, default to space
   let &expandtab = (a:0 >= 1 ? a:1 : 'space') !~? '^t'
   " Indent size
-  let &softtabstop = a:size
-  let &tabstop = a:size
   let &shiftwidth = a:size
+  let &softtabstop = a:size
 endfunction
 
 function s:MoveFile(src, dest) abort
