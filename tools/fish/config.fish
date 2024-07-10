@@ -16,7 +16,9 @@ if test (tty) = '/dev/tty1' -a -z "$DISPLAY"
     set -gx XMODIFIERS @im=fcitx
     # Apps
     set -gx ANKI_WAYLAND 1
-    # Window Manager
+    set -gx EDITOR edit
+    set -gx VISUAL edit
+    # Start Window Manager
     exec sway
 end
 

@@ -1,0 +1,53 @@
+#!/usr/bin/fish
+argparse 'h/help' -- $argv
+set exitcode $status
+
+function help
+    echo 'Usage: edit [-h|--help] FILE' >&2
+    echo >&2
+    echo '  Synopsis:' >&2
+    echo '    Edit text or gpg files using nvim.' >&2
+    echo >&2
+    echo '  Options:' >&2
+    echo '    -h, --help      Show list of command-line options' >&2
+    echo >&2
+    echo '  Arguments:' >&2
+    echo '    FILE: The file to be edited' >&2
+end
+
+if test $exitcode -ne 0 -o (count $argv) -eq 0 || set --query --local _flag_help
+    help
+    return $exitcode
+end
+
+if not test -f $argv[1]
+    echo "$argv[1] is not a file." >&2
+    help
+    return 1
+end
+
+if string match --quiet --regex '\.gpg$' $argv[1]
+    # GPG file
+    set decrypted_file /tmp/(string replace --regex '\.gpg$' '' (path basename $argv[1]))
+
+    # Skip decrypt if opening twice
+    if not test -f $decrypted_file
+        if not gpg --decrypt $argv[1] > $decrypted_file
+            echo "$argv[1] is not a gpg file." >&2
+            rm --force -- $decrypted_file
+            return 1
+        end
+    end
+
+    set before_shasum (sha512sum $decrypted_file)
+    nvim -ni NONE $decrypted_file
+
+    if test (sha512sum $decrypted_file) = $before_shasum
+        rm --force -- $decrypted_file
+        return 0
+    end
+    gpg --output - --encrypt --default-recipient-self $decrypted_file > $argv[1] && rm --force -- $decrypted_file
+else
+    # Text file
+    nvim $argv
+end

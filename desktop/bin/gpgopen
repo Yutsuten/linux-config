@@ -46,7 +46,6 @@ set before_shasum (sha512sum $decrypted_file)
 xdg-open $decrypted_file
 
 if test (sha512sum $decrypted_file) = $before_shasum
-    echo "File was not edited." >&2
     # Workaround: PDFs opening in existing browser exit before being fully loaded
     if test (path extension $decrypted_file) = .pdf
         sleep 3s

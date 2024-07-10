@@ -1,4 +1,4 @@
+BROWSER=firefox
+EDITOR=nvim
 PAGER="less -P?n -R"
 VISUAL=nvim
-EDITOR=nvim
-BROWSER=firefox
