@@ -10,31 +10,25 @@ else
     set selected_files $nnn
 end
 
-echo
-echo "Will compress the following $(count $selected_files) item(s):"
-echo
+echo >&2
+echo "Will compress the following $(count $selected_files) item(s):" >&2
+echo >&2
 for index in (seq (count $selected_files))
-    echo "$index: $selected_files[$index]"
+    echo "$index: $selected_files[$index]" >&2
 end
-echo
 
 function get_choice
+    echo >&2
     echo 'Which format to compress to?' >&2
     echo >&2
     for index in (seq (count $choices))
-        if test $index -eq 1
-            echo "$index) $choices[$index] (default)" >&2
-        else
-            echo "$index) $choices[$index]" >&2
-        end
+        echo "$index) $choices[$index]" >&2
     end
     echo >&2
     read --line --prompt-str 'Your choice: ' index_choice
 
     if string match --quiet --regex '^[0-9]+$' $index_choice && test $index_choice -ge 1 -a $index_choice -le (count $choices)
         echo $choices[$index_choice]
-    else
-        echo $choices[1]
     end
 end
 
@@ -55,6 +49,9 @@ if test (count $selected_files) -eq 1
             case .zip
                 echo "Generating $selection.zip" >&2
                 zip $selection.zip $selection
+            case '*'
+                echo 'Abort' >&2
+                return 1
         end
     # Single directory
     else if test -d $selection
@@ -73,15 +70,21 @@ if test (count $selected_files) -eq 1
             case .zip
                 echo "Generating $selection.zip" >&2
                 zip -r $selection.zip $selection
+            case '*'
+                echo 'Abort' >&2
+                return 1
         end
     end
 else
     # Multiple files / directories
     set choices .tar.zst .tgz .tar .zip
-    set extension (get_choice)
-    while test -z $output
-        read --line --prompt-str 'Filename without extension: ' output
+    echo >&2
+    read --line --prompt-str 'Filename without extension: ' output
+    if test -z $output
+        echo 'Abort' >&2
+        return 1
     end
+    set extension (get_choice)
     switch $extension
         case .tar.zst
             echo "Generating $output.tar.zst" >&2
@@ -95,5 +98,8 @@ else
         case .zip
             echo "Generating $output.zip" >&2
             zip -r $output.zip $selected_files
+        case '*'
+            echo 'Abort' >&2
+            return 1
     end
 end
