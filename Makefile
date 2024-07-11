@@ -28,6 +28,10 @@ desktop:
 	bash desktop/pipewire/90-init.sh
 	fish desktop/waybar/configure.fish
 	xdg-mime default gpgopen.desktop application/octet-stream
+	xdg-mime default extract.desktop application/gzip
+	xdg-mime default extract.desktop application/x-tar
+	xdg-mime default extract.desktop application/zip
+	xdg-mime default extract.desktop application/zstd
 
 system:
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb

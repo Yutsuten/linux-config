@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Extract
+Comment=Extract an archive
+Categories=Utility
+Exec=extract
+NoDisplay=true
+Terminal=false

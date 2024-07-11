@@ -1,0 +1,44 @@
+#!/usr/bin/fish
+argparse --max-args 1 'h/help' -- $argv
+set exitcode $status
+
+function help
+    echo 'Usage: extract [-h|--help] FILE' >&2
+    echo >&2
+    echo '  Synopsis:' >&2
+    echo '    Extract archive files.' >&2
+    echo >&2
+    echo '  Options:' >&2
+    echo '    -h, --help      Show list of command-line options' >&2
+    echo >&2
+    echo '  Arguments:' >&2
+    echo '    FILE: The file to be extracted' >&2
+end
+
+if test $exitcode -ne 0 -o (count $argv) -eq 0 || set --query --local _flag_help
+    help
+    return $exitcode
+end
+
+if not test -f $argv[1]
+    echo "$argv[1] is not a file." >&2
+    help
+    return 1
+end
+
+switch $argv[1]
+    case '*.zip'
+        unar $argv[1]
+    case '*.tar'
+        tar --extract --file $argv[1]
+    case '*.tgz'
+        tar --gunzip --extract --file $argv[1]
+    case '*.tar.gz'
+        tar --gunzip --extract --file $argv[1]
+    case '*.tar.zst'
+        tar --zstd --extract --file $argv[1]
+    case '*.zst'
+        unzstd $argv[1]
+    case '*.gz'
+        gunzip $argv[1]
+end
