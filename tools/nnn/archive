@@ -1,0 +1,99 @@
+#!/usr/bin/fish
+
+# Get selected files
+set selected_files
+if test -s ~/.config/nnn/.selection
+    while read --null selection
+        set --append selected_files (string replace --regex "^$PWD/" '' $selection)
+    end < ~/.config/nnn/.selection
+else
+    set selected_files $nnn
+end
+
+echo
+echo "Will compress the following $(count $selected_files) item(s):"
+echo
+for index in (seq (count $selected_files))
+    echo "$index: $selected_files[$index]"
+end
+echo
+
+function get_choice
+    echo 'Which format to compress to?' >&2
+    echo >&2
+    for index in (seq (count $choices))
+        if test $index -eq 1
+            echo "$index) $choices[$index] (default)" >&2
+        else
+            echo "$index) $choices[$index]" >&2
+        end
+    end
+    echo >&2
+    read --line --prompt-str 'Your choice: ' index_choice
+
+    if string match --quiet --regex '^[0-9]+$' $index_choice && test $index_choice -ge 1 -a $index_choice -le (count $choices)
+        echo $choices[$index_choice]
+    else
+        echo $choices[1]
+    end
+end
+
+if test (count $selected_files) -eq 1
+    set selection $selected_files[1]
+
+    # Single file
+    if test -f $selection
+        set choices .zst .gz .zip
+        set extension (get_choice)
+        switch $extension
+            case .zst
+                echo "Generating $selection.zst" >&2
+                zstd $selection
+            case .gz
+                echo "Generating $selection.gz" >&2
+                gzip --keep $selection
+            case .zip
+                echo "Generating $selection.zip" >&2
+                zip $selection.zip $selection
+        end
+    # Single directory
+    else if test -d $selection
+        set choices .tar.zst .tgz .tar .zip
+        set extension (get_choice)
+        switch $extension
+            case .tar.zst
+                echo "Generating $selection.tar.zst" >&2
+                tar --zstd --create --file $selection.tar.zst $selection
+            case .tgz
+                echo "Generating $selection.tgz" >&2
+                tar --gzip --create --file $selection.tgz $selection
+            case .tar
+                echo "Generating $selection.tar" >&2
+                tar --create --file $selection.tar $selection
+            case .zip
+                echo "Generating $selection.zip" >&2
+                zip -r $selection.zip $selection
+        end
+    end
+else
+    # Multiple files / directories
+    set choices .tar.zst .tgz .tar .zip
+    set extension (get_choice)
+    while test -z $output
+        read --line --prompt-str 'Filename without extension: ' output
+    end
+    switch $extension
+        case .tar.zst
+            echo "Generating $output.tar.zst" >&2
+            tar --zstd --create --file $output.tar.zst $selected_files
+        case .tgz
+            echo "Generating $output.tgz" >&2
+            tar --gzip --create --file $output.tgz $selected_files
+        case .tar
+            echo "Generating $output.tar" >&2
+            tar --create --file $output.tar $selected_files
+        case .zip
+            echo "Generating $output.zip" >&2
+            zip -r $output.zip $selected_files
+    end
+end

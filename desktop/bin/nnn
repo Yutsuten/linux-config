@@ -14,6 +14,7 @@ set --append shortcuts 't:ffmpeg-trim'
 set --append shortcuts 'x:rm'
 set --append shortcuts 'y:-!wl-copy "$nnn"*'
 set --append shortcuts 'Y:-!wl-copy "$PWD/$nnn"*'
+set --append shortcuts 'z:archive'
 set --export NNN_PLUG (string join ';' $shortcuts)
 
 set bookmarks

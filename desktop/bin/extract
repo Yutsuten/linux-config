@@ -40,5 +40,5 @@ switch $argv[1]
     case '*.zst'
         unzstd $argv[1]
     case '*.gz'
-        gunzip $argv[1]
+        gunzip --keep $argv[1]
 end

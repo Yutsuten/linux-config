@@ -4,7 +4,7 @@
 set selected_files
 if test -s ~/.config/nnn/.selection
     while read --null selection
-        set --append selected_files $selection
+        set --append selected_files (string replace --regex "^$PWD/" '' $selection)
     end < ~/.config/nnn/.selection
 else
     set selected_files $nnn
