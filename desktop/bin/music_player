@@ -1,0 +1,12 @@
+#!/usr/bin/fish
+
+pushd ~/Music
+
+find . -maxdepth 1 -type f -name '*.m3u' -printf '%P\n' \
+  | sort \
+  | sed 's|^|img:/usr/share/icons/Arc/actions/24@2x/music-library.png:text:|g' \
+  | wofi --dmenu --prompt 'Select Playlist' --cache-file /dev/null \
+  | cut -d ':' -f 4 \
+  | xargs -d '\n' mpv --profile=music --shuffle --loop-playlist --log-file=~/.cache/mpv/debug.log
+
+popd

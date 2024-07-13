@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Music Player
+Comment=Play music with mpv
+Categories=Music
+Icon=mpv
+Exec=music_player
+Terminal=false
