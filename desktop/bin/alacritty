@@ -1,0 +1,3 @@
+#!/usr/bin/fish
+
+/usr/bin/alacritty msg create-window $argv || /usr/bin/alacritty $argv
