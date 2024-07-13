@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Anki
+GenericName=Flashcards
+Comment=An intelligent spaced-repetition memory training program
+Categories=Education
+Icon=anki
+MimeType=application/x-apkg;application/x-anki;application/x-ankiaddon;
+Exec=anki %f
+Terminal=false
