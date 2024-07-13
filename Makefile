@@ -44,9 +44,9 @@ system:
 	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
+	fish system/misc.fish
 
-tools: alacritty fastfetch fish git lftp neomutt nnn nvim vimiv
-	@echo ' Add mpv settings with `make mpv`'
+tools: alacritty fastfetch fish git lftp mpv neomutt nnn nvim vimiv
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'

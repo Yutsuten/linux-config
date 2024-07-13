@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=NeoMutt
+Comment=Teaching an Old Dog New Tricks
+Categories=Email
+Exec=alacritty --command neomutt
+Icon=neomutt
+Terminal=false
