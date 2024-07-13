@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=alacritty --command fish
+Name=fish
+Comment=The user-friendly command line shell
+Icon=fish
+Categories=ConsoleOnly;System;

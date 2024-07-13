@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=nnn
+Comment=Terminal file manager
+Categories=System;FileTools;FileManager;ConsoleOnly
+Exec=alacritty --title Nnn --command nnn
+Icon=nnn
+Keywords=File;Manager;Management;Explorer;Launcher
+MimeType=inode/directory
+Terminal=false
