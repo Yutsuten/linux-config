@@ -1,5 +1,5 @@
 function pkgup --description 'Update customly installed packages'
-    argparse 'h/help' -- $argv
+    argparse 'h/help' 'l/list' -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
@@ -11,6 +11,11 @@ function pkgup --description 'Update customly installed packages'
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
         return $exitcode
+    end
+
+    if set --query --local _flag_list
+        echo 'anki droidcam osu vimiv' >&2
+        return 0
     end
 
     for package in $argv
