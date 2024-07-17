@@ -22,7 +22,7 @@ function get_choice
     echo 'Which format to compress to?' >&2
     echo >&2
     for index in (seq (count $choices))
-        echo "$index) $choices[$index]" >&2
+        echo "  $index. $choices[$index]" >&2
     end
     echo >&2
     read --line --prompt-str 'Your choice: ' index_choice

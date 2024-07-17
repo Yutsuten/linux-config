@@ -2,7 +2,7 @@ function tts --description 'Text-to-Speech using Google API'
     argparse 'h/help' 'g/girl' -- $argv
     set exitcode $status
 
-    if test $exitcode -ne 0 || set --query --local _flag_help
+    if test $exitcode -ne 0 -o (count $argv) -eq 0 || set --query --local _flag_help
         echo 'Usage: tts [options] TEXT' >&2
         echo >&2
         echo '  Synopsis:' >&2
