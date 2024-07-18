@@ -42,8 +42,10 @@ function random_wallpaper
 end
 
 if set --query --local _flag_random
+    rm --force -- /tmp/tmp_wallpaper.*
     random_wallpaper
 else if set --query --local _flag_restore
+    rm --force -- /tmp/tmp_wallpaper.*
     if not test -s $history_file_path
         random_wallpaper
         return $status
@@ -55,7 +57,12 @@ else if set --query --local _flag_restore
     end
     swaymsg output '*' bg $target fill
 else if set --query --local _flag_set
-    swaymsg output '*' bg $_flag_set fill
+    rm --force -- /tmp/tmp_wallpaper.*
+    if not swaymsg output '*' bg $_flag_set fill
+        set tmp_wallpaper /tmp/tmp_wallpaper(path extension $_flag_set)
+        cp $_flag_set $tmp_wallpaper
+        swaymsg output '*' bg $tmp_wallpaper fill
+    end
 else
     echo 'One option must be provided.' >&2
     script_help
