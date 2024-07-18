@@ -5,7 +5,7 @@ set find_options '(' -iname '*.jpg' -or -iname '*.jpeg' -or -iname '*.png' -or -
 if test -f $nnn
     if test (file $nnn) = "$nnn: ASCII text"
         # Text file with filenames in each line
-        xargs vimiv --log-level error -s sort.shuffle true --command 'goto 1' < $nnn &> /dev/null &
+        xargs --delimiter '\n' vimiv --log-level error -s sort.shuffle true --command 'goto 1' < $nnn &> /dev/null &
     else
         # Find pictures in current dir
         find . -maxdepth 1 -type f $find_options \
