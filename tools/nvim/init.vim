@@ -8,6 +8,7 @@ set fileencodings=ucs-bom,utf-8,sjis,latin1
 set grepprg=grep\ -In\ $*\ /dev/null
 set list listchars=tab:›\ ,trail:˽,nbsp:˲
 set mouse=nv
+set mousemodel=extend
 set nohlsearch
 set noshowmode
 set number
