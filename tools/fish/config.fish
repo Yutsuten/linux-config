@@ -38,7 +38,7 @@ if status is-interactive
     abbr --add diskusage -- "lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'"
     abbr --add ffmpeg    -- 'ffmpeg -hide_banner'
     abbr --add ffprobe   -- 'ffprobe -hide_banner'
-    abbr --add genm3u    -- "find . -type f -iname '*.mp3' -iname '*.m4a' -iname '*.ogg' -iname '*.opus' -iname '*.flac' -printf '%P\n' | sort > NewSongs.m3u"
+    abbr --add genm3u    -- "find . -type f \( -iname '*.mp3' -o -iname '*.m4a' -o -iname '*.ogg' -o -iname '*.opus' -o -iname '*.flac' \) -printf '%P\n' | sort > NewSongs.m3u"
     abbr --add identify  -- 'identify -precision 3'
     abbr --add l1        -- 'ls -N1 --sort=v --group-directories-first'
     abbr --add ll        -- 'ls -Nlh --sort=v --group-directories-first'
