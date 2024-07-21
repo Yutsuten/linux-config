@@ -27,11 +27,12 @@ desktop:
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
 	bash desktop/pipewire/90-init.sh
 	fish desktop/waybar/configure.fish
-	xdg-mime default gpgopen.desktop application/octet-stream
 	xdg-mime default extract.desktop application/gzip
 	xdg-mime default extract.desktop application/x-tar
 	xdg-mime default extract.desktop application/zip
 	xdg-mime default extract.desktop application/zstd
+	xdg-mime default firefox.desktop text/plain
+	xdg-mime default gpgopen.desktop application/octet-stream
 
 system:
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb
