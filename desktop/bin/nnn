@@ -8,12 +8,12 @@ set shortcuts
 set --append shortcuts 'd:dragdrop'
 set --append shortcuts 'g:gpg'
 set --append shortcuts 'i:-vimiv'
-set --append shortcuts 'l:-!less -N "$nnn"*'
+set --append shortcuts 'l:-!less -N -- "$nnn"*'
 set --append shortcuts 'p:-mpv'
 set --append shortcuts 't:ffmpeg-trim'
 set --append shortcuts 'x:rm'
-set --append shortcuts 'y:-!wl-copy "$nnn"*'
-set --append shortcuts 'Y:-!wl-copy "$PWD/$nnn"*'
+set --append shortcuts 'y:-!wl-copy -- "$nnn"*'
+set --append shortcuts 'Y:-!wl-copy -- "$PWD/$nnn"*'
 set --append shortcuts 'z:archive'
 set --export NNN_PLUG (string join ';' $shortcuts)
 
