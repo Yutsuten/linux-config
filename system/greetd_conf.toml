@@ -2,5 +2,5 @@
 vt = 1
 
 [default_session]
-command = "tuigreet --time --time-format '%Y-%m-%d %H:%M' --remember --asterisks --cmd fish"
+command = "tuigreet --time --time-format '%Y-%m-%d %H:%M' --window-padding 1 --remember --asterisks --cmd fish"
 user = "greeter"
