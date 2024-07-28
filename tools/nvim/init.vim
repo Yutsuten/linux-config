@@ -81,8 +81,7 @@ augroup end
 
 augroup terminal
   autocmd!
-  autocmd TermOpen *        setlocal bufhidden=hide nonumber | startinsert
-  autocmd BufEnter term://* startinsert
+  autocmd TermOpen * setlocal bufhidden=hide nonumber | startinsert
 augroup end
 
 augroup cursorline
