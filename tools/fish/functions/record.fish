@@ -31,18 +31,20 @@ function record --description 'Record screen and audio on wayland'
 
     if set --query --local _flag_mic
         echo $bold'[AUDIO] Start recording mic'$reset
-        nice -n -5 ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') -ac 1 $folder_name/mic.flac &
+        nice -n -5 pw-record --channels 1 --target (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') $folder_name/mic.flac &
         set mic_pid $last_pid
     end
     if set --query --local _flag_rec
         echo $bold'[AUDIO] Start recording "recording" source'$reset
         pactl set-sink-volume recording 100%
-        nice -n -5 ffmpeg -loglevel warning -nostdin -f pulse -i recording.monitor -ac 2 $folder_name/rec.flac &
+        # Cracklings if we use `pw-record`
+        nice -n -5 parec --record --raw --channels 2 --rate 48000 --device recording.monitor $folder_name/rec.raw &
         set rec_pid $last_pid
     end
     if set --query --local _flag_speakers
         echo $bold'[AUDIO] Start recording speakers'$reset
-        nice -n -5 ffmpeg -loglevel warning -nostdin -f pulse -i (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') -ac 2 $folder_name/speakers.flac &
+        # Cracklings if we use `pw-record`
+        nice -n -5 parec --record --raw --channels 2 --rate 48000 --device (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') $folder_name/speakers.raw &
         set speakers_pid $last_pid
     end
 
@@ -63,7 +65,19 @@ function record --description 'Record screen and audio on wayland'
         kill --verbose $speakers_pid
     end
 
-    sleep 0.2
+    echo $bold'[AUDIO] Wait for audio recordings to stop...'$reset
+    wait $mic_pid $rec_pid $speakers_pid
+
+    if set --query --local _flag_rec
+        echo $bold'[AUDIO] Saving recording source audio as flac'$reset
+        nice -n 5 ffmpeg -loglevel warning -f s16le -ar 48000 -ac 2 -i $folder_name/rec.raw $folder_name/rec.flac
+    end
+
+    if set --query --local _flag_speakers
+        echo $bold'[AUDIO] Saving speakers audio as flac'$reset
+        nice -n 5 ffmpeg -loglevel warning -f s16le -ar 48000 -ac 2 -i $folder_name/speakers.raw $folder_name/speakers.flac
+    end
+
     if set --query --local _flag_mic && set --query --local _flag_speakers
         echo $bold'[AUDIO] Mixing mic and speakers'$reset
         nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac -filter_complex 'amerge=inputs=2' -ac 2 $folder_name/mix.flac
