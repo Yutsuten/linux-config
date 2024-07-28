@@ -23,23 +23,7 @@
     "clock": {
         "interval": 60,
         "format": "{:L%x (%a)  %H:%M}",
-        "format-alt": "{:L%Ex (%a)  %H:%M}",
-        "tooltip-format": "{calendar}",
-        "calendar": {
-            "mode": "month",
-            "mode-mon-col": 3,
-            "on-scroll": -1,
-            "format": {
-                "months": "<b>{}</b>",
-                "weekdays": "<u><b>{}</b></u>",
-                "today": "<span background='#5294e2'><b>{}</b></span>"
-            }
-        },
-        "actions":  {
-            "on-click-right": "mode",
-            "on-scroll-up": "shift_up",
-            "on-scroll-down": "shift_down"
-        }
+        "tooltip": false
     },
     "pulseaudio": {
         "format": "<span color='#52c7e2'>{icon}</span> {volume}%",
