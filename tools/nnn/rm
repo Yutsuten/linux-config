@@ -1,5 +1,8 @@
 #!/usr/bin/fish
 
+set bold (tput bold)
+set reset (tput sgr0)
+
 # Get selected files
 set selected_files
 if test -s ~/.config/nnn/.selection
@@ -12,12 +15,10 @@ end
 
 # User interaction
 echo
-echo "Will REMOVE the following $(count $selected_files) item(s):"
+echo $bold"[RM] Going to REMOVE the following $(count $selected_files) item(s):"$reset
 echo
-set num 1
-for target in $selected_files
-    echo "$num: $target"
-    set num (math $num + 1)
+for i in (seq (count $selected_files))
+    echo "  $i: $selected_files[$i]"
 end
 echo
 read --line --prompt-str 'Are you sure? [y/N] ' answer

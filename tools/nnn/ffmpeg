@@ -1,8 +1,14 @@
 #!/usr/bin/fish
 
-echo "[ffmpeg] Going to trim selected video"
+set bold (tput bold)
+set reset (tput sgr0)
+
+echo
+echo $bold"[FFMPEG] Going to trim video: $nnn"$reset
+echo
 read --line --prompt-str 'From > ' from
 read --line --prompt-str 'Until> ' until
+echo
 
 set options
 if test -n $from
@@ -15,18 +21,19 @@ if test -z "$options"
     return 0
 end
 
-echo '[ffmpeg] Processing...'
-ffmpeg -loglevel warning $options -i $nnn -codec copy -avoid_negative_ts make_zero -y trim-$nnn || return
-touch --reference $nnn trim-$nnn
+echo 'Processing...'
+ffmpeg -loglevel warning $options -i $nnn -codec copy -avoid_negative_ts make_zero -y /tmp/$nnn || return
+touch --reference $nnn /tmp/$nnn
 
-echo "[ffmpeg] Before : $(du -h $nnn | cut -f 1)"
-echo "[ffmpeg] After  : $(du -h trim-$nnn | cut -f 1)"
-mpv --really-quiet trim-$nnn
+echo "Before : $(du -h $nnn | cut -f 1)"
+echo "After  : $(du -h /tmp/$nnn | cut -f 1)"
+mpv --really-quiet /tmp/$nnn
 
+echo
 read --line --prompt-str 'Replace original? [y/N] ' replace
 if string match --quiet --regex '^[Yy]$' $replace
     trash-put $nnn
-    mv trim-$nnn $nnn
+    mv /tmp/$nnn $nnn
 else
-    rm --force -- trim-$nnn
+    rm --force -- /tmp/$nnn
 end
