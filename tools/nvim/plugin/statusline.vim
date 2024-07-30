@@ -6,7 +6,7 @@ command -nargs=0 ToggleFileInfo call s:ToggleFileInfo()
 " Triggers
 augroup statusline
   autocmd!
-  autocmd VimEnter,WinEnter,BufEnter,SessionLoadPost,FileChangedShellPost * call s:UpdateStatusLine()
+  autocmd VimEnter,WinEnter,BufEnter,SessionLoadPost,FileChangedShellPost,TermLeave * call s:UpdateStatusLine()
   autocmd VimEnter * highlight link StatusLineMode StatusLineBlue
   autocmd VimEnter * highlight link StatusLineLinter StatusLineLinterGreen
 augroup end
@@ -24,7 +24,7 @@ function s:UpdateStatusLine() abort
     return
   endif
 
-  let l:statusline  = "%0* %t %m %h"
+  let l:statusline  = '%0* %t %m %h'
   let l:statusline .= '%='
 
   let l:active_statusline  = '%#StatusLineMode# %{GetCurrentMode()} '
