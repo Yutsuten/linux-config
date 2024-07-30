@@ -50,7 +50,7 @@ if status is-interactive
 end
 
 function fish_greeting
-    if test -z "$NNNLVL" -a -z "$NVIM"
+    if test -z "$NNNLVL"
         fastfetch
     end
 end
