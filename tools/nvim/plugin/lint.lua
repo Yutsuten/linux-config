@@ -6,7 +6,6 @@ require('lint').linters_by_ft = {
   markdown = {'eslint'},
   vue = {'eslint', 'stylelint'},
   sh = {'shellcheck'},
-  vim = {'vint'},
   lua = {'luacheck'},
   yaml = {'yamllint'},
 }
