@@ -15,6 +15,15 @@ function UpdateTabLine() abort
     endif
     let tabline .= ' [' . tabnum . '] '
   endfor
-  let tabline .= '%#TabLineFill#%T %= %{fnamemodify(getcwd(), ":~")} '
+  let tabline .= '%#TabLineFill#%T %= %{GetDirInfo()} '
   return tabline
+endfunction
+
+function GetDirInfo() abort
+  let l:curdir = fnamemodify(getcwd(), ':~')
+  if exists('b:gitsigns_head')
+    return l:curdir .. ' @ ' .. b:gitsigns_head
+  else
+    return l:curdir
+  endif
 endfunction
