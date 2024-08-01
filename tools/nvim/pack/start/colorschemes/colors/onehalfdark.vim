@@ -44,6 +44,7 @@ let s:gutter_fg   = s:white
 let s:non_text    = { 'gui': '#373C45', 'cterm': '239' }
 let s:selection   = s:brblack
 let s:warning_fg  = { 'gui': '#AF8700', 'cterm': '136' }
+let s:cur_line_bg = { 'gui': '#2D333E', 'cterm': 'NONE' }
 
 
 function s:h(group, fg, bg, attr) abort
@@ -70,7 +71,7 @@ call s:h('Normal', s:fg, '', '')
 
 call s:h('Cursor', s:bg, s:blue, '')
 call s:h('CursorColumn', '', '', '')
-call s:h('CursorLine', '', '', '')
+call s:h('CursorLine', '', s:cur_line_bg, '')
 call s:h('CursorLineNr', s:fg, s:gutter_bg, '')
 
 call s:h('DiffAdd', s:green, '', '')
