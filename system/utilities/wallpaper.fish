@@ -21,6 +21,7 @@ if test $exitcode -ne 0 || set --query --local _flag_help
 end
 
 set history_file_path ~/.cache/wallpaper
+set tmp_wallpaper /tmp/tmp_wallpaper.*
 
 function random_wallpaper
     set tmp_all_wallpapers (mktemp)
@@ -41,11 +42,17 @@ function random_wallpaper
     rm --force -- $tmp_all_wallpapers $tmp_new_history
 end
 
+function delete_tmp_wallpaper
+    if test -n "$tmp_wallpaper"
+        rm --force -- $tmp_wallpaper
+    end
+end
+
 if set --query --local _flag_random
-    rm --force -- /tmp/tmp_wallpaper.*
+    delete_tmp_wallpaper
     random_wallpaper
 else if set --query --local _flag_restore
-    rm --force -- /tmp/tmp_wallpaper.*
+    delete_tmp_wallpaper
     if not test -s $history_file_path
         random_wallpaper
         return $status
@@ -57,10 +64,11 @@ else if set --query --local _flag_restore
     end
     swaymsg output '*' bg $target fill
 else if set --query --local _flag_set
-    rm --force -- /tmp/tmp_wallpaper.*
-    if not swaymsg output '*' bg $_flag_set fill
+    delete_tmp_wallpaper
+    set target_wallpaper (path resolve $_flag_set)
+    if not swaymsg output '*' bg $target_wallpaper fill
         set tmp_wallpaper /tmp/tmp_wallpaper(path extension $_flag_set)
-        cp $_flag_set $tmp_wallpaper
+        cp $target_wallpaper $tmp_wallpaper
         swaymsg output '*' bg $tmp_wallpaper fill
     end
 else
