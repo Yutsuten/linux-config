@@ -17,6 +17,15 @@ function normalize_filenames --description 'Increase compatibility of file names
     set reset (tput sgr0)
     set count 0
 
+    if test (count (string split '/' $PWD)) -le 3
+        echo 'Current directory may affect too many files.'
+        echo
+        read --line --prompt-str 'Are you sure? [y/N] ' answer
+        if not string match --quiet --regex '^[Yy]$' $answer
+            return 1
+        end
+    end
+
     for file in **/*
         if not test -f $file
             continue
