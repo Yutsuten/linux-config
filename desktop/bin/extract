@@ -29,6 +29,8 @@ end
 switch $argv[1]
     case '*.zip'
         unar $argv[1]
+    case '*.rar'
+        unar $argv[1]
     case '*.tar'
         tar --extract --file $argv[1]
     case '*.tgz'

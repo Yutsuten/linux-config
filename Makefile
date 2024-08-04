@@ -28,6 +28,7 @@ desktop:
 	bash desktop/pipewire/90-init.sh
 	fish desktop/waybar/configure.fish
 	xdg-mime default extract.desktop application/gzip
+	xdg-mime default extract.desktop application/x-rar
 	xdg-mime default extract.desktop application/x-tar
 	xdg-mime default extract.desktop application/zip
 	xdg-mime default extract.desktop application/zstd
