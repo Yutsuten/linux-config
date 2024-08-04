@@ -8,4 +8,4 @@ end
 set tctl_path (dirname (dirname (realpath $tctl_dir)))
 set tctl_basename (basename $tctl_dir)
 
-sed -e "s#{{ hwmon-path-abs }}#$tctl_path#" -e "s#{{ input-filename }}#$tctl_basename#" desktop/waybar/config.json > ~/.config/waybar/config
+sed -e "s#{{ hwmon-path-abs }}#$tctl_path#" -e "s#{{ input-filename }}#$tctl_basename#" desktop/waybar/config.jsonc > ~/.config/waybar/config.jsonc
