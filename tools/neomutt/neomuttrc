@@ -34,7 +34,7 @@ set user_agent              = yes
 set wait_key                = no
 
 # Remove extra whitespace from the beginning of bad subjects
-subjectrx '^\s+' '%R'
+subjectrx '^[ ?]+' '%R'
 
 # Colors
 color attachment        bold  yellow  default
