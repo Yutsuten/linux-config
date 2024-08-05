@@ -34,6 +34,7 @@ if status is-interactive
     set -g fish_color_host_remote yellow
     set -g fish_color_user blue
 
+    abbr --add calc      -- 'bc -l'
     abbr --add cpwd      -- 'wl-copy (string replace --regex "^$HOME" \~ $PWD)'
     abbr --add diskusage -- "lsblk -o 'NAME,FSTYPE,SIZE,FSUSED,FSUSE%,MOUNTPOINTS'"
     abbr --add ffmpeg    -- 'ffmpeg -hide_banner'
