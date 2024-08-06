@@ -57,6 +57,10 @@ window#waybar {
     padding: 7px 12px 5px;
 }
 
+.modules-left #custom-record {
+    padding-left: 12px;
+}
+
 .modules-center #clock {
     padding-right: 24px;
 }
