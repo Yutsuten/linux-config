@@ -4,5 +4,5 @@ Name=Music Player
 Comment=Play music with mpv
 Categories=Music
 Icon=mpv
-Exec=music_player
+Exec=music-player
 Terminal=false
