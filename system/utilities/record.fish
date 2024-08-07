@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-argparse 'h/help' 'm/mic' 'r/rec' 's/speakers' -- $argv
+argparse 'h/help' 'm/mic' 'r/rec' 's/speakers' 'w/waybar' -- $argv
 set exitcode $status
 
 if test $exitcode -ne 0 || set --query --local _flag_help
@@ -21,6 +21,32 @@ end
 
 set bold (tput bold)
 set reset (tput sgr0)
+
+function stop_recording
+    echo $bold'[VIDEO] Stop recording wayland screen'$reset
+    kill --verbose $wf_recorder_pid
+
+    if set --query mic_pid
+        echo $bold'[AUDIO] Stop recording mic'$reset
+        kill --verbose $mic_pid
+    end
+    if set --query rec_pid
+        echo $bold'[AUDIO] Stop recording "recording" source'$reset
+        kill --verbose $rec_pid
+    end
+    if set --query speakers_pid
+        echo $bold'[AUDIO] Stop recording speakers'$reset
+        kill --verbose $speakers_pid
+    end
+end
+
+trap stop_recording SIGHUP SIGINT
+trap '' SIGTERM
+
+if set --query --local _flag_waybar
+    touch /tmp/waybar_record
+    kill --signal 35 waybar
+end
 
 set folder_name (date '+%Y-%m-%d_%H-%M-%S')
 if test (count $argv) -ge 1
@@ -49,24 +75,16 @@ if set --query --local _flag_speakers
 end
 
 echo $bold'[VIDEO] Start recording wayland screen'$reset
-nice -n -5 wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4
-echo $bold'[VIDEO] Stop recording wayland screen'$reset
+nice -n -5 wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4 &
+set wf_recorder_pid $last_pid
 
-if set --query --local _flag_mic
-    echo $bold'[AUDIO] Stop recording mic'$reset
-    kill --verbose $mic_pid
-end
-if set --query --local _flag_rec
-    echo $bold'[AUDIO] Stop recording "recording" source'$reset
-    kill --verbose $rec_pid
-end
-if set --query --local _flag_speakers
-    echo $bold'[AUDIO] Stop recording speakers'$reset
-    kill --verbose $speakers_pid
-end
+wait $wf_recorder_pid $mic_pid $rec_pid $speakers_pid
+echo $bold'[VIDEO/AUDIO] Recording finished, start post-processing'$reset
 
-echo $bold'[AUDIO] Wait for audio recordings to stop...'$reset
-wait $mic_pid $rec_pid $speakers_pid
+if set --query --local _flag_waybar
+    rm --force /tmp/waybar_record
+    kill --signal 35 waybar
+end
 
 if set --query --local _flag_rec
     echo $bold'[AUDIO] Saving recording source audio as flac'$reset
