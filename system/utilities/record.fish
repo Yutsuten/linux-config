@@ -22,20 +22,24 @@ end
 set bold (tput bold)
 set reset (tput sgr0)
 
+function debug
+    echo $bold"[$(date '+%FT%T.%N')] $argv"$reset
+end
+
 function stop_recording
-    echo $bold'[VIDEO] Stop recording wayland screen'$reset
+    debug '[VIDEO] Stop recording wayland screen'
     kill --verbose $wf_recorder_pid
 
     if set --query mic_pid
-        echo $bold'[AUDIO] Stop recording mic'$reset
+        debug '[AUDIO] Stop recording mic'
         kill --verbose $mic_pid
     end
     if set --query rec_pid
-        echo $bold'[AUDIO] Stop recording "recording" source'$reset
+        debug '[AUDIO] Stop recording "recording" source'
         kill --verbose $rec_pid
     end
     if set --query speakers_pid
-        echo $bold'[AUDIO] Stop recording speakers'$reset
+        debug '[AUDIO] Stop recording speakers'
         kill --verbose $speakers_pid
     end
 end
@@ -48,38 +52,38 @@ if set --query --local _flag_waybar
     kill --signal 35 waybar
 end
 
-set folder_name (date '+%Y-%m-%d_%H-%M-%S')
+set folder_name /mnt/hdd/Recording/(date '+%Y-%m-%d_%H-%M-%S')
 if test (count $argv) -ge 1
     set folder_name (string join _ $folder_name $argv)
 end
-echo $bold"[INFO] Will record in directory $folder_name/"$reset
-mkdir $folder_name
+debug "[INFO] Recording in $folder_name/"
+mkdir $folder_name || return 1
 
 if set --query --local _flag_mic
-    echo $bold'[AUDIO] Start recording mic'$reset
     nice -n -5 pw-record --channels 1 --target (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') $folder_name/mic.flac &
     set mic_pid $last_pid
+    debug "[AUDIO] Start recording mic (PID: $mic_pid)"
 end
 if set --query --local _flag_rec
-    echo $bold'[AUDIO] Start recording "recording" source'$reset
     pactl set-sink-volume recording 100%
     # Cracklings if we use `pw-record`
     nice -n -5 parec --record --raw --channels 2 --rate 48000 --device recording.monitor $folder_name/rec.raw &
     set rec_pid $last_pid
+    debug "[AUDIO] Start recording 'recording' source (PID: $rec_pid)"
 end
 if set --query --local _flag_speakers
-    echo $bold'[AUDIO] Start recording speakers'$reset
     # Cracklings if we use `pw-record`
     nice -n -5 parec --record --raw --channels 2 --rate 48000 --device (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') $folder_name/speakers.raw &
     set speakers_pid $last_pid
+    debug "[AUDIO] Start recording speakers (PID: $speakers_pid)"
 end
 
-echo $bold'[VIDEO] Start recording wayland screen'$reset
 nice -n -5 wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4 &
 set wf_recorder_pid $last_pid
+debug "[VIDEO] Start recording wayland screen (PID: $wf_recorder_pid)"
 
 wait $wf_recorder_pid $mic_pid $rec_pid $speakers_pid
-echo $bold'[VIDEO/AUDIO] Recording finished, start post-processing'$reset
+debug '[INFO] Recording finished, start post-processing'
 
 if set --query --local _flag_waybar
     rm --force /tmp/waybar_record
@@ -87,18 +91,18 @@ if set --query --local _flag_waybar
 end
 
 if set --query --local _flag_rec
-    echo $bold'[AUDIO] Saving recording source audio as flac'$reset
+    debug '[AUDIO] Saving recording source audio as flac'
     nice -n 5 ffmpeg -loglevel warning -f s16le -ar 48000 -ac 2 -i $folder_name/rec.raw $folder_name/rec.flac
 end
 
 if set --query --local _flag_speakers
-    echo $bold'[AUDIO] Saving speakers audio as flac'$reset
+    debug '[AUDIO] Saving speakers audio as flac'
     nice -n 5 ffmpeg -loglevel warning -f s16le -ar 48000 -ac 2 -i $folder_name/speakers.raw $folder_name/speakers.flac
 end
 
 if set --query --local _flag_mic && set --query --local _flag_speakers
-    echo $bold'[AUDIO] Mixing mic and speakers'$reset
+    debug '[AUDIO] Mixing mic and speakers'
     nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac -filter_complex 'amerge=inputs=2' -ac 2 $folder_name/mix.flac
 end
-echo $bold'Finish!'$reset
+debug '[INFO] Finish!'
 return 0

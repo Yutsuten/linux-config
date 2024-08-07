@@ -43,6 +43,7 @@ system:
 	cp -af system/utilities/record.fish /usr/local/bin/record
 	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af system/utilities/system.sh /usr/local/bin/system
+	cp -af system/utilities/toggle-record.fish /usr/local/bin/toggle-record
 	cp -af system/utilities/wallpaper.fish /usr/local/bin/wallpaper
 	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
