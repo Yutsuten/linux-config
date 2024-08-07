@@ -39,10 +39,11 @@ system:
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb
 	cp -af system/setvtrgb/install.sh /etc/initcpio/install/setvtrgb
 	cp -af system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
-	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af system/utilities/openweather.py /usr/local/bin/openweather
-	cp -af system/utilities/wallpaper.fish /usr/local/bin/wallpaper
+	cp -af system/utilities/record.fish /usr/local/bin/record
+	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af system/utilities/system.sh /usr/local/bin/system
+	cp -af system/utilities/wallpaper.fish /usr/local/bin/wallpaper
 	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
