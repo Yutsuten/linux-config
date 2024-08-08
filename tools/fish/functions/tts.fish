@@ -22,10 +22,10 @@ function tts --description 'Text-to-Speech using Google API'
     else
         set voice ja-JP-Wavenet-C
     end
-    set filename (echo {$voice}_{$argv}.ogg | tr -d '|?*<":>+[]\'\\\\' | tr ' ' '_')
+    set output_file ~/Downloads/(echo {$voice}_{$argv}.ogg | tr -d '|?*<":>+[]\'\\\\' | tr ' ' '_')
 
-    if test -f $filename
-        echo "$filename already exists!" >&2
+    if test -f $output_file
+        echo "$output_file already exists!" >&2
         return 1
     end
 
@@ -33,9 +33,9 @@ function tts --description 'Text-to-Speech using Google API'
       -d '{"audioConfig": {"audioEncoding": "OGG_OPUS"}, "input": {"ssml": "<speak>'"$argv"'</speak>"}, "voice": {"languageCode": "ja-JP", "name": "'$voice'"}}' \
       "https://texttospeech.googleapis.com/v1/text:synthesize?key=$GOOGLE_TTS_API_KEY" \
         | jq -r .audioContent \
-        | base64 --decode > $filename
+        | base64 --decode > $output_file
 
-    echo "$filename"
-    mpv --really-quiet --volume=100 $filename
+    path basename $output_file
+    mpv --really-quiet --volume=100 $output_file
     return 0
 end
