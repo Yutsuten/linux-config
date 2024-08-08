@@ -27,6 +27,7 @@ function s:callback(...) abort
   let selection = []
   if filereadable(s:nnn_tmpfile)
     let selection = readfile(s:nnn_tmpfile)
+    call delete(s:nnn_tmpfile)
   endif
 
   if !empty(selection)
