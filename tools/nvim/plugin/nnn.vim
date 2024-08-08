@@ -14,21 +14,21 @@ function s:Nnn(...) abort
     return
   endif
   let s:curfile = expand('%:~:.')
-  let s:nnn_tmpfile = tempname()
-  let cmd = ['nnn', '-p', s:nnn_tmpfile]
+  let s:tmpfile = tempname()
+  let cmd = ['nnn', '-p', s:tmpfile]
   if a:0
     call add(cmd, fnamemodify(a:1, ':p'))
   endif
   enew
   call termopen(cmd, {'on_exit': function('s:callback')})
-  let s:nnn_buffer = bufnr()
+  let s:buffer_nr = bufnr()
 endfunction
 
 function s:callback(job_id, exit_code, event_type) abort
   let selection = []
-  if filereadable(s:nnn_tmpfile)
-    let selection = readfile(s:nnn_tmpfile)
-    call delete(s:nnn_tmpfile)
+  if filereadable(s:tmpfile)
+    let selection = readfile(s:tmpfile)
+    call delete(s:tmpfile)
   endif
 
   if !empty(selection)
@@ -38,11 +38,11 @@ function s:callback(job_id, exit_code, event_type) abort
   else
     enew
   endif
-  if bufexists(s:nnn_buffer)
-    execute 'bdelete ' .. s:nnn_buffer
+  if bufexists(s:buffer_nr)
+    execute 'bdelete ' .. s:buffer_nr
   endif
 
   unlet s:curfile
-  unlet s:nnn_tmpfile
-  unlet s:nnn_buffer
+  unlet s:tmpfile
+  unlet s:buffer_nr
 endfunction
