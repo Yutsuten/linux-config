@@ -47,17 +47,21 @@ if status is-interactive
     abbr --add ssh       -- 'env TERM=xterm-256color ssh'
     abbr --add vimiv     -- 'vimiv --log-level error'
 
+    if set --query NVIM
+        abbr --add nvim -- 'nvim --server $NVIM --remote'
+    end
+
     fish_add_path $HOME/.local/bin
 end
 
 function fish_greeting
-    if test -z "$NNNLVL"
+    if not set --query NNNLVL
         fastfetch
     end
 end
 
 function fish_title
-    if set -q SSH_TTY
+    if set --query SSH_TTY
         echo "Fish $hostname $(prompt_pwd)"
     else
         echo "Fish $(prompt_pwd)"
