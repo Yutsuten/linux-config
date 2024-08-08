@@ -1,22 +1,26 @@
 scriptencoding utf-8
 
 " Commands
-command -nargs=0 Nnn call s:Nnn()
+command -nargs=? -complete=dir Nnn call s:Nnn(<f-args>)
 
 " Shortcuts
 nnoremap <silent> <leader>n :Nnn<CR>
+nnoremap <silent> <leader>N :Nnn %:p:h<CR>
 
 " Script
-function s:Nnn() abort
+function s:Nnn(...) abort
   if exists('s:curfile')
     echo 'Only one nnn instance can be opened at a time'
     return
   endif
   let s:curfile = expand('%:~:.')
   let s:nnn_tmpfile = tempname()
-  let jobopts = {'on_exit': funcref('s:callback')}
+  let cmd = ['nnn', '-p', s:nnn_tmpfile]
+  if a:0
+    call add(cmd, fnamemodify(a:1, ':p'))
+  endif
   enew
-  call termopen(['nnn', '-p', s:nnn_tmpfile], jobopts)
+  call termopen(cmd, {'on_exit': funcref('s:callback')})
 endfunction
 
 function s:callback(...) abort
