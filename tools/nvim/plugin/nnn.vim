@@ -29,10 +29,12 @@ function s:callback(...) abort
     let selection = readfile(s:nnn_tmpfile)
   endif
 
-  if empty(selection)
+  if !empty(selection)
+    execute 'edit ' .. selection[0] .. ' | bdelete #'
+  elseif strlen(s:curfile)
     execute 'edit ' .. s:curfile .. ' | bdelete #'
   else
-    execute 'edit ' .. selection[0] .. ' | bdelete #'
+    execute 'enew | bdelete #'
   endif
   unlet s:curfile
 endfunction
