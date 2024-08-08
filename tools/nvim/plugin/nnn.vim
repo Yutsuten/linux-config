@@ -20,10 +20,11 @@ function s:Nnn(...) abort
     call add(cmd, fnamemodify(a:1, ':p'))
   endif
   enew
-  call termopen(cmd, {'on_exit': funcref('s:callback')})
+  call termopen(cmd, {'on_exit': function('s:callback')})
+  let s:nnn_buffer = bufnr()
 endfunction
 
-function s:callback(...) abort
+function s:callback(job_id, exit_code, event_type) abort
   let selection = []
   if filereadable(s:nnn_tmpfile)
     let selection = readfile(s:nnn_tmpfile)
@@ -31,11 +32,17 @@ function s:callback(...) abort
   endif
 
   if !empty(selection)
-    execute 'edit ' .. selection[0] .. ' | bdelete #'
+    execute 'edit ' .. selection[0]
   elseif strlen(s:curfile)
-    execute 'edit ' .. s:curfile .. ' | bdelete #'
+    execute 'edit ' .. s:curfile
   else
-    execute 'enew | bdelete #'
+    enew
   endif
+  if bufexists(s:nnn_buffer)
+    execute 'bdelete ' .. s:nnn_buffer
+  endif
+
   unlet s:curfile
+  unlet s:nnn_tmpfile
+  unlet s:nnn_buffer
 endfunction
