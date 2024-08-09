@@ -41,7 +41,7 @@ function s:callback(job_id, exit_code, event_type) abort
     execute 'edit ' .. selection[0]
   elseif s:curbuf_nr && bufexists(s:curbuf_nr)
     execute 'buffer ' .. s:curbuf_nr
-  else
+  elseif !(tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1)
     enew
   endif
 
