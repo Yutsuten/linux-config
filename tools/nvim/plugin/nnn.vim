@@ -9,19 +9,24 @@ nnoremap <silent> <leader>N :Nnn %:p:h<CR>
 
 " Script
 function s:Nnn(...) abort
-  if exists('s:curfile')
+  if exists('s:curbuf_nr')
     echo 'Only one nnn instance can be opened at a time'
     return
   endif
-  let s:curfile = expand('%:~:.')
+
+  let s:curbuf_nr = 0
+  if strlen(expand('%:~:.'))
+    let s:curbuf_nr = bufnr()
+  endif
+
   let s:tmpfile = tempname()
   let cmd = ['nnn', '-p', s:tmpfile]
   if a:0
     call add(cmd, fnamemodify(a:1, ':p'))
   endif
-  enew
-  call termopen(cmd, {'on_exit': function('s:callback')})
-  let s:buffer_nr = bufnr()
+
+  enew | call termopen(cmd, {'on_exit': function('s:callback')})
+  let s:tmpbuf_nr = bufnr()
 endfunction
 
 function s:callback(job_id, exit_code, event_type) abort
@@ -33,16 +38,15 @@ function s:callback(job_id, exit_code, event_type) abort
 
   if !empty(selection)
     execute 'edit ' .. selection[0]
-  elseif strlen(s:curfile)
-    execute 'edit ' .. s:curfile
+  elseif s:curbuf_nr && bufexists(s:curbuf_nr)
+    execute 'buffer ' .. s:curbuf_nr
   else
     enew
   endif
-  if bufexists(s:buffer_nr)
-    execute 'bdelete ' .. s:buffer_nr
+
+  if bufexists(s:tmpbuf_nr)
+    execute 'bdelete ' .. s:tmpbuf_nr
   endif
 
-  unlet s:curfile
-  unlet s:tmpfile
-  unlet s:buffer_nr
+  unlet s:curbuf_nr s:tmpfile s:tmpbuf_nr
 endfunction
