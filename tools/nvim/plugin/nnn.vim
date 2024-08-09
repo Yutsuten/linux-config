@@ -1,14 +1,15 @@
 scriptencoding utf-8
 
 " Commands
-command -nargs=? -complete=dir Nnn call s:Nnn(<f-args>)
+command -nargs=? -complete=dir Nnn call s:nnn(<f-args>)
 
 " Shortcuts
 nnoremap <silent> <leader>n :Nnn<CR>
 nnoremap <silent> <leader>N :Nnn %:p:h<CR>
+nnoremap <silent> <C-n> :tabnew +Nnn<CR>
 
 " Script
-function s:Nnn(...) abort
+function s:nnn(...) abort
   if exists('s:curbuf_nr')
     echo 'Only one nnn instance can be opened at a time'
     return
