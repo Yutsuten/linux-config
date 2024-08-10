@@ -49,7 +49,7 @@ trap '' SIGTERM
 
 if set --query --local _flag_waybar
     touch /tmp/waybar_record
-    kill --signal 35 waybar
+    kill --signal RT1 waybar
 end
 
 set folder_name /mnt/hdd/Recording/(date '+%Y-%m-%d_%H-%M-%S')
@@ -87,7 +87,7 @@ debug '[INFO] Recording finished, start post-processing'
 
 if set --query --local _flag_waybar
     rm --force /tmp/waybar_record
-    kill --signal 35 waybar
+    kill --signal RT1 waybar
 end
 
 if set --query --local _flag_rec
