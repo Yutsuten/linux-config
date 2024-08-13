@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-argparse 'h/help' 'd/dir=' 'm/mic' 'r/rec' 's/speakers' 'w/waybar' -- $argv
+argparse 'h/help' 'c/config' 'd/dir=' 'm/mic' 'r/rec' 's/speakers' 'w/waybar' -- $argv
 set exitcode $status
 
 if test $exitcode -ne 0 || set --query --local _flag_help
@@ -19,9 +19,16 @@ if test $exitcode -ne 0 || set --query --local _flag_help
     return $exitcode
 end
 
+set config_file ~/.config/record/config.fish
+
+if set --query --local _flag_config
+    nvim $config_file
+    return
+end
+
 # Parse configuration
-if test -f ~/.config/record/config.fish
-    source ~/.config/record/config.fish
+if test -f $config_file
+    source $config_file
     if set --query REC_DIR
         set --global rec_dir $REC_DIR
     end

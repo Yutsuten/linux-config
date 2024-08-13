@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Record Settings
+Comment=Settings for the record application
+Categories=Settings
+Icon=nvim
+Exec=alacritty --title 'Record Settings' --command record --config
