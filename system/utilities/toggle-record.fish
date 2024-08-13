@@ -8,7 +8,7 @@ if pgrep --full 'fish /usr/local/bin/record'
 else
     # Start recording
     mkdir --parents ~/.local/logs
-    record --waybar --mic --rec --speakers &> ~/.local/logs/record.log &
+    record &> ~/.local/logs/record.log &
     notify-send --urgency low --app-name Record --icon software-update-urgent-symbolic 'Recording screen' &
     pw-play /usr/share/sounds/freedesktop/stereo/service-login.oga &
 end
