@@ -23,7 +23,7 @@ function process_media --description 'Process photos and music using its metadat
         end
         set newname (exiv2 $photo | sed -nE 's/Image timestamp : ([0-9]{4}):([0-9]{2}):([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/\1-\2-\3-\4-\5-\6.webp/p')
         if test -n "$newname" -a "$photo" != "$newname"
-            convert "$photo" -resize '2000x2000>' -define webp:method=6 "$newname"
+            magick "$photo" -resize '2000x2000>' -define webp:method=6 "$newname"
             trash-put "$photo"
             set count (math $count + 1)
         end
