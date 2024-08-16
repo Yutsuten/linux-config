@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-argparse 'h/help' 'c/config' 'd/dir=' 'm/mic' 'r/rec' 's/speakers' 'w/waybar' -- $argv
+argparse 'h/help' 'd/dir=' 'm/mic' 'r/rec' 's/speakers' 'w/waybar' -- $argv
 set exitcode $status
 
 if test $exitcode -ne 0 || set --query --local _flag_help
@@ -19,31 +19,32 @@ if test $exitcode -ne 0 || set --query --local _flag_help
     return $exitcode
 end
 
-set config_file ~/.config/record/config.fish
-
-if set --query --local _flag_config
-    nvim $config_file
-    return
-end
+set config_file ~/.config/record/config
 
 # Parse configuration
 if test -f $config_file
-    source $config_file
-    if set --query REC_DIR
-        set --global rec_dir $REC_DIR
-    end
-    if string match --quiet --regex '^yes$' (string lower $REC_WAYBAR)
-        set --global rec_waybar yes
-    end
-    if string match --quiet --regex '^yes$' (string lower $REC_AUDIO_SPEAKERS)
-        set --global rec_audio_speakers yes
-    end
-    if string match --quiet --regex '^yes$' (string lower $REC_AUDIO_MIC)
-        set --global rec_audio_mic yes
-    end
-    if string match --quiet --regex '^yes$' (string lower $REC_AUDIO_RECORDING)
-        set --global rec_audio_recording yes
-    end
+    while read --line line
+        set key_value (string split '=' $line)
+        if not test (count $key_value) -eq 2
+            continue
+        end
+        if test $key_value[1] = directory
+            set --global rec_dir $key_value[2]
+        else if $key_value[2] = true
+            switch $key_value[1]
+                case waybar
+                    set --global rec_waybar yes
+                case audio-speakers
+                    set --global rec_audio_speakers yes
+                case audio-mic
+                    set --global rec_audio_mic yes
+                case audio-recording
+                    set --global rec_audio_recording yes
+                case '*'
+                    echo "Invalid key ignored: $key_value[0]"
+            end
+        end
+    end < $config_file
 end
 
 # Process command line arguments
