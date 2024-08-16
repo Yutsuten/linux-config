@@ -2,4 +2,8 @@
 __pycache__/
 
 # Neovim
-tools/neovim/doc/tags
+/tools/neovim/doc/tags
+
+# Rust
+/rust/*/target/
+/rust/*/Cargo.lock

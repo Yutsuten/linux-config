@@ -1,9 +1,9 @@
-.PHONY: desktop system tools alacritty fastfetch fish git lftp mpv neomutt nnn nvim utilities vimiv
+.PHONY: desktop system tools alacritty fastfetch fish git lftp mpv neomutt nnn nvim utilities vimiv rust
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-all: desktop tools
+all: desktop tools rust
 	@echo ' Add system settings with: `sudo make system`'
 	@echo '${bold}Done!${reset}'
 
@@ -121,3 +121,7 @@ vimiv:
 	rm -f ~/.config/vimiv/vimiv.conf ~/.config/vimiv/keys.conf
 	ln -srf tools/vimiv/vimiv.conf ~/.config/vimiv/vimiv.conf
 	ln -srf tools/vimiv/keys.conf ~/.config/vimiv/keys.conf
+
+rust:
+	@echo '${bold}>> Rust apps <<${reset}'
+	cd rust/record-settings && cargo build --release && cp -up target/release/record-settings ~/.local/bin/
