@@ -27,6 +27,7 @@ require('lspconfig').tsserver.setup{
   },
   filetypes = {'javascript', 'typescript', 'vue'},
 }
+require('lspconfig').rust_analyzer.setup{}
 
 -- Diagnostics
 vim.diagnostic.config({virtual_text = false, underline = true, severity_sort = true})
