@@ -1,17 +1,15 @@
 scriptencoding utf-8
 
 " Commands
-command -nargs=? -complete=dir Nnn call s:nnn(<f-args>)
+command -nargs=0 Fzf call s:fzf()
 
 " Shortcuts
-nnoremap <silent> <leader>n :Nnn<CR>
-nnoremap <silent> <leader>N :Nnn %:p:h<CR>
-nnoremap <silent> <C-n> :tabnew +Nnn<CR>
+nnoremap <silent> <leader>m :Fzf<CR>
 
 " Script
-function s:nnn(...) abort
+function s:fzf() abort
   if exists('s:curbuf_nr')
-    echo 'Only one nnn instance can be opened at a time'
+    echo 'Only one fzf instance can be opened at a time'
     return
   endif
 
@@ -21,10 +19,7 @@ function s:nnn(...) abort
   endif
 
   let s:tmpfile = tempname()
-  let cmd = ['nnn', '-p', s:tmpfile]
-  if a:0
-    call add(cmd, fnamemodify(a:1, ':p'))
-  endif
+  let cmd = ['sh', '-c', 'fzf --layout=reverse > ' .. s:tmpfile]
 
   enew | call termopen(cmd, {'on_exit': function('s:on_exit')})
   let s:tmpbuf_nr = bufnr()
