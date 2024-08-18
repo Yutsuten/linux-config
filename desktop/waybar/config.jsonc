@@ -29,7 +29,21 @@
     "clock": {
         "interval": 60,
         "format": "{:L%x (%a)  %H:%M}",
-        "tooltip": false
+        "tooltip-format": "<span font='Noto Sans Mono CJK JP'>{calendar}</span>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": -1,
+            "format": {
+                "months": "<b>{}</b>",
+                "weekdays": "<u><b>日 月 火 水 木 金 土</b></u>",
+                "today": "<span background='#5294e2'><b>{}</b></span>"
+            }
+        },
+        "actions":  {
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
     "pulseaudio": {
         "format": "<span color='#52c7e2'>{icon}</span> {volume}%",
