@@ -5,6 +5,7 @@ if test -n "$NNNLVL" -a "$NNNLVL" -ge 1
     return 1
 end
 set shortcuts
+set --append shortcuts 'a:anki'
 set --append shortcuts 'c:-!wl-copy < "$nnn"*'
 set --append shortcuts 'C:!wl-paste --no-newline > clipboard*'
 set --append shortcuts 'd:-dragdrop'
