@@ -1,6 +1,6 @@
 #!/usr/bin/fish
 
-set selection (find . -maxdepth 4 -not -path '*/.*' -type d -printf '%P\n' | fzf --layout=reverse)
+set selection (find -L . -maxdepth 4 -not -path '*/.*' -type d -printf '%P\n' | fzf --layout=reverse)
 if test -n "$selection"
     printf "0c$(path resolve $selection)" > $NNN_PIPE
 end
