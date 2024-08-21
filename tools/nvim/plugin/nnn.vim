@@ -1,7 +1,7 @@
 scriptencoding utf-8
 
 " Commands
-command -nargs=? -complete=dir Nnn call s:nnn(<f-args>)
+command -nargs=? -complete=dir Nnn call s:Nnn(<f-args>)
 
 " Shortcuts
 nnoremap <silent> <leader>n :Nnn<CR>
@@ -9,7 +9,7 @@ nnoremap <silent> <leader>N :Nnn %:p:h<CR>
 nnoremap <silent> <C-n> :tabnew +Nnn<CR>
 
 " Script
-function s:nnn(...) abort
+function s:Nnn(...) abort
   if exists('s:curbuf_nr')
     echo 'Only one nnn instance can be opened at a time'
     return
@@ -26,11 +26,11 @@ function s:nnn(...) abort
     call add(cmd, fnamemodify(a:1, ':p'))
   endif
 
-  enew | call termopen(cmd, {'on_exit': function('s:on_exit')})
+  enew | call termopen(cmd, {'on_exit': function('s:onExit')})
   let s:tmpbuf_nr = bufnr()
 endfunction
 
-function s:on_exit(job_id, exit_code, event_type) abort
+function s:onExit(job_id, exit_code, event_type) abort
   let selection = []
   if filereadable(s:tmpfile)
     let selection = readfile(s:tmpfile)
