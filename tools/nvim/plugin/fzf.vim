@@ -1,26 +1,32 @@
 scriptencoding utf-8
 
 " Commands
-command -nargs=0 Find call s:File()
+command -nargs=? -complete=dir Find call s:Find(<f-args>)
 command -nargs=0 Project call s:Project()
 
 " Shortcuts
 nnoremap <silent> <leader>m :Find<CR>
+nnoremap <silent> <leader>M :Find %:p:h<CR>
 nnoremap <silent> <leader>p :tabnew +Project<CR>
 
 " Script
 let s:projects_dir = $HOME .. '/Projects'
 
-function s:File() abort
+function s:Find(...) abort
+  let s:find_dir = './'
+  if a:0
+    let s:find_dir = fnamemodify(a:1, ':p')
+  endif
   let blacklist = [
   \   '-name .git',
   \   '-name node_modules',
+  \   '-name __pycache__',
   \ ]
-  call s:Fzf('find . -type d \( ' .. join(blacklist, ' -o ') .. ' \) -prune -o -type f -printf "%P\n"', function('s:FileSelected'))
+  call s:Fzf('find ' .. s:find_dir .. ' -type d \( ' .. join(blacklist, ' -o ') .. ' \) -prune -o -type f -printf "%P\n"', function('s:FindSelected'))
 endfunction
 
-function s:FileSelected(selection) abort
-  execute 'edit ' .. a:selection
+function s:FindSelected(selection) abort
+  execute 'edit ' .. s:find_dir .. a:selection
 endfunction
 
 function s:Project() abort
@@ -75,4 +81,7 @@ function s:OnExit(job_id, exit_code, event_type) abort
   endif
 
   unlet s:curbuf_nr s:tmpfile s:tmpbuf_nr s:on_selected
+  if exists('s:find_dir')
+    unlet s:find_dir
+  endif
 endfunction
