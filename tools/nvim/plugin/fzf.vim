@@ -1,31 +1,21 @@
 scriptencoding utf-8
 
 " Commands
-command -nargs=0 Fzf call s:fzf()
+command -nargs=0 Fzf call s:fzf_file()
 
 " Shortcuts
 nnoremap <silent> <leader>m :Fzf<CR>
 
 " Script
-function s:fzf() abort
-  if exists('s:curbuf_nr')
-    echo 'Only one fzf instance can be opened at a time'
-    return
-  endif
-
-  let s:curbuf_nr = 0
-  if strlen(expand('%:~:.'))
-    let s:curbuf_nr = bufnr()
-  endif
-
-  let s:tmpfile = tempname()
-  let cmd = ['sh', '-c', 'fzf --layout=reverse > ' .. s:tmpfile]
-
-  enew | call termopen(cmd, {'on_exit': function('s:on_exit')})
-  let s:tmpbuf_nr = bufnr()
+function s:fzf_file() abort
+  let blacklist = [
+  \   '-name .git',
+  \   '-name node_modules',
+  \ ]
+  call s:fzf('find . -type d \( ' .. join(blacklist, ' -o ') .. ' \) -prune -o -type f -printf "%P\n"', function('s:fzf_file_exit'))
 endfunction
 
-function s:on_exit(job_id, exit_code, event_type) abort
+function s:fzf_file_exit(job_id, exit_code, event_type) abort
   let selection = []
   if filereadable(s:tmpfile)
     let selection = readfile(s:tmpfile)
@@ -45,4 +35,22 @@ function s:on_exit(job_id, exit_code, event_type) abort
   endif
 
   unlet s:curbuf_nr s:tmpfile s:tmpbuf_nr
+endfunction
+
+function s:fzf(input_cmd, on_exit) abort
+  if exists('s:curbuf_nr')
+    echo 'Only one fzf instance can be opened at a time'
+    return
+  endif
+
+  let s:curbuf_nr = 0
+  if strlen(expand('%:~:.'))
+    let s:curbuf_nr = bufnr()
+  endif
+
+  let s:tmpfile = tempname()
+  let cmd = a:input_cmd .. ' | fzf --layout=reverse > ' .. s:tmpfile
+
+  enew | call termopen(['sh', '-c', cmd], {'on_exit': a:on_exit})
+  let s:tmpbuf_nr = bufnr()
 endfunction
