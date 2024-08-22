@@ -16,7 +16,7 @@ function s:Nnn(...) abort
   endif
 
   let s:curbuf_nr = 0
-  if strlen(expand('%:~:.'))
+  if strlen(expand('%'))
     let s:curbuf_nr = bufnr()
   endif
 
@@ -26,11 +26,11 @@ function s:Nnn(...) abort
     call add(cmd, fnamemodify(a:1, ':p'))
   endif
 
-  enew | call termopen(cmd, {'on_exit': function('s:onExit')})
+  enew | call termopen(cmd, {'on_exit': function('s:OnExit')})
   let s:tmpbuf_nr = bufnr()
 endfunction
 
-function s:onExit(job_id, exit_code, event_type) abort
+function s:OnExit(job_id, exit_code, event_type) abort
   let selection = []
   if filereadable(s:tmpfile)
     let selection = readfile(s:tmpfile)
@@ -38,7 +38,7 @@ function s:onExit(job_id, exit_code, event_type) abort
   endif
 
   if !empty(selection)
-    execute 'edit ' .. selection[0]
+    execute 'edit ' .. fnamemodify(selection[0], ':.')
   elseif s:curbuf_nr && bufexists(s:curbuf_nr)
     execute 'buffer ' .. s:curbuf_nr
   elseif !(tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1)
