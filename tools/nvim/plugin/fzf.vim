@@ -35,14 +35,14 @@ endfunction
 function s:Find(...) abort
   let s:find_dir = './'
   if a:0
-    let s:find_dir = shellescape(fnamemodify(a:1, ':p'))
+    let s:find_dir = fnamemodify(a:1, ':p')
   endif
   let blacklist = [
   \   '-name .git',
   \   '-name node_modules',
   \   '-name __pycache__',
   \ ]
-  call s:Fzf('find ' .. s:find_dir .. ' -type d \( ' .. join(blacklist, ' -o ') .. ' \) -prune -o -type f -printf "%P\n"', function('s:FindSelected'))
+  call s:Fzf('find ' .. shellescape(s:find_dir) .. ' -type d \( ' .. join(blacklist, ' -o ') .. ' \) -prune -o -type f -printf "%P\n"', function('s:FindSelected'))
 endfunction
 
 function s:FindSelected(selection) abort
