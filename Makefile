@@ -1,15 +1,21 @@
-.PHONY: desktop system tools alacritty fastfetch fish git lftp mpv neomutt nnn nvim utilities vimiv rust
+.PHONY: build desktop system tools alacritty fastfetch fish git lftp mpv neomutt nnn nvim utilities vimiv
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
 
-all: desktop tools rust
+config: desktop tools
 	@echo ' Add system settings with: `sudo make system`'
 	@echo '${bold}Done!${reset}'
 
+build:
+	@echo '${bold}>> Compile rust apps <<${reset}'
+	mkdir -p ~/.local/bin
+	cd rust/record-settings && cargo build --release && cp -af target/release/record-settings ~/.local/bin/
+	cd rust/openweather && cargo build --release
+
 desktop:
 	@echo '${bold}>> Desktop environment settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d
+	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d ~/.local/share/applications ~/.local/bin
 	ln -srf desktop/sway.conf ~/.config/sway/config
 	ln -srf desktop/swaylock.conf ~/.config/swaylock/config
 	ln -srf desktop/waybar/style.css ~/.config/waybar/style.css
@@ -36,10 +42,10 @@ desktop:
 	xdg-mime default gpgopen.desktop application/octet-stream
 
 system:
+	cp -af rust/openweather/target/release/openweather /usr/local/bin/openweather
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb
 	cp -af system/setvtrgb/install.sh /etc/initcpio/install/setvtrgb
 	cp -af system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
-	cp -af system/utilities/openweather.py /usr/local/bin/openweather
 	cp -af system/utilities/record.fish /usr/local/bin/record
 	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af system/utilities/system.sh /usr/local/bin/system
@@ -121,7 +127,3 @@ vimiv:
 	rm -f ~/.config/vimiv/vimiv.conf ~/.config/vimiv/keys.conf
 	ln -srf tools/vimiv/vimiv.conf ~/.config/vimiv/vimiv.conf
 	ln -srf tools/vimiv/keys.conf ~/.config/vimiv/keys.conf
-
-rust:
-	@echo '${bold}>> Rust apps <<${reset}'
-	cd rust/record-settings && cargo build --release && cp -up target/release/record-settings ~/.local/bin/

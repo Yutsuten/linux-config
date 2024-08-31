@@ -3,5 +3,8 @@ name = "record-settings"
 version = "0.1.0"
 edition = "2021"
 
+[profile.release]
+strip = "symbols"
+
 [dependencies]
 iced = { git = "https://github.com/iced-rs/iced.git" } # "0.13.0"

@@ -1,0 +1,11 @@
+[package]
+name = "openweather"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+strip = "symbols"
+
+[dependencies]
+reqwest = { version = "0.12.7", features = ["blocking"] }
+serde_json = "1.0.127"

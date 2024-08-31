@@ -41,6 +41,7 @@ function s:Find(...) abort
   \   '-name .git',
   \   '-name node_modules',
   \   '-name __pycache__',
+  \   '-name target',
   \ ]
   call s:Fzf('find ' .. shellescape(s:find_dir) .. ' -type d \( ' .. join(blacklist, ' -o ') .. ' \) -prune -o -type f -printf "%P\n"', function('s:FindSelected'))
 endfunction
