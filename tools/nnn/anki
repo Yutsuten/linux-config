@@ -1,11 +1,11 @@
 #!/usr/bin/fish
 # Resize and convert an image to use it on Anki.
 
-set --local selection -- $nnn
+set --local selection $nnn
 set --local fname (path change-extension '' $nnn)
 
 if test (path extension $nnn) = '.webp'
-    set selection -- $fname-original.webp
+    set selection $fname-original.webp
     mv -- $nnn $selection
 end
 
