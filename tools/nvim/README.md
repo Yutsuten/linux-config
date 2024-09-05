@@ -2,7 +2,7 @@
 
 If SSHing in a server with no configuration,
 and cloning this repository seems to be overkill,
-use this small script to download `init.vim`:
+use this small script to download some basic configuration:
 
 ```shell
 mkdir -p ~/.config/nvim/plugin
