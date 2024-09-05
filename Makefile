@@ -114,6 +114,7 @@ nvim:
 	rm -rf ~/.config/nvim ~/.local/share/nvim/site
 	mkdir -p ~/.config/nvim/after ~/.local/share/nvim/site/pack/all
 	ln -srf tools/nvim/init.vim ~/.config/nvim/init.vim
+	ln -srnf tools/nvim/colors ~/.config/nvim/colors
 	ln -srnf tools/nvim/doc ~/.config/nvim/doc
 	ln -srnf tools/nvim/plugin ~/.config/nvim/after/plugin
 	ln -srnf tools/nvim/ftplugin ~/.config/nvim/after/ftplugin
