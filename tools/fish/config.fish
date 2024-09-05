@@ -48,7 +48,7 @@ if status is-interactive
     abbr --add vimiv     -- 'vimiv --log-level error'
 
     if set --query NVIM
-        abbr --add nvim -- 'nvim --server $NVIM --remote'
+        abbr --add nvim -- 'nvim --server $NVIM --remote $PWD/'
     end
 
     fish_add_path $HOME/.local/bin

@@ -1,15 +1,20 @@
 #!/usr/bin/fish
 # Resize and convert an image to use it on Anki.
 
-set --local selection $nnn
-set --local fname (path change-extension '' $nnn)
+set selection $nnn
+set fname (path change-extension '' $nnn)
+set fext (path extension $nnn)
 
-if test (path extension $nnn) = '.webp'
+if test $fext = '.webp'
     set selection $fname-original.webp
     mv -- $nnn $selection
 end
 
-magick $selection -strip -trim -resize '320x260>' -define webp:method=6 $fname.webp
+if test $fext = '.jpg'  # Don't trim
+    magick $selection -strip -resize '320x260>' -define webp:method=6 $fname.webp
+else
+    magick $selection -strip -trim -resize '320x260>' -define webp:method=6 $fname.webp
+end
 
 # Preview
 vimiv --log-level error $fname.webp
