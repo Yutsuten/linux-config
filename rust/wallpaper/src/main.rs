@@ -144,7 +144,7 @@ fn apply_wallpaper(wallpaper: String) -> Result<process::Output, std::io::Error>
 fn current_wallpaper(wallpapers_path: String, cache_path: String) {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     match fs::exists(&cur_symlink) {
-        Ok(true) => println!("{}", fs::read_link(cur_symlink).unwrap().display()),
+        Ok(true) => println!("{}", cur_symlink),
         Ok(false) => println!("{}", get_last_random_wallpaper(&wallpapers_path, &cache_path)),
         Err(reason) => panic!("Failed to check if symlink exists: {}", reason),
     }

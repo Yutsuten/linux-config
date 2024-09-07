@@ -10,9 +10,9 @@ config: desktop tools
 build:
 	@echo '${bold}>> Compile rust apps <<${reset}'
 	mkdir -p ~/.local/bin
-	cd rust/openweather && cargo build --release && upx target/release/openweather
-	cd rust/record-settings && cargo build --release && upx target/release/record-settings && cp -af target/release/record-settings ~/.local/bin/record-settings
-	cd rust/wallpaper && cargo build --release && upx target/release/wallpaper
+	cd rust/openweather && cargo build --release
+	cd rust/record-settings && cargo build --release && cp -af target/release/record-settings ~/.local/bin/record-settings
+	cd rust/wallpaper && cargo build --release
 
 desktop:
 	@echo '${bold}>> Desktop environment settings <<${reset}'
