@@ -41,6 +41,16 @@ desktop:
 	xdg-mime default extract.desktop application/zstd
 	xdg-mime default firefox.desktop text/plain
 	xdg-mime default gpgopen.desktop application/octet-stream
+	xdg-mime default mpv.desktop image/avif
+	xdg-mime default mpv.desktop image/heif
+	xdg-mime default mpv.desktop image/tiff
+	xdg-mime default vimiv.desktop image/bmp
+	xdg-mime default vimiv.desktop image/gif
+	xdg-mime default vimiv.desktop image/ico
+	xdg-mime default vimiv.desktop image/jpeg
+	xdg-mime default vimiv.desktop image/png
+	xdg-mime default vimiv.desktop image/svg
+	xdg-mime default vimiv.desktop image/webp
 
 system:
 	cp -af rust/openweather/target/release/openweather /usr/local/bin/openweather
