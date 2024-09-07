@@ -43,7 +43,7 @@ function pkgup --description 'Update customly installed packages'
                 echo "Update $package"
                 wget --no-verbose --show-progress --timestamping --directory-prefix ~/.local/games/osu/ 'https://github.com/ppy/osu/releases/latest/download/osu.AppImage'
                 chmod +x ~/.local/games/osu/osu.AppImage
-                pushd ~/.local/games/osu && ./osu.AppImage --appimage-extract; popd
+                pushd ~/.local/games/osu && ./osu.AppImage --appimage-extract &> /dev/null; popd
                 ln --symbolic --relative --force ~/.local/games/osu/squashfs-root/AppRun ~/.local/bin/'osu!'
                 ln --symbolic --relative --force ~/.local/games/osu/squashfs-root/'osu!.desktop' ~/.local/share/applications/'osu!.desktop'
                 if not test -f /usr/share/pixmaps/'osu!.png'

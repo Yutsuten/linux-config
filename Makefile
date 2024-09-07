@@ -10,8 +10,9 @@ config: desktop tools
 build:
 	@echo '${bold}>> Compile rust apps <<${reset}'
 	mkdir -p ~/.local/bin
-	cd rust/record-settings && cargo build --release && upx target/release/record-settings && cp -af target/release/record-settings ~/.local/bin/record-settings
 	cd rust/openweather && cargo build --release && upx target/release/openweather
+	cd rust/record-settings && cargo build --release && upx target/release/record-settings && cp -af target/release/record-settings ~/.local/bin/record-settings
+	cd rust/wallpaper && cargo build --release && upx target/release/wallpaper
 
 desktop:
 	@echo '${bold}>> Desktop environment settings <<${reset}'
@@ -43,6 +44,7 @@ desktop:
 
 system:
 	cp -af rust/openweather/target/release/openweather /usr/local/bin/openweather
+	cp -af rust/wallpaper/target/release/wallpaper /usr/local/bin/wallpaper
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb
 	cp -af system/setvtrgb/install.sh /etc/initcpio/install/setvtrgb
 	cp -af system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
@@ -50,7 +52,6 @@ system:
 	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
 	cp -af system/utilities/system.sh /usr/local/bin/system
 	cp -af system/utilities/toggle-record.fish /usr/local/bin/toggle-record
-	cp -af system/utilities/wallpaper.fish /usr/local/bin/wallpaper
 	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme

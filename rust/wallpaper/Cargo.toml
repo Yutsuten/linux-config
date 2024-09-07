@@ -1,5 +1,5 @@
 [package]
-name = "record-settings"
+name = "wallpaper"
 version = "1.0.0"
 edition = "2021"
 
@@ -7,4 +7,5 @@ edition = "2021"
 strip = "symbols"
 
 [dependencies]
-iced = { git = "https://github.com/iced-rs/iced.git" } # "0.13.0"
+clap = { version = "4.5.16", features = ["derive"] }
+rand = "0.8.5"
