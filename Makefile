@@ -41,9 +41,11 @@ desktop:
 	xdg-mime default extract.desktop application/zstd
 	xdg-mime default firefox.desktop text/plain
 	xdg-mime default gpgopen.desktop application/octet-stream
+	xdg-mime default mpv.desktop audio/flac
 	xdg-mime default mpv.desktop image/avif
 	xdg-mime default mpv.desktop image/heif
 	xdg-mime default mpv.desktop image/tiff
+	xdg-mime default mpv.desktop video/webm
 	xdg-mime default vimiv.desktop image/bmp
 	xdg-mime default vimiv.desktop image/gif
 	xdg-mime default vimiv.desktop image/ico

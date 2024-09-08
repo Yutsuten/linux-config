@@ -19,7 +19,7 @@ if test (tty) = '/dev/tty1' -a -z "$DISPLAY"
     set -gx EDITOR edit
     set -gx VISUAL edit
     # Start Window Manager
-    exec sway
+    exec sway &> $HOME/.local/logs/sway.log
 end
 
 if status is-interactive
