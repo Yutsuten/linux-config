@@ -8,22 +8,31 @@ const OPENWEATHER_API_URL: &'static str = "https://api.openweathermap.org/data/2
 const CACHE_FILE_DIR: &'static str = "/tmp/openweather";
 const CACHE_TIMEOUT: u64 = 900;
 
-fn fetch_weather_data() -> Value {
-    let key = env::var("OPEN_WEATHER_KEY").unwrap();
-    let lat = env::var("OPEN_WEATHER_LAT").unwrap();
-    let lon = env::var("OPEN_WEATHER_LON").unwrap();
+fn fetch_weather_data() -> Result<Value, u16> {
+    let key = match env::var("OPEN_WEATHER_KEY") {
+        Ok(value) => value,
+        Err(reason) => panic!("OPEN_WEATHER_KEY environment variable not set: {reason}"),
+    };
+    let lat = match env::var("OPEN_WEATHER_LAT") {
+        Ok(value) => value,
+        Err(reason) => panic!("OPEN_WEATHER_LAT environment variable not set: {reason}"),
+    };
+    let lon = match env::var("OPEN_WEATHER_LON") {
+        Ok(value) => value,
+        Err(reason) => panic!("OPEN_WEATHER_LON environment variable not set: {reason}"),
+    };
 
     let url = format!("{api_url}?appid={key}&lat={lat}&lon={lon}&units=metric", api_url=OPENWEATHER_API_URL);
     let response = reqwest::blocking::get(url).unwrap();
     if !response.status().is_success() {
-        panic!("Failed to fetch weather data");
+        return Err(response.status().as_u16());
     }
 
     let raw_json = response.text().unwrap();
     let mut cache_file = fs::File::create(CACHE_FILE_DIR).unwrap();
     cache_file.write_all(raw_json.as_bytes()).unwrap();
 
-    return serde_json::from_str(&raw_json).unwrap();
+    Ok(serde_json::from_str(&raw_json).unwrap())
 }
 
 fn main() {
@@ -33,12 +42,18 @@ fn main() {
             let now_timestamp = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs();
 
             if now_timestamp > cache_timestamp + CACHE_TIMEOUT {
-                fetch_weather_data()
+                match fetch_weather_data() {
+                    Ok(value) => value,
+                    Err(_) => serde_json::from_reader(&file).unwrap(),
+                }
             } else {
                 serde_json::from_reader(&file).unwrap()
             }
         },
-        Err(_) => fetch_weather_data(),
+        Err(_) => match fetch_weather_data() {
+            Ok(value) => value,
+            Err(status_code) => panic!("Failed to fetch weather data. Status code: {status_code}"),
+        },
     };
 
     // https://openweathermap.org/weather-conditions
