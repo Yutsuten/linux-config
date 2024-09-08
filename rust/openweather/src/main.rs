@@ -8,7 +8,7 @@ const OPENWEATHER_API_URL: &'static str = "https://api.openweathermap.org/data/2
 const CACHE_FILE_DIR: &'static str = "/tmp/openweather";
 const CACHE_TIMEOUT: u64 = 900;
 
-fn fetch_weather_data() -> Result<Value, u16> {
+fn fetch_weather_data() -> Result<Value, String> {
     let key = match env::var("OPEN_WEATHER_KEY") {
         Ok(value) => value,
         Err(reason) => panic!("OPEN_WEATHER_KEY environment variable not set: {reason}"),
@@ -23,9 +23,12 @@ fn fetch_weather_data() -> Result<Value, u16> {
     };
 
     let url = format!("{api_url}?appid={key}&lat={lat}&lon={lon}&units=metric", api_url=OPENWEATHER_API_URL);
-    let response = reqwest::blocking::get(url).unwrap();
+    let response = match reqwest::blocking::get(url) {
+        Ok(response) => response,
+        Err(reason) => return Err(reason.without_url().to_string()),
+    };
     if !response.status().is_success() {
-        return Err(response.status().as_u16());
+        return Err(response.status().to_string());
     }
 
     let raw_json = response.text().unwrap();
@@ -52,7 +55,7 @@ fn main() {
         },
         Err(_) => match fetch_weather_data() {
             Ok(value) => value,
-            Err(status_code) => panic!("Failed to fetch weather data. Status code: {status_code}"),
+            Err(reason) => panic!("Failed to fetch weather data: {reason}"),
         },
     };
 

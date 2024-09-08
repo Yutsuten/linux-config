@@ -29,6 +29,10 @@ struct Args {
     #[arg(short, long, group = "group", value_name = "FILE")]
     set: Option<PathBuf>,
 
+    /// Unset a previously set arbitrary wallpaper
+    #[arg(short, long, group = "group")]
+    unset: bool,
+
     /// Print the current wallpaper path
     #[arg(short, long, group = "group")]
     current: bool,
@@ -47,12 +51,23 @@ fn main() {
     if args.random {
         random_wallpaper(wallpapers_path, cache_path);
     } else if args.restore {
-        match restore(&wallpapers_path, &cache_path) {
+        match restore(&wallpapers_path, &cache_path, false) {
             Ok(_) => (),
-            Err(_) => random_wallpaper(wallpapers_path, cache_path),
+            Err(reason) => {
+                eprintln!("{reason}\nFallback to random wallpaper");
+                random_wallpaper(wallpapers_path, cache_path)
+            },
         };
     } else if let Some(set) = args.set {
         set_wallpaper(set.canonicalize().unwrap(), cache_path);
+    } else if args.unset {
+        match restore(&wallpapers_path, &cache_path, true) {
+            Ok(_) => (),
+            Err(reason) => {
+                eprintln!("{reason}\nFallback to random wallpaper");
+                random_wallpaper(wallpapers_path, cache_path)
+            },
+        };
     } else if args.current {
         current_wallpaper(wallpapers_path, cache_path);
     }
@@ -110,16 +125,22 @@ fn random_wallpaper(wallpapers_path: String, cache_path: String) {
     // Remove current (arbitrary) wallpaper symbolic link
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     match fs::exists(&cur_symlink) {
-        Ok(true) => { fs::remove_file(&cur_symlink).unwrap(); },
+        Ok(true) => { fs::remove_file(cur_symlink).unwrap(); },
         Ok(false) => (),
         Err(_) => (),
     }
 }
 
-fn restore(wallpapers_path: &String, cache_path: &String) -> Result<process::Output, std::io::Error> {
+fn restore(wallpapers_path: &String, cache_path: &String, unset: bool) -> Result<process::Output, std::io::Error> {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     let wallpaper = match fs::exists(&cur_symlink) {
-        Ok(true) => cur_symlink,
+        Ok(true) => match unset {
+            true => {
+                fs::remove_file(cur_symlink).unwrap();
+                get_last_random_wallpaper(wallpapers_path, cache_path)
+            },
+            false => cur_symlink
+        },
         Ok(false) => get_last_random_wallpaper(wallpapers_path, cache_path),
         Err(reason) => panic!("Failed to check if symlink exists: {}", reason),
     };
