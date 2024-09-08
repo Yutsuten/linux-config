@@ -36,7 +36,10 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let wallpapers_path = env::var("WALLPAPERS_PATH").unwrap();
+    let wallpapers_path = match env::var("WALLPAPERS_PATH") {
+        Ok(value) => value,
+        Err(reason) => panic!("WALLPAPERS_PATH environment variable not set: {reason}"),
+    };
     let cache_path = format!("{}/.cache/wallpaper", env::var("HOME").unwrap());
 
     fs::create_dir_all(&cache_path).unwrap();

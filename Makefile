@@ -28,7 +28,7 @@ desktop:
 	ln -srf desktop/pipewire/10-remap-sink.conf ~/.config/pipewire/pipewire-pulse.conf.d/10-remap-sink.conf
 	ln -srf desktop/bin/* ~/.local/bin/
 	ln -srf desktop/entries/*.desktop ~/.local/share/applications/
-	cp -af desktop/systemd/wallpaper.service ~/.config/systemd/user/wallpaper.service
+	sed "s#{WALLPAPERS_PATH}#$$WALLPAPERS_PATH#g" desktop/systemd/wallpaper.service > ~/.config/systemd/user/wallpaper.service
 	cp -af desktop/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af desktop/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
