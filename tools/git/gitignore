@@ -5,6 +5,9 @@ Session.vim
 # Ctags
 tags
 
+# Virtual environment
+.venv/
+
 # Environment
 .directory  # KDE
 .DS_Store   # Mac
