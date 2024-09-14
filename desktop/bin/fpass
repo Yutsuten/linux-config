@@ -1,0 +1,39 @@
+#!/usr/bin/fish
+argparse 'h/help' 's/show' -- $argv
+set exitcode $status
+
+function help
+    echo 'Usage: fpass [-h|--help] [-s|--show]' >&2
+    echo >&2
+    echo '  Synopsis:' >&2
+    echo '    Password manager using fuzzy finder' >&2
+    echo >&2
+    echo '  Options:' >&2
+    echo '    -h, --help      Show list of command-line options' >&2
+    echo '    -s, --show      Print the password to stdout' >&2
+end
+
+if test $exitcode -ne 0 || set --query --local _flag_help
+    help
+    return $exitcode
+end
+
+cd ~/.password-store
+set PASS_STORE_CACHE (mktemp)
+
+trap "rm $PASS_STORE_CACHE" SIGHUP SIGINT SIGTERM
+
+find . -type d -path '*/.*' -prune -o -type f -name '*.gpg' -printf '%P\n' | while read --line line
+    path change-extension '' $line >> $PASS_STORE_CACHE
+end
+
+while set selection (fzf < $PASS_STORE_CACHE) || return 0
+    if set --query _flag_show
+        printf '%-30s %s\n' (pass $selection) $selection
+    else
+        pass --clip $selection
+    end
+    read --line --prompt-str '' || return 0
+end
+
+rm $PASS_STORE_CACHE
