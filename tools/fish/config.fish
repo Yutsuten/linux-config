@@ -1,5 +1,7 @@
 test -f ~/.local/environment.fish && source ~/.local/environment.fish
 
+fish_add_path $HOME/.local/bin
+
 if test (tty) = '/dev/tty1' -a -z "$DISPLAY"
     # Gnome
     gsettings set org.gnome.desktop.interface gtk-theme 'Arc'
@@ -50,8 +52,6 @@ if status is-interactive
     if set --query NVIM
         abbr --add nvim -- 'nvim --server $NVIM --remote $PWD/'
     end
-
-    fish_add_path $HOME/.local/bin
 
     fzf --fish | source
 end
