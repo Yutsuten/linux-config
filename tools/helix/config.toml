@@ -6,3 +6,6 @@ cursorline = true
 
 [editor.cursor-shape]
 insert = "bar"
+
+[keys.normal]
+C-s = ":update"
