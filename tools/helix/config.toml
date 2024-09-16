@@ -1,0 +1,8 @@
+theme = "onedark_modified"
+
+[editor]
+color-modes = true
+cursorline = true
+
+[editor.cursor-shape]
+insert = "bar"

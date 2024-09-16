@@ -1,0 +1,5 @@
+inherits = "onedark"
+
+"ui.background" = {}
+"ui.gutter" = { bg = "black"}
+"ui.statusline.inactive" = { fg = "light-gray", bg = "black" }

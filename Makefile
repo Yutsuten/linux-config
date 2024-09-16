@@ -1,4 +1,4 @@
-.PHONY: build desktop system tools alacritty fastfetch fish git lftp mpv neomutt nnn nvim utilities vimiv
+.PHONY: build desktop system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn nvim utilities vimiv zellij
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -69,7 +69,7 @@ system:
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 	fish system/misc.fish
 
-tools: alacritty fastfetch fish git lftp mpv neomutt nnn nvim vimiv
+tools: alacritty fastfetch fish git helix lftp mpv neomutt nnn nvim vimiv zellij
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -91,13 +91,18 @@ fish:
 git:
 	@echo '${bold}>> Git settings <<${reset}'
 	git config --global commit.gpgsign true
-	git config --global core.editor 'nvim'
+	git config --global core.editor 'helix'
 	git config --global core.excludesfile $(CURDIR)/tools/git/gitignore
 	git config --global core.pager 'less -+XF -S'
 	git config --global init.defaultBranch main
 	git config --global pager.branch false
 	git config --global pager.stash false
 	git config --global push.autoSetupRemote true
+
+helix:
+	@echo '${bold}>> Helix settings <<${reset}'
+	rm -rf ~/.config/helix
+	ln -srf tools/helix ~/.config/helix
 
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'
@@ -141,3 +146,8 @@ vimiv:
 	rm -f ~/.config/vimiv/vimiv.conf ~/.config/vimiv/keys.conf
 	ln -srf tools/vimiv/vimiv.conf ~/.config/vimiv/vimiv.conf
 	ln -srf tools/vimiv/keys.conf ~/.config/vimiv/keys.conf
+
+zellij:
+	@echo '${bold}>> Zellij settings <<${reset}'
+	rm -rf ~/.config/zellij
+	ln -srf tools/zellij ~/.config/zellij

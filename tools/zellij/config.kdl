@@ -1,0 +1,52 @@
+keybinds clear-defaults=true {
+    shared_except "locked" {
+        bind "F3" {
+            NewTab {
+                layout "nnn"
+            };
+        }
+        bind "F4" { NewTab; }
+
+        bind "F5" { ToggleFloatingPanes; }
+        bind "F8" { TogglePaneEmbedOrFloating; }
+
+        bind "F9" {
+            Run "./.zellij/build_run" {
+                direction "Down"
+            }
+        }
+        bind "Ctrl F9" {
+            Run "./.zellij/build" {
+                direction "Down"
+            }
+        }
+        bind "Ctrl F10" {
+            Run "./.zellij/run" {
+                direction "Down"
+            }
+        }
+
+        bind "Alt Left" { MoveFocusOrTab "Left"; }
+        bind "Alt Right" { MoveFocusOrTab "Right"; }
+        bind "Alt Up" { MoveFocus "Up"; }
+        bind "Alt Down" { MoveFocus "Down"; }
+    }
+}
+
+plugins {
+    compact-bar location="zellij:compact-bar"
+}
+
+on_force_close "quit"
+simplified_ui true
+pane_frames false
+theme "tokyo-night"
+default_layout "compact"
+ui {
+    pane_frames {
+        hide_session_name true
+    }
+}
+session_serialization false
+pane_viewport_serialization false
+disable_session_metadata true

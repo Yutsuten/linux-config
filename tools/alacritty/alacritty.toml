@@ -1,3 +1,5 @@
+shell = { program = "/usr/bin/zellij" }
+
 [window]
 opacity = 0.96
 
