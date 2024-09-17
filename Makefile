@@ -103,7 +103,9 @@ git:
 helix:
 	@echo '${bold}>> Helix settings <<${reset}'
 	rm -rf ~/.config/helix
-	ln -srf tools/helix ~/.config/helix
+	mkdir -p ~/.config/helix
+	ln -srf tools/helix/themes ~/.config/helix/themes
+	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
 
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'

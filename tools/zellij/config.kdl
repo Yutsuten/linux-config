@@ -1,5 +1,9 @@
 keybinds clear-defaults=true {
+    locked {
+        bind "F1" { SwitchToMode "normal"; }
+    }
     shared_except "locked" {
+        bind "F1" { SwitchToMode "locked"; }
         bind "F3" {
             NewTab {
                 layout "nnn"
