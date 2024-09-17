@@ -2,8 +2,5 @@ layout {
     pane size=1 borderless=true {
         plugin location="compact-bar"
     }
-    pane {
-        command "nnn"
-        close_on_exit true
-    }
+    pane
 }
