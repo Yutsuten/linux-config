@@ -1,5 +1,5 @@
 #!/usr/bin/fish
-argparse --max-args 1 'h/help' -- $argv
+argparse --max-args 1 h/help -- $argv
 set exitcode $status
 
 function help
@@ -34,9 +34,11 @@ switch $argv[1]
     case '*.tar'
         tar --extract --file $argv[1]
     case '*.tgz'
-        tar --gunzip --extract --file $argv[1]
+        tar --gzip --extract --file $argv[1]
     case '*.tar.gz'
-        tar --gunzip --extract --file $argv[1]
+        tar --gzip --extract --file $argv[1]
+    case '*.tar.xz'
+        tar --xz --extract --file $argv[1]
     case '*.tar.zst'
         tar --zstd --extract --file $argv[1]
     case '*.zst'
