@@ -37,6 +37,7 @@ desktop:
 	xdg-mime default extract.desktop application/gzip
 	xdg-mime default extract.desktop application/x-rar
 	xdg-mime default extract.desktop application/x-tar
+	xdg-mime default extract.desktop application/x-xz
 	xdg-mime default extract.desktop application/zip
 	xdg-mime default extract.desktop application/zstd
 	xdg-mime default firefox.desktop text/plain
