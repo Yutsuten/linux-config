@@ -1,7 +1,8 @@
 # Editor / IDE
+.helix/
 .nvim/
-Session.vim
 .zellij/
+Session.vim
 
 # Ctags
 tags
