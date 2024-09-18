@@ -10,6 +10,7 @@ keybinds clear-defaults=true {
             };
         }
         bind "F4" { NewTab; }
+        bind "Alt F4" { CloseTab; }
 
         bind "F5" { ToggleFloatingPanes; }
         bind "F8" { TogglePaneEmbedOrFloating; }
