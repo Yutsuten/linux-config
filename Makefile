@@ -106,6 +106,7 @@ helix:
 	mkdir -p ~/.config/helix
 	ln -srf tools/helix/themes ~/.config/helix/themes
 	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
+	ln -srf tools/helix/languages.toml ~/.config/helix/languages.toml
 
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'
