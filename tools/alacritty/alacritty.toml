@@ -10,8 +10,8 @@ size = 10.0
 family = "Source Code Pro"
 
 [colors.primary]
-background = "#282C34"
-foreground = "#DCDFE4"
+background = "#2C323C"
+foreground = "#ABB2BF"
 
 [colors.normal]
 black = "#282C34"
@@ -24,19 +24,19 @@ cyan = "#56B6C2"
 white = "#919BAA"
 
 [colors.bright]
-black = "#474E5D"
+black = "#2C323C"
 red = "#E06C75"
 green = "#98C379"
 yellow = "#E5C07B"
 blue = "#61AFEF"
 magenta = "#C678DD"
 cyan = "#56B6C2"
-white = "#DCDFE4"
+white = "#ABB2BF"
 
 [mouse]
 hide_when_typing = true
 
 [keyboard]
 bindings = [
-  { key = "X",      mods = "Control|Shift", action = "Copy" },
+  { key = "X", mods = "Control|Shift", action = "Copy" },
 ]
