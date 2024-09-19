@@ -102,7 +102,6 @@ git:
 
 helix:
 	@echo '${bold}>> Helix settings <<${reset}'
-	rm -rf ~/.config/helix
 	mkdir -p ~/.config/helix
 	ln -srf tools/helix/themes ~/.config/helix/themes
 	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
@@ -115,7 +114,6 @@ lftp:
 
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
-	rm -rf ~/.config/mpv
 	mkdir -p ~/.config/mpv/script-opts
 	ln -srf tools/mpv/mpv.conf ~/.config/mpv/mpv.conf
 	ln -srf tools/mpv/input.conf ~/.config/mpv/input.conf
@@ -128,7 +126,7 @@ neomutt:
 
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
-	rm -rf ~/.config/nnn/plugins
+	mkdir -p ~/.config/nnn
 	ln -srnf tools/nnn ~/.config/nnn/plugins
 
 nvim:
@@ -147,11 +145,9 @@ nvim:
 vimiv:
 	@echo '${bold}>> Vimiv settings <<${reset}'
 	mkdir -p ~/.config/vimiv
-	rm -f ~/.config/vimiv/vimiv.conf ~/.config/vimiv/keys.conf
 	ln -srf tools/vimiv/vimiv.conf ~/.config/vimiv/vimiv.conf
 	ln -srf tools/vimiv/keys.conf ~/.config/vimiv/keys.conf
 
 zellij:
 	@echo '${bold}>> Zellij settings <<${reset}'
-	rm -rf ~/.config/zellij
 	ln -srf tools/zellij ~/.config/zellij
