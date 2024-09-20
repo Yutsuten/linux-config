@@ -3,9 +3,9 @@
     "modules": [
         "title",
         "separator",
+        "host",
         "bios",
         "os",
-        "host",
         "kernel",
         "wm",
         {
@@ -24,6 +24,9 @@
         },
         "uptime",
         "break",
-        "colors"
+        {
+            "type": "colors",
+            "symbol": "block"
+        }
     ]
 }
