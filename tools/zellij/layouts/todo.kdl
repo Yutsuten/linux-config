@@ -1,0 +1,12 @@
+layout {
+    tab name="Notes" {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        pane command="hx" {
+            args "ToDo.md"
+            cwd "Documents/Notes"
+            close_on_exit true
+        }
+    }
+}

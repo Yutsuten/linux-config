@@ -1,4 +1,4 @@
-shell = { program = "/usr/bin/zellij" }
+shell = { program = "/usr/bin/zellij", args = ["--layout", "todo"] }
 
 [window]
 opacity = 0.96

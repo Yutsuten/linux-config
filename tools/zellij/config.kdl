@@ -4,30 +4,36 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" {
         bind "F1" { SwitchToMode "locked"; }
-        bind "F3" {
+        bind "F4" {
             NewTab {
-                layout "nnn"
-            };
+                layout "compact"
+            }
         }
-        bind "F4" { NewTab; }
         bind "Alt F4" { CloseTab; }
 
-        bind "F5" { ToggleFloatingPanes; }
-        bind "F8" { TogglePaneEmbedOrFloating; }
+        bind "F5" {
+            NewTab {
+                name "Nnn"
+                layout "nnn"
+            }
+        }
 
         bind "F9" {
-            Run "./.zellij/build_run" {
-                direction "Down"
+            NewTab {
+                name "Build & Run"
+                layout "build_run"
             }
         }
         bind "Ctrl F9" {
-            Run "./.zellij/build" {
-                direction "Down"
+            NewTab {
+                name "Build"
+                layout "build"
             }
         }
         bind "Ctrl F10" {
-            Run "./.zellij/run" {
-                direction "Down"
+            NewTab {
+                name "Run"
+                layout "run"
             }
         }
 
