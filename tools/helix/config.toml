@@ -4,10 +4,12 @@ theme = "onedark_modified"
 color-modes = true
 cursorline = true
 
-[editor.soft-wrap]
-enable = true
-
 [editor.cursor-shape]
 insert = "bar"
+select = "underline"
 
-[keys.normal]
+[editor.gutters.line-numbers]
+min-width = 2
+
+[editor.soft-wrap]
+enable = true
