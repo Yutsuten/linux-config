@@ -1,5 +1,0 @@
-#!/usr/bin/fish
-$argv
-set result $status
-echo
-read --prompt-str "[Process exited $result]"

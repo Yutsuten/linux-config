@@ -2,8 +2,8 @@ layout {
     pane size=1 borderless=true {
         plugin location="compact-bar"
     }
-    pane command="run_and_wait" {
-        args "./.zellij/run"
+    pane command="zellij_open" {
+        args "--wait-on-exit" "./.zellij/run"
         close_on_exit true
     }
 }
