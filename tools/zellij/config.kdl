@@ -17,6 +17,12 @@ keybinds clear-defaults=true {
                 layout "nnn"
             }
         }
+        bind "F6" {
+            NewTab {
+                name "Open Project"
+                layout "project"
+            }
+        }
 
         bind "F9" {
             NewTab {

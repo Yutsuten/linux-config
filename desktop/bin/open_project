@@ -1,0 +1,8 @@
+#!/usr/bin/fish
+set selection (printf '%s\n' ~/Projects/* | xargs --delimiter '\n' --max-args 1 basename | fzf --layout=reverse) || return
+cd ~/Projects/$selection
+zellij action rename-tab (string sub --length 1 -- $selection | string upper)(string sub --start 2 -- $selection)
+if test -d .venv
+	source .venv/bin/activate.fish
+end
+hx .
