@@ -4,9 +4,9 @@ keybinds clear-defaults=true {
     }
     renametab {
         bind "Enter" { SwitchToMode "Normal"; }
-        bind "Esc" {
+        bind "Esc" "F3" {
             UndoRenameTab;
-            SwitchToMode "Tab";
+            SwitchToMode "Normal";
         }
     }
     shared_except "locked" {
