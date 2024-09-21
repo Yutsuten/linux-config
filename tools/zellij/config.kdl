@@ -2,8 +2,16 @@ keybinds clear-defaults=true {
     locked {
         bind "F1" { SwitchToMode "normal"; }
     }
+    renametab {
+        bind "Enter" { SwitchToMode "Normal"; }
+        bind "Esc" {
+            UndoRenameTab;
+            SwitchToMode "Tab";
+        }
+    }
     shared_except "locked" {
         bind "F1" { SwitchToMode "locked"; }
+        bind "F3" { SwitchToMode "renametab"; }
         bind "F4" {
             NewTab {
                 name "Fish"
