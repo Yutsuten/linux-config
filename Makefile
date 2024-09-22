@@ -106,7 +106,6 @@ helix:
 	@echo '${bold}>> Helix settings <<${reset}'
 	mkdir -p ~/.config/helix
 	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
-	ln -srf tools/helix/ignore ~/.config/helix/ignore
 	ln -srf tools/helix/languages.toml ~/.config/helix/languages.toml
 	ln -srnf tools/helix/themes ~/.config/helix/themes
 

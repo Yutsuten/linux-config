@@ -8,11 +8,6 @@ cursorline = true
 insert = "bar"
 select = "underline"
 
-[editor.file-picker]
-git-ignore = false
-git-global = false
-git-exclude = false
-
 [editor.gutters.line-numbers]
 min-width = 2
 
