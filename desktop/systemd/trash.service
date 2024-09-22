@@ -4,6 +4,3 @@ Description=clear old trash files
 [Service]
 Type=oneshot
 ExecStart=trash-empty 7
-
-[Install]
-WantedBy=multi-user.target

@@ -5,7 +5,13 @@ or return
 if set --query _flag_project
     set selection (printf '%s\n' ~/Projects/* | xargs --delimiter '\n' --max-args 1 basename | fzf --layout=reverse) || return
     cd ~/Projects/$selection
-    zellij action rename-tab (string sub --length 1 -- $selection | string upper)(string sub --start 2 -- $selection)
+
+    # TabName: Split on `-` AND capitalize
+    for word in (string split - $selection)
+        set tabname "$tabname"(string sub --length 1 -- $word | string upper)(string sub --start 2 -- $word)
+    end
+    zellij action rename-tab $tabname
+
     if test -d .venv
         source .venv/bin/activate.fish
     end

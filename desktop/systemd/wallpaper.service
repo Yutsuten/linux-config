@@ -5,6 +5,3 @@ Description=set random wallpaper
 Type=oneshot
 Environment=WALLPAPERS_PATH={WALLPAPERS_PATH}
 ExecStart=/usr/local/bin/wallpaper --random
-
-[Install]
-WantedBy=multi-user.target

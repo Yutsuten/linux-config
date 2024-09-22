@@ -26,7 +26,7 @@ keybinds clear-defaults=true {
                 layout "nnn"
             }
         }
-        bind "F6" {
+        bind "F8" {
             NewTab {
                 name "Open Project"
                 layout "project"

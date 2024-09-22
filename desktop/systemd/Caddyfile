@@ -1,0 +1,5 @@
+http://localhost:2000 http://[LOCAL_IP]:2000 {
+    root * [HOME]/.local/server/static
+    file_server browse
+    try_files {path}.html
+}

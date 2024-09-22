@@ -29,6 +29,8 @@ desktop:
 	ln -srf desktop/bin/* ~/.local/bin/
 	ln -srf desktop/entries/*.desktop ~/.local/share/applications/
 	sed "s#{WALLPAPERS_PATH}#$$WALLPAPERS_PATH#g" desktop/systemd/wallpaper.service > ~/.config/systemd/user/wallpaper.service
+	sed "s#{HOME}#$$HOME#g" desktop/systemd/caddy.service > ~/.config/systemd/user/caddy.service
+	sed -e "s#\[LOCAL_IP\]#$$(ip address | sed -nE 's# *inet (192[^/]+)/.*#\1#p')#g" -e "s#\[HOME\]#$$HOME#g" desktop/systemd/Caddyfile > ~/.local/server/Caddyfile
 	cp -af desktop/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af desktop/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer

@@ -1,0 +1,15 @@
+[Unit]
+Description=Caddy web server
+Documentation=https://caddyserver.com/docs/
+After=network.target
+
+[Service]
+Type=notify
+ExecStartPre=/usr/bin/caddy validate --config {HOME}/.local/server/Caddyfile
+ExecStart=/usr/bin/caddy run --config {HOME}/.local/server/Caddyfile
+ExecReload=/usr/bin/caddy reload --config {HOME}/.local/server/Caddyfile --force
+Restart=on-abnormal
+TimeoutStopSec=5s
+
+[Install]
+WantedBy=default.target
