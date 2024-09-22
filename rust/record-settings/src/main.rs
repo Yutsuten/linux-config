@@ -1,15 +1,7 @@
+use iced::widget::{column, row, Button, Checkbox, Column, Text, TextInput};
 use std::fmt;
 use std::fs;
 use std::io::prelude::*;
-use iced::widget::{
-    Column,
-    Button,
-    Checkbox,
-    column,
-    row,
-    Text,
-    TextInput,
-};
 
 const CONFIG: &'static str = "config";
 
@@ -34,7 +26,9 @@ struct Config {
 }
 
 pub fn main() -> iced::Result {
-    iced::application("Record Settings", Config::update, Config::view).theme(theme).run()
+    iced::application("Record Settings", Config::update, Config::view)
+        .theme(theme)
+        .run()
 }
 
 fn theme(_state: &Config) -> iced::Theme {
@@ -69,8 +63,8 @@ impl Default for Config {
             Ok(file) => file,
             Err(_) => {
                 config.changed = true;
-                return config
-            },
+                return config;
+            }
         };
         let mut file_contents = String::new();
         file.read_to_string(&mut file_contents).unwrap();
@@ -92,16 +86,24 @@ impl Default for Config {
 impl Config {
     fn view(&self) -> Column<Message> {
         column![
-            row![Text::new("Directory"), TextInput::new("/mnt/hdd/Recording", &self.directory).on_input(Message::Directory)].spacing(10),
+            row![
+                Text::new("Directory"),
+                TextInput::new("/mnt/hdd/Recording", &self.directory).on_input(Message::Directory)
+            ]
+            .spacing(10),
             Checkbox::new("Waybar", self.waybar).on_toggle(Message::Waybar),
             Checkbox::new("Audio Speakers", self.audio_speakers).on_toggle(Message::AudioSpeakers),
             Checkbox::new("Audio Mic", self.audio_mic).on_toggle(Message::AudioMic),
-            Checkbox::new("Audio Recording", self.audio_recording).on_toggle(Message::AudioRecording),
+            Checkbox::new("Audio Recording", self.audio_recording)
+                .on_toggle(Message::AudioRecording),
             match self.changed {
                 true => Button::new("Save").on_press(Message::Save),
                 false => Button::new("Save"),
             }
-        ].padding(20).spacing(10).into()
+        ]
+        .padding(20)
+        .spacing(10)
+        .into()
     }
 
     fn update(&mut self, message: Message) {
@@ -129,10 +131,20 @@ impl Config {
             Message::Save => {
                 match fs::exists(&self.save_dir) {
                     Ok(true) => (),
-                    Ok(false) => { fs::create_dir_all(&self.save_dir).unwrap(); },
-                    Err(_) => panic!("Unable to access configuration directory: {}", &self.save_dir),
+                    Ok(false) => {
+                        fs::create_dir_all(&self.save_dir).unwrap();
+                    }
+                    Err(_) => panic!(
+                        "Unable to access configuration directory: {}",
+                        &self.save_dir
+                    ),
                 };
-                write!(fs::File::create(format!("{}/{CONFIG}", &self.save_dir)).unwrap(), "{}", &self).unwrap();
+                write!(
+                    fs::File::create(format!("{}/{CONFIG}", &self.save_dir)).unwrap(),
+                    "{}",
+                    &self
+                )
+                .unwrap();
                 self.changed = false;
             }
         }

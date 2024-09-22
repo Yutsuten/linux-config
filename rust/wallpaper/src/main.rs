@@ -1,8 +1,8 @@
 use std::collections::HashSet;
 use std::env;
 use std::fs;
-use std::io::BufReader;
 use std::io::prelude::*;
+use std::io::BufReader;
 use std::os::unix::fs::symlink;
 use std::path::PathBuf;
 use std::process;
@@ -15,7 +15,7 @@ const CUR_SYM: &'static str = "current";
 
 /// Set wallpaper in sway
 #[derive(Parser)]
-#[command(version, about, long_about = None)]
+#[command(version, about, long_about = None, arg_required_else_help = true)]
 struct Args {
     /// Change to a random wallpaper
     #[arg(short, long, group = "group")]
@@ -56,7 +56,7 @@ fn main() {
             Err(reason) => {
                 eprintln!("{reason}\nFallback to random wallpaper");
                 random_wallpaper(wallpapers_path, cache_path)
-            },
+            }
         };
     } else if let Some(set) = args.set {
         set_wallpaper(set.canonicalize().unwrap(), cache_path);
@@ -66,7 +66,7 @@ fn main() {
             Err(reason) => {
                 eprintln!("{reason}\nFallback to random wallpaper");
                 random_wallpaper(wallpapers_path, cache_path)
-            },
+            }
         };
     } else if args.current {
         current_wallpaper(wallpapers_path, cache_path);
@@ -76,10 +76,11 @@ fn main() {
 fn random_wallpaper(wallpapers_path: String, cache_path: String) {
     // Available wallpapers
     let available_wallpapers_set: HashSet<String> = HashSet::from_iter(
-        fs::read_dir(&wallpapers_path).unwrap()
-        .map(|res_entry| res_entry.unwrap().path())
-        .filter(|path| path.is_file())
-        .map(|path| path.file_name().unwrap().to_str().unwrap().to_owned())
+        fs::read_dir(&wallpapers_path)
+            .unwrap()
+            .map(|res_entry| res_entry.unwrap().path())
+            .filter(|path| path.is_file())
+            .map(|path| path.file_name().unwrap().to_str().unwrap().to_owned()),
     );
     if available_wallpapers_set.is_empty() {
         panic!("No wallpapers available");
@@ -91,8 +92,11 @@ fn random_wallpaper(wallpapers_path: String, cache_path: String) {
         Ok(mut file) => {
             let mut history_file_contents = String::new();
             file.read_to_string(&mut history_file_contents).unwrap();
-            history_file_contents.lines().map(|line| line.to_owned()).collect()
-        },
+            history_file_contents
+                .lines()
+                .map(|line| line.to_owned())
+                .collect()
+        }
         Err(_) => Vec::new(),
     };
 
@@ -104,7 +108,9 @@ fn random_wallpaper(wallpapers_path: String, cache_path: String) {
 
     // Randomly elect a new wallpaper
     let hist_wallpapers_set: HashSet<String> = HashSet::from_iter(hist_wallpapers_list.clone());
-    let candidate_wallpapers: Vec<&String> = available_wallpapers_set.difference(&hist_wallpapers_set).collect();
+    let candidate_wallpapers: Vec<&String> = available_wallpapers_set
+        .difference(&hist_wallpapers_set)
+        .collect();
 
     let mut rng = rand::thread_rng();
     let random_index = rng.gen_range(0..candidate_wallpapers.len());
@@ -125,21 +131,27 @@ fn random_wallpaper(wallpapers_path: String, cache_path: String) {
     // Remove current (arbitrary) wallpaper symbolic link
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     match fs::exists(&cur_symlink) {
-        Ok(true) => { fs::remove_file(cur_symlink).unwrap(); },
+        Ok(true) => {
+            fs::remove_file(cur_symlink).unwrap();
+        }
         Ok(false) => (),
         Err(_) => (),
     }
 }
 
-fn restore(wallpapers_path: &String, cache_path: &String, unset: bool) -> Result<process::Output, std::io::Error> {
+fn restore(
+    wallpapers_path: &String,
+    cache_path: &String,
+    unset: bool,
+) -> Result<process::Output, std::io::Error> {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     let wallpaper = match fs::exists(&cur_symlink) {
         Ok(true) => match unset {
             true => {
                 fs::remove_file(cur_symlink).unwrap();
                 get_last_random_wallpaper(wallpapers_path, cache_path)
-            },
-            false => cur_symlink
+            }
+            false => cur_symlink,
         },
         Ok(false) => get_last_random_wallpaper(wallpapers_path, cache_path),
         Err(reason) => panic!("Failed to check if symlink exists: {}", reason),
@@ -150,7 +162,9 @@ fn restore(wallpapers_path: &String, cache_path: &String, unset: bool) -> Result
 fn set_wallpaper(wallpaper_abspath: PathBuf, cache_path: String) {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     match fs::exists(&cur_symlink) {
-        Ok(true) => { fs::remove_file(&cur_symlink).unwrap(); },
+        Ok(true) => {
+            fs::remove_file(&cur_symlink).unwrap();
+        }
         Ok(false) => (),
         Err(reason) => panic!("Failed to check if symlink exists: {}", reason),
     }
@@ -162,25 +176,28 @@ fn set_wallpaper(wallpaper_abspath: PathBuf, cache_path: String) {
 }
 
 fn apply_wallpaper(wallpaper: String) -> Result<process::Output, std::io::Error> {
-    process::Command::new("swaymsg").args(["output", "*", "bg", wallpaper.as_str(), "fill"]).output()
+    process::Command::new("swaymsg")
+        .args(["output", "*", "bg", wallpaper.as_str(), "fill"])
+        .output()
 }
 
 fn current_wallpaper(wallpapers_path: String, cache_path: String) {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
     match fs::exists(&cur_symlink) {
         Ok(true) => println!("{}", cur_symlink),
-        Ok(false) => println!("{}", get_last_random_wallpaper(&wallpapers_path, &cache_path)),
+        Ok(false) => println!(
+            "{}",
+            get_last_random_wallpaper(&wallpapers_path, &cache_path)
+        ),
         Err(reason) => panic!("Failed to check if symlink exists: {}", reason),
     }
 }
 
 fn get_last_random_wallpaper(wallpapers_path: &String, cache_path: &String) -> String {
-    let mut reader = BufReader::new(
-        match fs::File::open(format!("{cache_path}/{HIST_FILE}")) {
-            Ok(file) => file,
-            Err(reason) => panic!("Failed to open history file: {}", reason),
-        }
-    );
+    let mut reader = BufReader::new(match fs::File::open(format!("{cache_path}/{HIST_FILE}")) {
+        Ok(file) => file,
+        Err(reason) => panic!("Failed to open history file: {}", reason),
+    });
     let mut last_wallpaper = String::new();
     reader.read_line(&mut last_wallpaper).unwrap();
     format!("{wallpapers_path}/{}", last_wallpaper.trim())
