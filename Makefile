@@ -89,7 +89,7 @@ fish:
 	rm -f ~/.config/fish/config.fish
 	rm -rf ~/.config/fish/functions
 	ln -srf tools/fish/config.fish ~/.config/fish/config.fish
-	ln -srf tools/fish/functions ~/.config/fish/functions
+	ln -srnf tools/fish/functions ~/.config/fish/functions
 
 git:
 	@echo '${bold}>> Git settings <<${reset}'
@@ -105,9 +105,10 @@ git:
 helix:
 	@echo '${bold}>> Helix settings <<${reset}'
 	mkdir -p ~/.config/helix
-	ln -srf tools/helix/themes ~/.config/helix/themes
 	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
+	ln -srf tools/helix/ignore ~/.config/helix/ignore
 	ln -srf tools/helix/languages.toml ~/.config/helix/languages.toml
+	ln -srnf tools/helix/themes ~/.config/helix/themes
 
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'
@@ -152,4 +153,4 @@ vimiv:
 
 zellij:
 	@echo '${bold}>> Zellij settings <<${reset}'
-	ln -srf tools/zellij ~/.config/zellij
+	ln -srnf tools/zellij ~/.config/zellij
