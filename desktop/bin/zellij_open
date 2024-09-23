@@ -1,5 +1,5 @@
 #!/usr/bin/fish
-argparse project wait-on-exit -- $argv
+argparse project file-picker wait-on-exit -- $argv
 or return
 
 if set --query _flag_project
@@ -16,6 +16,15 @@ if set --query _flag_project
         source .venv/bin/activate.fish
     end
     hx .
+else if set --query _flag_file_picker
+    set selection (nnn -p -)
+    if test (count $selection) -eq 1 -a -f $selection
+        zellij action focus-previous-pane
+        zellij action write-chars ":o $(string replace --regex "^$PWD/" '' $selection)"
+        zellij action write 13 # Enter
+        zellij action focus-next-pane
+    end
+    zellij action close-pane
 else if test (count $argv) -ge 1
     $argv
     set result $status

@@ -21,9 +21,8 @@ keybinds clear-defaults=true {
         bind "Alt F4" { CloseTab; }
 
         bind "F5" {
-            NewTab {
-                name "Nnn"
-                layout "nnn"
+            Run "zellij_open" "--file-picker" {
+                direction "Right"
             }
         }
         bind "F8" {
