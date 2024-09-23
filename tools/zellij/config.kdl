@@ -18,11 +18,11 @@ keybinds clear-defaults=true {
                 layout "compact"
             }
         }
-        bind "Alt F4" { CloseTab; }
+        bind "Alt F4" { CloseFocus; }
 
         bind "F5" {
             Run "zellij_open" "--file-picker" {
-                direction "Right"
+                direction "Down"
             }
         }
         bind "F8" {
