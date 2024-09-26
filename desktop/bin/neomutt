@@ -1,11 +1,7 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 
-if not set --query GPG_TTY
-    set -gx GPG_TTY (tty)
-end
-
-gpg --quiet --encrypt --default-recipient-self < /dev/null | gpg --quiet --decrypt > /dev/null
-protonmail-bridge-core --noninteractive &> ~/.local/logs/protonmail-bridge.log &
+gpg --quiet --encrypt --default-recipient-self </dev/null | gpg --quiet --decrypt >/dev/null
+protonmail-bridge-core --noninteractive &>~/.local/logs/protonmail-bridge.log &
 set proton_pid $last_pid
 
 /usr/bin/neomutt $argv

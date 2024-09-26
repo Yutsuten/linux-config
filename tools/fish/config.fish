@@ -1,5 +1,9 @@
 test -f ~/.local/environment.fish && source ~/.local/environment.fish
 
+set -gx GPG_TTY (tty)
+set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
+set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
+
 fish_add_path $HOME/.local/bin
 
 if test (tty) = /dev/tty1 -a -z "$DISPLAY"
@@ -25,10 +29,6 @@ if test (tty) = /dev/tty1 -a -z "$DISPLAY"
 end
 
 if status is-interactive
-    set -gx GPG_TTY (tty)
-    set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
-    set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
-
     set -g CDPATH . $HOME $HOME/Projects
     set -g VIRTUAL_ENV_DISABLE_PROMPT true
     set -g fish_color_autosuggestion white
