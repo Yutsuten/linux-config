@@ -1,9 +1,9 @@
 # linux-config
 
 Configure my linux environment.
-This configures some tools like Git, Neovim and Fish.
+This configures some tools like Git, Zellij, Helix and Fish.
 
-It uses Sway as Window Manager.
+It uses [Sway](https://swaywm.org/) as Window Manager.
 
 ## Usage
 
@@ -11,7 +11,6 @@ Clone the repository:
 
 ```shell
 git clone git@github.com:Yutsuten/linux-config.git ~/.config/linux
-git submodule update --init
 ```
 
 Apply the configuration:

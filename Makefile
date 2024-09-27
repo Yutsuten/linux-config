@@ -1,4 +1,4 @@
-.PHONY: build desktop system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn nvim utilities vimiv zellij
+.PHONY: build desktop system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn utilities vimiv zellij
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -72,7 +72,7 @@ system:
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 	fish system/misc.fish
 
-tools: alacritty fastfetch fish git helix lftp mpv neomutt nnn nvim vimiv zellij
+tools: alacritty fastfetch fish git helix lftp mpv neomutt nnn vimiv zellij
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -130,19 +130,6 @@ nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	mkdir -p ~/.config/nnn
 	ln -srnf tools/nnn ~/.config/nnn/plugins
-
-nvim:
-	@echo '${bold}>> Neovim settings <<${reset}'
-	rm -rf ~/.config/nvim ~/.local/share/nvim/site
-	mkdir -p ~/.config/nvim/after ~/.local/share/nvim/site/pack/all
-	ln -srf tools/nvim/init.vim ~/.config/nvim/init.vim
-	ln -srnf tools/nvim/colors ~/.config/nvim/colors
-	ln -srnf tools/nvim/doc ~/.config/nvim/doc
-	ln -srnf tools/nvim/plugin ~/.config/nvim/after/plugin
-	ln -srnf tools/nvim/ftplugin ~/.config/nvim/after/ftplugin
-	ln -srnf tools/nvim/pack/start ~/.local/share/nvim/site/pack/all/start
-	ln -srnf tools/nvim/pack/opt ~/.local/share/nvim/site/pack/all/opt
-	nvim --cmd ':helptags ALL | :q' --headless
 
 vimiv:
 	@echo '${bold}>> Vimiv settings <<${reset}'

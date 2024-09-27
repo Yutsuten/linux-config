@@ -49,10 +49,6 @@ if status is-interactive
     abbr --add ssh -- 'env TERM=xterm ssh'
     abbr --add vimiv -- 'vimiv --log-level error'
 
-    if set --query NVIM
-        abbr --add nvim -- 'nvim --server $NVIM --remote $PWD/'
-    end
-
     fzf --fish | source
 end
 

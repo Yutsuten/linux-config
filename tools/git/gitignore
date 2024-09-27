@@ -1,7 +1,6 @@
 # Editor / IDE
 .helix/
 .ignore
-.nvim/
 .zellij/
 Session.vim
 
