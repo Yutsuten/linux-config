@@ -26,28 +26,23 @@ if not test -f $argv[1]
     return 1
 end
 
-if string match --quiet --regex '\.gpg$' $argv[1]
-    # GPG file
-    set decrypted_file /tmp/(string replace --regex '\.gpg$' '' (path basename $argv[1]))
-
-    # Skip decrypt if opening twice
-    if not test -f $decrypted_file
+switch (path extension $argv[1])
+    case '.gpg'
+        set decrypted_file (mktemp --tmpdir XXXXXXX_(path change-extension '' (path basename $argv[1])))
         if not gpg --decrypt $argv[1] >$decrypted_file
             echo "$argv[1] is not a gpg file." >&2
             rm --force -- $decrypted_file
             return 1
         end
-    end
 
-    set before_shasum (sha512sum $decrypted_file)
-    helix $decrypted_file
+        set before_shasum (sha512sum $decrypted_file)
+        hx $decrypted_file
 
-    if test (sha512sum $decrypted_file) = $before_shasum
-        rm --force -- $decrypted_file
-        return 0
-    end
-    gpg --output - --encrypt --default-recipient-self $decrypted_file >$argv[1] && rm --force -- $decrypted_file
-else
-    # Text file
-    helix $argv
+        if test (sha512sum $decrypted_file) = $before_shasum
+            rm --force -- $decrypted_file
+            return 0
+        end
+        gpg --output - --encrypt --default-recipient-self $decrypted_file >$argv[1] && rm --force -- $decrypted_file
+    case '*'
+        hx $argv
 end
