@@ -1,9 +1,9 @@
 #!/usr/bin/fish
-argparse --max-args 1 'h/help' -- $argv
+argparse --max-args 1 h/help -- $argv
 set exitcode $status
 
 function help
-    echo 'Usage: gpgopen [-h|--help] FILE' >&2
+    echo 'Usage: gpg-open [-h|--help] FILE' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Open gpg files using xdg-open.' >&2
@@ -54,4 +54,4 @@ if test (sha512sum $decrypted_file) = $before_shasum
     return 0
 end
 
-gpg --output - --encrypt --default-recipient-self $decrypted_file > $argv[1] && rm --force -- $decrypted_file
+gpg --output - --encrypt --default-recipient-self $decrypted_file >$argv[1] && rm --force -- $decrypted_file
