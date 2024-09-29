@@ -115,10 +115,11 @@ lftp:
 
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
-	mkdir -p ~/.config/mpv/script-opts
+	mkdir -p ~/.config/mpv
 	ln -srf tools/mpv/mpv.conf ~/.config/mpv/mpv.conf
 	ln -srf tools/mpv/input.conf ~/.config/mpv/input.conf
-	ln -srf tools/mpv/osc.conf ~/.config/mpv/script-opts/osc.conf
+	ln -srnf tools/mpv/script-opts ~/.config/mpv/script-opts
+	ln -srnf tools/mpv/scripts ~/.config/mpv/scripts
 
 neomutt:
 	@echo '${bold}>> Neomutt settings <<${reset}'
