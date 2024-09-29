@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 argparse --max-args 1 h/help -- $argv
 set exitcode $status
 

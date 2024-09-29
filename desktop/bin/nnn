@@ -1,9 +1,9 @@
-#!/usr/bin/fish
-
+#!/usr/bin/env fish
 if test -n "$NNNLVL" -a "$NNNLVL" -ge 1
     echo 'nnn is already running' >&2
     return 1
 end
+
 set shortcuts
 set --append shortcuts 'a:anki'
 set --append shortcuts 'c:-!wl-copy < "$nnn"*'
@@ -34,4 +34,5 @@ if test -e "$HOME/.config/nnn/.lastd"
     source "$HOME/.config/nnn/.lastd"
     rm "$HOME/.config/nnn/.lastd"
 end
+
 return 0

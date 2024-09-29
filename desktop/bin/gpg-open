@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 argparse --max-args 1 h/help -- $argv
 set exitcode $status
 
@@ -31,17 +31,14 @@ if not string match --quiet --regex '\.gpg$' $argv[1]
     return 1
 end
 
-set decrypted_file /tmp/(string replace --regex '\.gpg$' '' (path basename $argv[1]))
-
-# Skip decrypt if opening twice
-if not test -f $decrypted_file
-    if not gpg --output $decrypted_file --decrypt $argv[1]
-        echo "$argv[1] is not a gpg file" >&2
-        return 1
-    end
-    touch --reference $argv[1] $decrypted_file
+set decrypted_file (mktemp --tmpdir XXXXXXX_(path change-extension '' (path basename $argv[1])))
+if not gpg --decrypt $argv[1] >$decrypted_file
+    echo "$argv[1] is not a gpg file" >&2
+    rm --force -- $decrypted_file
+    return 1
 end
 
+touch --reference $argv[1] $decrypted_file
 set before_shasum (sha512sum $decrypted_file)
 xdg-open $decrypted_file
 

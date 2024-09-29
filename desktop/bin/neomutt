@@ -1,9 +1,7 @@
 #!/usr/bin/env fish
-
 gpg --quiet --encrypt --default-recipient-self </dev/null | gpg --quiet --decrypt >/dev/null
 protonmail-bridge-core --noninteractive &>~/.local/logs/protonmail-bridge.log &
 set proton_pid $last_pid
-
 /usr/bin/neomutt $argv
 
 kill $proton_pid

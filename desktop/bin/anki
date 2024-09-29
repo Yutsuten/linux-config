@@ -1,4 +1,3 @@
-#!/usr/bin/fish
-
+#!/usr/bin/env fish
 cd $ANKI_VENV/bin
 ./anki $argv

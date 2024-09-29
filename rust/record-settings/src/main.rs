@@ -47,15 +47,17 @@ impl fmt::Display for Config {
 
 impl Default for Config {
     fn default() -> Self {
+        let home = std::env::var("HOME").unwrap();
+
         // Default values
         let mut config = Self {
-            directory: String::from("/mnt/hdd/Recording"),
+            directory: format!("{home}/Videos"),
             waybar: true,
             audio_speakers: true,
             audio_mic: true,
             audio_recording: true,
             changed: false,
-            save_dir: std::env::var("HOME").unwrap() + "/.config/record",
+            save_dir: format!("{home}/.config/record"),
         };
 
         // Try to read configuration
