@@ -36,12 +36,6 @@ desktop:
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
 	bash desktop/pipewire/90-init.sh
 	fish desktop/waybar/configure.fish
-	xdg-mime default extract.desktop application/gzip
-	xdg-mime default extract.desktop application/x-rar
-	xdg-mime default extract.desktop application/x-tar
-	xdg-mime default extract.desktop application/x-xz
-	xdg-mime default extract.desktop application/zip
-	xdg-mime default extract.desktop application/zstd
 	xdg-mime default firefox.desktop text/plain
 	xdg-mime default mpv.desktop audio/flac
 	xdg-mime default mpv.desktop image/avif

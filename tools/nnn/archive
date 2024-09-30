@@ -1,5 +1,4 @@
-#!/usr/bin/fish
-
+#!/usr/bin/env fish
 set bold (tput bold)
 set reset (tput sgr0)
 
@@ -8,7 +7,7 @@ set selected_files
 if test -s ~/.config/nnn/.selection
     while read --null selection
         set --append selected_files (string replace --regex "^$PWD/" '' $selection)
-    end < ~/.config/nnn/.selection
+    end <~/.config/nnn/.selection
 else
     set selected_files $nnn
 end
@@ -38,8 +37,7 @@ end
 if test (count $selected_files) -eq 1
     set selection $selected_files[1]
 
-    # Single file
-    if test -f $selection
+    if test -f $selection # Single file
         set choices .zst .gz .zip
         set extension (get_choice)
         switch $extension
@@ -53,11 +51,10 @@ if test (count $selected_files) -eq 1
                 echo "Generating $selection.zip"
                 zip $selection.zip $selection
             case '*'
-                echo 'Abort'
+                echo Abort
                 return 1
         end
-    # Single directory
-    else if test -d $selection
+    else if test -d $selection # Single directory
         set choices .tar.zst .tgz .tar .zip
         set extension (get_choice)
         switch $extension
@@ -74,16 +71,15 @@ if test (count $selected_files) -eq 1
                 echo "Generating $selection.zip"
                 zip -r $selection.zip $selection
             case '*'
-                echo 'Abort'
+                echo Abort
                 return 1
         end
     end
-else
-    # Multiple files / directories
+else # Multiple files / directories
     set choices .tar.zst .tgz .tar .zip
     read --line --prompt-str 'Filename without extension: ' output
     if test -z $output
-        echo 'Abort'
+        echo Abort
         return 1
     end
     echo
@@ -102,7 +98,7 @@ else
             echo "Generating $output.zip"
             zip -r $output.zip $selected_files
         case '*'
-            echo 'Abort'
+            echo Abort
             return 1
     end
 end
