@@ -47,7 +47,6 @@ if status is-interactive
     abbr --add ll -- 'ls -Nlh --sort=v --group-directories-first'
     abbr --add lo -- 'ls -Noh --sort=v --group-directories-first'
     abbr --add ssh -- 'env TERM=xterm ssh'
-    abbr --add vimiv -- 'vimiv --log-level error'
 
     fzf --fish | source
 end

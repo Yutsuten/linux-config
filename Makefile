@@ -1,4 +1,4 @@
-.PHONY: build desktop mime system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn utilities vimiv zellij
+.PHONY: build desktop mime system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn utilities zellij
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -67,7 +67,7 @@ system:
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 	fish system/misc.fish
 
-tools: alacritty fastfetch fish git helix lftp mpv neomutt nnn vimiv zellij
+tools: alacritty fastfetch fish git helix lftp mpv neomutt nnn zellij
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -126,12 +126,6 @@ nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	mkdir -p ~/.config/nnn
 	ln -srnf tools/nnn ~/.config/nnn/plugins
-
-vimiv:
-	@echo '${bold}>> Vimiv settings <<${reset}'
-	mkdir -p ~/.config/vimiv
-	ln -srf tools/vimiv/vimiv.conf ~/.config/vimiv/vimiv.conf
-	ln -srf tools/vimiv/keys.conf ~/.config/vimiv/keys.conf
 
 zellij:
 	@echo '${bold}>> Zellij settings <<${reset}'
