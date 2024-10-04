@@ -10,11 +10,11 @@ if test $fext = '.webp'
     mv -- $nnn $selection
 end
 
-if test $fext = '.jpg'  # Don't trim
+if test $fext = '.jpg' # Don't trim
     magick $selection -strip -resize '320x260>' -define webp:method=6 $fname.webp
 else
     magick $selection -strip -trim -resize '320x260>' -define webp:method=6 $fname.webp
 end
 
 # Preview
-vimiv --log-level error $fname.webp
+mvi --log-level error $fname.webp

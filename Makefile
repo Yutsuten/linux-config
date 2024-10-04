@@ -1,4 +1,4 @@
-.PHONY: build desktop system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn utilities vimiv zellij
+.PHONY: build desktop mime system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn utilities vimiv zellij
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -14,7 +14,7 @@ build:
 	cd rust/record-settings && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/record-settings ~/.local/bin/record-settings
 	cd rust/wallpaper && RUSTFLAGS='-C target-cpu=native' cargo build --release
 
-desktop:
+desktop: mime
 	@echo '${bold}>> Desktop environment settings <<${reset}'
 	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d ~/.local/share/applications ~/.local/bin
 	ln -srf desktop/sway.conf ~/.config/sway/config
@@ -36,19 +36,21 @@ desktop:
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
 	bash desktop/pipewire/90-init.sh
 	fish desktop/waybar/configure.fish
+
+mime:
 	xdg-mime default firefox.desktop text/plain
 	xdg-mime default mpv.desktop audio/flac
-	xdg-mime default mpv.desktop image/avif
-	xdg-mime default mpv.desktop image/heif
-	xdg-mime default mpv.desktop image/tiff
 	xdg-mime default mpv.desktop video/webm
-	xdg-mime default vimiv.desktop image/bmp
-	xdg-mime default vimiv.desktop image/gif
-	xdg-mime default vimiv.desktop image/ico
-	xdg-mime default vimiv.desktop image/jpeg
-	xdg-mime default vimiv.desktop image/png
-	xdg-mime default vimiv.desktop image/svg
-	xdg-mime default vimiv.desktop image/webp
+	xdg-mime default mvi.desktop image/avif
+	xdg-mime default mvi.desktop image/bmp
+	xdg-mime default mvi.desktop image/gif
+	xdg-mime default mvi.desktop image/heif
+	xdg-mime default mvi.desktop image/ico
+	xdg-mime default mvi.desktop image/jpeg
+	xdg-mime default mvi.desktop image/png
+	xdg-mime default mvi.desktop image/svg
+	xdg-mime default mvi.desktop image/tiff
+	xdg-mime default mvi.desktop image/webp
 
 system:
 	cp -af rust/openweather/target/release/openweather /usr/local/bin/openweather
@@ -57,7 +59,7 @@ system:
 	cp -af system/setvtrgb/install.sh /etc/initcpio/install/setvtrgb
 	cp -af system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
 	cp -af system/utilities/record.fish /usr/local/bin/record
-	cp -af system/utilities/screenshot.sh /usr/local/bin/screenshot
+	cp -af system/utilities/screenshot.fish /usr/local/bin/screenshot
 	cp -af system/utilities/system.sh /usr/local/bin/system
 	cp -af system/utilities/toggle-record.fish /usr/local/bin/toggle-record
 	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
@@ -110,6 +112,10 @@ lftp:
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
 	ln -srnf tools/mpv ~/.config/mpv
+
+mvi:
+	@echo '${bold}>> MVI settings <<${reset}'
+	ln -srnf tools/mvi ~/.config/mvi
 
 neomutt:
 	@echo '${bold}>> Neomutt settings <<${reset}'

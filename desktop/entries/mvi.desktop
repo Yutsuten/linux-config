@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Image Viewer
+Categories=Graphics
+Comment=Browser images with MPV
+Exec=mvi
+Icon=mpv
+NoDisplay=true
+Terminal=false

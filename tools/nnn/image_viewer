@@ -1,0 +1,23 @@
+#!/usr/bin/env fish
+if test -f $nnn
+    if test (file $nnn) = "$nnn: ASCII text" # Text file with filenames in each line
+        set files (shuf <$nnn)
+    else
+        nohup mvi &>/dev/null &
+    end
+else if test -d $nnn # Find pictures inside selected dir
+    while not string match --regex --quiet '^[1-3]$' $depth
+        read --prompt-str 'Depth [1-3]: ' depth || return
+    end
+    cd $nnn
+    set extensions jpg jpeg png gif webp svg bmp avif heif heifs tiff tif
+    set find_img_opts -iname '*.'$extensions[1]
+    for extension in $extensions[2..]
+        set --append find_img_opts -or -iname '*.'$extension
+    end
+    set files (find . -maxdepth $depth -type f -not -path '*/.*' '(' $find_img_opts ')' -printf '%P\n' | shuf)
+end
+
+if test (count $files) -ge 1
+    nohup mvi $files &>/dev/null &
+end
