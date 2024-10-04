@@ -1,5 +1,5 @@
 function aurupdate --description 'Update AUR packages'
-    argparse --max-args 0 'h/help' -- $argv
+    argparse --max-args 0 h/help -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
@@ -31,7 +31,7 @@ function aurupdate --description 'Update AUR packages'
             git -C ~/.local/aur clone --quiet $package_url &
         end
         set --append pids $last_pid
-    end < ~/.local/aur/packages
+    end <~/.local/aur/packages
     set packages_count (count $packages)
     wait $pids
 
@@ -40,7 +40,8 @@ function aurupdate --description 'Update AUR packages'
         set package (echo $package_dir | sed -nE 's#^.+/aur/([^/]+)/$#\1#p')
         if contains $package $packages
             echo $bold"($cur/$packages_count) AUR update $package"$reset
-            fish --command "cd $package_dir && makepkg -sic --needed --nocolor"
+            pushd $package_dir && makepkg -sic --needed --nocolor
+            popd
             set cur (math $cur + 1)
         else
             echo $bold"⚠️ Remove unused $package"$reset
