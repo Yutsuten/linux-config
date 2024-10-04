@@ -3,7 +3,7 @@ theme = "onedark_modified"
 [editor]
 color-modes = true
 cursorline = true
-scrolloff = 2
+scrolloff = 3
 
 [editor.cursor-shape]
 insert = "bar"

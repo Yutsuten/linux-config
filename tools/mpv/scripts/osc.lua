@@ -3,4 +3,4 @@ function show_osc()
 end
 
 mp.register_event("seek", show_osc)
-mp.observe_property("pause", "bool", show_osc);
+mp.observe_property("pause", "bool", show_osc)
