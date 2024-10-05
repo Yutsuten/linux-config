@@ -99,7 +99,7 @@ bind  index,pager          !               flag-message
 bind  index,pager          x               set-flag
 bind  index,pager          c               clear-flag
 macro index,pager          y               '<change-folder>?<change-dir><enter>'
-macro index,pager          s               save-message
+bind  index,pager          s               save-message
 bind  index                A               tag-prefix
 bind  index,browser        <Space>         tag-entry
 bind  index,browser        t               tag-entry
