@@ -1,16 +1,15 @@
 #!/usr/bin/env fish
-argparse h/help s/show -- $argv
+argparse h/help -- $argv
 set exitcode $status
 
 function help
-    echo 'Usage: fpass [-h|--help] [-s|--show]' >&2
+    echo 'Usage: fpass [-h|--help]' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Password manager using fuzzy finder' >&2
     echo >&2
     echo '  Options:' >&2
     echo '    -h, --help      Show list of command-line options' >&2
-    echo '    -s, --show      Print the password to stdout' >&2
 end
 
 if test $exitcode -ne 0 || set --query --local _flag_help
@@ -30,11 +29,8 @@ find . -type d -path '*/.*' -prune -o -type f -name '*.gpg' -printf '%P\n' | whi
 end
 
 while test $interrupt -eq 0 && set selection (fzf < $pass_store_cache)
-    if set --query _flag_show
-        printf '%-30s %s\n' (pass $selection) $selection
-    else
-        pass --clip $selection
-    end
+    pass $selection
+    pass --clip $selection
     read --line --prompt-str '' || set interrupt 1
 end
 
