@@ -17,4 +17,4 @@ else
 end
 
 # Preview
-mvi --log-level error $fname.webp
+mvi $fname.webp
