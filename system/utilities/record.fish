@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-argparse 'h/help' 'd/dir=' 'm/mic' 'r/rec' 's/speakers' 'w/waybar' -- $argv
+argparse h/help 'd/dir=' m/mic r/rec s/speakers w/waybar -- $argv
 set exitcode $status
 
 if test $exitcode -ne 0 || set --query --local _flag_help
@@ -44,7 +44,7 @@ if test -f $config_file
                     echo "Invalid key ignored: $key_value[0]"
             end
         end
-    end < $config_file
+    end <$config_file
 end
 
 # Process command line arguments

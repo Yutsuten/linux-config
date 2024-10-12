@@ -1,4 +1,5 @@
 use iced::widget::{column, row, Button, Checkbox, Column, Text, TextInput};
+use iced::Task;
 use std::fmt;
 use std::fs;
 use std::io::prelude::*;
@@ -99,8 +100,8 @@ impl Config {
             Checkbox::new("Audio Recording", self.audio_recording)
                 .on_toggle(Message::AudioRecording),
             match self.changed {
-                true => Button::new("Save").on_press(Message::Save),
-                false => Button::new("Save"),
+                true => Button::new("Save & Exit").on_press(Message::Save),
+                false => Button::new("Save & Exit"),
             }
         ]
         .padding(20)
@@ -108,27 +109,32 @@ impl Config {
         .into()
     }
 
-    fn update(&mut self, message: Message) {
+    fn update(&mut self, message: Message) -> Task<Message> {
         match message {
             Message::Directory(text) => {
                 self.directory = text;
                 self.changed = true;
+                Task::none()
             }
             Message::Waybar(checked) => {
                 self.waybar = checked;
                 self.changed = true;
+                Task::none()
             }
             Message::AudioSpeakers(checked) => {
                 self.audio_speakers = checked;
                 self.changed = true;
+                Task::none()
             }
             Message::AudioMic(checked) => {
                 self.audio_mic = checked;
                 self.changed = true;
+                Task::none()
             }
             Message::AudioRecording(checked) => {
                 self.audio_recording = checked;
                 self.changed = true;
+                Task::none()
             }
             Message::Save => {
                 match fs::exists(&self.save_dir) {
@@ -148,6 +154,7 @@ impl Config {
                 )
                 .unwrap();
                 self.changed = false;
+                iced::exit()
             }
         }
     }

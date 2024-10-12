@@ -9,4 +9,4 @@ lto = "fat"
 strip = "symbols"
 
 [dependencies]
-iced = "0.13.0"
+iced = "0.13.1"
