@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Gpg Open
+Comment=Open a GPG encrypted file
+Categories=Utility
+Exec=gpg-open
+NoDisplay=true
+Terminal=false
