@@ -46,7 +46,7 @@ keybinds clear-defaults=true {
             }
         }
         bind "F6" {
-            Run "zellij_open" "--file-picker" {
+            Run "zellij-open" "--file-picker" {
                 direction "Down"
             }
         }

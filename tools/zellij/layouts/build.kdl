@@ -2,7 +2,7 @@ layout {
     pane size=1 borderless=true {
         plugin location="compact-bar"
     }
-    pane command="zellij_open" {
+    pane command="zellij-open" {
         args "--wait-on-exit" "./.zellij/build"
         close_on_exit true
     }
