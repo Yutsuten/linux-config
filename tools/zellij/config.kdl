@@ -2,25 +2,45 @@ keybinds clear-defaults=true {
     locked {
         bind "F1" { SwitchToMode "normal"; }
     }
+    search {
+        bind "N" { Search "up"; }
+        bind "n" { Search "down"; }
+
+        bind "Up" { ScrollUp; }
+        bind "Down" { ScrollDown; }
+        bind "PageUp" { PageScrollUp; }
+        bind "PageDown" { PageScrollDown; }
+        bind "Home" { ScrollToTop; }
+        bind "End" { ScrollToBottom; }
+
+        bind "F3" { SwitchToMode "EnterSearch"; }
+        bind "Esc" "F2" { SwitchToMode "Normal"; }
+    }
+    entersearch {
+        bind "Enter" "F2" { SwitchToMode "Search"; }
+        bind "Esc" "F3" { SwitchToMode "Normal"; }
+    }
     renametab {
         bind "Enter" { SwitchToMode "Normal"; }
-        bind "Esc" "F3" {
+        bind "Esc" "F4" {
             UndoRenameTab;
             SwitchToMode "Normal";
         }
     }
     shared_except "locked" {
-        bind "F1" { SwitchToMode "locked"; }
-        bind "F3" { SwitchToMode "renametab"; }
-        bind "F4" {
+        bind "F1" { SwitchToMode "Locked"; }
+        bind "F2" { SwitchToMode "Search"; }
+        bind "F3" { SwitchToMode "EnterSearch"; }
+        bind "F4" { SwitchToMode "RenameTab"; }
+        bind "Alt F4" { CloseFocus; }
+
+        bind "F5" {
             NewTab {
                 name "Fish"
                 layout "compact"
             }
         }
-        bind "Alt F4" { CloseFocus; }
-
-        bind "F5" {
+        bind "F6" {
             Run "zellij_open" "--file-picker" {
                 direction "Down"
             }
