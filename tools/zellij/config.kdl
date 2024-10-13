@@ -36,18 +36,24 @@ keybinds clear-defaults=true {
         bind "F5" {
             NewTab {
                 name "Fish"
+                layout "compact"
+            }
+        }
+        bind "Ctrl F5" {
+            NewTab {
+                name "Fish"
                 layout "fish_home"
             }
         }
         bind "F6" {
-            NewTab {
-                name "Fish"
-                layout "compact"
-            }
-        }
-        bind "F7" {
             Run "zellij_open" "--file-picker" {
                 direction "Down"
+            }
+        }
+        bind "Ctrl F6" {
+            NewTab {
+                name "Nnn"
+                layout "nnn"
             }
         }
         bind "F8" {

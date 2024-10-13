@@ -42,6 +42,7 @@ mime:
 	xdg-mime default firefox.desktop text/plain
 	xdg-mime default gpg-open.desktop application/octet-stream
 	xdg-mime default mpv.desktop audio/flac
+	xdg-mime default mpv.desktop audio/ogg
 	xdg-mime default mpv.desktop video/webm
 	xdg-mime default mvi.desktop image/avif
 	xdg-mime default mvi.desktop image/bmp
