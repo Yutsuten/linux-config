@@ -15,7 +15,7 @@ if set --query _flag_project
     if test -d .venv
         source .venv/bin/activate.fish
     end
-    hx .
+    hx
 else if set --query _flag_file_picker
     zellij action toggle-pane-embed-or-floating
     set selection (nnn -p -)

@@ -3,6 +3,7 @@ keybinds clear-defaults=true {
         bind "F1" { SwitchToMode "normal"; }
     }
     search {
+        bind "/" "?" { SwitchToMode "EnterSearch"; }
         bind "N" { Search "up"; }
         bind "n" { Search "down"; }
 
@@ -17,12 +18,11 @@ keybinds clear-defaults=true {
         bind "Esc" "F2" { SwitchToMode "Normal"; }
     }
     entersearch {
-        bind "Enter" "F2" { SwitchToMode "Search"; }
-        bind "Esc" "F3" { SwitchToMode "Normal"; }
+        bind "Enter" "Esc" { SwitchToMode "Search"; }
     }
     renametab {
         bind "Enter" { SwitchToMode "Normal"; }
-        bind "Esc" "F4" {
+        bind "Esc" "F3" {
             UndoRenameTab;
             SwitchToMode "Normal";
         }
@@ -30,8 +30,7 @@ keybinds clear-defaults=true {
     shared_except "locked" {
         bind "F1" { SwitchToMode "Locked"; }
         bind "F2" { SwitchToMode "Search"; }
-        bind "F3" { SwitchToMode "EnterSearch"; }
-        bind "F4" { SwitchToMode "RenameTab"; }
+        bind "F3" { SwitchToMode "RenameTab"; }
         bind "Alt F4" { CloseFocus; }
 
         bind "F5" {
