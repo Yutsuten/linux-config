@@ -9,6 +9,7 @@ const CONFIG: &'static str = "config";
 #[derive(Debug, Clone)]
 enum Message {
     Directory(String),
+    Name(String),
     Waybar(bool),
     AudioSpeakers(bool),
     AudioMic(bool),
@@ -18,6 +19,7 @@ enum Message {
 
 struct Config {
     directory: String,
+    name: String,
     waybar: bool,
     audio_speakers: bool,
     audio_mic: bool,
@@ -39,6 +41,7 @@ fn theme(_state: &Config) -> iced::Theme {
 impl fmt::Display for Config {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f, "directory={}", self.directory)?;
+        writeln!(f, "name={}", self.name)?;
         writeln!(f, "waybar={}", self.waybar)?;
         writeln!(f, "audio-speakers={}", self.audio_speakers)?;
         writeln!(f, "audio-mic={}", self.audio_mic)?;
@@ -53,6 +56,7 @@ impl Default for Config {
         // Default values
         let mut config = Self {
             directory: format!("{home}/Videos"),
+            name: String::new(),
             waybar: true,
             audio_speakers: true,
             audio_mic: true,
@@ -75,6 +79,7 @@ impl Default for Config {
             let key_value: Vec<&str> = line.split('=').collect();
             match key_value[0] {
                 "directory" => config.directory = key_value[1].to_string(),
+                "name" => config.name = key_value[1].to_string(),
                 "waybar" => config.waybar = key_value[1] == "true",
                 "audio-speakers" => config.audio_speakers = key_value[1] == "true",
                 "audio-mic" => config.audio_mic = key_value[1] == "true",
@@ -92,6 +97,11 @@ impl Config {
             row![
                 Text::new("Directory"),
                 TextInput::new("/mnt/hdd/Recording", &self.directory).on_input(Message::Directory)
+            ]
+            .spacing(10),
+            row![
+                Text::new("Name (optional)"),
+                TextInput::new("", &self.name).on_input(Message::Name)
             ]
             .spacing(10),
             Checkbox::new("Waybar", self.waybar).on_toggle(Message::Waybar),
@@ -113,6 +123,11 @@ impl Config {
         match message {
             Message::Directory(text) => {
                 self.directory = text;
+                self.changed = true;
+                Task::none()
+            }
+            Message::Name(text) => {
+                self.name = text;
                 self.changed = true;
                 Task::none()
             }

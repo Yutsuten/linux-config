@@ -20,16 +20,19 @@ if test $exitcode -ne 0 || set --query --local _flag_help
 end
 
 set config_file ~/.config/record/config
+set name $argv
 
 # Parse configuration
 if test -f $config_file
     while read --line line
         set key_value (string split '=' $line)
-        if not test (count $key_value) -eq 2
+        if test (count $key_value) -le 1
             continue
         end
         if test $key_value[1] = directory
-            set --global rec_dir $key_value[2]
+            set --global rec_dir (string join '=' $key_value[2..])
+        else if test $key_value[1] = name
+            set name (string join '=' $key_value[2..])
         else if $key_value[2] = true
             switch $key_value[1]
                 case waybar
@@ -74,7 +77,7 @@ set bold (tput bold)
 set reset (tput sgr0)
 
 function debug
-    echo $bold"[$(date '+%FT%T.%N')] $argv"$reset
+    echo $bold"[$(date '+%FT%T.%N')] $name"$reset
 end
 
 function stop_recording
@@ -104,8 +107,8 @@ if set --query rec_waybar
 end
 
 set folder_name $rec_dir/(date '+%Y-%m-%d_%H-%M-%S')
-if test (count $argv) -ge 1
-    set folder_name (string join _ $folder_name $argv)
+if test (count $name) -ge 1
+    set folder_name (string join _ $folder_name $name)
 end
 debug "[INFO] Recording in $folder_name/"
 mkdir $folder_name || return 1
