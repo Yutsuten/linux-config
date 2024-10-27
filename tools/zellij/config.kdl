@@ -1,66 +1,55 @@
 keybinds clear-defaults=true {
     locked {
-        bind "F1" { SwitchToMode "normal"; }
+        bind "F1" { SwitchToMode "Normal"; }
     }
-    search {
+    normal {
+        // Searching
         bind "/" "?" { SwitchToMode "EnterSearch"; }
-        bind "N" { Search "up"; }
-        bind "n" { Search "down"; }
 
-        bind "Up" { ScrollUp; }
-        bind "Down" { ScrollDown; }
-        bind "PageUp" { PageScrollUp; }
-        bind "PageDown" { PageScrollDown; }
-        bind "Home" { ScrollToTop; }
-        bind "End" { ScrollToBottom; }
+        // Tab
+        bind "r" { SwitchToMode "RenameTab"; }
+        bind "Left" { MoveFocusOrTab "Left"; }
+        bind "Right" { MoveFocusOrTab "Right"; }
+        bind "Alt Left" { MoveTab "Left"; }
+        bind "Alt Right" { MoveTab "Right"; }
 
-        bind "F3" { SwitchToMode "EnterSearch"; }
-        bind "Esc" "F2" { SwitchToMode "Normal"; }
-    }
-    entersearch {
-        bind "Enter" "Esc" { SwitchToMode "Search"; }
-    }
-    renametab {
-        bind "Enter" { SwitchToMode "Normal"; }
-        bind "Esc" "F3" {
-            UndoRenameTab;
-            SwitchToMode "Normal";
-        }
-    }
-    shared_except "locked" {
-        bind "F1" { SwitchToMode "Locked"; }
-        bind "F2" { SwitchToMode "Search"; }
-        bind "F3" { SwitchToMode "RenameTab"; }
+        // Panel
         bind "Alt F4" { CloseFocus; }
 
-        bind "F5" {
+        // Utilities
+        bind "Enter" {
             NewTab {
                 name "Fish"
                 layout "compact"
             }
+            SwitchToMode "Locked";
         }
-        bind "Ctrl F5" {
+        bind "t" {
             NewTab {
                 name "Fish"
                 layout "fish_home"
             }
+            SwitchToMode "Locked";
         }
-        bind "F6" {
+        bind "f" {
             Run "zellij-open" "--file-picker" {
                 direction "Down"
             }
+            SwitchToMode "Locked";
         }
-        bind "Ctrl F6" {
+        bind "n" {
             NewTab {
                 name "Nnn"
                 layout "nnn"
             }
+            SwitchToMode "Locked";
         }
-        bind "F8" {
+        bind "o" {
             NewTab {
                 name "Open Project"
                 layout "project"
             }
+            SwitchToMode "Locked";
         }
 
         bind "F9" {
@@ -82,12 +71,37 @@ keybinds clear-defaults=true {
             }
         }
 
-        bind "Alt Left" { MoveFocusOrTab "Left"; }
-        bind "Alt Right" { MoveFocusOrTab "Right"; }
-        bind "Alt Up" { MoveFocus "Up"; }
-        bind "Alt Down" { MoveFocus "Down"; }
-
-        bind "Ctrl z" { SwitchToMode "normal"; }
+        // Disable remaining characters to avoid typing while in normal mode
+        bind "a" "b" "c" "d" "e" "g" "h" "i" "j" "k" "l" "m" "p" "s" "u" "v" "x" "y" "z" {
+            SwitchToMode "Normal";
+        }
+    }
+    search {
+        bind "Esc" "q" { SwitchToMode "Normal"; }
+        bind "/" "?" { SwitchToMode "EnterSearch"; }
+        bind "N" { Search "up"; }
+        bind "n" { Search "down"; }
+    }
+    shared_among "normal" "search" {
+        bind "Up" { ScrollUp; }
+        bind "Down" { ScrollDown; }
+        bind "PageUp" { PageScrollUp; }
+        bind "PageDown" { PageScrollDown; }
+        bind "Home" { ScrollToTop; }
+        bind "End" { ScrollToBottom; }
+    }
+    entersearch {
+        bind "Enter" "Esc" { SwitchToMode "Search"; }
+    }
+    renametab {
+        bind "Enter" { SwitchToMode "Normal"; }
+        bind "Esc" {
+            UndoRenameTab;
+            SwitchToMode "Normal";
+        }
+    }
+    shared_except "locked" {
+        bind "F1" { SwitchToMode "Locked"; }
     }
 }
 
@@ -100,6 +114,7 @@ simplified_ui true
 pane_frames false
 theme "tokyo-night"
 default_layout "compact"
+default_mode "locked"
 ui {
     pane_frames {
         hide_session_name true
