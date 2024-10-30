@@ -72,7 +72,7 @@ keybinds clear-defaults=true {
         }
 
         // Disable remaining characters to avoid typing while in normal mode
-        bind "a" "b" "c" "d" "e" "g" "h" "i" "j" "k" "l" "m" "p" "s" "u" "v" "x" "y" "z" {
+        bind "a" "b" "c" "d" "e" "g" "h" "i" "j" "k" "l" "m" "p" "q" "s" "u" "v" "x" "y" "z" {
             SwitchToMode "Normal";
         }
     }

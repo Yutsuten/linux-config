@@ -1,6 +1,8 @@
 #!/usr/bin/env fish
 
 switch (path extension $nnn)
+    case '.fish'
+        fish $nnn
     case '.gpg'
         gpg-open $nnn
     case '*'

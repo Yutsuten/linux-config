@@ -5,7 +5,6 @@ set attribution_intro       = '%{%x(%a) %H:%M} %f:'
 set browser_sort_dirs_first = yes
 set compose_format          = '【メール作成中】添付%aつ (%lB)'
 set confirm_append          = no
-set copy                    = no
 set date_format             = '%Y-%m-%d %H:%M'
 set delete                  = yes
 set envelope_from           = yes
