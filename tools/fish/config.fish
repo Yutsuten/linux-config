@@ -19,7 +19,6 @@ if test (tty) = /dev/tty1 -a -z "$DISPLAY"
     set -gx QT_QPA_PLATFORM wayland
     set -gx QT_QPA_PLATFORMTHEME qt5ct
     # Input Method
-    set -gx GTK_IM_MODULE fcitx
     set -gx QT_IM_MODULE fcitx
     set -gx XMODIFIERS @im=fcitx
     # Apps
