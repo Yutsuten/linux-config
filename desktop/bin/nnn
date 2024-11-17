@@ -29,7 +29,7 @@ set --append bookmarks 'l:/mnt/hdd'
 set --export NNN_BMS (string join ';' $bookmarks)
 
 set --export NNN_TRASH 1
-/usr/bin/nnn -AeouUT v $argv
+/usr/bin/nnn -AdeouUT v $argv
 
 if test -e "$HOME/.config/nnn/.lastd"
     source "$HOME/.config/nnn/.lastd"

@@ -52,6 +52,7 @@ mime:
 	xdg-mime default mvi.desktop image/jpeg
 	xdg-mime default mvi.desktop image/png
 	xdg-mime default mvi.desktop image/svg
+	xdg-mime default mvi.desktop image/svg+xml
 	xdg-mime default mvi.desktop image/tiff
 	xdg-mime default mvi.desktop image/webp
 
