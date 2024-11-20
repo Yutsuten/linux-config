@@ -16,5 +16,5 @@ min-width = 2
 enable = true
 
 [editor.statusline]
-left = ["mode", "spinner", "file-base-name", "read-only-indicator", "file-modification-indicator"]
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
 right = ["diagnostics", "selections", "register", "position", "total-line-numbers", "file-type", "file-encoding", "file-line-ending"]
