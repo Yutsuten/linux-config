@@ -1,6 +1,7 @@
 theme = "onedark_modified"
 
 [editor]
+auto-pairs = false
 color-modes = true
 cursorline = true
 scrolloff = 3

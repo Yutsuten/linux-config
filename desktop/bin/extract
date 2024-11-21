@@ -28,7 +28,11 @@ end
 
 switch $argv[1]
     case '*.zip'
-        unar $argv[1] || unzip $argv[1]
+        if which unar &>/dev/null
+            unar $argv[1]
+        else
+            unzip $argv[1]
+        end
     case '*.rar'
         unar $argv[1]
     case '*.tar'
