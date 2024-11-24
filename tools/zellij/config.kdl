@@ -24,21 +24,30 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "Locked";
         }
-        bind "t" {
-            NewTab {
-                name "Fish"
-                layout "fish_home"
-            }
-            SwitchToMode "Locked";
-        }
         bind "f" {
             Run "zellij-open" "--file-picker" {
                 direction "Down"
             }
             SwitchToMode "Locked";
         }
+        bind "F" {
+            NewTab {
+                name "Nnn"
+                layout "nnn"
+            }
+            SwitchToMode "Locked";
+        }
+        bind "m" {
+            NewTab {
+                cwd ""
+                name "NeoMutt"
+                layout "neomutt"
+            }
+            SwitchToMode "Locked";
+        }
         bind "n" {
             NewTab {
+                cwd ""
                 name "Nnn"
                 layout "nnn"
             }
@@ -51,7 +60,15 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "Locked";
         }
+        bind "t" {
+            NewTab {
+                name "Fish"
+                layout "fish_home"
+            }
+            SwitchToMode "Locked";
+        }
 
+        // IDE
         bind "F9" {
             NewTab {
                 name "Build & Run"
@@ -72,7 +89,7 @@ keybinds clear-defaults=true {
         }
 
         // Disable remaining characters to avoid typing while in normal mode
-        bind "a" "b" "c" "d" "e" "g" "h" "i" "j" "k" "l" "m" "p" "q" "s" "u" "v" "x" "y" "z" {
+        bind "a" "b" "c" "d" "e" "g" "h" "i" "j" "k" "l" "p" "q" "s" "u" "v" "x" "y" "z" {
             SwitchToMode "Normal";
         }
     }

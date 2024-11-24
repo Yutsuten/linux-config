@@ -1,0 +1,8 @@
+layout {
+    pane size=1 borderless=true {
+        plugin location="compact-bar"
+    }
+    pane command="neomutt" {
+        close_on_exit true
+    }
+}
