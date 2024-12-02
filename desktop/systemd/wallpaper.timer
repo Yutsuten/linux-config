@@ -2,7 +2,7 @@
 Description=change wallpaper periodically
 
 [Timer]
-OnCalendar=*-*-* 04:00:00
+OnCalendar=Sat *-*-* 04:00:00
 Persistent=true
 
 [Install]
