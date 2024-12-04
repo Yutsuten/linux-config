@@ -252,19 +252,9 @@ function rotate_video(amt)
     mp.set_property_number("video-rotate", rot)
 end
 
-function reset_pan_if_visible()
-    local dim = mp.get_property_native("osd-dimensions")
-    if not dim then return end
-    local command = ""
-    if (dim.ml + dim.mr >= 0) then
-        command = command .. "no-osd set video-pan-x 0" .. ";"
-    end
-    if (dim.mt + dim.mb >= 0) then
-        command = command .. "no-osd set video-pan-y 0" .. ";"
-    end
-    if command ~= "" then
-        mp.command(command)
-    end
+function reset_pan()
+    mp.set_property("video-pan-x", 0)
+    mp.set_property("video-pan-y", 0)
 end
 
 mp.add_key_binding(nil, "drag-to-pan", drag_to_pan_handler, {complex = true})
@@ -273,5 +263,5 @@ mp.add_key_binding(nil, "cursor-centric-zoom", cursor_centric_zoom_handler)
 mp.add_key_binding(nil, "align-border", align_border)
 mp.add_key_binding(nil, "pan-image", pan_image)
 mp.add_key_binding(nil, "rotate-video", rotate_video)
-mp.add_key_binding(nil, "reset-pan-if-visible", reset_pan_if_visible)
+mp.add_key_binding(nil, "reset-pan", reset_pan)
 mp.add_key_binding(nil, "force-print-filename", force_print_filename)

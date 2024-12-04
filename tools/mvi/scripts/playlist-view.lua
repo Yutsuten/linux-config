@@ -256,6 +256,11 @@ function reload_bindings()
     bindings[opts.ACCEPT] = function()
         load_selection()
         if opts.close_on_load_file then stop() end
+        mp.set_property("video-zoom", 0)
+        mp.set_property("video-pan-x", 0)
+        mp.set_property("video-pan-y", 0)
+        mp.set_property("video-unscaled", "downscale-big")
+        mp.set_property("video-rotate", 0)
     end
     bindings[opts.CANCEL] = function() stop() end
     bindings[opts.FLAG]   = function()
