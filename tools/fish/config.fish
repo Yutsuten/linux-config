@@ -8,7 +8,7 @@ set -gx VISUAL edit
 
 fish_add_path $HOME/.local/bin
 
-if test (tty) = /dev/tty1 -a -z "$DISPLAY"
+if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     # Gnome
     gsettings set org.gnome.desktop.interface gtk-theme Arc
     gsettings set org.gnome.desktop.interface icon-theme Arc
