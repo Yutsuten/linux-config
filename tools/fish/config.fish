@@ -15,9 +15,6 @@ if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     gsettings set org.gnome.desktop.interface font-name 'Noto Sans CJK JP 12'
     gsettings set org.gnome.desktop.interface cursor-theme capitaine-cursors
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-    # QT
-    set -gx QT_QPA_PLATFORM wayland
-    set -gx QT_QPA_PLATFORMTHEME qt5ct
     # Input Method
     set -gx QT_IM_MODULE fcitx
     set -gx XMODIFIERS @im=fcitx

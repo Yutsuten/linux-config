@@ -1,4 +1,6 @@
 BROWSER=firefox
 EDITOR=helix
 PAGER="less -P?n -R"
+QT_QPA_PLATFORM=wayland
+QT_QPA_PLATFORMTHEME=qt5ct
 VISUAL=helix
