@@ -10,7 +10,6 @@ function gallery_new()
         -- public, can be modified by user
         items = {},
         item_to_overlay_path = function(index, item) return "" end,
-        item_to_thumbnail_params = function(index, item) return "", 0 end,
         item_to_text = function(index, item) return "", true end,
         item_to_border = function(index, item) return 0, "" end,
         ass_show = function(ass) end,
@@ -60,7 +59,6 @@ function gallery_new()
             placeholders = "",
         },
         generators = {}, -- list of generator scripts
-
 
     }, gallery_mt)
 
@@ -135,13 +133,11 @@ function gallery_mt.refresh_overlays(gallery, force)
         for i = #todo, 1, -1 do
             local generator = gallery.generators[i % #gallery.generators + 1]
             local t = todo[i]
-            local input_path, time = gallery.item_to_thumbnail_params(t.index, gallery.items[t.index])
             mp.commandv("script-message-to", generator, "push-thumbnail-front",
                 mp.get_script_name(),
-                input_path,
+                gallery.items[t.index].filename,
                 tostring(g.thumbnail_size[1]),
                 tostring(g.thumbnail_size[2]),
-                time,
                 t.output,
                 gallery.config.accurate and "true" or "false",
                 gallery.config.generate_thumbnails_with_mpv and "true" or "false"

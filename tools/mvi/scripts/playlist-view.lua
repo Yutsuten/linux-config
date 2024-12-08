@@ -19,8 +19,6 @@ require 'gallery'
 -- global variables
 
 flags = {}
-resume = {}
-did_pause = false
 hash_cache = {}
 playlist_pos = 0
 
@@ -51,17 +49,10 @@ opts = {
     thumbnail_size = "(ww * wh <= 1366 * 768) and {192, 108} or {288, 162}",
     max_thumbnails = 64,
 
-    take_thumbnail_at = "20%",
-
-    load_file_on_toggle_off = false,
     close_on_load_file = true,
-    pause_on_start = true,
-    resume_on_stop = "only-if-did-pause",
     follow_playlist_position = false,
-    remember_time_position = true,
 
     start_on_mpv_startup = false,
-    start_on_file_end = true,
 
     show_text = true,
     show_title = true,
@@ -130,8 +121,6 @@ function reload_config()
 end
 options.read_options(opts, mp.get_script_name(), reload_config)
 
-
-
 local sha256
 --[[
 minified code below is a combination of:
@@ -159,11 +148,8 @@ gallery.item_to_overlay_path = function(index, item)
         filename_hash = string.sub(sha256(normalize_path(filename)), 1, 12)
         hash_cache[filename] = filename_hash
     end
-    local thumb_filename = string.format("%s_%d_%d_%s", filename_hash, gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2], string.gsub(opts.take_thumbnail_at, '%%', 'p'))
+    local thumb_filename = string.format("%s_%d_%d", filename_hash, gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2])
     return utils.join_path(thumbs_dir, thumb_filename)
-end
-gallery.item_to_thumbnail_params = function(index, item)
-    return item.filename, opts.take_thumbnail_at
 end
 function blend_colors(colors)
     if #colors == 1 then return colors[1] end
@@ -214,7 +200,6 @@ gallery.item_to_text = function(index, item)
     end
     return f, true
 end
-
 
 function setup_ui_handlers()
     for key, func in pairs(bindings_repeat) do
@@ -495,11 +480,6 @@ function start()
     gallery:set_selection(playlist_pos or 1)
     if not gallery:activate() then return end
 
-    did_pause = false
-    if opts.pause_on_start and not mp.get_property_bool("pause", false) then
-        mp.set_property_bool("pause", true)
-        did_pause = true
-    end
     if opts.command_on_open ~= "" then
         mp.command(opts.command_on_open)
     end
@@ -515,32 +495,15 @@ end
 
 function load_selection()
     local sel = mp.get_property_number("playlist-pos-1", -1)
-    if sel == gallery.selection then return end
-    if opts.remember_time_position then
-        if sel then
-            local time = mp.get_property_number("time-pos")
-            if time and time > 1 then
-                resume[gallery.items[sel].filename] = time
-            end
-        end
-        mp.set_property("playlist-pos-1", gallery.selection)
-        local time = resume[gallery.items[gallery.selection].filename]
-        if not time then return end
-        local func
-        func = function()
-            mp.commandv("osd-msg-bar", "seek", time, "absolute")
-            mp.unregister_event(func)
-        end
-        mp.register_event("file-loaded", func)
-    else
-        mp.set_property("playlist-pos-1", gallery.selection)
+    if sel == gallery.selection then
+        return
     end
+    mp.set_property("playlist-pos-1", gallery.selection)
 end
 
 function stop()
-    if not gallery.active then return end
-    if opts.resume_on_stop == "yes" or (opts.resume_on_stop == "only-if-did-pause" and did_pause) then
-        mp.set_property_bool("pause", false)
+    if not gallery.active then
+        return
     end
     if opts.command_on_close ~= "" then
         mp.command(opts.command_on_close)
@@ -555,11 +518,10 @@ function stop()
 end
 
 function toggle()
-    if not gallery.active then
-        start()
-    else
-        if opts.load_file_on_toggle_off then load_selection() end
+    if gallery.active then
         stop()
+    else
+        start()
     end
 end
 
@@ -582,14 +544,6 @@ end
 mp.register_event("shutdown", write_flag_file)
 
 reload_config()
-
-if opts.start_on_file_end then
-    mp.observe_property("eof-reached", "bool", function(_, val)
-        if val and mp.get_property_number("playlist-count") > 1 then
-            start()
-        end
-    end)
-end
 
 if opts.start_on_mpv_startup then
     local autostart
