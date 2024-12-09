@@ -2,6 +2,7 @@ local utils = require 'mp.utils'
 local msg = require 'mp.msg'
 local assdraw = require 'mp.assdraw'
 
+local max_thumbnails = 64
 local gallery_mt = {}
 gallery_mt.__index = gallery_mt
 
@@ -21,13 +22,11 @@ function gallery_new()
             scrollbar_left_side = false,
             scrollbar_min_size = 10,
             overlay_range = 0,
-            max_thumbnails = 64,
             show_placeholders = true,
             always_show_placeholders = false,
             placeholder_color = '222222',
             text_size = 28,
             align_text = true,
-            generate_thumbnails_with_mpv = false,
         },
 
         -- private, can be read but should not be modified
@@ -61,7 +60,7 @@ function gallery_new()
 
     }, gallery_mt)
 
-    for i = 1, gallery.config.max_thumbnails do
+    for i = 1, max_thumbnails do
         gallery.overlays.active[i] = false
     end
     return gallery
@@ -137,8 +136,7 @@ function gallery_mt.refresh_overlays(gallery, force)
                 gallery.items[t.index].filename,
                 tostring(g.thumbnail_size[1]),
                 tostring(g.thumbnail_size[2]),
-                t.output,
-                gallery.config.generate_thumbnails_with_mpv and "true" or "false"
+                t.output
             )
         end
     end
@@ -176,8 +174,8 @@ function gallery_mt.compute_internal_geometry(gallery)
         g.effective_spacing[2] = g.size[2]
         return
     end
-    if (g.rows * g.columns > gallery.config.max_thumbnails) then
-        local r = math.sqrt(g.rows * g.columns / gallery.config.max_thumbnails)
+    if (g.rows * g.columns > max_thumbnails) then
+        local r = math.sqrt(g.rows * g.columns / max_thumbnails)
         g.rows = math.floor(g.rows / r)
         g.columns = math.floor(g.columns / r)
     end

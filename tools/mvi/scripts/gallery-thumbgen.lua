@@ -27,7 +27,7 @@ local function file_exists(path)
     return info ~= nil and info.is_file
 end
 
-function thumbnail_command(input_path, width, height, output_path, with_mpv)
+function thumbnail_command(input_path, width, height, output_path)
     local vf = string.format("%s,%s",
         string.format("scale=iw*min(1\\,min(%d/iw\\,%d/ih)):-2", width, height),
         string.format("pad=%d:%d:(%d-iw)/2:(%d-ih)/2:color=0x00000000", width, height, width, height)
@@ -35,32 +35,18 @@ function thumbnail_command(input_path, width, height, output_path, with_mpv)
     local out = {}
     local add = function(table) out = append_table(out, table) end
 
-    if not with_mpv then
-        out = { "ffmpeg" }
-        add({
-            "-i", input_path,
-            "-vf", vf,
-            "-map", "v:0",
-            "-f", "rawvideo",
-            "-pix_fmt", "bgra",
-            "-c:v", "rawvideo",
-            "-frames:v", "1",
-            "-y", "-loglevel", "quiet",
-            output_path
-        })
-    else
-        out = { "mpv", input_path }
-        add({
-            "--no-config", "--msg-level=all=no",
-            "--vf=lavfi=[" .. vf .. ",format=bgra]",
-            "--audio=no",
-            "--sub=no",
-            "--frames=1",
-            "--image-display-duration=0",
-            "--of=rawvideo", "--ovc=rawvideo",
-            "--o="..output_path
-        })
-    end
+    out = { "ffmpeg" }
+    add({
+        "-i", input_path,
+        "-vf", vf,
+        "-map", "v:0",
+        "-f", "rawvideo",
+        "-pix_fmt", "bgra",
+        "-c:v", "rawvideo",
+        "-frames:v", "1",
+        "-y", "-loglevel", "quiet",
+        output_path
+    })
     return out
 end
 
@@ -76,8 +62,7 @@ function generate_thumbnail(thumbnail_job)
         thumbnail_job.input_path,
         thumbnail_job.width,
         thumbnail_job.height,
-        tmp_output_path,
-        thumbnail_job.with_mpv
+        tmp_output_path
     )
 
     local res = utils.subprocess({ args = command, cancellable = false })
@@ -107,7 +92,6 @@ function handle_events(wait)
                     width = tonumber(e.args[4]),
                     height = tonumber(e.args[5]),
                     output_path = e.args[6],
-                    with_mpv = (e.args[7] == "true"),
                 }
                 if e.args[1] == "push-thumbnail-front" then
                     jobs_queue[#jobs_queue + 1] = thumbnail_job
