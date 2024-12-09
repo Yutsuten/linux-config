@@ -38,17 +38,15 @@ gallery = gallery_new()
 gallery.config.always_show_placeholders = true
 
 opts = {
-    thumbs_dir = "~/.cache/thumbnails/mpv-gallery/",
+    thumbs_dir = "~/.cache/thumbnails/mvi-gallery",
+    close_on_load_file = true,
+    start_on_mpv_startup = false,
+    follow_playlist_position = true,
 
     gallery_position = "{ (ww - gw) / 2, (wh - gh) / 2}",
     gallery_size = "{ 9 * ww / 10, 9 * wh / 10 }",
     min_spacing = "{ 15, 15 }",
     thumbnail_size = "(ww * wh <= 1366 * 768) and {192, 108} or {288, 162}",
-
-    close_on_load_file = true,
-    follow_playlist_position = false,
-
-    start_on_mpv_startup = false,
 
     show_text = true,
     show_title = true,
