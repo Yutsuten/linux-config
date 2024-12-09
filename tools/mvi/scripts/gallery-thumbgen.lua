@@ -27,7 +27,7 @@ local function file_exists(path)
     return info ~= nil and info.is_file
 end
 
-function thumbnail_command(input_path, width, height, output_path, accurate, with_mpv)
+function thumbnail_command(input_path, width, height, output_path, with_mpv)
     local vf = string.format("%s,%s",
         string.format("scale=iw*min(1\\,min(%d/iw\\,%d/ih)):-2", width, height),
         string.format("pad=%d:%d:(%d-iw)/2:(%d-ih)/2:color=0x00000000", width, height, width, height)
@@ -37,9 +37,6 @@ function thumbnail_command(input_path, width, height, output_path, accurate, wit
 
     if not with_mpv then
         out = { "ffmpeg" }
-        if not accurate then
-            add({"-noaccurate_seek"})
-        end
         add({
             "-i", input_path,
             "-vf", vf,
@@ -80,7 +77,6 @@ function generate_thumbnail(thumbnail_job)
         thumbnail_job.width,
         thumbnail_job.height,
         tmp_output_path,
-        thumbnail_job.accurate,
         thumbnail_job.with_mpv
     )
 
@@ -111,8 +107,7 @@ function handle_events(wait)
                     width = tonumber(e.args[4]),
                     height = tonumber(e.args[5]),
                     output_path = e.args[6],
-                    accurate = (e.args[7] == "true"),
-                    with_mpv = (e.args[8] == "true"),
+                    with_mpv = (e.args[7] == "true"),
                 }
                 if e.args[1] == "push-thumbnail-front" then
                     jobs_queue[#jobs_queue + 1] = thumbnail_job

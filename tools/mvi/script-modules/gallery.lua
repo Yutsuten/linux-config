@@ -9,7 +9,7 @@ function gallery_new()
     local gallery = setmetatable({
         -- public, can be modified by user
         items = {},
-        item_to_overlay_path = function(index, item) return "" end,
+        item_to_overlay_path = function(item) return "" end,
         item_to_text = function(index, item) return "", true end,
         item_to_border = function(index, item) return 0, "" end,
         ass_show = function(ass) end,
@@ -27,7 +27,6 @@ function gallery_new()
             placeholder_color = '222222',
             text_size = 28,
             align_text = true,
-            accurate = false,
             generate_thumbnails_with_mpv = false,
         },
 
@@ -108,7 +107,7 @@ function gallery_mt.refresh_overlays(gallery, force)
         local index = gallery.view.first + view_index - 1
         local active = o.active[view_index]
         if index > 0 and index <= #gallery.items then
-            local thumb_path = gallery.item_to_overlay_path(index, gallery.items[index])
+            local thumb_path = gallery.item_to_overlay_path(gallery.items[index])
             if not force and active == thumb_path then
                 -- nothing to do
             elseif file_exists(thumb_path) then
@@ -139,7 +138,6 @@ function gallery_mt.refresh_overlays(gallery, force)
                 tostring(g.thumbnail_size[1]),
                 tostring(g.thumbnail_size[2]),
                 t.output,
-                gallery.config.accurate and "true" or "false",
                 gallery.config.generate_thumbnails_with_mpv and "true" or "false"
             )
         end

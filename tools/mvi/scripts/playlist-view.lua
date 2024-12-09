@@ -36,7 +36,6 @@ thumb_dir = ""
 
 gallery = gallery_new()
 gallery.config.always_show_placeholders = true
-gallery.config.accurate = false
 
 opts = {
     thumbs_dir = "~/.cache/thumbnails/mpv-gallery/",
@@ -141,15 +140,12 @@ gallery.ass_show = function(new_ass)
     ass_changed = true
     ass = new_ass
 end
-gallery.item_to_overlay_path = function(index, item)
+gallery.item_to_overlay_path = function(item)
     local filename = item.filename
-    local filename_hash = hash_cache[filename]
-    if filename_hash == nil then
-        filename_hash = string.sub(sha256(normalize_path(filename)), 1, 12)
-        hash_cache[filename] = filename_hash
+    if hash_cache[filename] == nil then
+        hash_cache[filename] = string.sub(sha256(normalize_path(filename)), 1, 30)
     end
-    local thumb_filename = string.format("%s_%d_%d", filename_hash, gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2])
-    return utils.join_path(thumbs_dir, thumb_filename)
+    return utils.join_path(thumbs_dir, hash_cache[filename])
 end
 function blend_colors(colors)
     if #colors == 1 then return colors[1] end
