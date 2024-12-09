@@ -39,7 +39,6 @@ gallery.config.always_show_placeholders = true
 
 opts = {
     thumbs_dir = "~/.cache/thumbnails/mpv-gallery/",
-    mkdir_thumbs = true,
 
     gallery_position = "{ (ww - gw) / 2, (wh - gh) / 2}",
     gallery_size = "{ 9 * ww / 10, 9 * wh / 10 }",
@@ -70,9 +69,6 @@ opts = {
     flagged_border_size = 4,
     placeholder_color = "222222",
 
-    command_on_open = "",
-    command_on_close = "",
-
     flagged_file_path = "./mpv_gallery_flagged",
 
     mouse_support = true,
@@ -98,12 +94,8 @@ function reload_config()
     thumbs_dir = string.gsub(opts.thumbs_dir, "^~", os.getenv("HOME") or "~")
     local res = utils.file_info(thumbs_dir)
     if not res or not res.is_dir then
-        if opts.mkdir_thumbs then
-            local args = { "mkdir", "-p", thumbs_dir }
-            utils.subprocess({ args = args, playback_only = false })
-        else
-            msg.error(string.format("Thumbnail directory \"%s\" does not exist", thumbs_dir))
-        end
+        local args = { "mkdir", "-p", thumbs_dir }
+        utils.subprocess({ args = args, playback_only = false })
     end
 
     compute_geometry = get_geometry_function()
@@ -459,9 +451,6 @@ function start()
     gallery:set_selection(playlist_pos or 1)
     if not gallery:activate() then return end
 
-    if opts.command_on_open ~= "" then
-        mp.command(opts.command_on_open)
-    end
     mp.observe_property("playlist-pos-1", "native", playlist_pos_changed)
     mp.observe_property("playlist", "native", playlist_changed)
     mp.observe_property("osd-width", "native", mark_geometry_stale)
@@ -483,9 +472,6 @@ end
 function stop()
     if not gallery.active then
         return
-    end
-    if opts.command_on_close ~= "" then
-        mp.command(opts.command_on_close)
     end
     mp.unobserve_property(playlist_pos_changed)
     mp.unobserve_property(playlist_changed)
