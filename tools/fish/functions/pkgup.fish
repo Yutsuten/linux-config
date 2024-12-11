@@ -49,8 +49,8 @@ function pkgup --description 'Update customly installed packages'
                 popd
                 ln --symbolic --relative --force ~/.local/games/osu/squashfs-root/AppRun ~/.local/bin/'osu!'
                 ln --symbolic --relative --force ~/.local/games/osu/squashfs-root/'osu!.desktop' ~/.local/share/applications/'osu!.desktop'
-                if not test -f /usr/share/pixmaps/'osu!.png'
-                    sudo cp -a ~/.local/games/osu/squashfs-root/'osu!.png' /usr/share/pixmaps/'osu!.png'
+                if not test -f /usr/share/pixmaps/osu.png
+                    sudo cp -a ~/.local/games/osu/squashfs-root/osu.png /usr/share/pixmaps/osu.png
                 end
             case '*'
                 echo "Unknown package $package. Skipping."
