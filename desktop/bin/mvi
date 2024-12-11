@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 if test (count $argv) -eq 0
-    set image_files (string match --regex --entire --ignore-case '\.jpe?g$|\.png$|\.gif$|\.webp$|\.svg$|\.bmp$|\.avif$|\.heifs?$|\.tiff?$' *)
+    set image_files (string match --regex --entire --ignore-case '\.jpe?g$|\.png$|\.gif$|\.webp$|\.svg$|\.bmp$|\.avif$|\.hei[cf]s?$|\.tiff?$' *)
     if test (count $image_files)
-        mpv --really-quiet --config-dir=$HOME/.config/mvi $image_files
+        mpv --msg-level=all=warn --config-dir=$HOME/.config/mvi $image_files
     end
 else
-    mpv --really-quiet --config-dir=$HOME/.config/mvi $argv
+    mpv --msg-level=all=warn --config-dir=$HOME/.config/mvi $argv
 end
-find ~/.cache/thumbnails/mpv-gallery/ -maxdepth 1 -type f -amin +43200 -delete # 30 days
+find ~/.cache/thumbnails/mvi-gallery/ -maxdepth 1 -type f -amin +43200 -delete # 30 days

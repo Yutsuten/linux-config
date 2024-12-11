@@ -1,5 +1,5 @@
 function tts --description 'Text-to-Speech using Google API'
-    argparse 'h/help' 'g/girl' -- $argv
+    argparse h/help g/girl -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 -o (count $argv) -eq 0 || set --query --local _flag_help
@@ -30,12 +30,12 @@ function tts --description 'Text-to-Speech using Google API'
     end
 
     curl --silent -X POST -H 'Content-Type:application/json' \
-      -d '{"audioConfig": {"audioEncoding": "OGG_OPUS"}, "input": {"ssml": "<speak>'"$argv"'</speak>"}, "voice": {"languageCode": "ja-JP", "name": "'$voice'"}}' \
-      "https://texttospeech.googleapis.com/v1/text:synthesize?key=$GOOGLE_TTS_API_KEY" \
+        -d '{"audioConfig": {"audioEncoding": "OGG_OPUS"}, "input": {"ssml": "<speak>'"$argv"'</speak>"}, "voice": {"languageCode": "ja-JP", "name": "'$voice'"}}' \
+        "https://texttospeech.googleapis.com/v1/text:synthesize?key=$GOOGLE_TTS_API_KEY" \
         | jq -r .audioContent \
-        | base64 --decode > $output_file
+        | base64 --decode >$output_file
 
     path basename $output_file
-    mpv --really-quiet --volume=100 $output_file
+    mpv --msg-level=all=warn --volume=100 $output_file
     return 0
 end

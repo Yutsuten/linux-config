@@ -47,6 +47,7 @@ mime:
 	xdg-mime default mvi.desktop image/avif
 	xdg-mime default mvi.desktop image/bmp
 	xdg-mime default mvi.desktop image/gif
+	xdg-mime default mvi.desktop image/heic
 	xdg-mime default mvi.desktop image/heif
 	xdg-mime default mvi.desktop image/ico
 	xdg-mime default mvi.desktop image/jpeg

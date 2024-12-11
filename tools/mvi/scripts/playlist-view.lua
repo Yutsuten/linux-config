@@ -113,13 +113,12 @@ end
 gallery.item_to_overlay_path = function(item)
     local filename = item.filename
     if hash_cache[filename] == nil then
-        local cmd_res = mp.command_native({
-            name = "subprocess",
-            playback_only = false,
-            capture_stdout = true,
+        local sha256sum_res = utils.subprocess({
             args = {"sha256sum", filename},
+            capture_stdout = true,
+            playback_only = false,
         })
-        hash_cache[filename] = string.format("%s_%d-%d", string.sub(cmd_res.stdout, 1, 64), gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2])
+        hash_cache[filename] = string.format("%s_%d-%d", string.sub(sha256sum_res.stdout, 1, 64), gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2])
     end
     return utils.join_path(thumbs_dir, hash_cache[filename])
 end
