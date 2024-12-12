@@ -28,8 +28,8 @@ function fish_prompt --description 'Write out the prompt'
     set -l prompt_status (__fish_print_pipestatus ' [' ']' '|' "$status_color" "$statusb_color" $last_pipestatus)
 
     echo -n -s \n \
-      (prompt_jobs) (prompt_state) (prompt_login) (set_color $color_cwd) (prompt_pwd) $normal (string match -qr '^/media/sshfs/' $PWD || fish_vcs_prompt) $normal $prompt_status \n \
-      (string repeat -n $SHLVL $suffix) ' '
+        (prompt_jobs) (prompt_state) (prompt_login) (set_color $color_cwd) (prompt_pwd --dir-length=0) $normal (string match -qr '^/media/sshfs/' $PWD || fish_vcs_prompt) $normal $prompt_status \n \
+        (string repeat -n $SHLVL $suffix) ' '
 end
 
 function prompt_jobs --description 'Display number of running jobs'
