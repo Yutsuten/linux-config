@@ -106,17 +106,17 @@ function gallery_mt.refresh_overlays(gallery, force)
         local index = gallery.view.first + view_index - 1
         local active = o.active[view_index]
         if index > 0 and index <= #gallery.items then
-            local thumb_path = gallery.item_to_overlay_path(gallery.items[index])
+            local thumb_path, tmp_path = gallery.item_to_overlay_path(gallery.items[index])
             if not force and active == thumb_path then
                 -- nothing to do
-            elseif file_exists(thumb_path) then
-                gallery:show_overlay(view_index, thumb_path)
+            elseif file_exists(tmp_path) then
+                gallery:show_overlay(view_index, tmp_path)
             else
                 -- need to generate that thumbnail
                 o.active[view_index] = false
                 mp.commandv("overlay-remove", gallery.config.overlay_range + view_index - 1)
-                o.missing[thumb_path] = view_index
-                todo[#todo + 1] = { index = index, output = thumb_path }
+                o.missing[tmp_path] = view_index
+                todo[#todo + 1] = { index = index, thumb_out = thumb_path, bgra_out = tmp_path }
             end
         else
             -- might happen if we're close to the end of gallery.items
@@ -136,7 +136,8 @@ function gallery_mt.refresh_overlays(gallery, force)
                 gallery.items[t.index].filename,
                 tostring(g.thumbnail_size[1]),
                 tostring(g.thumbnail_size[2]),
-                t.output
+                t.thumb_out,
+                t.bgra_out
             )
         end
     end

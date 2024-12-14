@@ -15,68 +15,73 @@ local jobs_queue = {} -- queue of thumbnail jobs
 local failed = {} -- list of failed output paths, to avoid redoing them
 local script_id = mp.get_script_name() .. utils.getpid()
 
-function append_table(lhs, rhs)
-    for i = 1,#rhs do
-        lhs[#lhs+1] = rhs[i]
-    end
-    return lhs
-end
-
 local function file_exists(path)
     local info = utils.file_info(path)
     return info ~= nil and info.is_file
 end
 
-function thumbnail_command(input_path, width, height, output_path)
-    local vf = string.format("%s,%s",
-        string.format("scale=iw*min(1\\,min(%d/iw\\,%d/ih)):-2", width, height),
-        string.format("pad=%d:%d:(%d-iw)/2:(%d-ih)/2:color=0x00000000", width, height, width, height)
-    )
-    local out = {}
-    local add = function(table) out = append_table(out, table) end
-
-    out = { "ffmpeg" }
-    add({
-        "-i", input_path,
-        "-vf", vf,
-        "-map", "v:0",
-        "-f", "rawvideo",
-        "-pix_fmt", "bgra",
-        "-c:v", "rawvideo",
-        "-frames:v", "1",
-        "-y", "-loglevel", "quiet",
-        output_path
+function thumbnail_command(command_args, tmp_output_path, output_path)
+    local res = utils.subprocess({
+        args = command_args,
+        cancellable = false
     })
-    return out
+    -- "atomically" generate the output to avoid loading half-generated thumbnails (results in crashes)
+    if res.status ~= 0 then
+        return false
+    end
+    local info = utils.file_info(tmp_output_path)
+    if not info or not info.is_file or info.size == 0 or not os.rename(tmp_output_path, output_path) then
+        return false
+    end
+    return true
+end
+
+function generate_tmp_filepath(path)
+    local dir, name = utils.split_path(path)
+    return utils.join_path(dir, "tmp" .. script_id .. "-" .. name)
 end
 
 function generate_thumbnail(thumbnail_job)
-    if file_exists(thumbnail_job.output_path) then
-        return true
-    end
-
-    local dir, _ = utils.split_path(thumbnail_job.output_path)
-    local tmp_output_path = utils.join_path(dir, script_id)
-
-    local command = thumbnail_command(
-        thumbnail_job.input_path,
-        thumbnail_job.width,
-        thumbnail_job.height,
-        tmp_output_path
-    )
-
-    local res = utils.subprocess({ args = command, cancellable = false })
-    --"atomically" generate the output to avoid loading half-generated thumbnails (results in crashes)
-    if res.status == 0 then
-        local info = utils.file_info(tmp_output_path)
-        if not info or not info.is_file or info.size == 0 then
+    local target_size = thumbnail_job.width .. "x" .. thumbnail_job.height
+    if not file_exists(thumbnail_job.thumb_path) then
+        local tmp_output_path = generate_tmp_filepath(thumbnail_job.thumb_path)
+        local success = thumbnail_command(
+            {
+                "magick", thumbnail_job.input_path .. "[0]",
+                "-alpha", "set",
+                "-resize", target_size,
+                "-background", "none",
+                "-gravity", "center",
+                "-extent", target_size,
+                tmp_output_path,
+            },
+            tmp_output_path,
+            thumbnail_job.thumb_path
+        )
+        if not success then
             return false
         end
-        if os.rename(tmp_output_path, thumbnail_job.output_path) then
-            return true
+    end
+    if not file_exists(thumbnail_job.bgra_path) then
+        local tmp_output_path = generate_tmp_filepath(thumbnail_job.bgra_path)
+        -- Explanation of the bellow command's necessity is on mpv's documentation:
+        -- "[...] only bgra is defined. [...] This uses premultiplied alpha: every color component is already multiplied with the alpha component."
+        local success = thumbnail_command(
+            {
+                "magick", thumbnail_job.thumb_path,
+                "(", "+clone", "-alpha", "extract", ")", -- clone + extract alpha channel as grayscale
+                "-channel", "RGB",                       -- next command only apply to colors (RGB)
+                "-compose", "multiply", "-composite",    -- perform multiply between colors and extracted alpha
+                "BGRA:" .. tmp_output_path,
+            },
+            tmp_output_path,
+            thumbnail_job.bgra_path
+        )
+        if not success then
+            return false
         end
     end
-    return false
+    return true
 end
 
 function handle_events(wait)
@@ -91,7 +96,8 @@ function handle_events(wait)
                     input_path = e.args[3],
                     width = tonumber(e.args[4]),
                     height = tonumber(e.args[5]),
-                    output_path = e.args[6],
+                    thumb_path = e.args[6],
+                    bgra_path = e.args[7]
                 }
                 if e.args[1] == "push-thumbnail-front" then
                     jobs_queue[#jobs_queue + 1] = thumbnail_job
@@ -132,11 +138,11 @@ function mp_event_loop()
         broadcast_func()
         while #jobs_queue > 0 do
             local thumbnail_job = jobs_queue[#jobs_queue]
-            if not failed[thumbnail_job.output_path] then
+            if not failed[thumbnail_job.bgra_path] then
                 if generate_thumbnail(thumbnail_job) then
-                    mp.commandv("script-message-to", thumbnail_job.requester, "thumbnail-generated", thumbnail_job.output_path)
+                    mp.commandv("script-message-to", thumbnail_job.requester, "thumbnail-generated", thumbnail_job.bgra_path)
                 else
-                    failed[thumbnail_job.output_path] = true
+                    failed[thumbnail_job.bgra_path] = true
                 end
             end
             jobs_queue[#jobs_queue] = nil

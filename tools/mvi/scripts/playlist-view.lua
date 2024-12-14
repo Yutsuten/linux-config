@@ -33,6 +33,7 @@ geometry_changed = false
 pending_selection = nil
 
 thumb_dir = ""
+bgra_thumb_tmpdir = ""
 
 gallery = gallery_new()
 gallery.config.always_show_placeholders = true
@@ -47,6 +48,7 @@ opts = {
     gallery_size = "{ 9 * ww / 10, 9 * wh / 10 }",
     min_spacing = "{ 15, 15 }",
     thumbnail_size = "(ww * wh <= 1366 * 768) and {192, 108} or {288, 162}",
+    thumbnail_format = "webp",
 
     show_text = true,
     show_title = true,
@@ -120,7 +122,7 @@ gallery.item_to_overlay_path = function(item)
         })
         hash_cache[filename] = string.format("%s_%d-%d", string.sub(sha256sum_res.stdout, 1, 64), gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2])
     end
-    return utils.join_path(thumbs_dir, hash_cache[filename])
+    return utils.join_path(thumbs_dir, hash_cache[filename] .. "." .. opts.thumbnail_format), utils.join_path(bgra_thumb_tmpdir, hash_cache[filename])
 end
 function blend_colors(colors)
     if #colors == 1 then return colors[1] end
@@ -170,6 +172,29 @@ gallery.item_to_text = function(index, item)
         end
     end
     return f, true
+end
+
+-- Temporary directory for BGRA thumbnails
+function create_thumb_tmpdir()
+    if bgra_thumb_tmpdir ~= "" then
+        return
+    end
+
+    local mktemp_res = utils.subprocess({
+        args = {"mktemp", "--tmpdir", "--directory", "mvi-gallery-XXXXXXXX"},
+        capture_stdout = true,
+        playback_only = false,
+    })
+    if mktemp_res.status > 0 then
+        msg.error("Error creating temporary directory for thumbnails")
+        return
+    end
+    bgra_thumb_tmpdir = string.sub(mktemp_res.stdout, 1, -2)
+
+    function remove_thumb_tmpdir()
+        utils.subprocess({args = {"rm", "-rf", bgra_thumb_tmpdir}, playback_only = false})
+    end
+    mp.register_event("shutdown", remove_thumb_tmpdir)
 end
 
 function setup_ui_handlers()
@@ -443,6 +468,7 @@ function start()
     playlist = mp.get_property_native("playlist")
     if #playlist == 0 then return end
     gallery.items = playlist
+    create_thumb_tmpdir()
 
     local ww, wh = mp.get_osd_size()
     compute_geometry(ww, wh)
