@@ -161,13 +161,7 @@ fn restore(
 
 fn set_wallpaper(wallpaper_abspath: PathBuf, cache_path: String) {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
-    match fs::exists(&cur_symlink) {
-        Ok(true) => {
-            fs::remove_file(&cur_symlink).unwrap();
-        }
-        Ok(false) => (),
-        Err(reason) => panic!("Failed to check if symlink exists: {}", reason),
-    }
+    fs::remove_file(&cur_symlink).unwrap();
     symlink(wallpaper_abspath, &cur_symlink).unwrap();
     match apply_wallpaper(cur_symlink) {
         Ok(_) => (),
