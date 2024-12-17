@@ -161,7 +161,10 @@ fn restore(
 
 fn set_wallpaper(wallpaper_abspath: PathBuf, cache_path: String) {
     let cur_symlink = format!("{cache_path}/{CUR_SYM}");
-    fs::remove_file(&cur_symlink).unwrap();
+    match fs::remove_file(&cur_symlink) {
+        Ok(_) => (),
+        Err(_) => (),
+    };
     symlink(wallpaper_abspath, &cur_symlink).unwrap();
     match apply_wallpaper(cur_symlink) {
         Ok(_) => (),
