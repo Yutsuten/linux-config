@@ -34,6 +34,7 @@ pending_selection = nil
 
 thumb_dir = ""
 bgra_thumb_tmpdir = ""
+thumbs_dir = ""
 
 gallery = gallery_new()
 gallery.config.always_show_placeholders = true
@@ -112,20 +113,10 @@ gallery.ass_show = function(new_ass)
     ass_changed = true
     ass = new_ass
 end
-gallery.item_to_overlay_path = function(item)
-    local filename = item.filename
-    if hash_cache[filename] == nil then
-        local sha256sum_res = utils.subprocess({
-            args = {"sha256sum", filename},
-            capture_stdout = true,
-            playback_only = false,
-        })
-        hash_cache[filename] = string.format("%s_%d-%d", string.sub(sha256sum_res.stdout, 1, 64), gallery.geometry.thumbnail_size[1], gallery.geometry.thumbnail_size[2])
-    end
-    return utils.join_path(thumbs_dir, hash_cache[filename] .. "." .. opts.thumbnail_format), utils.join_path(bgra_thumb_tmpdir, hash_cache[filename])
-end
 function blend_colors(colors)
-    if #colors == 1 then return colors[1] end
+    if #colors == 1 then
+        return colors[1]
+    end
     local comp1 = 0
     local comp2 = 0
     local comp3 = 0
@@ -158,7 +149,9 @@ gallery.item_to_border = function(index, item)
     end
 end
 gallery.item_to_text = function(index, item)
-    if not opts.show_text or index ~= gallery.selection then return "", false end
+    if not opts.show_text or index ~= gallery.selection then
+        return "", false
+    end
     local f
     if opts.show_title and item.title then
         f = item.title
@@ -172,29 +165,6 @@ gallery.item_to_text = function(index, item)
         end
     end
     return f, true
-end
-
--- Temporary directory for BGRA thumbnails
-function create_thumb_tmpdir()
-    if bgra_thumb_tmpdir ~= "" then
-        return
-    end
-
-    local mktemp_res = utils.subprocess({
-        args = {"mktemp", "--tmpdir", "--directory", "mvi-gallery-XXXXXXXX"},
-        capture_stdout = true,
-        playback_only = false,
-    })
-    if mktemp_res.status > 0 then
-        msg.error("Error creating temporary directory for thumbnails")
-        return
-    end
-    bgra_thumb_tmpdir = string.sub(mktemp_res.stdout, 1, -2)
-
-    function remove_thumb_tmpdir()
-        utils.subprocess({args = {"rm", "-rf", bgra_thumb_tmpdir}, playback_only = false})
-    end
-    mp.register_event("shutdown", remove_thumb_tmpdir)
 end
 
 function setup_ui_handlers()
@@ -226,7 +196,9 @@ function reload_bindings()
     local increment_func = function(increment, clamp)
         local new = (pending_selection or gallery.selection) + increment
         if new <= 0 or new > #gallery.items then
-            if not clamp then return end
+            if not clamp then
+                return
+            end
             new = math.max(1, math.min(new, #gallery.items))
         end
         pending_selection = new
@@ -236,7 +208,9 @@ function reload_bindings()
     bindings[opts.LAST]   = function() pending_selection = #gallery.items end
     bindings[opts.ACCEPT] = function()
         load_selection()
-        if opts.close_on_load_file then stop() end
+        if opts.close_on_load_file then
+            stop()
+        end
         mp.set_property("video-zoom", 0)
         mp.set_property("video-pan-x", 0)
         mp.set_property("video-pan-y", 0)
@@ -256,10 +230,14 @@ function reload_bindings()
     if opts.mouse_support then
         bindings["MBTN_LEFT"]  = function()
             local index = gallery:index_at(mp.get_mouse_pos())
-            if not index then return end
+            if not index then
+                return
+            end
             if index == gallery.selection then
                 load_selection()
-                if opts.close_on_load_file then stop() end
+                if opts.close_on_load_file then
+                    stop()
+                end
             else
                 pending_selection= index
             end
@@ -392,29 +370,24 @@ function get_geometry_function()
     end
 end
 
-function normalize_path(path)
-    if string.find(path, "://") then
-        return path
-    end
-    path = utils.join_path(utils.getcwd(), path)
-    path = string.gsub(path, "/%./", "/")
-    local n
-    repeat
-        path, n = string.gsub(path, "/[^/]*/%.%./", "/", 1)
-    until n == 0
-    return path
-end
-
 function playlist_changed(key, playlist)
-    if not gallery.active then return end
+    if not gallery.active then
+        return
+    end
     local did_change = function()
-        if #gallery.items ~= #playlist then return true end
+        if #gallery.items ~= #playlist then
+            return true
+        end
         for i = 1, #gallery.items do
-            if gallery.items[i].filename ~= playlist[i].filename then return true end
+            if gallery.items[i].filename ~= playlist[i].filename then
+                return true
+            end
         end
         return false
     end
-    if not did_change() then return end
+    if not did_change() then
+        return
+    end
     if #playlist == 0 then
         stop()
         return
@@ -464,18 +437,23 @@ function mark_geometry_stale()
 end
 
 function start()
-    if gallery.active then return end
+    if gallery.active then
+        return
+    end
     playlist = mp.get_property_native("playlist")
-    if #playlist == 0 then return end
+    if #playlist == 0 then
+        return
+    end
     gallery.items = playlist
-    create_thumb_tmpdir()
 
     local ww, wh = mp.get_osd_size()
     compute_geometry(ww, wh)
 
     playlist_pos = mp.get_property_number("playlist-pos-1")
     gallery:set_selection(playlist_pos or 1)
-    if not gallery:activate() then return end
+    if not gallery:activate() then
+        return
+    end
 
     mp.observe_property("playlist-pos-1", "native", playlist_pos_changed)
     mp.observe_property("playlist", "native", playlist_changed)
@@ -516,16 +494,18 @@ function toggle()
     end
 end
 
-mp.register_script_message("thumbnail-generated", function(thumb_path)
-     gallery:thumbnail_generated(thumb_path)
+mp.register_script_message("thumbnail-generated", function(input_path, bgra_path)
+    gallery:thumbnail_generated(input_path, bgra_path)
 end)
 
 mp.register_script_message("thumbnails-generator-broadcast", function(generator_name)
-     gallery:add_generator(generator_name)
+    gallery:add_generator(generator_name)
 end)
 
 function write_flag_file()
-    if next(flags) == nil then return end
+    if next(flags) == nil then
+        return
+    end
     local out = io.open(opts.flagged_file_path, "w")
     for f, _ in pairs(flags) do
         out:write(f .. "\n")
@@ -536,11 +516,34 @@ mp.register_event("shutdown", write_flag_file)
 
 reload_config()
 
+function osd_size_changed()
+    local ww, wh = mp.get_osd_size()
+    if ww > 0 and wh > 0 then
+        compute_geometry(ww, wh)
+        mp.commandv(
+            "script-message-to",
+            "gallery_thumbgen",
+            "thumb-config-broadcast",
+            tostring(gallery.geometry.thumbnail_size[1]),
+            tostring(gallery.geometry.thumbnail_size[2]),
+            thumbs_dir,
+            opts.thumbnail_format
+        )
+    end
+end
+
+mp.observe_property("osd-width", "number", osd_size_changed)
+mp.observe_property("osd-height", "number", osd_size_changed)
+
 if opts.start_on_mpv_startup then
     local autostart
     autostart = function()
-        if mp.get_property_number("playlist-count") == 0 then return end
-        if mp.get_property_number("osd-width") <= 0 then return end
+        if mp.get_property_number("playlist-count") == 0 then
+            return
+        end
+        if mp.get_property_number("osd-width") <= 0 then
+            return
+        end
         start()
         mp.unobserve_property(autostart)
     end

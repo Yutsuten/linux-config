@@ -10,7 +10,7 @@ function gallery_new()
     local gallery = setmetatable({
         -- public, can be modified by user
         items = {},
-        item_to_overlay_path = function(item) return "" end,
+        hash_cache = {},
         item_to_text = function(index, item) return "", true end,
         item_to_border = function(index, item) return 0, "" end,
         ass_show = function(ass) end,
@@ -106,17 +106,18 @@ function gallery_mt.refresh_overlays(gallery, force)
         local index = gallery.view.first + view_index - 1
         local active = o.active[view_index]
         if index > 0 and index <= #gallery.items then
-            local thumb_path, tmp_path = gallery.item_to_overlay_path(gallery.items[index])
-            if not force and active == thumb_path then
+            local filename = gallery.items[index].filename
+            local bgra_path = gallery.hash_cache[filename]
+            if not force and active == bgra_path then
                 -- nothing to do
-            elseif file_exists(tmp_path) then
-                gallery:show_overlay(view_index, tmp_path)
+            elseif bgra_path ~= nil and file_exists(bgra_path) then
+                gallery:show_overlay(view_index, bgra_path)
             else
                 -- need to generate that thumbnail
                 o.active[view_index] = false
                 mp.commandv("overlay-remove", gallery.config.overlay_range + view_index - 1)
-                o.missing[tmp_path] = view_index
-                todo[#todo + 1] = { index = index, thumb_out = thumb_path, bgra_out = tmp_path }
+                o.missing[filename] = view_index
+                todo[#todo + 1] = filename
             end
         else
             -- might happen if we're close to the end of gallery.items
@@ -130,14 +131,9 @@ function gallery_mt.refresh_overlays(gallery, force)
         -- reverse iterate so that the first thumbnail is at the top of the stack
         for i = #todo, 1, -1 do
             local generator = gallery.generators[i % #gallery.generators + 1]
-            local t = todo[i]
             mp.commandv("script-message-to", generator, "push-thumbnail-front",
                 mp.get_script_name(),
-                gallery.items[t.index].filename,
-                tostring(g.thumbnail_size[1]),
-                tostring(g.thumbnail_size[2]),
-                t.thumb_out,
-                t.bgra_out
+                todo[i]
             )
         end
     end
@@ -145,10 +141,14 @@ end
 
 function gallery_mt.index_at(gallery, mx, my)
     local g = gallery.geometry
-    if mx < g.position[1] or my < g.position[2] then return nil end
+    if mx < g.position[1] or my < g.position[2] then
+        return nil
+    end
     mx = mx - g.position[1]
     my = my - g.position[2]
-    if mx > g.size[1] or my > g.size[2] then return nil end
+    if mx > g.size[1] or my > g.size[2] then
+        return nil
+    end
     mx = mx - g.effective_spacing[1]
     my = my - g.effective_spacing[2]
     local on_column = (mx % (g.thumbnail_size[1] + g.effective_spacing[1])) < g.thumbnail_size[1]
@@ -257,7 +257,9 @@ function gallery_mt.refresh_background(gallery)
 end
 
 function gallery_mt.refresh_placeholders(gallery)
-    if not gallery.config.show_placeholders then return end
+    if not gallery.config.show_placeholders then
+        return
+    end
     if gallery.view.first == 0 then
         gallery.ass.placeholders = ""
         return
@@ -282,14 +284,20 @@ function gallery_mt.refresh_placeholders(gallery)
 end
 
 function gallery_mt.refresh_scrollbar(gallery)
-    if not gallery.config.scrollbar then return end
+    if not gallery.config.scrollbar then
+        return
+    end
     gallery.ass.scrollbar = ""
-    if gallery.view.first == 0 then return end
+    if gallery.view.first == 0 then
+        return
+    end
     local g = gallery.geometry
     local before = (gallery.view.first - 1) / #gallery.items
     local after = (#gallery.items - gallery.view.last) / #gallery.items
     -- don't show the scrollbar if everything is visible
-    if before + after == 0 then return end
+    if before + after == 0 then
+        return
+    end
     local p = gallery.config.scrollbar_min_size / 100
     if before + after > 1 - p then
         if before == 0 then
@@ -383,11 +391,21 @@ function gallery_mt.refresh_selection(gallery)
 end
 
 function gallery_mt.ass_refresh(gallery, selection, scrollbar, placeholders, background)
-    if not gallery.active then return end
-    if selection then gallery:refresh_selection() end
-    if scrollbar then gallery:refresh_scrollbar() end
-    if placeholders then gallery:refresh_placeholders() end
-    if background then gallery:refresh_background() end
+    if not gallery.active then
+        return
+    end
+    if selection then
+        gallery:refresh_selection()
+    end
+    if scrollbar then
+        gallery:refresh_scrollbar()
+    end
+    if placeholders then
+        gallery:refresh_placeholders()
+    end
+    if background then
+        gallery:refresh_background()
+    end
     gallery.ass_show(table.concat({
         gallery.ass.background,
         gallery.ass.placeholders,
@@ -397,9 +415,13 @@ function gallery_mt.ass_refresh(gallery, selection, scrollbar, placeholders, bac
 end
 
 function gallery_mt.set_selection(gallery, selection)
-    if not selection or selection ~= selection then return end
+    if not selection or selection ~= selection then
+        return
+    end
     local new_selection = math.max(1, math.min(selection, #gallery.items))
-    if gallery.selection == new_selection then return end
+    if gallery.selection == new_selection then
+        return
+    end
     gallery.selection = new_selection
     if gallery.active then
         if gallery:ensure_view_valid() then
@@ -421,7 +443,9 @@ function gallery_mt.set_geometry(gallery, x, y, w, h, sw, sh, tw, th)
     gallery.geometry.min_spacing = {sw, sh}
     gallery.geometry.thumbnail_size = {tw, th}
     gallery.geometry.ok = true
-    if not gallery.active then return end
+    if not gallery.active then
+        return
+    end
     if not gallery:enough_space() then
         msg.warn("Not enough space to display something")
     end
@@ -441,26 +465,35 @@ end
 
 function gallery_mt.items_changed(gallery, new_sel)
     gallery.selection = math.max(1, math.min(new_sel, #gallery.items))
-    if not gallery.active then return end
+    if not gallery.active then
+        return
+    end
     gallery:ensure_view_valid()
     gallery:refresh_overlays(false)
     gallery:ass_refresh(true, true, true, false)
 end
 
-function gallery_mt.thumbnail_generated(gallery, thumb_path)
-    if not gallery.active then return end
-    local view_index = gallery.overlays.missing[thumb_path]
-    if view_index == nil then return end
-    gallery:show_overlay(view_index, thumb_path)
+function gallery_mt.thumbnail_generated(gallery, input_path, bgra_path)
+    gallery.hash_cache[input_path] = bgra_path
+    if not gallery.active then
+        return
+    end
+    local view_index = gallery.overlays.missing[input_path]
+    if view_index == nil then
+        return
+    end
+    gallery:show_overlay(view_index, bgra_path)
     if not gallery.config.always_show_placeholders then
         gallery:ass_refresh(false, false, true, false)
     end
-    gallery.overlays.missing[thumb_path] = nil
+    gallery.overlays.missing[input_path] = nil
 end
 
 function gallery_mt.add_generator(gallery, generator_name)
     for _, g in ipairs(gallery.generators) do
-        if generator_name == g then return end
+        if generator_name == g then
+            return
+        end
     end
     gallery.generators[#gallery.generators + 1] = generator_name
 end
@@ -472,13 +505,19 @@ function gallery_mt.view_index_position(gallery, index_0)
 end
 
 function gallery_mt.enough_space(gallery)
-    if gallery.geometry.size[1] < gallery.geometry.thumbnail_size[1] + 2 * gallery.geometry.min_spacing[1] then return false end
-    if gallery.geometry.size[2] < gallery.geometry.thumbnail_size[2] + 2 * gallery.geometry.min_spacing[2] then return false end
+    if gallery.geometry.size[1] < gallery.geometry.thumbnail_size[1] + 2 * gallery.geometry.min_spacing[1] then
+        return false
+    end
+    if gallery.geometry.size[2] < gallery.geometry.thumbnail_size[2] + 2 * gallery.geometry.min_spacing[2] then
+        return false
+    end
     return true
 end
 
 function gallery_mt.activate(gallery)
-    if gallery.active then return false end
+    if gallery.active then
+        return false
+    end
     if not gallery:enough_space() then
         msg.warn("Not enough space, refusing to start")
         return false
@@ -499,7 +538,9 @@ function gallery_mt.activate(gallery)
 end
 
 function gallery_mt.deactivate(gallery)
-    if not gallery.active then return end
+    if not gallery.active then
+        return
+    end
     gallery.active = false
     gallery:remove_overlays()
     gallery.ass_show("")
