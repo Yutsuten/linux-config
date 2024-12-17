@@ -3,7 +3,7 @@ if test -f $nnn
     if test (file $nnn) = "$nnn: ASCII text" # Text file with filenames in each line
         set files (shuf <$nnn)
     else
-        nohup mvi &>/dev/null &
+        nohup mvi &>~/.local/logs/mvi.log &
     end
 else if test -d $nnn # Find pictures inside selected dir
     while not string match --regex --quiet '^[1-3]$' $depth
@@ -19,5 +19,5 @@ else if test -d $nnn # Find pictures inside selected dir
 end
 
 if test (count $files) -ge 1
-    nohup mvi $files &>/dev/null &
+    nohup mvi $files &>~/.local/logs/mvi.log &
 end

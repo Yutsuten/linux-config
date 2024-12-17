@@ -27,7 +27,7 @@ touch --reference $nnn /tmp/$nnn
 
 echo "Before : $(du -h $nnn | cut -f 1)"
 echo "After  : $(du -h /tmp/$nnn | cut -f 1)"
-mpv --really-quiet /tmp/$nnn
+mpv --msg-level=all=warn /tmp/$nnn
 
 echo
 read --line --prompt-str 'Replace original? [y/N] ' replace

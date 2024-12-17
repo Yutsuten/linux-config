@@ -7,7 +7,7 @@ set music_regex (string join '|' $music'$')
 set video_regex (string join '|' $video'$')
 
 if string match -qr '.m3u8?$' $nnn
-    nohup mpv --profile=music --shuffle --loop-playlist --log-file=~/.local/logs/mpv-music-player.log $nnn &>/dev/null &
+    nohup mpv --profile=music --shuffle --loop-playlist $nnn &>~/.local/logs/music-player.log &
 else if test -d $nnn
     set category
     for file in $nnn/**/*
@@ -35,10 +35,12 @@ else if test -d $nnn
     end
     set params[-1] ')'
     set -a params -exec nohup mpv --no-terminal --shuffle
+    set output_file ~/.local/logs/mpv.log
     if test $category = music
         set -a params --profile=music --loop-playlist
+        set output_file ~/.local/logs/music-player.log
     end
-    find $nnn $params '{}' '+' &>/dev/null &
+    find $nnn $params '{}' '+' &>$output_file &
 else
     set category
     if string match -qr $music_regex $nnn
@@ -62,8 +64,10 @@ else
     end
     set params[-1] ')'
     set -a params -exec nohup mpv --no-terminal --shuffle
+    set output_file ~/.local/logs/mpv.log
     if test $category = music
         set -a params --profile=music --loop-playlist
+        set output_file ~/.local/logs/music-player.log
     end
-    find . $params '{}' '+' &>/dev/null &
+    find . $params '{}' '+' &>$output_file &
 end
