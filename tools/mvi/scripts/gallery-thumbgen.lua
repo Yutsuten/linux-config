@@ -17,12 +17,13 @@ local preprocess_queue = {}
 local preprocessed_thumb_sizes = {}
 local script_id = mp.get_script_name() .. utils.getpid()
 local hash_cache = {}
-local thumb_tmpdir = ""
 
-local thumbnail_width = 0
-local thumbnail_height = 0
-local thumbs_dir = ""
+local thumbs_width = 0
+local thumbs_height = 0
 local thumbs_ext = ""
+local thumbs_dir = ""
+local thumbs_dir_regex = ""
+local thumbs_tmpdir = ""
 
 local function sha256sum(filename, width, height)
     if hash_cache[filename] == nil then
@@ -47,11 +48,11 @@ local function mktemp_thumbs()
         msg.error("Error creating temporary directory for thumbnails")
         return
     end
-    thumb_tmpdir = string.sub(mktemp_res.stdout, 1, -2)
+    thumbs_tmpdir = string.sub(mktemp_res.stdout, 1, -2)
 end
 
 function preprocess_thumbnails(playlist)
-    local thumb_size_str = string.format("%dx%d", thumbnail_width, thumbnail_height)
+    local thumb_size_str = string.format("%dx%d", thumbs_width, thumbs_height)
     if preprocessed_thumb_sizes[thumb_size_str] == nil then
         preprocessed_thumb_sizes[thumb_size_str] = true
         preprocess_queue = {}
@@ -83,12 +84,27 @@ function thumbnail_command(command_args, tmp_output_path, output_path)
 end
 
 function generate_thumbnail(thumbnail_job, generate_bgra)
-    local bgra_name = string.format("%s_%d-%d", sha256sum(thumbnail_job.input_path), thumbnail_width, thumbnail_height)
-    local bgra_path = utils.join_path(thumb_tmpdir, bgra_name)
-    local compressed_name = string.format("%s.%s", bgra_name, thumbs_ext)
-    local compressed_path = utils.join_path(thumbs_dir, compressed_name)
+    local compressed_path = utils.join_path(mp.get_property_native("working-directory"), thumbnail_job.input_path)
+    local input_dir, compressed_name = utils.split_path(compressed_path)
+    local bgra_name
+    local bgra_path
 
-    local target_size = string.format("%dx%d", thumbnail_width, thumbnail_height)
+    if string.match(input_dir, thumbs_dir_regex) then
+        -- Be careful to not generate thumbnails of thumbnails
+        local width, height
+        sha256sum_str, width, height = string.match(compressed_name, "([a-z0-9]+)_([0-9]+)-([0-9]+)%.[a-z]+")
+        if tonumber(width) ~= thumbs_width or tonumber(height) ~= thumbs_height then
+            return "" -- Thumbnail of different size than the one currently configured
+        end
+        bgra_name = string.format("%s_%s-%s", sha256sum_str, thumbs_width, thumbs_height)
+    else
+        bgra_name = string.format("%s_%d-%d", sha256sum(thumbnail_job.input_path), thumbs_width, thumbs_height)
+        compressed_name = string.format("%s.%s", bgra_name, thumbs_ext)
+        compressed_path = utils.join_path(thumbs_dir, compressed_name)
+    end
+    bgra_path = utils.join_path(thumbs_tmpdir, bgra_name)
+
+    local target_size = string.format("%dx%d", thumbs_width, thumbs_height)
     if not file_exists(compressed_path) then
         local tmp_output_path = utils.join_path(
             thumbs_dir,
@@ -113,7 +129,7 @@ function generate_thumbnail(thumbnail_job, generate_bgra)
     end
     if thumbnail_job.requester ~= "" and not file_exists(bgra_path) then
         local tmp_output_path = utils.join_path(
-            thumb_tmpdir,
+            thumbs_tmpdir,
             string.format("tmp%s-%s", script_id, bgra_name)
         )
         -- Explanation of the bellow command's necessity is on mpv's documentation:
@@ -140,7 +156,7 @@ function handle_events(wait)
     e = mp.wait_event(wait)
     while e.event ~= "none" do
         if e.event == "shutdown" then
-            utils.subprocess({args = {"rm", "-rf", thumb_tmpdir}, playback_only = false})
+            utils.subprocess({args = {"rm", "-rf", thumbs_tmpdir}, playback_only = false})
             return false
         elseif e.event == "client-message" then
             if e.args[1] == "push-thumbnail-front" then
@@ -150,9 +166,12 @@ function handle_events(wait)
                 }
                 jobs_queue[#jobs_queue + 1] = thumbnail_job
             elseif e.args[1] == "thumb-config-broadcast" then
-                thumbnail_width = tonumber(e.args[2])
-                thumbnail_height = tonumber(e.args[3])
-                thumbs_dir = e.args[4]
+                thumbs_width = tonumber(e.args[2])
+                thumbs_height = tonumber(e.args[3])
+                if thumbs_dir ~= e.args[4] then
+                    thumbs_dir = e.args[4]
+                    thumbs_dir_regex = '^' .. string.gsub(thumbs_dir, "[%%()%[%]^$.*+-]", "%%%1")
+                end
                 thumbs_ext = e.args[5]
                 preprocess_thumbnails(mp.get_property_native("playlist"))
             end
