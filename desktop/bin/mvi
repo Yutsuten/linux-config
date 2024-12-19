@@ -7,4 +7,3 @@ if test (count $argv) -eq 0
 else
     mpv --config-dir=$HOME/.config/mvi $argv
 end
-find ~/.cache/thumbnails/mvi-gallery/ -maxdepth 1 -type f -amin +43200 -delete # 30 days

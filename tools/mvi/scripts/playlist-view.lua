@@ -16,31 +16,33 @@ local options = require 'mp.options'
 package.path = mp.command_native({ "expand-path", "~~/script-modules/?.lua;" }) .. package.path
 require 'gallery'
 
--- global variables
+local HOURS = 60 -- find command uses minutes as unit
+local DAYS = 24 * HOURS
 
-flags = {}
-hash_cache = {}
-playlist_pos = 0
+local flags = {}
+local hash_cache = {}
+local playlist_pos = 0
 
-bindings = {}
-bindings_repeat = {}
+local bindings = {}
+local bindings_repeat = {}
 
-compute_geometry = function(ww, wh) end
+local ass_changed = false
+local ass = ""
+local geometry_changed = false
+local pending_selection = nil
 
-ass_changed = false
-ass = ""
-geometry_changed = false
-pending_selection = nil
+local thumb_dir = ""
+local bgra_thumb_tmpdir = ""
+local thumbs_dir = ""
 
-thumb_dir = ""
-bgra_thumb_tmpdir = ""
-thumbs_dir = ""
-
-gallery = gallery_new()
+local gallery = gallery_new()
 gallery.config.always_show_placeholders = true
 
-opts = {
+local compute_geometry = function(ww, wh) end
+
+local opts = {
     thumbs_dir = "~/.cache/thumbnails/mvi-gallery",
+    delete_old_thumbs_in_days = 30,
     close_on_load_file = true,
     start_on_mpv_startup = false,
     follow_playlist_position = true,
@@ -513,6 +515,20 @@ function write_flag_file()
     out:close()
 end
 mp.register_event("shutdown", write_flag_file)
+
+function delete_old_thumbnails()
+    utils.subprocess({
+        args = {
+            "find", thumbs_dir,
+            "-maxdepth", "1",
+            "-type", "f",
+            "-amin", "+" .. tostring(opts.delete_old_thumbs_in_days * DAYS),
+            "-delete"
+        },
+        playback_only = false
+    })
+end
+mp.register_event("shutdown", delete_old_thumbnails)
 
 reload_config()
 
