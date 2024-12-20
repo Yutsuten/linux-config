@@ -56,7 +56,7 @@ function gallery_new()
             scrollbar = "",
             placeholders = "",
         },
-        generators = {}, -- list of generator scripts
+        generators = { "gallery_thumbgen" }, -- list of generator scripts
 
     }, gallery_mt)
 
@@ -487,15 +487,6 @@ function gallery_mt.thumbnail_generated(gallery, input_path, bgra_path)
         gallery:ass_refresh(false, false, true, false)
     end
     gallery.overlays.missing[input_path] = nil
-end
-
-function gallery_mt.add_generator(gallery, generator_name)
-    for _, g in ipairs(gallery.generators) do
-        if generator_name == g then
-            return
-        end
-    end
-    gallery.generators[#gallery.generators + 1] = generator_name
 end
 
 function gallery_mt.view_index_position(gallery, index_0)

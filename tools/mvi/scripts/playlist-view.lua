@@ -500,10 +500,6 @@ mp.register_script_message("thumbnail-generated", function(input_path, bgra_path
     gallery:thumbnail_generated(input_path, bgra_path)
 end)
 
-mp.register_script_message("thumbnails-generator-broadcast", function(generator_name)
-    gallery:add_generator(generator_name)
-end)
-
 function write_flag_file()
     if next(flags) == nil then
         return

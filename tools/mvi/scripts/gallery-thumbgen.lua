@@ -185,33 +185,13 @@ mp.observe_property("playlist", "native", function(key, playlist)
     preprocess_thumbnails(playlist)
 end)
 
-local registration_timeout = 2 -- seconds
-local registration_period = 0.2
-
 -- shitty custom event loop because I can't figure out a better way
 -- works pretty well though
 function mp_event_loop()
-    local start_time = mp.get_time()
-    local sleep_time = registration_period
-    local last_broadcast_time = -registration_period
-    local broadcast_func
-    broadcast_func = function()
-        local now = mp.get_time()
-        if now >= start_time + registration_timeout then
-            mp.commandv("script-message", "thumbnails-generator-broadcast", mp.get_script_name())
-            sleep_time = 1e20
-            broadcast_func = function() end
-        elseif now >= last_broadcast_time + registration_period then
-            mp.commandv("script-message", "thumbnails-generator-broadcast", mp.get_script_name())
-            last_broadcast_time = now
-        end
-    end
-
-    while true do
-        if not handle_events(sleep_time) then
+    while mp.keep_running do
+        if not handle_events(-1) then
             return
         end
-        broadcast_func()
         while #jobs_queue > 0 or #preprocess_queue > 0 do
             while #jobs_queue > 0 do
                 local thumbnail_job = jobs_queue[#jobs_queue]
@@ -234,7 +214,6 @@ function mp_event_loop()
                 if not handle_events(0) then
                     return
                 end
-                broadcast_func()
             end
             if #preprocess_queue > 0 then
                 local thumbnail_job = preprocess_queue[#preprocess_queue]
@@ -248,7 +227,6 @@ function mp_event_loop()
                 if not handle_events(0) then
                     return
                 end
-                broadcast_func()
             end
         end
     end
