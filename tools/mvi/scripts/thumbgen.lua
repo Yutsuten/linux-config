@@ -122,9 +122,11 @@ function generate_thumbnail(thumbnail_job, generate_bgra)
         )
         local success = thumbnail_command(
             {
-                "magick", thumbnail_job.input_path .. "[0]",
+                "magick",
+                "-background", "none",
+                thumbnail_job.input_path .. "[0]",
                 "-alpha", "set",
-                "-resize", target_size,
+                "-resize", target_size .. ">",
                 "-background", "none",
                 "-gravity", "center",
                 "-extent", target_size,
