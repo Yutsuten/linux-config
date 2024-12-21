@@ -18,7 +18,7 @@ The original `playlist-view.lua` script saves raw BGRA images into the configure
 - **Phase 1:** Resize the original image to the size configured for thumbnails, and save it in a *compressed* format into the configured directory. By default we use `webp` but it is configurable. This step is the most time and CPU intensive because we may be dealing with huge images.
 - **Phase 2:** Using the image generated in phase 1, we convert it to raw BGRA and save it in a temporary directory, usually `/tmp/`. When closing the program, the folder with raw BGRA thumbnails is erased. We can repeat this step everytime with minimal time and CPU usage because the source images are small.
 
-To make the process *feel* faster, we also pre-process all opened images in background. This pre-processing is the phase 1. So the first time opening a batch of images may consume a lot of CPU, but after phase 1 finished for all your images, only phase 2 is needed and therefore very fast.
+To make the process *feel* faster, we also pre-process all opened images in background. This pre-processing is the phase 1. So the first time opening a batch of images may consume a lot of CPU, but after phase 1 finished, only phase 2 is needed and therefore very fast.
 
 This way we achieve the best of both worlds: save disk usage and fast thumbnails generation.
 
