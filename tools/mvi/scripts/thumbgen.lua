@@ -3,7 +3,6 @@ mpv-gallery-view | https://github.com/occivink/mpv-gallery-view
 
 This mpv script implements a worker for generating gallery thumbnails.
 It is meant to be used by other scripts.
-Multiple copies of this script can be loaded by mpv.
 
 File placement: inside scripts directory
 ]]
@@ -185,9 +184,9 @@ mp.observe_property("playlist", "native", function(key, playlist)
     preprocess_thumbnails(playlist)
 end)
 
--- shitty custom event loop because I can't figure out a better way
--- works pretty well though
+-- Custom event loop for handling events while generating thumbnails
 function mp_event_loop()
+    mktemp_thumbs()
     while mp.keep_running do
         if not handle_events(-1) then
             return
@@ -231,5 +230,3 @@ function mp_event_loop()
         end
     end
 end
-
-mktemp_thumbs()
