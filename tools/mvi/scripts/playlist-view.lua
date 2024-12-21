@@ -21,6 +21,7 @@ local ass = ""
 local ass_changed = false
 local bindings = {}
 local bindings_repeat = {}
+local compute_geometry
 local flags = {}
 local geometry_changed = false
 local hash_cache = {}
@@ -31,7 +32,6 @@ local opts = {
     thumbs_dir = "~/.cache/thumbnails/mvi-gallery",
     delete_old_thumbs_in_days = 30,
     close_on_load_file = true,
-    start_on_mpv_startup = false,
     follow_playlist_position = true,
 
     gallery_position = "{ (ww - gw) / 2, (wh - gh) / 2}",
@@ -95,7 +95,7 @@ local gallery = {
         scrollbar_min_size = 10,
         overlay_range = 0,
         show_placeholders = true,
-        always_show_placeholders = false,
+        always_show_placeholders = true,
         placeholder_color = '222222',
         text_size = 28,
         align_text = true,
@@ -618,7 +618,6 @@ local gallery = {
 for i = 1, MAX_THUMBNAILS do
     gallery.overlays.active[i] = false
 end
-gallery.config.always_show_placeholders = true
 
 function reload_config()
     gallery.config.background_color = opts.background_color
@@ -1031,25 +1030,8 @@ function osd_size_changed()
         )
     end
 end
-
 mp.observe_property("osd-width", "number", osd_size_changed)
 mp.observe_property("osd-height", "number", osd_size_changed)
-
-if opts.start_on_mpv_startup then
-    local autostart
-    autostart = function()
-        if mp.get_property_number("playlist-count") == 0 then
-            return
-        end
-        if mp.get_property_number("osd-width") <= 0 then
-            return
-        end
-        start()
-        mp.unobserve_property(autostart)
-    end
-    mp.observe_property("playlist-count", "number", autostart)
-    mp.observe_property("osd-width", "number", autostart)
-end
 
 mp.add_key_binding(nil, "playlist-view-open", function() start() end)
 mp.add_key_binding(nil, "playlist-view-close", stop)
