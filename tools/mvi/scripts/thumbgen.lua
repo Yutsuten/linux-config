@@ -48,7 +48,7 @@ function sha256sum(filepath, width, height)
 end
 
 function normalize_path(path)
-    local path = string.gsub(path, "/%./", "/")
+    path = string.gsub(path, "/%./", "/")
     local n
     repeat
         path, n = string.gsub(path, "/[^/]*/%.%./", "/", 1)
