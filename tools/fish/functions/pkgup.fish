@@ -24,8 +24,9 @@ function pkgup --description 'Update customly installed packages'
                 echo "Update $package"
                 source $ANKI_VENV/bin/activate.fish && pip install --upgrade aqt
                 deactivate
-                if not test -f /usr/share/pixmaps/anki.png
-                    sudo cp --preserve=all (find $ANKI_VENV/lib -type f -name 'anki.png' -print -quit) /usr/share/pixmaps/anki.png
+                if not test -f ~/.local/share/icons/anki.png
+                    mkdir --parents ~/.local/share/icons
+                    cp --preserve=all (find $ANKI_VENV/lib -type f -name 'anki.png' -print -quit) ~/.local/share/icons/anki.png
                 end
             case droidcam # DEPS: v4l2loopback-dkms linux-headers
                 # More info: https://www.dev47apps.com/droidcam/linux/
@@ -49,8 +50,9 @@ function pkgup --description 'Update customly installed packages'
                 popd
                 ln --symbolic --relative --force ~/.local/games/osu/squashfs-root/AppRun ~/.local/bin/'osu!'
                 ln --symbolic --relative --force ~/.local/games/osu/squashfs-root/'osu!.desktop' ~/.local/share/applications/'osu!.desktop'
-                if not test -f /usr/share/pixmaps/osu.png
-                    sudo cp -a ~/.local/games/osu/squashfs-root/osu.png /usr/share/pixmaps/osu.png
+                if not test -f ~/.local/share/icons/osu.png
+                    mkdir --parents ~/.local/share/icons
+                    cp --preserve=all ~/.local/games/osu/squashfs-root/osu.png ~/.local/share/icons/osu.png
                 end
             case '*'
                 echo "Unknown package $package. Skipping."
