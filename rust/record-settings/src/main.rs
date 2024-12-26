@@ -1,4 +1,5 @@
-use iced::widget::{column, row, Button, Checkbox, Column, Text, TextInput};
+use iced::widget::{column, row, scrollable, Button, Checkbox, Text, TextInput};
+use iced::Element;
 use iced::Task;
 use std::fmt;
 use std::fs;
@@ -10,7 +11,6 @@ const CONFIG: &'static str = "config";
 enum Message {
     Directory(String),
     Name(String),
-    Waybar(bool),
     AudioSpeakers(bool),
     AudioMic(bool),
     AudioRecording(bool),
@@ -20,11 +20,9 @@ enum Message {
 struct Config {
     directory: String,
     name: String,
-    waybar: bool,
     audio_speakers: bool,
     audio_mic: bool,
     audio_recording: bool,
-    changed: bool,
     save_dir: String,
 }
 
@@ -42,7 +40,6 @@ impl fmt::Display for Config {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f, "directory={}", self.directory)?;
         writeln!(f, "name={}", self.name)?;
-        writeln!(f, "waybar={}", self.waybar)?;
         writeln!(f, "audio-speakers={}", self.audio_speakers)?;
         writeln!(f, "audio-mic={}", self.audio_mic)?;
         writeln!(f, "audio-recording={}", self.audio_recording)
@@ -57,11 +54,9 @@ impl Default for Config {
         let mut config = Self {
             directory: format!("{home}/Videos"),
             name: String::new(),
-            waybar: true,
             audio_speakers: true,
             audio_mic: true,
             audio_recording: true,
-            changed: false,
             save_dir: format!("{home}/.config/record"),
         };
 
@@ -69,7 +64,6 @@ impl Default for Config {
         let mut file = match fs::File::open(format!("{}/{CONFIG}", &config.save_dir)) {
             Ok(file) => file,
             Err(_) => {
-                config.changed = true;
                 return config;
             }
         };
@@ -80,7 +74,6 @@ impl Default for Config {
             match key_value[0] {
                 "directory" => config.directory = key_value[1].to_string(),
                 "name" => config.name = key_value[1].to_string(),
-                "waybar" => config.waybar = key_value[1] == "true",
                 "audio-speakers" => config.audio_speakers = key_value[1] == "true",
                 "audio-mic" => config.audio_mic = key_value[1] == "true",
                 "audio-recording" => config.audio_recording = key_value[1] == "true",
@@ -92,30 +85,28 @@ impl Default for Config {
 }
 
 impl Config {
-    fn view(&self) -> Column<Message> {
-        column![
-            row![
-                Text::new("Directory"),
-                TextInput::new("/mnt/hdd/Recording", &self.directory).on_input(Message::Directory)
+    fn view(&self) -> Element<'_, Message> {
+        scrollable(
+            column![
+                row![
+                    Text::new("Directory"),
+                    TextInput::new("/mnt/hdd/Recording", &self.directory)
+                        .on_input(Message::Directory)
+                ]
+                .spacing(10),
+                row![
+                    Text::new("Name (optional)"),
+                    TextInput::new("", &self.name).on_input(Message::Name)
+                ]
+                .spacing(10),
+                Checkbox::new("Recording", self.audio_recording).on_toggle(Message::AudioRecording),
+                Checkbox::new("Speakers", self.audio_speakers).on_toggle(Message::AudioSpeakers),
+                Checkbox::new("Mic", self.audio_mic).on_toggle(Message::AudioMic),
+                Button::new("Save & Exit").on_press(Message::Save),
             ]
+            .padding(20)
             .spacing(10),
-            row![
-                Text::new("Name (optional)"),
-                TextInput::new("", &self.name).on_input(Message::Name)
-            ]
-            .spacing(10),
-            Checkbox::new("Waybar", self.waybar).on_toggle(Message::Waybar),
-            Checkbox::new("Audio Speakers", self.audio_speakers).on_toggle(Message::AudioSpeakers),
-            Checkbox::new("Audio Mic", self.audio_mic).on_toggle(Message::AudioMic),
-            Checkbox::new("Audio Recording", self.audio_recording)
-                .on_toggle(Message::AudioRecording),
-            match self.changed {
-                true => Button::new("Save & Exit").on_press(Message::Save),
-                false => Button::new("Save & Exit"),
-            }
-        ]
-        .padding(20)
-        .spacing(10)
+        )
         .into()
     }
 
@@ -123,32 +114,22 @@ impl Config {
         match message {
             Message::Directory(text) => {
                 self.directory = text;
-                self.changed = true;
                 Task::none()
             }
             Message::Name(text) => {
                 self.name = text;
-                self.changed = true;
-                Task::none()
-            }
-            Message::Waybar(checked) => {
-                self.waybar = checked;
-                self.changed = true;
                 Task::none()
             }
             Message::AudioSpeakers(checked) => {
                 self.audio_speakers = checked;
-                self.changed = true;
                 Task::none()
             }
             Message::AudioMic(checked) => {
                 self.audio_mic = checked;
-                self.changed = true;
                 Task::none()
             }
             Message::AudioRecording(checked) => {
                 self.audio_recording = checked;
-                self.changed = true;
                 Task::none()
             }
             Message::Save => {
@@ -168,7 +149,6 @@ impl Config {
                     &self
                 )
                 .unwrap();
-                self.changed = false;
                 iced::exit()
             }
         }

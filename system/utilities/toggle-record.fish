@@ -11,7 +11,7 @@ else
     record-settings
     pkill --signal STOP ffmpeg # Stop any video reencoding if any
     mkdir --parents ~/.local/logs
-    record &>~/.local/logs/record.log &
+    record --waybar &>~/.local/logs/record.log &
     notify-send --urgency low --app-name Record --icon software-update-urgent-symbolic 'Recording screen' &
     pw-play /usr/share/sounds/freedesktop/stereo/service-login.oga &
 end

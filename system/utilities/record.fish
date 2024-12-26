@@ -102,7 +102,7 @@ trap stop_recording SIGHUP SIGINT
 trap '' SIGTERM
 
 if set --query rec_waybar
-    touch /tmp/waybar_record
+    date '+%s' >/tmp/waybar_record
     kill --signal RT1 waybar
 end
 
