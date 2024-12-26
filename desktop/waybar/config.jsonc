@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/record"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/status"],
     "modules-center": ["clock", "custom/weather"],
     "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "sway/language", "tray"],
     "mpris": {
@@ -14,9 +14,10 @@
         },
         "ignored-players": ["firefox"]
     },
-    "custom/record": {
+    "custom/status": {
         "signal": 1,
-        "exec": "sh -c '[ -f /tmp/waybar_record ] && echo 🔴 Recording'",
+        "exec": "cat /tmp/waybar_status",
+        "tooltip": false,
         "hide-empty-text": true,
         "escape": true
     },

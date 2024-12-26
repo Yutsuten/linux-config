@@ -5,7 +5,9 @@ if test -z "$tctl_dir"
     return 0
 end
 
-set tctl_path (dirname (dirname (realpath $tctl_dir)))
-set tctl_basename (basename $tctl_dir)
+set tctl_path (path dirname (path dirname (path resolve $tctl_dir)))
+set tctl_basename (path basename $tctl_dir)
 
-sed -e "s#{{ hwmon-path-abs }}#$tctl_path#" -e "s#{{ input-filename }}#$tctl_basename#" desktop/waybar/config.jsonc > ~/.config/waybar/config.jsonc
+sed -e "s#{{ hwmon-path-abs }}#$tctl_path#" \
+    -e "s#{{ input-filename }}#$tctl_basename#" \
+    desktop/waybar/config.jsonc >~/.config/waybar/config.jsonc

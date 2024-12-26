@@ -101,11 +101,6 @@ end
 trap stop_recording SIGHUP SIGINT
 trap '' SIGTERM
 
-if set --query rec_waybar
-    date '+%s' >/tmp/waybar_record
-    kill --signal RT1 waybar
-end
-
 set folder_name $rec_dir/(date '+%Y-%m-%d_%H-%M-%S')
 if test (count $name) -ge 1
     set folder_name (string join _ $folder_name $name)
@@ -136,11 +131,24 @@ nice -n -5 wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4 &
 set wf_recorder_pid $last_pid
 debug "[VIDEO] Start recording wayland screen (PID: $wf_recorder_pid)"
 
+if set --query rec_waybar
+    fish --command="
+    while pgrep --exact wf-recorder &>/dev/null
+        set seconds --scale 0 (math (date '+%s') - $(date '+%s'))
+        set minutes --scale 0 (math \$seconds / 60)
+        printf '🔴 %d:%02d:%02d - Recording\n' \
+            (math --scale 0 \$minutes / 60) (math \$minutes % 60) (math \$seconds % 60) \
+            >/tmp/waybar_status
+        kill --signal RT1 waybar
+        sleep 1s
+    end" &
+end
+
 wait $wf_recorder_pid $mic_pid $rec_pid $speakers_pid
 debug '[INFO] Recording finished, start post-processing'
 
 if set --query rec_waybar
-    rm --force /tmp/waybar_record
+    rm --force /tmp/waybar_status
     kill --signal RT1 waybar
 end
 
