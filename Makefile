@@ -16,7 +16,7 @@ build:
 
 desktop: mime
 	@echo '${bold}>> Desktop environment settings <<${reset}'
-	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d ~/.local/share/applications ~/.local/bin
+	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.config/pipewire/pipewire-pulse.conf.d ~/.local/share/applications ~/.local/bin ~/.local/server
 	ln -srf desktop/sway.conf ~/.config/sway/config
 	ln -srf desktop/swaylock.conf ~/.config/swaylock/config
 	ln -srf desktop/waybar/style.css ~/.config/waybar/style.css
