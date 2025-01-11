@@ -141,16 +141,13 @@ if set --query rec_waybar
             >/tmp/waybar_status
         kill --signal RT1 waybar
         sleep 1s
-    end" &
+    end
+    rm --force /tmp/waybar_status
+    kill --signal RT1 waybar" &
 end
 
 wait $wf_recorder_pid $mic_pid $rec_pid $speakers_pid
 debug '[INFO] Recording finished, start post-processing'
-
-if set --query rec_waybar
-    rm --force /tmp/waybar_status
-    kill --signal RT1 waybar
-end
 
 if set --query rec_audio_recording
     debug '[AUDIO] Saving recording source audio as flac'
