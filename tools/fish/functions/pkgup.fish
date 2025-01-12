@@ -20,14 +20,6 @@ function pkgup --description 'Update customly installed packages'
 
     for package in $argv
         switch $package
-            case anki # DEPS: python-pyqt6
-                echo "Update $package"
-                source $ANKI_VENV/bin/activate.fish && pip install --upgrade aqt
-                deactivate
-                if not test -f ~/.local/share/icons/anki.png
-                    mkdir --parents ~/.local/share/icons
-                    cp --preserve=all (find $ANKI_VENV/lib -type f -name 'anki.png' -print -quit) ~/.local/share/icons/anki.png
-                end
             case droidcam # DEPS: v4l2loopback-dkms linux-headers
                 # More info: https://www.dev47apps.com/droidcam/linux/
                 echo "Update $package"
