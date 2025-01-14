@@ -1,5 +1,5 @@
 function process_media --description 'Process photos and music using its metadata in the current directory'
-    argparse --max-args 0 'h/help' -- $argv
+    argparse --max-args 0 h/help -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
@@ -29,18 +29,26 @@ function process_media --description 'Process photos and music using its metadat
         end
     end
 
+    for video in *.mp4
+        set newname (date -d (ffprobe -hide_banner $video 2>&1 | sed -nE 's/^.*creation_time.*:.* (\S+).*$/\1/p' | head -n 1) '+%Y-%m-%d-%H-%M-%S.mp4')
+        if test -n "$newname" -a "$video" != "$newname"
+            mv $video $newname
+            set count (math $count + 1)
+        end
+    end
+
     for music in *.mp3 *.m4a *.ogg *.opus *.flac
         if not test -f $music
             continue
         end
         set ffprobe_out (mktemp)
-        ffprobe $music 2>&1 | sed -e "s/'/_/g" -e 's/"//g' -e 's#/#／#g' > $ffprobe_out
+        ffprobe -hide_banner $music 2>&1 | sed -e "s/'/_/g" -e 's/"//g' -e 's#/#／#g' >$ffprobe_out
 
-        set disc   (sed -nE 's/^\s*disc\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)
-        set track  (sed -nE 's/^\s*track\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)
-        set album  (sed -nE 's/^\s*album\s*:\s*(.*)/\1/p' $ffprobe_out)
-        set title  (sed -nE 's/^\s*title\s*:\s*(.*)/\1/p' $ffprobe_out)
-        set ext    (echo $music | sed -nE 's/^.*\.([a-zA-Z0-9]{2,4})$/\1/p')
+        set disc (sed -nE 's/^\s*disc\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)
+        set track (sed -nE 's/^\s*track\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)
+        set album (sed -nE 's/^\s*album\s*:\s*(.*)/\1/p' $ffprobe_out)
+        set title (sed -nE 's/^\s*title\s*:\s*(.*)/\1/p' $ffprobe_out)
+        set ext (echo $music | sed -nE 's/^.*\.([a-zA-Z0-9]{2,4})$/\1/p')
 
         mkdir -p "$album"
         mv $music "$album"/(printf '%02d' $disc)_(printf '%02d' $track)_"$title".$ext
