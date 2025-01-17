@@ -1,0 +1,13 @@
+[package]
+name = "record-reencoder"
+version = "1.0.0"
+edition = "2021"
+
+[profile.release]
+strip = "symbols"
+codegen-units = 1
+lto = "fat"
+
+[dependencies]
+chrono = "0.4.39"
+clap = { version = "4.5.23", features = ["derive"] }

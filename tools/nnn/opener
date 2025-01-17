@@ -5,6 +5,8 @@ switch (path extension $nnn)
         fish $nnn
     case '.gpg'
         gpg-open $nnn
+    case '.rre'
+        nohup nice record-reencoder $nnn &>~/.local/logs/ffmpeg-(date '+%s').log &
     case '*'
         xdg-open $nnn
 end
