@@ -74,18 +74,21 @@ keybinds clear-defaults=true {
                 name "Build & Run"
                 layout "build_run"
             }
+            SwitchToMode "Locked";
         }
         bind "Ctrl F9" {
             NewTab {
                 name "Build"
                 layout "build"
             }
+            SwitchToMode "Locked";
         }
         bind "Ctrl F10" {
             NewTab {
                 name "Run"
                 layout "run"
             }
+            SwitchToMode "Locked";
         }
 
         // Disable remaining characters to avoid typing while in normal mode
