@@ -10,7 +10,7 @@ use std::process::Stdio;
 const REC_FILENAME: &'static str = "rec.flac";
 const MIX_FILENAME: &'static str = "mix.flac";
 
-/// Easily re-encode recordings
+/// Easily re-encode recordings. Supported codecs are libsvtav1 (default) and libvpx-vp9.
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 struct Args {
@@ -36,6 +36,7 @@ struct Metadata {
     audio: Vec<Audio>,
     datetime: String,
     crf: u8,
+    codec: String,
     output: String,
 }
 
@@ -46,31 +47,157 @@ fn main() {
         Err(reason) => panic!("HOME environment variable not set: {reason}"),
     };
 
-    let (reencode_info, metadata) = parse_input(&home, args.input);
+    let now = Local::now();
+    let now_timestamp = now.timestamp_millis();
+
+    let (reencode_info, metadata) = parse_input(&home, args.input, now);
     let record_directory = get_record_directory(&home);
-    let cmd_args = generate_cmd_args(reencode_info, metadata, record_directory);
-    let stdout = Command::new("ffmpeg")
-        .args(cmd_args)
-        .stdout(Stdio::piped())
-        .spawn()
-        .unwrap()
-        .stdout
-        .unwrap();
-    let reader = BufReader::new(stdout);
-    reader
-        .lines()
-        .for_each(|line| println!("{}", line.unwrap()));
+    let mut target_directory = record_directory.clone();
+    let (has_rec, has_mix) = {
+        let mut has_rec = false;
+        let mut has_mix = false;
+        target_directory.push(reencode_info[0].folder.clone());
+        for entry in target_directory.read_dir().unwrap() {
+            match entry.unwrap().file_name().into_string().unwrap().as_str() {
+                REC_FILENAME => has_rec = true,
+                MIX_FILENAME => has_mix = true,
+                _ => (),
+            }
+        }
+        (has_rec, has_mix)
+    };
+
+    if metadata.codec == "libsvtav1" {
+        // One-pass
+        let mut cmd_args = generate_cmd_args(
+            &reencode_info,
+            &metadata,
+            &record_directory,
+            has_rec,
+            has_mix,
+        );
+        let (fps, preset, output) = if metadata.output.is_empty() {
+            let output = format!("/tmp/test-{}", now_timestamp);
+            println!("Output path is not set. Generate test output at {output}");
+            (30, 13, output)
+        } else {
+            (60, 0, metadata.output)
+        };
+
+        // Codec + output configuration
+        cmd_args.append(&mut vec![
+            String::from("-vcodec"),
+            metadata.codec,
+            String::from("-r"),
+            format!("{}", fps),
+            String::from("-crf"),
+            format!("{}", metadata.crf),
+            String::from("-preset"),
+            format!("{}", preset),
+            String::from("-g"),
+            String::from("300"),
+            String::from("-pix_fmt"),
+            String::from("yuv420p"),
+            String::from("-acodec"),
+            String::from("libopus"),
+            format!("{}.mkv", output),
+        ]);
+        run_ffmpeg(cmd_args);
+    } else if metadata.codec == "libvpx-vp9" {
+        // Two-pass
+        let mut first_pass_args =
+            generate_cmd_args(&reencode_info, &metadata, &record_directory, false, false);
+        first_pass_args.append(&mut vec![
+            String::from("-passlogfile"),
+            format!("/tmp/ffmpeg2pass-{}", now_timestamp),
+            String::from("-pass"),
+            String::from("1"),
+            String::from("-f"),
+            String::from("null"),
+        ]);
+        let mut second_pass_args = generate_cmd_args(
+            &reencode_info,
+            &metadata,
+            &record_directory,
+            has_rec,
+            has_mix,
+        );
+        second_pass_args.append(&mut vec![
+            String::from("-passlogfile"),
+            format!("/tmp/ffmpeg2pass-{}", now_timestamp),
+            String::from("-pass"),
+            String::from("2"),
+        ]);
+        let (fps, preset, output) = if metadata.output.is_empty() {
+            let output = format!("/tmp/test-{}", now_timestamp);
+            println!("Output path is not set. Generate test output at {output}");
+            (30, 5, output)
+        } else {
+            (60, 0, metadata.output)
+        };
+
+        // Codec + output configuration
+        first_pass_args.append(&mut vec![
+            String::from("-vcodec"),
+            metadata.codec.clone(),
+            String::from("-r"),
+            format!("{}", fps),
+            String::from("-b:v"),
+            String::from("0"),
+            String::from("-crf"),
+            format!("{}", metadata.crf),
+            String::from("-cpu-used"),
+            format!("{}", preset),
+            String::from("-tune-content"),
+            String::from("screen"),
+            String::from("-pix_fmt"),
+            String::from("yuv420p"),
+            String::from("-acodec"),
+            String::from("libopus"),
+            String::from("/dev/null"),
+        ]);
+        second_pass_args.append(&mut vec![
+            String::from("-vcodec"),
+            metadata.codec,
+            String::from("-r"),
+            format!("{}", fps),
+            String::from("-b:v"),
+            String::from("0"),
+            String::from("-crf"),
+            format!("{}", metadata.crf),
+            String::from("-cpu-used"),
+            format!("{}", preset),
+            String::from("-tune-content"),
+            String::from("screen"),
+            String::from("-pix_fmt"),
+            String::from("yuv420p"),
+            String::from("-acodec"),
+            String::from("libopus"),
+            format!("{}.webm", output),
+        ]);
+        run_ffmpeg(first_pass_args);
+        run_ffmpeg(second_pass_args);
+        fs::remove_file(format!("/tmp/ffmpeg2pass-{}-0.log", now_timestamp)).unwrap();
+    } else {
+        eprintln!("No support for codec: {}", metadata.codec);
+        panic!("Unknown codec");
+    }
 }
 
-fn parse_input(home: &String, input_path: PathBuf) -> (Vec<TrimInfo>, Metadata) {
+fn parse_input(
+    home: &String,
+    input_path: PathBuf,
+    now: DateTime<Local>,
+) -> (Vec<TrimInfo>, Metadata) {
     let mut input_reader = BufReader::new(fs::File::open(input_path).unwrap());
     let mut folder_name = String::new();
     let mut reencode_info: Vec<TrimInfo> = Vec::new();
     let mut metadata = Metadata {
         title: String::new(),
         audio: Vec::new(),
-        datetime: Local::now().format("%Y-%m-%d %H:%M:%S").to_string(),
+        datetime: now.format("%Y-%m-%d %H:%M:%S").to_string(),
         crf: 42,
+        codec: String::from("libsvtav1"),
         output: String::new(),
     };
     loop {
@@ -112,6 +239,9 @@ fn parse_metadata(metadata: &mut Metadata, content: &str, byte_index: usize, hom
         }
         "crf" => {
             metadata.crf = value.parse().unwrap();
+        }
+        "codec" => {
+            metadata.codec = value.to_string();
         }
         "output" => {
             let mut output = String::from(value);
@@ -219,32 +349,19 @@ fn get_record_directory(home: &String) -> PathBuf {
 }
 
 fn generate_cmd_args(
-    reencode_info: Vec<TrimInfo>,
-    metadata: Metadata,
-    record_directory: PathBuf,
+    reencode_info: &Vec<TrimInfo>,
+    metadata: &Metadata,
+    record_directory: &PathBuf,
+    has_rec: bool,
+    has_mix: bool,
 ) -> Vec<String> {
-    let mut target_directory = record_directory.clone();
-    let (has_rec, has_mix) = {
-        let mut has_rec = false;
-        let mut has_mix = false;
-        target_directory.push(reencode_info[0].folder.clone());
-        for entry in target_directory.read_dir().unwrap() {
-            match entry.unwrap().file_name().into_string().unwrap().as_str() {
-                REC_FILENAME => has_rec = true,
-                MIX_FILENAME => has_mix = true,
-                _ => (),
-            }
-        }
-        (has_rec, has_mix)
-    };
-
     // Create ffmpeg command with inputs, prepare filter complex
     let mut cmd_args: Vec<String> = vec![String::from("-nostdin")];
     let mut filter_args: Vec<String> = Vec::new();
     let mut concat_filter = String::new();
     let mut stream_index = 0;
-    for trim_info in &reencode_info {
-        target_directory = record_directory.clone();
+    for trim_info in reencode_info {
+        let mut target_directory = record_directory.clone();
         target_directory.push(trim_info.folder.clone());
         cmd_args.append(&mut generate_input_args(
             trim_info,
@@ -271,14 +388,11 @@ fn generate_cmd_args(
     );
     filter_args.push(concat_filter);
 
-    // Add filter complex and map args to cmd_args
+    // Add filter complex, map args and metadata to cmd_args
     cmd_args.push(String::from("-filter_complex"));
     cmd_args.push(filter_args.join(";"));
     cmd_args.append(&mut map_args);
-
-    // Metadata and codecs
     cmd_args.append(&mut generate_metadata_args(&metadata));
-    cmd_args.append(&mut generate_codec_args(metadata.output, metadata.crf));
 
     cmd_args
 }
@@ -422,54 +536,6 @@ fn generate_metadata_args(metadata: &Metadata) -> Vec<String> {
     metadata_args
 }
 
-fn generate_codec_args(output_path: String, crf: u8) -> Vec<String> {
-    let mut codec_args: Vec<String> = Vec::new();
-    if output_path.is_empty() {
-        println!("Output path is not set. Generate test output at /tmp/test.mkv");
-        let mut codecs_args = vec![
-            String::from("-vcodec"),
-            String::from("libsvtav1"),
-            String::from("-r"),
-            String::from("30"),
-            String::from("-crf"),
-            format!("{}", crf),
-            String::from("-preset"),
-            String::from("13"),
-            String::from("-g"),
-            String::from("600"),
-            String::from("-pix_fmt"),
-            String::from("yuv420p"),
-            String::from("-acodec"),
-            String::from("libopus"),
-        ];
-        codec_args.append(&mut codecs_args);
-
-        codec_args.push(String::from("-y"));
-        codec_args.push(String::from("/tmp/test.mkv"));
-    } else {
-        let mut codecs_args = vec![
-            String::from("-vcodec"),
-            String::from("libsvtav1"),
-            String::from("-r"),
-            String::from("60"),
-            String::from("-crf"),
-            format!("{}", crf),
-            String::from("-preset"),
-            String::from("0"),
-            String::from("-g"),
-            String::from("600"),
-            String::from("-pix_fmt"),
-            String::from("yuv420p"),
-            String::from("-acodec"),
-            String::from("libopus"),
-        ];
-        codec_args.append(&mut codecs_args);
-
-        codec_args.push(output_path);
-    }
-    codec_args
-}
-
 fn time_to_secs(time: String) -> f64 {
     time.split(':')
         .rev()
@@ -482,4 +548,18 @@ fn time_to_secs(time: String) -> f64 {
         })
         .enumerate()
         .fold(0.0, |acc, x| acc + x.1 * (60f64).powi(x.0 as i32))
+}
+
+fn run_ffmpeg(cmd_args: Vec<String>) {
+    let stdout = Command::new("ffmpeg")
+        .args(cmd_args)
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap()
+        .stdout
+        .unwrap();
+    let reader = BufReader::new(stdout);
+    reader
+        .lines()
+        .for_each(|line| println!("{}", line.unwrap()));
 }
