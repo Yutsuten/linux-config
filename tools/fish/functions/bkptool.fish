@@ -1,5 +1,5 @@
 function bkptool --description 'Backup and restore user files'
-    argparse --max-args 0 'h/help' 'r/restore' -- $argv
+    argparse --max-args 0 h/help r/restore -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
@@ -17,8 +17,8 @@ function bkptool --description 'Backup and restore user files'
     set bold (tput bold)
     set reset (tput sgr0)
 
-    set bkp_dir '/media/hdd1'
-    set sync_dirs Desktop Documents Music Pictures Videos .password-store
+    set bkp_dir /media/hdd1
+    set sync_dirs Desktop Documents Music Pictures Videos Encrypted .password-store
 
     if not lsblk | grep --fixed-strings --quiet $bkp_dir
         echo 'FAIL: External drive not mounted.' >&2
@@ -37,8 +37,8 @@ function bkptool --description 'Backup and restore user files'
             | tar --extract --zstd --directory ~
     else
         # Pacman backup
-        pacman -Qqe > ~/Documents/Backup/Computer/pacman_(date '+%Y-%m-%d').list
-        groups (whoami) > ~/Documents/Backup/Computer/groups.list
+        pacman -Qqe >~/Documents/Backup/Computer/pacman_(date '+%Y-%m-%d').list
+        groups (whoami) >~/Documents/Backup/Computer/groups.list
 
         function trim_old_backup
             set keep_count $argv[1]
@@ -67,11 +67,11 @@ function bkptool --description 'Backup and restore user files'
         set bkp_linux .config/backup.list
         while read --line target
             set --append bkp_linux $target
-        end < ~/.config/backup.list
+        end <~/.config/backup.list
 
         echo $bold'Generate Linux.tar.zst.gpg'$reset
         tar --create --zstd --directory ~ $bkp_linux \
-          | gpg --encrypt --default-recipient-self > Linux.tar.zst.gpg
+            | gpg --encrypt --default-recipient-self >Linux.tar.zst.gpg
 
         echo $bold'Backup Linux.tar.zst.gpg'$reset
         cp --archive Linux.tar.zst.gpg "$bkp_dir/Linux.tar.zst.gpg"
