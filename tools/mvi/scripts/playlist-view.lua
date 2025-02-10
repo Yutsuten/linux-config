@@ -59,7 +59,7 @@ local opts = {
     flagged_border_size = 4,
     placeholder_color = "222222",
 
-    flagged_file_path = "./mpv_gallery_flagged",
+    flagged_file_path = "./mvi_flagged",
 
     mouse_support = true,
     UP        = "UP",

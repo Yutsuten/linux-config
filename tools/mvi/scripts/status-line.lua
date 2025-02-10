@@ -8,6 +8,8 @@ local opts = {
     text_bottom_right = "[${dwidth:X}x${dheight:X}]",
 }
 
+local MAX_LEN = 70
+
 local msg = require 'mp.msg'
 local assdraw = require 'mp.assdraw'
 local options = require 'mp.options'
@@ -51,6 +53,9 @@ function refresh()
         if not expanded then
             msg.error("Error expanding status-line")
             return
+        end
+        if string.len(expanded) > MAX_LEN then
+            expanded = string.sub(expanded, 0, MAX_LEN) .. "..."
         end
         msg.verbose("Status-line changed to: " .. expanded)
         a:new_event()
