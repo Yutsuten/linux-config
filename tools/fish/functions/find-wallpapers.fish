@@ -1,9 +1,9 @@
-function find_wallpapers --description 'Search for images that can be used as wallpaper'
-    argparse 'h/help' 'w#min-width' -- $argv
+function find-wallpapers --description 'Search for images that can be used as wallpaper'
+    argparse h/help 'w#min-width' -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
-        echo 'Usage: find_wallpapers [options] [DIRS]' >&2
+        echo 'Usage: find-wallpapers [options] [DIRS]' >&2
         echo >&2
         echo '  Synopsis:' >&2
         echo '    Search for images that can be used as wallpaper.' >&2

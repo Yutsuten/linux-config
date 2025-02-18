@@ -1,9 +1,9 @@
-function process_media --description 'Process photos and music using its metadata in the current directory'
+function process-media --description 'Process photos and music using its metadata in the current directory'
     argparse --max-args 0 h/help -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
-        echo 'Usage: process_media [options]' >&2
+        echo 'Usage: process-media [options]' >&2
         echo >&2
         echo '  Synopsis:' >&2
         echo '    Process photos and music using its metadata in the current directory.' >&2

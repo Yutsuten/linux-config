@@ -1,9 +1,9 @@
-function normalize_filenames --description 'Increase compatibility of file names recursively in the current directory'
-    argparse --max-args 0 'h/help' -- $argv
+function normalize-filenames --description 'Increase compatibility of file names recursively in the current directory'
+    argparse --max-args 0 h/help -- $argv
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
-        echo 'Usage: normalize_filenames [options]' >&2
+        echo 'Usage: normalize-filenames [options]' >&2
         echo >&2
         echo '  Synopsis:' >&2
         echo '    Increase compatibility of file names recursively in the current directory.' >&2
