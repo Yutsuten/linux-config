@@ -5,7 +5,7 @@ find . -maxdepth 1 -type f -name '*.m3u' -printf '%P\n' \
     | sed 's|^|img:/usr/share/icons/Arc/actions/24@2x/music-library.png:text:|g' \
     | wofi --dmenu --prompt 'Select Playlist' --cache-file /dev/null \
     | cut -d ':' -f 4 \
-    | read --line m3ufile
+    | read --line m3ufile || return
 
 m3ucheck $m3ufile || notify-send --app-name music-player --icon dialog-warning --urgency critical 'm3ucheck failed' "Playlist $m3ufile may have issues."
 mpv --profile=music --shuffle --loop-playlist $m3ufile &>~/.local/logs/music-player.log
