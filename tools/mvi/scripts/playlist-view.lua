@@ -22,6 +22,7 @@ local ass_changed = false
 local bindings = {}
 local bindings_repeat = {}
 local compute_geometry
+local cwd = mp.get_property_native("working-directory")
 local flags = {}
 local geometry_changed = false
 local hash_cache = {}
@@ -991,11 +992,12 @@ function write_flag_file()
     if next(flags) == nil then
         return
     end
-    local out = io.open(opts.flagged_file_path, "w")
-    for f, _ in pairs(flags) do
-        out:write(f .. "\n")
+    local flagged_file_path = string.gsub(opts.flagged_file_path, "^~", os.getenv("HOME") or "~")
+    local output_file = io.open(flagged_file_path, "w")
+    for flag, _ in pairs(flags) do
+        output_file:write(utils.join_path(cwd, flag) .. "\0")
     end
-    out:close()
+    output_file:close()
 end
 mp.register_event("shutdown", write_flag_file)
 
