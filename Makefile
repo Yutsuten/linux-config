@@ -27,8 +27,8 @@ desktop: mime
 	ln -srf desktop/wofi/config ~/.config/wofi/config
 	ln -srf desktop/wofi/style.css ~/.config/wofi/style.css
 	ln -srf desktop/pipewire/10-remap-sink.conf ~/.config/pipewire/pipewire-pulse.conf.d/10-remap-sink.conf
-	ln -srf desktop/bin/* ~/.local/bin/
-	ln -srf desktop/entries/*.desktop ~/.local/share/applications/
+	ln -srf desktop/bin/* ~/.local/bin/ && find ~/.local/bin -xtype l -delete
+	ln -srf desktop/entries/*.desktop ~/.local/share/applications/ && find ~/.local/share/applications -xtype l -delete
 	sed "s#{WALLPAPERS_PATH}#$$WALLPAPERS_PATH#g" desktop/systemd/wallpaper.service > ~/.config/systemd/user/wallpaper.service
 	sed "s#{HOME}#$$HOME#g" desktop/systemd/caddy.service > ~/.config/systemd/user/caddy.service
 	sed -e "s#\[LOCAL_IP\]#$$(ip address | sed -nE 's# *inet (192[^/]+)/.*#\1#p')#g" -e "s#\[HOME\]#$$HOME#g" desktop/systemd/Caddyfile > ~/.local/server/Caddyfile
