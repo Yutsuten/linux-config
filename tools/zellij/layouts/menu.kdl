@@ -1,0 +1,11 @@
+layout {
+    tab name="Menu" {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        pane command="./.config/zellij/scripts/menu" {
+            cwd ""
+            close_on_exit true
+        }
+    }
+}

@@ -3,6 +3,7 @@ layout {
         plugin location="compact-bar"
     }
     pane command="neomutt" {
+        cwd "Downloads"
         close_on_exit true
     }
 }

@@ -1,0 +1,43 @@
+#!/usr/bin/env fish
+# --------------------------------------------------- #
+# Zellij's main menu.                                 #
+# Extra scripts can be added at ~/.local/share/zellij #
+# --------------------------------------------------- #
+
+set choices 'Open project' 'Password Manager' 'File Browser' Fish
+for filepath in ~/.local/share/zellij/*
+    # Split on `-` AND capitalize
+    set --erase choice
+    for word in (string split - (path basename $filepath))
+        set choice "$choice "(string sub --length 1 -- $word | string upper)(string sub --start 2 -- $word)
+    end
+    set --append choices (string trim $choice)
+end
+
+set selection (string join \n $choices | sort | fzf --layout=reverse) || return
+switch $selection
+    case 'Open project'
+        source ~/.config/zellij/scripts/open-project
+        return 0
+    case 'Password Manager'
+        zellij action rename-tab Pass
+        fpass
+        return 0
+    case 'File Browser'
+        zellij action rename-tab Nnn
+        cd ~ && nnn
+        return 0
+    case Fish
+        zellij action rename-tab Fish
+        cd ~ && fish
+        return 0
+    case '*'
+        set scriptname (string lower (string replace --all ' ' '-' $selection))
+        if test -x ~/.local/share/zellij/$scriptname
+            source ~/.local/share/zellij/$scriptname
+            return 0
+        end
+end
+
+echo 'Something went wrong...' >&2
+return 1

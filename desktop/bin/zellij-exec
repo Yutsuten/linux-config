@@ -1,0 +1,29 @@
+#!/usr/bin/env fish
+# -------------------------------------------------- #
+# Run scripts inside `.zellij` of current directory. #
+# -------------------------------------------------- #
+
+if not test -d .zellij
+    echo '.zellij directory not found' >&2
+    return 1
+end
+
+set choices
+for choice in .zellij/*
+    if test -x $choice
+        set --append choices (path basename $choice)
+    end
+end
+
+if test (count $choices) -eq 0
+    echo 'There are no executable scripts in .zellij directory' >&2
+    return 1
+end
+
+set selection (string join \n $choices | sort | fzf --layout=reverse) || return
+
+zellij action rename-tab "Exec $selection"
+./.zellij/$selection
+set result $status
+echo
+read --prompt-str "[Process exited $result]"

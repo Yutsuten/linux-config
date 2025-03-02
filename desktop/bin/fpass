@@ -28,7 +28,7 @@ find . -type d -path '*/.*' -prune -o -type f -name '*.gpg' -printf '%P\n' | whi
     path change-extension '' $line >>$pass_store_cache
 end
 
-while test $interrupt -eq 0 && set selection (fzf < $pass_store_cache)
+while test $interrupt -eq 0 && set selection (fzf --layout=reverse < $pass_store_cache)
     pass $selection
     pass --clip $selection
     read --line --prompt-str '' || set interrupt 1

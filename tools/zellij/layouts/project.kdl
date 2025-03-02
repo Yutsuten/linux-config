@@ -2,8 +2,8 @@ layout {
     pane size=1 borderless=true {
         plugin location="compact-bar"
     }
-    pane command="zellij-open" {
-        args "--project"
+    pane command="./.config/zellij/scripts/open-project" {
+        cwd ""
         close_on_exit true
     }
 }

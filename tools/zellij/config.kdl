@@ -17,6 +17,13 @@ keybinds clear-defaults=true {
         bind "Alt F4" { CloseFocus; }
 
         // Utilities
+        bind "Space" {
+            NewTab {
+                name "Menu"
+                layout "menu"
+            }
+            SwitchToMode "Locked";
+        }
         bind "Enter" {
             NewTab {
                 name "Fish"
@@ -25,7 +32,7 @@ keybinds clear-defaults=true {
             SwitchToMode "Locked";
         }
         bind "f" {
-            Run "zellij-open" "--file-picker" {
+            Run "zellij-nnn" {
                 direction "Down"
             }
             SwitchToMode "Locked";
@@ -39,7 +46,6 @@ keybinds clear-defaults=true {
         }
         bind "m" {
             NewTab {
-                cwd ""
                 name "NeoMutt"
                 layout "neomutt"
             }
@@ -55,15 +61,15 @@ keybinds clear-defaults=true {
         }
         bind "o" {
             NewTab {
-                name "Open Project"
                 layout "project"
             }
             SwitchToMode "Locked";
         }
         bind "t" {
             NewTab {
+                cwd ""
                 name "Fish"
-                layout "fish_home"
+                layout "compact"
             }
             SwitchToMode "Locked";
         }
@@ -71,22 +77,8 @@ keybinds clear-defaults=true {
         // IDE
         bind "F9" {
             NewTab {
-                name "Build & Run"
-                layout "build_run"
-            }
-            SwitchToMode "Locked";
-        }
-        bind "Ctrl F9" {
-            NewTab {
-                name "Build"
-                layout "build"
-            }
-            SwitchToMode "Locked";
-        }
-        bind "Ctrl F10" {
-            NewTab {
-                name "Run"
-                layout "run"
+                name "Exec menu"
+                layout "exec"
             }
             SwitchToMode "Locked";
         }

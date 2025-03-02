@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+# ----------------------------------------------------------- #
+# Open nnn as floating window to open selected file in helix. #
+# ----------------------------------------------------------- #
+
+zellij action toggle-pane-embed-or-floating
+set selection (nnn -p -)
+if test (count $selection) -eq 1 -a -f $selection
+    set filepath (string replace --regex "^$PWD/" '' $selection)
+    nohup fish --command="
+        zellij action close-pane
+        zellij action write-chars ':o $filepath'
+        zellij action write 13
+    " &>/dev/null &
+    wait
+else
+    zellij action close-pane
+end
