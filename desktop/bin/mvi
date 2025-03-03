@@ -1,9 +1,9 @@
 #!/usr/bin/env fish
 if test (count $argv) -eq 0
     set image_files (string match --regex --entire --ignore-case '\.jpe?g$|\.png$|\.gif$|\.webp$|\.svg$|\.bmp$|\.avif$|\.hei[cf]s?$|\.tiff?$' *)
-    if test (count $image_files)
-        mpv --config-dir=$HOME/.config/mvi $image_files
+    if test (count $image_files) -ge 1
+        mpv --config-dir=$HOME/.config/mvi $image_files &>~/.local/logs/mvi.log
     end
 else
-    mpv --config-dir=$HOME/.config/mvi $argv
+    mpv --config-dir=$HOME/.config/mvi $argv &>~/.local/logs/mvi.log
 end

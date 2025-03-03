@@ -34,8 +34,8 @@ else if test -d $nnn
         end
     end
     set params[-1] ')'
-    set -a params -exec nohup mpv --no-terminal --shuffle
-    set output_file ~/.local/logs/mpv.log
+    set -a params -exec nohup mpv --shuffle
+    set output_file /dev/null
     if test $category = music
         set -a params --profile=music --loop-playlist
         set output_file ~/.local/logs/music-player.log
@@ -63,8 +63,8 @@ else
         end
     end
     set params[-1] ')'
-    set -a params -exec nohup mpv --no-terminal --shuffle
-    set output_file ~/.local/logs/mpv.log
+    set -a params -exec nohup mpv --shuffle
+    set output_file /dev/null
     if test $category = music
         set -a params --profile=music --loop-playlist
         set output_file ~/.local/logs/music-player.log

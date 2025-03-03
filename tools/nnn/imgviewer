@@ -3,7 +3,7 @@ if test -f $nnn
     if test (file $nnn) = "$nnn: ASCII text" # Text file with filenames in each line
         set files (shuf <$nnn)
     else
-        nohup mvi &>~/.local/logs/mvi.log &
+        nohup mvi &>/dev/null &
     end
 else if test -d $nnn # Find pictures inside selected dir
     set depth (gum choose --header 'Depth:' 1 2 3) || return
@@ -17,5 +17,5 @@ else if test -d $nnn # Find pictures inside selected dir
 end
 
 if test (count $files) -ge 1
-    nohup mvi $files &>~/.local/logs/mvi.log &
+    nohup mvi $files &>/dev/null &
 end
