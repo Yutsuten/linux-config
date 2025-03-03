@@ -3,7 +3,6 @@
 # Open a project using fzf. #
 # ------------------------- #
 
-zellij action rename-tab 'Open Project'
 set selection (printf '%s\n' ~/Projects/* | xargs --delimiter '\n' --max-args 1 basename | fzf --layout=reverse) || return
 cd ~/Projects/$selection
 

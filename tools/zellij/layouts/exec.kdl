@@ -1,8 +1,10 @@
 layout {
-    pane size=1 borderless=true {
-        plugin location="compact-bar"
-    }
-    pane command="zellij-exec" {
-        close_on_exit true
+    tab name="Exec menu" {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        pane command="zellij-exec" {
+            close_on_exit true
+        }
     }
 }

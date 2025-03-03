@@ -19,7 +19,6 @@ keybinds clear-defaults=true {
         // Utilities
         bind "Space" {
             NewTab {
-                name "Menu"
                 layout "menu"
             }
             SwitchToMode "Locked";
@@ -39,14 +38,12 @@ keybinds clear-defaults=true {
         }
         bind "F" {
             NewTab {
-                name "Nnn"
                 layout "nnn"
             }
             SwitchToMode "Locked";
         }
         bind "m" {
             NewTab {
-                name "NeoMutt"
                 layout "neomutt"
             }
             SwitchToMode "Locked";
@@ -54,7 +51,6 @@ keybinds clear-defaults=true {
         bind "n" {
             NewTab {
                 cwd ""
-                name "Nnn"
                 layout "nnn"
             }
             SwitchToMode "Locked";
@@ -77,7 +73,6 @@ keybinds clear-defaults=true {
         // IDE
         bind "F9" {
             NewTab {
-                name "Exec menu"
                 layout "exec"
             }
             SwitchToMode "Locked";
