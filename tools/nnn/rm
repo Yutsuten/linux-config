@@ -8,7 +8,7 @@ set selected_files
 if test -s ~/.config/nnn/.selection
     while read --null selection
         set --append selected_files (string replace --regex "^$PWD/" '' $selection)
-    end < ~/.config/nnn/.selection
+    end <~/.config/nnn/.selection
 else
     set selected_files $nnn
 end
@@ -21,12 +21,9 @@ for i in (seq (count $selected_files))
     echo "  $i: $selected_files[$i]"
 end
 echo
-read --line --prompt-str 'Are you sure? [y/N] ' answer
 
 # Remove execution
-if string match --quiet --regex '^[Yy]$' $answer
+if gum confirm 'Are you sure?'
     rm --recursive --force -- $selected_files
-
-    # Clear selection
-    printf '-' > $NNN_PIPE
+    printf - >$NNN_PIPE # Clear selection
 end

@@ -19,9 +19,7 @@ function normalize-filenames --description 'Increase compatibility of file names
 
     if test (count (string split '/' $PWD)) -le 3
         echo 'Current directory may affect too many files.'
-        echo
-        read --line --prompt-str 'Are you sure? [y/N] ' answer
-        if not string match --quiet --regex '^[Yy]$' $answer
+        if not gum confirm 'Are you sure?'
             return 1
         end
     end
@@ -35,6 +33,9 @@ function normalize-filenames --description 'Increase compatibility of file names
         if test "$file" != "$normalized"
             mkdir -p "$normalized_dir"
             mv $file "$normalized"
+            echo "Before : $file"
+            echo "After  : $normalized"
+            echo
             set count (math $count + 1)
         end
     end

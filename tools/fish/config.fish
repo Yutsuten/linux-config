@@ -8,6 +8,15 @@ set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
 set -gx EDITOR edit
 set -gx VISUAL edit
 
+set -gx GUM_CHOOSE_CURSOR ' → '
+set -gx GUM_CHOOSE_CURSOR_BOLD 1
+set -gx GUM_CHOOSE_CURSOR_FOREGROUND 4
+set -gx GUM_CHOOSE_HEADER_FOREGROUND 6
+set -gx GUM_CHOOSE_SHOW_HELP 0
+set -gx GUM_CONFIRM_PROMPT_FOREGROUND 6
+set -gx GUM_CONFIRM_SELECTED_BACKGROUND 4
+set -gx GUM_CONFIRM_SHOW_HELP 0
+
 if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     # Gnome
     gsettings set org.gnome.desktop.interface gtk-theme Arc

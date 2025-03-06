@@ -30,8 +30,7 @@ echo "After  : $(du -h /tmp/$nnn | cut -f 1)"
 mpv --msg-level=all=warn /tmp/$nnn
 
 echo
-read --line --prompt-str 'Replace original? [y/N] ' replace
-if string match --quiet --regex '^[Yy]$' $replace
+if gum confirm 'Replace original?'
     trash-put $nnn
     mv /tmp/$nnn $nnn
 else

@@ -20,27 +20,11 @@ for i in (seq (count $selected_files))
 end
 echo
 
-function get_choice
-    echo 'Which format to compress to?' >&2
-    echo >&2
-    for i in (seq (count $choices))
-        echo "  $i: $choices[$i]" >&2
-    end
-    echo >&2
-    read --line --prompt-str 'Your choice: ' index_choice
-
-    if string match --quiet --regex '^[0-9]+$' $index_choice && test $index_choice -ge 1 -a $index_choice -le (count $choices)
-        echo $choices[$index_choice]
-    end
-end
-
 if test (count $selected_files) -eq 1
     set selection $selected_files[1]
 
     if test -f $selection # Single file
-        set choices .zst .gz .zip
-        set extension (get_choice)
-        switch $extension
+        switch (gum choose --header 'Which format to compress to?' .zst .gz .zip || return)
             case .zst
                 echo "Generating $selection.zst"
                 zstd $selection
@@ -50,14 +34,9 @@ if test (count $selected_files) -eq 1
             case .zip
                 echo "Generating $selection.zip"
                 zip $selection.zip $selection
-            case '*'
-                echo Abort
-                return 1
         end
     else if test -d $selection # Single directory
-        set choices .tar.zst .tgz .tar .zip
-        set extension (get_choice)
-        switch $extension
+        switch (gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip || return)
             case .tar.zst
                 echo "Generating $selection.tar.zst"
                 tar --zstd --create --file $selection.tar.zst $selection
@@ -70,21 +49,15 @@ if test (count $selected_files) -eq 1
             case .zip
                 echo "Generating $selection.zip"
                 zip -r $selection.zip $selection
-            case '*'
-                echo Abort
-                return 1
         end
     end
 else # Multiple files / directories
-    set choices .tar.zst .tgz .tar .zip
     read --line --prompt-str 'Filename without extension: ' output
     if test -z $output
         echo Abort
         return 1
     end
-    echo
-    set extension (get_choice)
-    switch $extension
+    switch (gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip || return)
         case .tar.zst
             echo "Generating $output.tar.zst"
             tar --zstd --create --file $output.tar.zst $selected_files
@@ -97,8 +70,5 @@ else # Multiple files / directories
         case .zip
             echo "Generating $output.zip"
             zip -r $output.zip $selected_files
-        case '*'
-            echo Abort
-            return 1
     end
 end
