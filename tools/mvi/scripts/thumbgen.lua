@@ -7,8 +7,8 @@ It is meant to be used by other scripts.
 File placement: inside scripts directory
 ]]
 
-local utils = require 'mp.utils'
 local msg = require 'mp.msg'
+local utils = require 'mp.utils'
 
 local cwd = mp.get_property_native("working-directory")
 local jobs_queue = {} -- queue of thumbnail jobs
@@ -58,16 +58,17 @@ end
 
 function mktemp_thumbs()
     -- Temporary directory for BGRA thumbnails
-    local mktemp_res = utils.subprocess({
+    local result = utils.subprocess({
         args = {"mktemp", "--tmpdir", "--directory", "mvi-gallery-XXXXXXXX"},
         capture_stdout = true,
+        capture_stderr = true,
         playback_only = false,
     })
-    if mktemp_res.status > 0 then
-        msg.error("Error creating temporary directory for thumbnails")
+    if result.status > 0 then
+        msg.error("Error creating temporary directory for thumbnails. " .. result.stderr)
         return
     end
-    thumbs_tmpdir = string.sub(mktemp_res.stdout, 1, -2)
+    thumbs_tmpdir = string.sub(result.stdout, 1, -2)
 end
 
 function preprocess_thumbnails(playlist)
@@ -89,7 +90,7 @@ end
 function thumbnail_command(command_args, tmp_output_path, output_path)
     local res = utils.subprocess({
         args = command_args,
-        cancellable = false
+        playback_only = false
     })
     -- "atomically" generate the output to avoid loading half-generated thumbnails (results in crashes)
     if res.status ~= 0 then

@@ -1,5 +1,5 @@
-local utils = require 'mp.utils'
 local msg = require 'mp.msg'
+local utils = require 'mp.utils'
 
 function remove_current()
     local playlist_path = mp.get_property_native("playlist-path")

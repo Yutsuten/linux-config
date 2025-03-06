@@ -1,3 +1,7 @@
+local assdraw = require 'mp.assdraw'
+local msg = require 'mp.msg'
+local options = require 'mp.options'
+
 local opts = {
     enabled = true,
     size = 36,
@@ -9,10 +13,6 @@ local opts = {
 }
 
 local MAX_LEN = 70
-
-local msg = require 'mp.msg'
-local assdraw = require 'mp.assdraw'
-local options = require 'mp.options'
 
 options.read_options(opts, nil, function(c)
     if c["enabled"] then

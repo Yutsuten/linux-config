@@ -8,10 +8,10 @@ Settings: script-opts/playlist_view.conf
 Default keybinding: g script-binding playlist-view-toggle
 ]]
 
-local utils = require 'mp.utils'
+local assdraw = require 'mp.assdraw'
 local msg = require 'mp.msg'
 local options = require 'mp.options'
-local assdraw = require 'mp.assdraw'
+local utils = require 'mp.utils'
 
 local HOURS = 60 -- find command uses minutes as unit
 local DAYS = 24 * HOURS

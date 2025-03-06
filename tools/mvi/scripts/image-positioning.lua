@@ -1,3 +1,7 @@
+local assdraw = require 'mp.assdraw'
+local msg = require 'mp.msg'
+local options = require 'mp.options'
+
 local opts = {
     drag_to_pan_margin = 50,
     drag_to_pan_move_if_full_view=false,
@@ -8,10 +12,6 @@ local opts = {
     cursor_centric_zoom_auto_center = true,
     cursor_centric_zoom_dezoom_if_full_view = false,
 }
-local options = require 'mp.options'
-local msg = require 'mp.msg'
-local assdraw = require 'mp.assdraw'
-
 options.read_options(opts, nil, function() end)
 
 function clamp(value, low, high)
