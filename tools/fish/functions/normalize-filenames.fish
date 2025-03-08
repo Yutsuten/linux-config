@@ -19,7 +19,7 @@ function normalize-filenames --description 'Increase compatibility of file names
 
     if test (count (string split '/' $PWD)) -le 3
         echo 'Current directory may affect too many files.'
-        if not gum confirm 'Are you sure?'
+        if not gum confirm 'Are you sure?' --show-output
             return 1
         end
     end

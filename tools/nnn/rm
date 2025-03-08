@@ -23,7 +23,7 @@ end
 echo
 
 # Remove execution
-if gum confirm 'Are you sure?'
+if gum confirm 'Are you sure?' --show-output
     rm --recursive --force -- $selected_files
     printf - >$NNN_PIPE # Clear selection
 end

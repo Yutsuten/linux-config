@@ -30,7 +30,7 @@ echo "After  : $(du -h /tmp/$nnn | cut -f 1)"
 mpv --msg-level=all=warn /tmp/$nnn
 
 echo
-if gum confirm 'Replace original?'
+if gum confirm 'Replace original?' --show-output
     trash-put $nnn
     mv /tmp/$nnn $nnn
 else
