@@ -68,7 +68,7 @@ system:
 	cp -af system/utilities/screenshot.fish /usr/local/bin/screenshot
 	cp -af system/utilities/system.fish /usr/local/bin/system
 	cp -af system/utilities/toggle-record.fish /usr/local/bin/toggle-record
-	cp -af system/utilities/wp-volume.sh /usr/local/bin/wp-volume
+	cp -af system/utilities/wp-volume.fish /usr/local/bin/wp-volume
 	cp -af system/greetd_conf.toml /etc/greetd/config.toml
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 	fish system/misc.fish
