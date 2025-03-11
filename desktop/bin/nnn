@@ -21,8 +21,7 @@ set --append shortcuts 'v:-!less -NR -- "$nnn"*'
 set --append shortcuts 'x:rm'
 set --append shortcuts 'y:-!wl-copy -- "$nnn"*'
 set --append shortcuts 'Y:-!wl-copy -- "$PWD/$nnn"*'
-set --append shortcuts 'z:!extract -- "$nnn"*'
-set --append shortcuts 'Z:archive'
+set --append shortcuts 'z:archive'
 set --export NNN_PLUG (string join ';' $shortcuts)
 
 set bookmarks

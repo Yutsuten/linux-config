@@ -12,30 +12,58 @@ else
     set selected_files $nnn
 end
 
-echo
-echo $bold"[ARCHIVE] Going to compress the following $(count $selected_files) item(s):"$reset
-echo
-for i in (seq (count $selected_files))
-    echo "  $i: $selected_files[$i]"
-end
-echo
-
 if test (count $selected_files) -eq 1
     set selection $selected_files[1]
-
-    if test -f $selection # Single file
-        switch (gum choose --header 'Which format to compress to?' .zst .gz .zip || return)
-            case .zst
-                echo "Generating $selection.zst"
-                zstd $selection
-            case .gz
-                echo "Generating $selection.gz"
-                gzip --keep $selection
-            case .zip
-                echo "Generating $selection.zip"
-                zip $selection.zip $selection
+    if test -f $selection
+        # For a single file, check extension and auto-choose between archive/extract
+        switch $selection # Try to extract
+            case '*.zip'
+                echo "Extracting $selection"
+                if which unar &>/dev/null
+                    unar $selection
+                else
+                    unzip $selection
+                end
+            case '*.rar'
+                echo "Extracting $selection"
+                unar $selection
+            case '*.tar'
+                echo "Extracting $selection"
+                tar --extract --file $selection
+            case '*.tgz'
+                echo "Extracting $selection"
+                tar --gzip --extract --file $selection
+            case '*.tar.gz'
+                echo "Extracting $selection"
+                tar --gzip --extract --file $selection
+            case '*.tar.xz'
+                echo "Extracting $selection"
+                tar --xz --extract --file $selection
+            case '*.tar.zst'
+                echo "Extracting $selection"
+                tar --zstd --extract --file $selection
+            case '*.zst'
+                echo "Extracting $selection"
+                unzstd $selection
+            case '*.gz'
+                echo "Extracting $selection"
+                gunzip --keep $selection
+            case '*'
+                # Archive instead
+                switch (gum choose --header 'Which format to compress to?' .zst .gz .zip || return)
+                    case .zst
+                        echo "Generating $selection.zst"
+                        zstd $selection
+                    case .gz
+                        echo "Generating $selection.gz"
+                        gzip --keep $selection
+                    case .zip
+                        echo "Generating $selection.zip"
+                        zip $selection.zip $selection
+                end
         end
-    else if test -d $selection # Single directory
+    else if test -d $selection
+        # For a single directory, archive
         switch (gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip || return)
             case .tar.zst
                 echo "Generating $selection.tar.zst"
@@ -51,7 +79,14 @@ if test (count $selected_files) -eq 1
                 zip -r $selection.zip $selection
         end
     end
-else # Multiple files / directories
+else # For multiple selections, archive all into one file
+    echo
+    echo $bold"[ARCHIVE] Going to compress the following $(count $selected_files) items:"$reset
+    echo
+    for i in (seq (count $selected_files))
+        echo "  $i: $selected_files[$i]"
+    end
+    echo
     read --line --prompt-str 'Filename without extension: ' output
     if test -z $output
         echo Abort
