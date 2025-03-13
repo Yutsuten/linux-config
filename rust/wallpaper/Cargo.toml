@@ -10,4 +10,4 @@ strip = "symbols"
 
 [dependencies]
 clap = { version = "4.5.16", features = ["derive"] }
-rand = "0.8.5"
+rand = "0.9.0"

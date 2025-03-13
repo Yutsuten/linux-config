@@ -112,8 +112,8 @@ fn random_wallpaper(wallpapers_path: String, cache_path: String) {
         .difference(&hist_wallpapers_set)
         .collect();
 
-    let mut rng = rand::thread_rng();
-    let random_index = rng.gen_range(0..candidate_wallpapers.len());
+    let mut rng = rand::rng();
+    let random_index = rng.random_range(0..candidate_wallpapers.len());
     let elected_wallpaper = candidate_wallpapers[random_index];
 
     // Update and save history
