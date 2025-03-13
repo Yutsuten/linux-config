@@ -58,8 +58,9 @@ end
 
 function mktemp_thumbs()
     -- Temporary directory for BGRA thumbnails
-    local result = utils.subprocess({
-        args = {"mktemp", "--tmpdir", "--directory", "mvi-gallery-XXXXXXXX"},
+    local result = mp.command_native({
+        name = "subprocess",
+        args = { "mktemp", "--tmpdir", "--directory", "mvi-gallery-XXXXXXXX" },
         capture_stdout = true,
         capture_stderr = true,
         playback_only = false,
@@ -88,12 +89,13 @@ function file_exists(path)
 end
 
 function thumbnail_command(command_args, tmp_output_path, output_path)
-    local res = utils.subprocess({
+    local result = mp.command_native({
+        name = "subprocess",
         args = command_args,
-        playback_only = false
+        playback_only = false,
     })
     -- "atomically" generate the output to avoid loading half-generated thumbnails (results in crashes)
-    if res.status ~= 0 then
+    if result.status ~= 0 then
         return false
     end
     local info = utils.file_info(tmp_output_path)
@@ -179,7 +181,11 @@ function handle_events(wait)
     e = mp.wait_event(wait)
     while e.event ~= "none" do
         if e.event == "shutdown" then
-            utils.subprocess({args = {"rm", "-rf", thumbs_tmpdir}, playback_only = false})
+            mp.command_native({
+                name = "subprocess",
+                args = { "rm", "-rf", thumbs_tmpdir },
+                playback_only = false,
+            })
             return false
         elseif e.event == "client-message" then
             if e.args[1] == "push-thumbnail-front" then

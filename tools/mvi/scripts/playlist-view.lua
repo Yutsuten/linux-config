@@ -626,10 +626,13 @@ function reload_config()
     gallery.config.placeholder_color = opts.placeholder_color
     gallery.config.text_size = opts.text_size
     thumbs_dir = string.gsub(opts.thumbs_dir, "^~", os.getenv("HOME") or "~")
-    local res = utils.file_info(thumbs_dir)
-    if not res or not res.is_dir then
-        local args = { "mkdir", "-p", thumbs_dir }
-        utils.subprocess({ args = args, playback_only = false })
+    local result = utils.file_info(thumbs_dir)
+    if not result or not result.is_dir then
+        mp.command_native({
+            name = "subprocess",
+            args = { "mkdir", "-p", thumbs_dir },
+            playback_only = false,
+        })
     end
 
     compute_geometry = get_geometry_function()
@@ -1002,15 +1005,16 @@ end
 mp.register_event("shutdown", write_flag_file)
 
 function delete_old_thumbnails()
-    utils.subprocess({
+    mp.command_native({
+        name = "subprocess",
         args = {
             "find", thumbs_dir,
             "-maxdepth", "1",
             "-type", "f",
             "-amin", "+" .. tostring(opts.delete_old_thumbs_in_days * DAYS),
-            "-delete"
+            "-delete",
         },
-        playback_only = false
+        playback_only = false,
     })
 end
 mp.register_event("shutdown", delete_old_thumbnails)
