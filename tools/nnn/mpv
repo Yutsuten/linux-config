@@ -1,15 +1,76 @@
-#!/usr/bin/fish
-
+#!/usr/bin/env fish
 set music .mp3 .m4a .ogg .opus .flac
 set video .mp4 .mkv .webm .3gp .ogv
+set image .avif .bmp .gif .heic .heif .heifs .ico .jpeg .jpg .png .svg .tif .tiff .webp
 
 set music_regex (string join '|' $music'$')
 set video_regex (string join '|' $video'$')
+set image_regex (string join '|' $image'$')
 
-if string match -qr '.m3u8?$' $nnn
-    nohup mpv --profile=music --shuffle --loop-playlist $nnn &>~/.local/logs/music-player.log &
+if test -f $nnn
+    # Text file
+    if string match -qr '.m3u8?$' $nnn
+        # Playlist
+        nohup mpv --profile=music --shuffle --loop-playlist $nnn &>~/.local/logs/music-player.log &
+        return 0
+    else if string match -qr '.alb$' $nnn
+        # Album
+        if gum confirm 'Shuffle?'
+            shuf <$nnn | xargs --no-run-if-empty nohup mvi &>/dev/null &
+        else
+            sort --version-sort <$nnn | xargs --no-run-if-empty nohup mvi &>/dev/null &
+        end
+        return 0
+    end
+
+    # Detect media category
+    if string match -qr $music_regex $nnn
+        set category music
+    else if string match -qr $video_regex $nnn
+        set category video
+    else if string match -qr $image_regex $nnn
+        set category image
+    end
+    if test -z "$category"
+        echo 'Current file is not media' >&2
+        exit 1
+    end
+
+    # Find parameters
+    set params -maxdepth 1 -type f '('
+    switch $category
+        case music
+            for extension in $music
+                set --append params -iname '*'$extension -or
+            end
+        case video
+            for extension in $video
+                set --append params -iname '*'$extension -or
+            end
+        case image
+            for extension in $image
+                set --append params -iname '*'$extension -or
+            end
+    end
+    set params[-1] ')'
+
+    # Find files, sort and run
+    switch $category
+        case music
+            find . $params -printf '%P\0' \
+                | sort --zero-terminated --version-sort \
+                | xargs --null --no-run-if-empty nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
+        case video
+            find . $params -printf '%P\0' \
+                | sort --zero-terminated --version-sort \
+                | xargs --null --no-run-if-empty nohup mpv &>/dev/null &
+        case image
+            find . $params -printf '%P\0' \
+                | sort --zero-terminated --version-sort \
+                | xargs --null --no-run-if-empty nohup mvi &>/dev/null &
+    end
 else if test -d $nnn
-    set category
+    # Detect media category
     for file in $nnn/**/*
         if string match -qr $music_regex $file
             set category music
@@ -17,57 +78,48 @@ else if test -d $nnn
         else if string match -qr $video_regex $file
             set category video
             break
+        else if string match -qr $image_regex $file
+            set category image
+            break
         end
     end
     if test -z "$category"
         echo 'There is no media file in this directory' >&2
         exit 1
     end
-    set params -maxdepth 2 -type f -not -path '*/.*' '('
-    if test $category = music
-        for extension in $music
-            set -a params -iname '*'$extension -or
-        end
-    else
-        for extension in $video
-            set -a params -iname '*'$extension -or
-        end
+
+    # Find parameters
+    set params -maxdepth (gum choose --header 'Depth:' 1 2 3 || return) -type f -not -path '*/.*' '('
+    switch $category
+        case music
+            for extension in $music
+                set --append params -iname '*'$extension -or
+            end
+        case video
+            for extension in $video
+                set --append params -iname '*'$extension -or
+            end
+        case image
+            for extension in $image
+                set --append params -iname '*'$extension -or
+            end
     end
     set params[-1] ')'
-    set -a params -exec nohup mpv --shuffle
-    set output_file /dev/null
-    if test $category = music
-        set -a params --profile=music --loop-playlist
-        set output_file ~/.local/logs/music-player.log
+
+    # Find files, shuffle and run
+    cd $nnn
+    switch $category
+        case music
+            find . $params -printf '%P\0' \
+                | shuf --zero-terminated \
+                | xargs --null --no-run-if-empty nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
+        case video
+            find . $params -printf '%P\0' \
+                | shuf --zero-terminated \
+                | xargs --null --no-run-if-empty nohup mpv &>/dev/null &
+        case image
+            find . $params -printf '%P\0' \
+                | shuf --zero-terminated \
+                | xargs --null --no-run-if-empty nohup mvi &>/dev/null &
     end
-    find $nnn $params '{}' '+' &>$output_file &
-else
-    set category
-    if string match -qr $music_regex $nnn
-        set category music
-    else if string match -qr $video_regex $nnn
-        set category video
-    end
-    if test -z "$category"
-        echo 'Current file is not media' >&2
-        exit 1
-    end
-    set params -maxdepth 1 -type f -not -path '*/.*' '('
-    if test $category = music
-        for extension in $music
-            set -a params -iname '*'$extension -or
-        end
-    else
-        for extension in $video
-            set -a params -iname '*'$extension -or
-        end
-    end
-    set params[-1] ')'
-    set -a params -exec nohup mpv --shuffle
-    set output_file /dev/null
-    if test $category = music
-        set -a params --profile=music --loop-playlist
-        set output_file ~/.local/logs/music-player.log
-    end
-    find . $params '{}' '+' &>$output_file &
 end
