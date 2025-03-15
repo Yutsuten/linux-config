@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set selection (find -L . -maxdepth 4 -not -path '*/.*' -type d -printf '%P\n' | sort --version-sort | fzf --layout=reverse)
+set selection (find -L . -maxdepth 4 -not -path '*/.*' -not -path . -type d -printf '%P\n' | sort --version-sort | fzf --layout=reverse)
 if test -n "$selection"
     printf "0c$(path resolve $selection)" >$NNN_PIPE
 end
