@@ -126,18 +126,25 @@ else if test -d $nnn
     set params[-1] ')'
 
     # Find files, shuffle and run
+    set playlist_file .playlist-tmp-(date '+%s')
     switch $category
         case music
-            find . $params -printf '%P\0' \
-                | shuf --zero-terminated \
-                | xargs --null --no-run-if-empty nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
+            find . $params -printf '%P\n' >$playlist_file
+            fish --command "
+                nohup mpv --profile=music --loop-playlist --playlist=$playlist_file --shuffle &>~/.local/logs/music-player.log
+                rm --force $playlist_file
+            " &
         case video
-            find . $params -printf '%P\0' \
-                | shuf --zero-terminated \
-                | xargs --null --no-run-if-empty nohup mpv &>/dev/null &
+            find . $params -printf '%P\n' >$playlist_file
+            fish --command "
+                nohup mpv --playlist=$playlist_file --shuffle &>/dev/null
+                rm --force $playlist_file
+            " &
         case image
-            find . $params -printf '%P\0' \
-                | shuf --zero-terminated \
-                | xargs --null --no-run-if-empty nohup mvi &>/dev/null &
+            find . $params -printf '%P\n' >$playlist_file
+            fish --command "
+                nohup mvi --playlist=$playlist_file --shuffle &>/dev/null
+                rm --force $playlist_file
+            " &
     end
 end
