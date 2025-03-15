@@ -9,11 +9,11 @@ set image_regex (string join '|' $image'$')
 
 if test -f $nnn
     # Text file
-    if string match -qr '.m3u8?$' $nnn
+    if string match --quiet --regex '.m3u8?$' $nnn
         # Playlist
         nohup mpv --profile=music --shuffle --loop-playlist $nnn &>~/.local/logs/music-player.log &
         return 0
-    else if string match -qr '.alb$' $nnn
+    else if string match --quiet --regex '.alb$' $nnn
         # Album
         if gum confirm 'Shuffle?'
             shuf <$nnn | xargs --no-run-if-empty nohup mvi &>/dev/null &
@@ -24,11 +24,11 @@ if test -f $nnn
     end
 
     # Detect media category
-    if string match -qr $music_regex $nnn
+    if string match --quiet --regex $music_regex $nnn
         set category music
-    else if string match -qr $video_regex $nnn
+    else if string match --quiet --regex $video_regex $nnn
         set category video
-    else if string match -qr $image_regex $nnn
+    else if string match --quiet --regex $image_regex $nnn
         set category image
     end
     if test -z "$category"
@@ -72,13 +72,13 @@ if test -f $nnn
 else if test -d $nnn
     # Detect media category
     for file in $nnn/**/*
-        if string match -qr $music_regex $file
+        if string match --quiet --regex $music_regex $file
             set category music
             break
-        else if string match -qr $video_regex $file
+        else if string match --quiet --regex $video_regex $file
             set category video
             break
-        else if string match -qr $image_regex $file
+        else if string match --quiet --regex $image_regex $file && string match --quiet --invert --ignore-case 'cover.*' $file
             set category image
             break
         end
