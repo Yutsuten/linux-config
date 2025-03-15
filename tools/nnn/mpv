@@ -88,8 +88,27 @@ else if test -d $nnn
         exit 1
     end
 
+    # Max depth available (search until 3)
+    cd $nnn
+    set maxdepth 1
+    find . -maxdepth 2 -not -path . -type d -printf '%P\n' | while read --line dirpath
+        if string match --quiet --entire / $dirpath
+            set maxdepth 3
+            break
+        else
+            set maxdepth 2
+        end
+    end
+
+    # Get depth
+    if test $maxdepth = 1
+        set depth 1
+    else
+        set depth (gum choose --header 'Depth:' (seq 1 $maxdepth) || return)
+    end
+
     # Find parameters
-    set params -maxdepth (gum choose --header 'Depth:' 1 2 3 || return) -type f -not -path '*/.*' '('
+    set params -maxdepth $depth -type f -not -path '*/.*' '('
     switch $category
         case music
             for extension in $music
@@ -107,7 +126,6 @@ else if test -d $nnn
     set params[-1] ')'
 
     # Find files, shuffle and run
-    cd $nnn
     switch $category
         case music
             find . $params -printf '%P\0' \
