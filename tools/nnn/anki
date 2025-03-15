@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 # Resize and convert an image to use it on Anki.
 
 set selection $nnn

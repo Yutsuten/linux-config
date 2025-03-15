@@ -24,7 +24,7 @@ set interrupt 0
 
 trap "rm $pass_store_cache" SIGHUP SIGINT SIGTERM
 
-find . -type d -path '*/.*' -prune -o -type f -name '*.gpg' -printf '%P\n' | while read --line line
+find . -type d -path '*/.*' -prune -o -type f -name '*.gpg' -printf '%P\n' | sort --version-sort | while read --line line
     path change-extension '' $line >>$pass_store_cache
 end
 

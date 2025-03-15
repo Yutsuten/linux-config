@@ -1,7 +1,7 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 
 if test -s ~/.config/nnn/.selection
-    xargs --null nohup dragon-drop --all --and-exit < ~/.config/nnn/.selection &> /dev/null &
+    xargs --null nohup dragon-drop --all --and-exit <~/.config/nnn/.selection &>/dev/null &
 else
-    nohup dragon-drop --and-exit $nnn &> /dev/null &
+    nohup dragon-drop --and-exit $nnn &>/dev/null &
 end
