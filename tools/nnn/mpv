@@ -3,9 +3,9 @@ set music .mp3 .m4a .ogg .opus .flac
 set video .mp4 .mkv .webm .3gp .ogv
 set image .avif .bmp .gif .heic .heif .heifs .ico .jpeg .jpg .png .svg .tif .tiff .webp
 
-set music_regex (string join '|' $music'$')
-set video_regex (string join '|' $video'$')
-set image_regex (string join '|' $image'$')
+set music_regex (string join '|\\' $music'$')
+set video_regex (string join '|\\' $video'$')
+set image_regex (string join '|\\' $image'$')
 
 if test -f $nnn
     # Text file
