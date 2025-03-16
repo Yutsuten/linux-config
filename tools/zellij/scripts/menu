@@ -14,7 +14,7 @@ for filepath in ~/.local/share/zellij/*
     set --append choices (string trim $choice)
 end
 
-set selection (string join \n $choices | sort --version-sort | fzf --layout=reverse --no-sort) || return
+set selection (string join \n $choices | sort --version-sort | fzf --layout=reverse) || return
 switch $selection
     case 'Open project'
         source ~/.config/zellij/scripts/open-project
