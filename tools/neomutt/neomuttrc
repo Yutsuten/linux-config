@@ -66,6 +66,8 @@ bind  generic,pager        <PageUp>        previous-page
 bind  generic,pager        <PageDown>      next-page
 bind  generic              <Up>            previous-entry
 bind  generic              <Down>          next-entry
+bind  generic              <Home>          first-entry
+bind  generic              <End>           last-entry
 bind  generic              k               previous-entry
 bind  generic              j               next-entry
 bind  generic              \#              jump
