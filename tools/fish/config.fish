@@ -22,7 +22,7 @@ if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     gsettings set org.gnome.desktop.interface gtk-theme Arc
     gsettings set org.gnome.desktop.interface icon-theme Arc
     gsettings set org.gnome.desktop.interface font-name 'Noto Sans CJK JP 12'
-    gsettings set org.gnome.desktop.interface cursor-theme capitaine-cursors
+    gsettings set org.gnome.desktop.interface cursor-theme Vimix-cursors
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
     # Input Method
     set -gx QT_IM_MODULE fcitx
