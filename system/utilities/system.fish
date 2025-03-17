@@ -17,10 +17,11 @@ switch $option
     case Sleep
         systemctl suspend
     case Hibernate
-        if findmnt --output TARGET --noheadings --raw | grep --quiet '^/media'
+        set mounted_media (findmnt --output TARGET --noheadings --raw | string match '/media*')
+        if test -n "$mounted_media"
             notify-send --app-name system --icon dialog-warning --urgency critical \
                 "CANNOT HIBERNATE" \
-                "There is media mounted at \n$(findmnt --output TARGET --noheadings --raw | grep '^/media')"
+                "There is media mounted at\n$mounted_media"
             pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
             exit 1
         end
