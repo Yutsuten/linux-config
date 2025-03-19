@@ -6,8 +6,8 @@ set reset (tput sgr0)
 echo
 echo $bold"[FFMPEG] Going to trim video: $nnn"$reset
 echo
-read --line --prompt-str 'From > ' from
-read --line --prompt-str 'Until> ' until
+read --line --prompt-str 'From > ' from || return
+read --line --prompt-str 'Until> ' until || return
 echo
 
 set options

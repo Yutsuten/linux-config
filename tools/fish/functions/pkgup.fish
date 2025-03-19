@@ -14,7 +14,7 @@ function pkgup --description 'Update customly installed packages'
     end
 
     if set --query --local _flag_list
-        echo 'anki droidcam osu' >&2
+        echo 'droidcam osu' >&2
         return 0
     end
 

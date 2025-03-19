@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+
+set selection (find . -not -path '*/.*' -type f -printf '%P\n' | fzf --layout=reverse)
+if test -n "$selection"
+    printf "0c$(path dirname $(path resolve $selection))" >$NNN_PIPE
+end
