@@ -1,6 +1,16 @@
 #!/usr/bin/env fish
+# ---------------------------------------- #
+# Search for a directory and change to it. #
+# ---------------------------------------- #
 
-set selection (find -L . -maxdepth 5 -not -path '*/.*' -not -path . -type d -printf '%P\n' | sort --version-sort | fzf --layout=reverse)
-if test -n "$selection"
-    printf "0c$(path resolve $selection)" >$NNN_PIPE
+source (status dirname)/.utils
+
+set restrictions
+if test $NNN_INCLUDE_HIDDEN -eq 0
+    set --append restrictions -not -path '*/.*'
+end
+
+set selection (find -L . -maxdepth 5 $restrictions -not -path . -type d -printf '%P\n' | sort --version-sort | fzf --layout=reverse)
+if test -d "$selection"
+    nnn_cd $selection
 end

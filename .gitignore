@@ -1,8 +1,1 @@
-# Python testing
-__pycache__/
-
-# Neovim
-/tools/neovim/doc/tags
-
-# Rust
 /rust/*/target/

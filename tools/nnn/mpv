@@ -1,4 +1,12 @@
 #!/usr/bin/env fish
+# --------------------------------------- #
+# Open media (audio, video, image) files. #
+# --------------------------------------- #
+
+source (status dirname)/.utils
+
+nnn_get_selection MPV open $argv[1] || return
+
 set music .mp3 .m4a .ogg .opus .flac
 set video .mp4 .mkv .webm .3gp .ogv
 set image .avif .bmp .gif .heic .heif .heifs .ico .jpeg .jpg .png .svg .tif .tiff .webp
@@ -7,144 +15,179 @@ set music_regex (string join '|\\' $music'$')
 set video_regex (string join '|\\' $video'$')
 set image_regex (string join '|\\' $image'$')
 
-if test -f $nnn
-    # Text file
-    if string match --quiet --regex '.m3u8?$' $nnn
-        # Playlist
-        nohup mpv --profile=music --shuffle --loop-playlist $nnn &>~/.local/logs/music-player.log &
-        return 0
-    else if string match --quiet --regex '.alb$' $nnn
-        # Album
-        if gum confirm 'Shuffle?'
-            shuf <$nnn | xargs --no-run-if-empty nohup mvi &>/dev/null &
-        else
-            sort --version-sort <$nnn | xargs --no-run-if-empty nohup mvi &>/dev/null &
-        end
-        return 0
-    end
-
-    # Detect media category
-    if string match --quiet --regex $music_regex $nnn
-        set category music
-    else if string match --quiet --regex $video_regex $nnn
-        set category video
-    else if string match --quiet --regex $image_regex $nnn
-        set category image
-    end
+# Detect media category
+set category
+set maxdepth 1
+for selection in $NNN_SELECTION
     if test -z "$category"
-        echo 'Current file is not media' >&2
-        exit 1
+        if test -f $selection
+            if string match --quiet --regex $music_regex'|\.m3u8?$' $selection
+                set category music
+            else if string match --quiet --regex $video_regex $selection
+                set category video
+            else if string match --quiet --regex $image_regex'|\.alb$' $selection
+                set category image
+            end
+        else if test -d $selection
+            for file in $selection/**/*
+                if string match --quiet --regex $music_regex'|\.m3u8?$' $file
+                    set category music
+                    break
+                else if string match --quiet --regex $video_regex $file
+                    set category video
+                    break
+                else if string match --quiet --regex $image_regex'|\.alb$' $file && string match --quiet --invert --ignore-case 'cover.*' $file
+                    set category image
+                    break
+                end
+            end
+        end
     end
+    if test -d $selection -a $maxdepth -ne 3
+        find $selection -maxdepth 2 -not -path $selection -type d -printf '%P\n' | while read --line dirpath
+            set dirpath (string replace "^$selection/" '' $dirpath)
+            if string match --quiet --entire / $dirpath
+                set maxdepth 3
+                break
+            else
+                set maxdepth 2
+            end
+        end
+    end
+    if test -n "$category" -a $maxdepth -eq 3
+        break
+    end
+end
 
-    # Find parameters
-    set params -maxdepth 1 -type f '('
+if test -z "$category"
+    echo 'Failed to detect media category' >&2
+    exit 1
+end
+
+if test $maxdepth = 1
+    set depth 1
+else
+    gum choose --header 'Depth:' (seq 1 $maxdepth) | read depth || return
+end
+
+set files
+set playlists
+set tmp_playlists
+
+# Look for files and playlists
+for selection in $NNN_SELECTION
+    if test -f $selection
+        switch $category
+            case music
+                if string match --quiet --regex '.m3u8?$' $selection
+                    set --append playlists $selection
+                else if test (count $NNN_SELECTION) -eq 1
+                    set --append files (string match --regex --entire --ignore-case $music_regex *)
+                else if string match --quiet --regex $music_regex $selection
+                    set --append files $selection
+                end
+            case video
+                if test (count $NNN_SELECTION) -eq 1
+                    set --append files (string match --regex --entire --ignore-case $video_regex *)
+                else if string match --quiet --regex $video_regex $selection
+                    set --append files $selection
+                end
+            case image
+                if string match --quiet --regex '.alb$' $selection
+                    set --append playlists $selection
+                else if test (count $NNN_SELECTION) -eq 1
+                    set --append files (string match --regex --entire --ignore-case $image_regex *)
+                else if string match --quiet --regex $image_regex $selection
+                    set --append files $selection
+                end
+        end
+    else if test -d $selection
+        # Find parameters
+        set params -maxdepth $depth -type f '('
+        switch $category
+            case music
+                for extension in $music
+                    set --append params -iname '*'$extension -or
+                end
+            case video
+                for extension in $video
+                    set --append params -iname '*'$extension -or
+                end
+            case image
+                for extension in $image
+                    set --append params -iname '*'$extension -or
+                end
+        end
+        set params[-1] ')'
+
+        set playlist_file (mktemp --tmpdir playlist-tmp-XXXXXXXX)
+        switch $category
+            case music
+                find (path resolve $selection) $params -print >$playlist_file
+                set --append playlists $playlist_file
+                set --append tmp_playlists $playlist_file
+            case video
+                find (path resolve $selection) $params -print >$playlist_file
+                set --append playlists $playlist_file
+                set --append tmp_playlists $playlist_file
+            case image
+                find (path resolve $selection) $params -print >$playlist_file
+                set --append playlists $playlist_file
+                set --append tmp_playlists $playlist_file
+        end
+    end
+end
+
+# Open selected playlists and files
+if test (count $tmp_playlists) -eq 0
     switch $category
         case music
-            for extension in $music
-                set --append params -iname '*'$extension -or
+            # Shuffle playlists, sort otherwise
+            if test (count playlists) -ge 1
+                nohup mpv --profile=music --shuffle --loop-playlist --playlist=$playlists $files &>~/.local/logs/music-player.log &
+            else
+                string join0 $files \
+                    | sort --zero-terminated --version-sort \
+                    | xargs --null --no-run-if-empty nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
             end
         case video
-            for extension in $video
-                set --append params -iname '*'$extension -or
-            end
-        case image
-            for extension in $image
-                set --append params -iname '*'$extension -or
-            end
-    end
-    set params[-1] ')'
-
-    # Find files, sort and run
-    switch $category
-        case music
-            find . $params -printf '%P\0' \
-                | sort --zero-terminated --version-sort \
-                | xargs --null --no-run-if-empty nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
-        case video
-            find . $params -printf '%P\0' \
+            # Always play in order
+            string join0 $files \
                 | sort --zero-terminated --version-sort \
                 | xargs --null --no-run-if-empty nohup mpv &>/dev/null &
         case image
-            find . $params -printf '%P\0' \
-                | sort --zero-terminated --version-sort \
-                | xargs --null --no-run-if-empty nohup mvi &>/dev/null &
+            # Ask to shuffle if album, sort otherwise
+            if test (count $playlists) -ge 1
+                if gum confirm '[MPV] Shuffle?'
+                    nohup mvi --shuffle --playlist=$playlists $files &>/dev/null &
+                else
+                    begin
+                        cat $playlists
+                        string join \n $files
+                    end | sort --version-sort | xargs --no-run-if-empty nohup mvi &>/dev/null &
+                end
+            else
+                string join \n $files | sort --version-sort | xargs --no-run-if-empty nohup mvi &>/dev/null &
+            end
     end
-else if test -d $nnn
-    # Detect media category
-    for file in $nnn/**/*
-        if string match --quiet --regex $music_regex $file
-            set category music
-            break
-        else if string match --quiet --regex $video_regex $file
-            set category video
-            break
-        else if string match --quiet --regex $image_regex $file && string match --quiet --invert --ignore-case 'cover.*' $file
-            set category image
-            break
-        end
-    end
-    if test -z "$category"
-        echo 'There is no media file in this directory' >&2
-        exit 1
-    end
-
-    # Max depth available (search until 3)
-    cd $nnn
-    set maxdepth 1
-    find . -maxdepth 2 -not -path . -type d -printf '%P\n' | while read --line dirpath
-        if string match --quiet --entire / $dirpath
-            set maxdepth 3
-            break
-        else
-            set maxdepth 2
-        end
-    end
-
-    # Get depth
-    if test $maxdepth = 1
-        set depth 1
-    else
-        set depth (gum choose --header 'Depth:' (seq 1 $maxdepth) || return)
-    end
-
-    # Find parameters
-    set params -maxdepth $depth -type f -not -path '*/.*' '('
+else
+    # If directory was selected, always shuffle
+    set playlist_args --playlist=$playlists
     switch $category
         case music
-            for extension in $music
-                set --append params -iname '*'$extension -or
-            end
-        case video
-            for extension in $video
-                set --append params -iname '*'$extension -or
-            end
-        case image
-            for extension in $image
-                set --append params -iname '*'$extension -or
-            end
-    end
-    set params[-1] ')'
-
-    # Find files, shuffle and run
-    set playlist_file .playlist-tmp-(date '+%s')
-    switch $category
-        case music
-            find . $params -printf '%P\n' >$playlist_file
             fish --command "
-                nohup mpv --profile=music --loop-playlist --playlist=$playlist_file --shuffle &>~/.local/logs/music-player.log
-                rm --force $playlist_file
+                nohup mpv --profile=music --loop-playlist --shuffle $playlist_args $files &>~/.local/logs/music-player.log
+                rm --force $tmp_playlists
             " &
         case video
-            find . $params -printf '%P\n' >$playlist_file
             fish --command "
-                nohup mpv --playlist=$playlist_file --shuffle &>/dev/null
-                rm --force $playlist_file
+                nohup mpv --shuffle $playlist_args $files &>/dev/null
+                rm --force $tmp_playlists
             " &
         case image
-            find . $params -printf '%P\n' >$playlist_file
             fish --command "
-                nohup mvi --playlist=$playlist_file --shuffle &>/dev/null
-                rm --force $playlist_file
+                nohup mvi --shuffle $playlist_args $files &>/dev/null
+                rm --force $tmp_playlists
             " &
     end
 end

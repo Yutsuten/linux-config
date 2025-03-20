@@ -1,12 +1,21 @@
 #!/usr/bin/env fish
+# ------------------- #
+# Custom file opener. #
+# ------------------- #
 
-switch (path extension $nnn)
-    case '.fish'
-        fish $nnn
-    case '.gpg'
-        gpg-open $nnn
-    case '.rre'
-        nohup nice record-reencoder $nnn &>~/.local/logs/ffmpeg-(date '+%s').log &
-    case '*'
-        xdg-open $nnn
+source (status dirname)/.utils
+
+nnn_get_selection Open open $argv[1] || return
+
+for selection in $NNN_SELECTION
+    switch (path extension $selection)
+        case '.fish'
+            fish $selection
+        case '.gpg'
+            gpg-open $selection
+        case '.rre'
+            nohup nice record-reencoder $selection &>~/.local/logs/ffmpeg-(uuidgen).log &
+        case '*'
+            xdg-open $selection
+    end
 end

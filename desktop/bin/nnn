@@ -10,7 +10,6 @@ set --append shortcuts 'c:-!wl-copy < "$nnn"*'
 set --append shortcuts 'C:!wl-paste --no-newline > clipboard*'
 set --append shortcuts 'd:-dragdrop'
 set --append shortcuts 'D:!fdupes --recurse --delete .*'
-set --append shortcuts 'f:ffmpeg'
 set --append shortcuts 'g:gpg'
 set --append shortcuts 'j:jumpdir'
 set --append shortcuts 'm:mvimove'
@@ -26,8 +25,9 @@ set --append shortcuts '/:find'
 set --export NNN_PLUG (string join ';' $shortcuts)
 
 set bookmarks
-set --append bookmarks 'm:/media'
 set --append bookmarks 'l:/mnt/hdd'
+set --append bookmarks 'm:/media'
+set --append bookmarks "p:$HOME/Projects"
 set --export NNN_BMS (string join ';' $bookmarks)
 
 set --export NNN_TRASH 1

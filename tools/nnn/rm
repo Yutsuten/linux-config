@@ -1,29 +1,14 @@
 #!/usr/bin/env fish
+# -------------------------- #
+# Remove the selected files. #
+# -------------------------- #
 
-set bold (tput bold)
-set reset (tput sgr0)
+source (status dirname)/.utils
 
-# Get selected files
-set selected_files
-if test -s ~/.config/nnn/.selection
-    while read --null selection
-        set --append selected_files (string replace --regex "^$PWD/" '' $selection)
-    end <~/.config/nnn/.selection
-else
-    set selected_files $nnn
-end
-
-# User interaction
-echo
-echo $bold"[RM] Going to REMOVE the following $(count $selected_files) item(s):"$reset
-echo
-for i in (seq (count $selected_files))
-    echo "  $i: $selected_files[$i]"
-end
-echo
+nnn_get_selection RM REMOVE $argv[1] || return
 
 # Remove execution
-if gum confirm 'Are you sure?' --prompt.foreground 1 --selected.background 1 --show-output
-    rm --recursive --force -- $selected_files
-    printf - >$NNN_PIPE # Clear selection
+if gum confirm '[RM] Are you sure?' --prompt.foreground 1 --selected.background 1 --show-output
+    rm --recursive --force -- $NNN_SELECTION
+    nnn_clear_selection
 end

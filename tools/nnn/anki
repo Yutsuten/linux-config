@@ -1,20 +1,28 @@
 #!/usr/bin/env fish
-# Resize and convert an image to use it on Anki.
+# ---------------------------------------------- #
+# Resize and convert an image to use it on Anki. #
+# ---------------------------------------------- #
 
-set selection $nnn
-set fname (path change-extension '' $nnn)
-set fext (path extension $nnn)
+source (status dirname)/.utils
 
-if test $fext = '.webp'
-    set selection $fname-original.webp
-    mv -- $nnn $selection
+nnn_get_selection ANKI convert $argv[1] || return
+
+for selection in $NNN_SELECTION
+    set fname (path change-extension '' $selection)
+    set fext (path extension $selection)
+
+    if test $fext = '.webp'
+        set selection $fname-original.webp
+        mv -- $selection $selection
+    end
+
+    echo "[ANKI] Processing: $selection"
+    if string match --quiet --regex '^\.jpe?g$' $fext
+        magick $selection -strip -resize '320x260>' -define webp:method=6 $fname.webp || continue
+    else
+        magick $selection -strip -trim -resize '320x260>' -define webp:method=6 $fname.webp || continue
+    end
+    echo "[ANKI] Success"
+
+    nohup mvi $fname.webp &>/dev/null &
 end
-
-if test $fext = '.jpg' # Don't trim
-    magick $selection -strip -resize '320x260>' -define webp:method=6 $fname.webp
-else
-    magick $selection -strip -trim -resize '320x260>' -define webp:method=6 $fname.webp
-end
-
-# Preview
-mvi $fname.webp

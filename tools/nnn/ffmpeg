@@ -1,38 +1,45 @@
 #!/usr/bin/env fish
+# --------------------------- #
+# Process videos with ffmpeg. #
+# --------------------------- #
 
-set bold (tput bold)
-set reset (tput sgr0)
+source (status dirname)/.utils
 
-echo
-echo $bold"[FFMPEG] Going to trim video: $nnn"$reset
-echo
-read --line --prompt-str 'From > ' from || return
-read --line --prompt-str 'Until> ' until || return
-echo
+nnn_get_selection Archive extract/compress $argv[1] || return
 
-set options
-if test -n $from
-    set --append options -ss $from
-end
-if test -n $until
-    set --append options -to $until
-end
-if test -z "$options"
-    return 0
-end
+for selection in $NNN_SELECTION
+    echo
+    echo "[FFMPEG] Going to trim video: $selection"
+    echo
+    read --line --prompt-str '[FFMPEG] From > ' from || return
+    read --line --prompt-str '[FFMPEG] Until> ' until || return
+    echo
 
-echo 'Processing...'
-ffmpeg -loglevel warning $options -i $nnn -codec copy -avoid_negative_ts make_zero -y /tmp/$nnn || return
-touch --reference $nnn /tmp/$nnn
+    set options
+    if test -n "$from"
+        set --append options -ss $from
+    end
+    if test -n "$until"
+        set --append options -to $until
+    end
+    if test -z "$options"
+        echo Abort >&2
+        return 1
+    end
 
-echo "Before : $(du -h $nnn | cut -f 1)"
-echo "After  : $(du -h /tmp/$nnn | cut -f 1)"
-mpv --msg-level=all=warn /tmp/$nnn
+    echo '[FFMPEG] Processing...'
+    ffmpeg -loglevel warning $options -i $selection -codec copy -avoid_negative_ts make_zero -y /tmp/$selection || return
+    touch --reference $selection /tmp/$selection
 
-echo
-if gum confirm 'Replace original?' --show-output
-    trash-put $nnn
-    mv /tmp/$nnn $nnn
-else
-    rm --force -- /tmp/$nnn
+    echo "[FFMPEG] Before : $(du -h $selection | cut -f 1)"
+    echo "[FFMPEG] After  : $(du -h /tmp/$selection | cut -f 1)"
+    mpv --msg-level=all=warn /tmp/$selection
+
+    echo
+    if gum confirm '[FFMPEG] Replace original?' --show-output
+        trash-put $selection
+        mv /tmp/$selection $selection
+    else
+        rm --force -- /tmp/$selection
+    end
 end

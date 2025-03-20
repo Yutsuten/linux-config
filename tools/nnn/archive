@@ -1,109 +1,100 @@
 #!/usr/bin/env fish
-set bold (tput bold)
-set reset (tput sgr0)
+# ----------------------------- #
+# Compress or extract archives. #
+# ----------------------------- #
 
-# Get selected files
-set selected_files
-if test -s ~/.config/nnn/.selection
-    while read --null selection
-        set --append selected_files (string replace --regex "^$PWD/" '' $selection)
-    end <~/.config/nnn/.selection
-else
-    set selected_files $nnn
-end
+source (status dirname)/.utils
 
-if test (count $selected_files) -eq 1
-    set selection $selected_files[1]
+nnn_get_selection ARCHIVE extract/compress $argv[1] || return
+
+if test (count $NNN_SELECTION) -eq 1
+    set selection $NNN_SELECTION[1]
     if test -f $selection
         # For a single file, check extension and auto-choose between archive/extract
         switch $selection # Try to extract
             case '*.zip'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 if which unar &>/dev/null
                     unar $selection
                 else
                     unzip $selection
                 end
             case '*.rar'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 unar $selection
             case '*.tar'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 tar --extract --file $selection
             case '*.tgz'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 tar --gzip --extract --file $selection
             case '*.tar.gz'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 tar --gzip --extract --file $selection
             case '*.tar.xz'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 tar --xz --extract --file $selection
             case '*.tar.zst'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 tar --zstd --extract --file $selection
             case '*.zst'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 unzstd $selection
             case '*.gz'
-                echo "Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection"
                 gunzip --keep $selection
             case '*'
                 # Archive instead
-                switch (gum choose --header 'Which format to compress to?' .zst .gz .zip || return)
+                gum choose --header 'Which format to compress to?' .zst .gz .zip | read format || return
+                switch $format
                     case .zst
-                        echo "Generating $selection.zst"
+                        echo "[ARCHIVE] Generating $selection.zst"
                         zstd $selection
                     case .gz
-                        echo "Generating $selection.gz"
+                        echo "[ARCHIVE] Generating $selection.gz"
                         gzip --keep $selection
                     case .zip
-                        echo "Generating $selection.zip"
+                        echo "[ARCHIVE] Generating $selection.zip"
                         zip $selection.zip $selection
                 end
         end
     else if test -d $selection
         # For a single directory, archive
-        switch (gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip || return)
+        gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip | read format || return
+        switch $format
             case .tar.zst
-                echo "Generating $selection.tar.zst"
+                echo "[ARCHIVE] Generating $selection.tar.zst"
                 tar --zstd --create --file $selection.tar.zst $selection
             case .tgz
-                echo "Generating $selection.tgz"
+                echo "[ARCHIVE] Generating $selection.tgz"
                 tar --gzip --create --file $selection.tgz $selection
             case .tar
-                echo "Generating $selection.tar"
+                echo "[ARCHIVE] Generating $selection.tar"
                 tar --create --file $selection.tar $selection
             case .zip
-                echo "Generating $selection.zip"
+                echo "[ARCHIVE] Generating $selection.zip"
                 zip -r $selection.zip $selection
         end
     end
-else # For multiple selections, archive all into one file
-    echo
-    echo $bold"[ARCHIVE] Going to compress the following $(count $selected_files) items:"$reset
-    echo
-    for i in (seq (count $selected_files))
-        echo "  $i: $selected_files[$i]"
-    end
-    echo
-    read --line --prompt-str 'Filename without extension: ' output
-    if test -z $output
-        echo Abort
+else # For multiple selections, compress all into one file
+    read --line --prompt-str "[ARCHIVE] Compressed file's name without extension: " output || return
+    if test -z "$output"
+        echo Abort >&2
         return 1
     end
-    switch (gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip || return)
+    gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip | read format || return
+    switch $format
         case .tar.zst
-            echo "Generating $output.tar.zst"
-            tar --zstd --create --file $output.tar.zst $selected_files
+            echo "[ARCHIVE] Generating $output.tar.zst"
+            tar --zstd --create --file $output.tar.zst $NNN_SELECTION
         case .tgz
-            echo "Generating $output.tgz"
-            tar --gzip --create --file $output.tgz $selected_files
+            echo "[ARCHIVE] Generating $output.tgz"
+            tar --gzip --create --file $output.tgz $NNN_SELECTION
         case .tar
-            echo "Generating $output.tar"
-            tar --create --file $output.tar $selected_files
+            echo "[ARCHIVE] Generating $output.tar"
+            tar --create --file $output.tar $NNN_SELECTION
         case .zip
-            echo "Generating $output.zip"
-            zip -r $output.zip $selected_files
+            echo "[ARCHIVE] Generating $output.zip"
+            zip -r $output.zip $NNN_SELECTION
     end
 end

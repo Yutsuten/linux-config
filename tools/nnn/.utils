@@ -1,0 +1,69 @@
+#!/usr/bin/env fish
+# --------------------------------- #
+# Common functions for nnn plugins. #
+# --------------------------------- #
+
+set bold (tput bold)
+set reset (tput sgr0)
+
+function nnn_cd \
+    --description 'Change current directory' \
+    --argument-names target_dir
+
+    printf '0c%s' (path resolve $target_dir) >$NNN_PIPE
+end
+
+function nnn_clear_selection \
+    --description 'Clear the currently selected files'
+
+    printf - >$NNN_PIPE
+end
+
+function nnn_get_selection \
+    --description 'Get current selection and set NNN_SELECTION variable' \
+    --argument-names plugin_name action_text hovered_item
+
+    set -g NNN_SELECTION
+    if test -s ~/.config/nnn/.selection
+        while read --null selection
+            set --append NNN_SELECTION (string replace --regex "^$PWD/" '' $selection)
+        end <~/.config/nnn/.selection
+
+        echo
+        echo $bold"[$plugin_name] Selected the following $(count $NNN_SELECTION) item(s):"$reset
+        echo
+        for i in (seq (count $NNN_SELECTION))
+            echo "  $i: $NNN_SELECTION[$i]"
+        end
+        echo
+
+        set select_type selected
+        if test $NNN_PREFER_SELECTION -eq 0
+            # If hover and selection are different, choose which one
+            if test (count $NNN_SELECTION) -gt 1 -o "$(path resolve $NNN_SELECTION[1])" != "$(path resolve $hovered_item)"
+                echo $bold"[$plugin_name] Hovered the following item:"$reset
+                echo
+                echo "  1: $hovered_item"
+                echo
+                gum choose --header 'Use selection or hover?' Selection Hover | read answer || return
+                if test $answer = Hover
+                    set NNN_SELECTION $hovered_item
+                    set select_type hovered
+                end
+            end
+        end
+    else
+        echo
+        echo $bold"[$plugin_name] Hovered the following item:"$reset
+        echo
+        echo "  1: $hovered_item"
+        echo
+        set NNN_SELECTION $hovered_item
+        set select_type hovered
+    end
+    if test (count $NNN_SELECTION) -eq 1
+        echo $bold"[$plugin_name] Going to $action_text the $select_type item."$reset
+    else
+        echo $bold"[$plugin_name] Going to $action_text the $select_type items."$reset
+    end
+end

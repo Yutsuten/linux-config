@@ -1,6 +1,24 @@
 #!/usr/bin/env fish
+# ------------------------------------------------------------ #
+# Search for a file and change to the directory it is located. #
+# ------------------------------------------------------------ #
 
-set selection (find . -not -path '*/.*' -type f -printf '%P\n' | fzf --layout=reverse)
-if test -n "$selection"
-    printf "0c$(path dirname $(path resolve $selection))" >$NNN_PIPE
+source (status dirname)/.utils
+
+if test -d .git
+    if test $NNN_INCLUDE_HIDDEN -eq 0
+        set selection (git ls-files | string match --regex '^[^.].*/[^.].*$' | fzf --layout=reverse)
+    else
+        set selection (git ls-files | fzf --layout=reverse)
+    end
+else
+    set restrictions
+    if test $NNN_INCLUDE_HIDDEN -eq 0
+        set --append restrictions -not -path '*/.*'
+    end
+    set selection (find . $restrictions -type f -printf '%P\n' | fzf --layout=reverse)
+end
+
+if test -f "$selection"
+    nnn_cd (path dirname $selection)
 end

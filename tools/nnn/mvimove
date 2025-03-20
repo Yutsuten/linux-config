@@ -1,4 +1,7 @@
 #!/usr/bin/env fish
+# -------------------------------------------------- #
+# Move files selected with mvi to current directory. #
+# -------------------------------------------------- #
 
 if test -s /tmp/mvi_selection
     while read --null selection
