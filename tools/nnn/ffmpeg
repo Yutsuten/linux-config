@@ -5,7 +5,7 @@
 
 source (status dirname)/.utils
 
-nnn_get_selection Archive extract/compress $argv[1] || return
+nnn_get_selection FFMPEG process $argv[1] || return
 
 for selection in $NNN_SELECTION
     echo

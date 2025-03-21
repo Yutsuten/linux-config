@@ -22,7 +22,5 @@ for selection in $NNN_SELECTION
     else
         magick $selection -strip -trim -resize '320x260>' -define webp:method=6 $fname.webp || continue
     end
-    echo "[ANKI] Success"
-
     nohup mvi $fname.webp &>/dev/null &
 end

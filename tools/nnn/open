@@ -5,7 +5,7 @@
 
 source (status dirname)/.utils
 
-nnn_get_selection Open open $argv[1] || return
+nnn_get_selection OPEN open $argv[1] || return
 
 for selection in $NNN_SELECTION
     switch (path extension $selection)
