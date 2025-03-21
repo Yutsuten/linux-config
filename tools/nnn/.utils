@@ -23,11 +23,19 @@ function nnn_get_selection \
     --description 'Get current selection and set NNN_SELECTION variable' \
     --argument-names plugin_name action_text hovered_item
 
+    if test -n "$NNN_SEL"
+        set sel_source_file $NNN_SEL
+    else if test -n "$XDG_CONFIG_HOME"
+        set sel_source_file $XDG_CONFIG_HOME/nnn/.selection
+    else
+        set sel_source_file $HOME/.config/nnn/.selection
+    end
+
     set -g NNN_SELECTION
-    if test -s ~/.config/nnn/.selection
+    if test -s $sel_source_file
         while read --null selection
             set --append NNN_SELECTION (string replace --regex "^$PWD/" '' $selection)
-        end <~/.config/nnn/.selection
+        end <$sel_source_file
 
         echo
         echo $bold"[$plugin_name] Selected the following $(count $NNN_SELECTION) item(s):"$reset

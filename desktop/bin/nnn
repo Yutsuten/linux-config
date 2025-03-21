@@ -30,8 +30,14 @@ set --append bookmarks 'm:/media'
 set --append bookmarks "p:$HOME/Projects"
 set --export NNN_BMS (string join ';' $bookmarks)
 
+set dir_order
+set --append dir_order "t:$HOME/Downloads"
+set --export NNN_ORDER (string join ';' $dir_order)
+
 set --export NNN_TRASH 1
-/usr/bin/nnn -AdeouUT v $argv
+set --export NNN_OPTS AdeNouU
+
+/usr/bin/nnn $argv
 
 if test -e "$HOME/.config/nnn/.lastd"
     source "$HOME/.config/nnn/.lastd"
