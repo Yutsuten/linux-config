@@ -122,9 +122,6 @@ lftp:
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
 	ln -srnf tools/mpv ~/.config/mpv
-
-mvi:
-	@echo '${bold}>> MVI settings <<${reset}'
 	ln -srnf tools/mvi ~/.config/mvi
 
 neomutt:
