@@ -3,8 +3,8 @@ fish_add_path $HOME/.local/bin
 test -f ~/.local/environment.fish && source ~/.local/environment.fish
 
 set -gx GPG_TTY (tty)
-set -gx LESSCLOSE $HOME'/.config/linux/tools/less/lessclose.fish %s %s'
-set -gx LESSOPEN $HOME'/.config/linux/tools/less/lessopen.fish %s'
+set -gx LESSCLOSE "$HOME/.config/less/lessclose.fish %s %s"
+set -gx LESSOPEN "$HOME/.config/less/lessopen.fish %s"
 set -gx EDITOR edit
 set -gx VISUAL edit
 

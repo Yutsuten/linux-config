@@ -1,4 +1,4 @@
-.PHONY: build desktop mime system tools alacritty fastfetch fish git helix lftp mpv neomutt nnn utilities zellij
+.PHONY: build desktop mime system tools alacritty fastfetch fish git helix less lftp mpv neomutt nnn utilities zellij
 
 bold := $(shell tput bold)
 reset := $(shell tput sgr0)
@@ -73,7 +73,7 @@ system:
 	cp -af system/cursor.theme /usr/share/icons/default/index.theme
 	fish system/misc.fish
 
-tools: alacritty fastfetch fish git helix lftp mpv neomutt nnn zellij
+tools: alacritty fastfetch fish git helix less lftp mpv neomutt nnn zellij
 
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
@@ -109,6 +109,10 @@ helix:
 	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
 	ln -srf tools/helix/languages.toml ~/.config/helix/languages.toml
 	ln -srnf tools/helix/themes ~/.config/helix/themes
+
+less:
+	@echo '${bold}>> Less settings <<${reset}'
+	ln -srnf tools/less ~/.config/less
 
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'
