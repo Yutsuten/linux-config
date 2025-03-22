@@ -148,13 +148,13 @@ if test (count $tmp_playlists) -eq 0
             else
                 string join0 $files \
                     | sort --zero-terminated --version-sort \
-                    | xargs --null --no-run-if-empty nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
+                    | xargs --null nohup mpv --profile=music --loop-playlist &>~/.local/logs/music-player.log &
             end
         case video
             # Always play in order
             string join0 $files \
                 | sort --zero-terminated --version-sort \
-                | xargs --null --no-run-if-empty nohup mpv &>/dev/null &
+                | xargs --null nohup mpv &>/dev/null &
         case image
             # Ask to shuffle if album, sort otherwise
             if test (count $playlists) -ge 1
@@ -164,10 +164,10 @@ if test (count $tmp_playlists) -eq 0
                     begin
                         cat $playlists
                         string join \n $files
-                    end | sort --version-sort | xargs --no-run-if-empty nohup mvi &>/dev/null &
+                    end | sort --version-sort | xargs --delimiter '\n' nohup mvi &>/dev/null &
                 end
             else
-                string join \n $files | sort --version-sort | xargs --no-run-if-empty nohup mvi &>/dev/null &
+                string join0 $files | sort --zero-terminated --version-sort | xargs --null nohup mvi &>/dev/null &
             end
     end
 else
