@@ -23,6 +23,7 @@ function process-media --description 'Process photos and music using its metadat
         end
         set newname (exiv2 $photo | sed -nE 's/Image timestamp : ([0-9]{4}):([0-9]{2}):([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/\1-\2-\3-\4-\5-\6.webp/p')
         if test -n "$newname" -a "$photo" != "$newname"
+            echo "Processing $photo"
             magick "$photo" -resize '2000x2000>' -define webp:method=6 "$newname"
             trash-put "$photo"
             set count (math $count + 1)
@@ -32,6 +33,7 @@ function process-media --description 'Process photos and music using its metadat
     for video in *.mp4
         set newname (date -d (ffprobe -hide_banner $video 2>&1 | sed -nE 's/^.*creation_time.*:.* (\S+).*$/\1/p' | head -n 1) '+%Y-%m-%d-%H-%M-%S.mp4')
         if test -n "$newname" -a "$video" != "$newname"
+            echo "Processing $video"
             mv $video $newname
             set count (math $count + 1)
         end
@@ -48,10 +50,10 @@ function process-media --description 'Process photos and music using its metadat
         set track (sed -nE 's/^\s*track\s*:\s*(.*)/\1/p' $ffprobe_out | cut -d / -f 1)
         set album (sed -nE 's/^\s*album\s*:\s*(.*)/\1/p' $ffprobe_out)
         set title (sed -nE 's/^\s*title\s*:\s*(.*)/\1/p' $ffprobe_out)
-        set ext (echo $music | sed -nE 's/^.*\.([a-zA-Z0-9]{2,4})$/\1/p')
 
         mkdir -p "$album"
-        mv $music "$album"/(printf '%02d' $disc)_(printf '%02d' $track)_"$title".$ext
+        echo "Processing $music"
+        mv $music "$album"/(printf '%02d' $disc)_(printf '%02d' $track)_"$title"(path extension $music)
         rm $ffprobe_out
         set count (math $count + 1)
     end

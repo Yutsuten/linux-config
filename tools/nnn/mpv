@@ -171,22 +171,26 @@ if test (count $tmp_playlists) -eq 0
             end
     end
 else
-    # If directory was selected, always shuffle
+    # If directory was selected
     set playlist_args --playlist=$playlists
+    set shuffle
+    if gum confirm 'Shuffle?'
+        set shuffle --shuffle
+    end
     switch $category
         case music
             fish --command "
-                nohup mpv --profile=music --loop-playlist --shuffle $playlist_args $files &>~/.local/logs/music-player.log
+                nohup mpv --profile=music --loop-playlist $shuffle $playlist_args $files &>~/.local/logs/music-player.log
                 rm --force $tmp_playlists
             " &
         case video
             fish --command "
-                nohup mpv --shuffle $playlist_args $files &>/dev/null
+                nohup mpv $shuffle $playlist_args $files &>/dev/null
                 rm --force $tmp_playlists
             " &
         case image
             fish --command "
-                nohup mvi --shuffle $playlist_args $files &>/dev/null
+                nohup mvi $shuffle $playlist_args $files &>/dev/null
                 rm --force $tmp_playlists
             " &
     end
