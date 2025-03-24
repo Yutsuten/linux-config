@@ -1,4 +1,4 @@
-set tctl_dir (paste (ls -1 /sys/class/hwmon/hwmon*/*_input | psub) (cat /sys/class/hwmon/hwmon*/*_label | psub) | sed -nE 's/^([^\t]+)\tTctl$/\1/p')
+set tctl_dir (paste (printf '%s\n' /sys/class/hwmon/hwmon*/*_input | psub) (cat /sys/class/hwmon/hwmon*/*_label | psub) | sed -nE 's/^([^\t]+)\tTctl$/\1/p')
 
 if test -z "$tctl_dir"
     echo 'Tctl sensor directory not found.'

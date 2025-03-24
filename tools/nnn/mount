@@ -1,0 +1,135 @@
+#!/usr/bin/env fish
+# ------------------------------------- #
+# Easy mount/unmount removable devices. #
+#                                       #
+# For simplicity, this script only      #
+# handles /dev/sd* devices.             #
+# ------------------------------------- #
+
+source (status dirname)/.utils
+
+set bold (tput bold)
+set reset (tput sgr0)
+
+echo
+echo $bold'[MOUNT] Going to mount/unmount a device.'$reset
+
+# Analyze devices and targets
+lsblk --output NAME,FSTYPE,FSVER,FSSIZE,LABEL,VENDOR,MODEL,MOUNTPOINTS | string match --regex --entire '^NAME|sd[a-z]'
+echo
+
+lsblk --output NAME,FSTYPE,MOUNTPOINT --pairs | read --null lsblk_output
+if test -z "$lsblk_output"
+    echo '[MOUNT] Failed to fetch data from lsblk' >&2
+    read --prompt-str 'Press ENTER to continue...'
+    return 1
+end
+
+set mounted_devices
+echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9])".+MOUNTPOINT="/media/[^"]+"$#\1#p' | while read --line device
+    set --append mounted_devices $device
+    if string match --quiet 'enc*' $device
+        set --append mounted_devices (echo $device | sed -nE 's#enc(sd[a-z])#\1#p')
+    end
+end
+
+set available_devices (echo "$lsblk_output" | sed -nE 's#^NAME="(sd[a-z][0-9])".+MOUNTPOINT=""$#\1#p')
+echo "$lsblk_output" | sed -nE 's#^NAME="(sd[a-z])" FSTYPE="crypto_LUKS" MOUNTPOINT=""$#\1#p' | while read --line device
+    set is_available 1
+    for mounted_device in $mounted_devices
+        if test $mounted_device = $device
+            set is_available 0
+            break
+        end
+    end
+    if test $is_available -eq 1
+        set --append available_devices $device
+    end
+end
+
+set mounted_targets (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9])".+MOUNTPOINT="(/media/[^"]+)"$#\2#p')
+set available_targets (comm -23 (string join \n /media/* | sort | psub) (string join \n $mounted_targets | sort | psub))
+
+if test (count $available_devices) -eq 0 -a (count $mounted_targets) -eq 0
+    echo '[MOUNT] There are no devices to mount or unmount' >&2
+    return 0
+end
+
+set options
+set selection
+
+# Mount or unmount?
+if test (count $available_devices) -gt 0
+    set --append options Mount
+end
+if test (count $mounted_targets) -gt 0
+    set --append options Unmount
+end
+
+if test (count $options) -eq 2
+    gum choose $options | read selection || return
+else
+    set selection $options[1]
+end
+
+# Perform mount/unmount
+switch $selection
+    case Mount
+        set selected_device
+        if test (count $available_devices) -gt 1
+            string join \n $available_devices | sort | gum choose --header 'Which device to mount?' | read selected_device || return
+        else
+            set selected_device $available_devices[1]
+        end
+
+        gum choose --header "Where to mount $selected_device?" $available_targets | read selected_target || return
+
+        if gum confirm "[MOUNT] Mount $selected_device into $selected_target?" --show-output
+            set fstype (echo "$lsblk_output" | sed -nE 's#^NAME="'"$selected_device"'" FSTYPE="([^"]+)".+$#\1#p')
+            if test "$fstype" = crypto_LUKS
+                fpass | read --null password
+                printf '%s' "$password" | sudo cryptsetup --key-file - open /dev/$selected_device enc$selected_device
+                if test "$status" = 0
+                    set selected_device enc$selected_device
+                    set fstype (echo "$lsblk_output" | sed -nE 's#^NAME="'"$selected_device"'" FSTYPE="([^"]+)".+$#\1#p')
+                    set selected_device mapper/$selected_device
+                else
+                    echo "[MOUNT] Failed to decrypt $fstype: Abort" >&2
+                    read --prompt-str 'Press ENTER to continue...'
+                    return 1
+                end
+            end
+
+            set options nodev,nosuid,noexec
+            if test "$fstype" = vfat
+                set options "$options,uid=$(id -u),gid=$(id -g),fmask=111"
+            end
+
+            if sudo mount -o $options /dev/$selected_device $selected_target
+                nnn_cd $selected_target
+            else
+                echo '[MOUNT] Failed to mount' >&2
+                read --prompt-str 'Press ENTER to continue...'
+            end
+        end
+    case Unmount
+        set selected_target
+        if test (count $mounted_targets) -gt 1
+            gum choose --header 'Which target to unmount?' $mounted_targets | read selected_target || return
+        else
+            set selected_target $mounted_targets[1]
+        end
+
+        set device (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9])".+MOUNTPOINT="'"$selected_target"'"$#\1#p')
+        if gum confirm "[MOUNT] Unmount $device mounted at $selected_target?" --show-output || return
+            if sudo umount $selected_target
+                sudo sync
+                if string match --quiet 'enc*' $device
+                    sudo cryptsetup close $device
+                end
+            else
+                echo '[MOUNT] Failed to unmount' >&2
+                read --prompt-str 'Press ENTER to continue...'
+            end
+        end
+end
