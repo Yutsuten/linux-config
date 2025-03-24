@@ -29,6 +29,7 @@ set bookmarks
 set --append bookmarks 'l:/mnt/hdd'
 set --append bookmarks 'm:/media'
 set --append bookmarks "p:$HOME/Projects"
+set --append bookmarks "z:$HOME/.local/share/zellij"
 set --export NNN_BMS (string join ';' $bookmarks)
 
 set dir_order
