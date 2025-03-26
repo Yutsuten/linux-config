@@ -3,7 +3,7 @@ local utils = require "mp.utils"
 
 function trash_file()
     local current = mp.get_property_native("path")
-    msg.info("Delete " .. current)
+    msg.warn("Delete " .. current)
     local result = mp.command_native({
         name = "subprocess",
         args = { "trash-put", current },

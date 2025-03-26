@@ -7,7 +7,7 @@ function remove_current()
         return
     end
     local current = mp.get_property_native("path")
-    msg.info(string.format("%s: Remove %s", playlist_path, current))
+    msg.warn(string.format("%s: Remove %s", playlist_path, current))
     local playlist_after = {}
     for music_path in io.lines(playlist_path) do
         if music_path ~= current then
