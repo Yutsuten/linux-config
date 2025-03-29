@@ -4,6 +4,12 @@ if test -n "$NNNLVL" -a "$NNNLVL" -ge 1
     return 1
 end
 
+if test -n "$XDG_CONFIG_HOME"
+    set nnn_config_home "$XDG_CONFIG_HOME/nnn"
+else
+    set nnn_config_home "$HOME/.config/nnn"
+end
+
 set shortcuts
 set --append shortcuts 'a:anki'
 set --append shortcuts 'c:-!wl-copy < "$nnn"*'
@@ -26,10 +32,10 @@ set --append shortcuts '/:find'
 set --export NNN_PLUG (string join ';' $shortcuts)
 
 set bookmarks
+set --append bookmarks "c:$nnn_config_home/mounts"
 set --append bookmarks 'l:/mnt/hdd'
 set --append bookmarks 'm:/media'
 set --append bookmarks "p:$HOME/Projects"
-set --append bookmarks "s:/sftp"
 set --append bookmarks "z:$HOME/.local/share/zellij"
 set --export NNN_BMS (string join ';' $bookmarks)
 
@@ -37,7 +43,8 @@ set dir_order
 set --append dir_order "t:$HOME/Downloads"
 set --export NNN_ORDER (string join ';' $dir_order)
 
-set --export NNN_TRASH 1
+set --export NNN_SSHFS 'sshfs -o nodev,nosuid,noexec,umask=137,idmap=user,reconnect'
+set --export NNN_TRASH trash
 set --export NNN_OPTS AdeNouU
 
 /usr/bin/nnn $argv
