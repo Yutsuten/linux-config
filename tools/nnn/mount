@@ -106,6 +106,7 @@ switch $selection
             end
 
             if sudo mount -o $options /dev/$selected_device $selected_target
+                echo '[MOUNT] Mounted successfully'
                 nnn_cd $selected_target
             else
                 echo '[MOUNT] Failed to mount' >&2
@@ -127,9 +128,13 @@ switch $selection
                 if string match --quiet 'enc*' $device
                     sudo cryptsetup close $device
                 end
+                echo '[MOUNT] Unmounted successfully'
+                echo
+                lsblk --output NAME,FSTYPE,FSVER,FSSIZE,LABEL,VENDOR,MODEL,MOUNTPOINTS | string match --regex --entire '^NAME|sd[a-z]'
+                echo
             else
                 echo '[MOUNT] Failed to unmount' >&2
-                read --prompt-str 'Press ENTER to continue...'
             end
+            read --prompt-str 'Press ENTER to continue...'
         end
 end
