@@ -131,9 +131,10 @@ neomutt:
 
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
-	mkdir -p ~/.config/nnn
-	ln -srnf tools/nnn ~/.config/nnn/plugins
+	mkdir -p ~/.config/nnn/plugins ~/.local/share/nnn
+	ln -srf tools/nnn/.utils tools/nnn/* ~/.config/nnn/plugins && find ~/.config/nnn/plugins -xtype l -delete
 
 zellij:
 	@echo '${bold}>> Zellij settings <<${reset}'
+	mkdir -p ~/.local/share/zellij
 	ln -srnf tools/zellij ~/.config/zellij

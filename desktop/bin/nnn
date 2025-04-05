@@ -10,8 +10,13 @@ else
     set nnn_config_home "$HOME/.config/nnn"
 end
 
+set extra_plugins ~/.local/share/nnn/*
+if test (count $extra_plugins) -ge 1
+    ln -srf $extra_plugins ~/.config/nnn/plugins
+end
+find ~/.config/nnn/plugins -xtype l -delete
+
 set shortcuts
-set --append shortcuts 'a:anki'
 set --append shortcuts 'c:-!wl-copy < "$nnn"*'
 set --append shortcuts 'C:!wl-paste --no-newline > clipboard*'
 set --append shortcuts 'd:-dragdrop'
@@ -35,6 +40,7 @@ set bookmarks
 set --append bookmarks "c:$nnn_config_home/mounts"
 set --append bookmarks 'l:/mnt/hdd'
 set --append bookmarks 'm:/media'
+set --append bookmarks "n:$HOME/.local/share/nnn"
 set --append bookmarks "p:$HOME/Projects"
 set --append bookmarks "z:$HOME/.local/share/zellij"
 set --export NNN_BMS (string join ';' $bookmarks)
