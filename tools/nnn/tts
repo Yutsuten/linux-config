@@ -1,0 +1,34 @@
+#!/usr/bin/env fish
+# -------------------------------- #
+# Text-to-Speech using Google API. #
+# -------------------------------- #
+
+set text (wl-paste)
+echo "[TTS] Going to generate speech for: $text"
+
+set voice (gum choose Boy Girl) || return
+if test $voice = Girl
+    set voice ja-JP-Wavenet-B
+else
+    set voice ja-JP-Wavenet-C
+end
+
+set output_file (echo {$voice}_{$text}.ogg | tr -d '|?*<":>+[]\'\\\\' | tr ' ' '_')
+if test -f $output_file
+    echo "[TTS] $output_file already exists!" >&2
+    return 1
+end
+
+curl --silent -X POST -H 'Content-Type:application/json' \
+    -d '{"audioConfig": {"audioEncoding": "OGG_OPUS"}, "input": {"ssml": "<speak>'"$text"'</speak>"}, "voice": {"languageCode": "ja-JP", "name": "'$voice'"}}' \
+    "https://texttospeech.googleapis.com/v1/text:synthesize?key=$GOOGLE_TTS_API_KEY" \
+    | jq -r .audioContent \
+    | base64 --decode >$output_file
+
+if test -s "$output_file"
+    nohup mpv --terminal=no --volume=100 $output_file >/dev/null &
+else
+    echo '[TTS] Failed to generate speech.' >&2
+    read --prompt-str 'Press ENTER to continue...'
+    return 1
+end

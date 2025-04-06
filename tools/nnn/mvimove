@@ -8,7 +8,7 @@ if test -s /tmp/mvi_selection
         mv $selection .
     end </tmp/mvi_selection
 else
-    echo 'No mvi selection' >&2
+    echo '[MVIMOVE] No mvi selection' >&2
     return 1
 end
 
