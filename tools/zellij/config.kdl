@@ -32,7 +32,8 @@ keybinds clear-defaults=true {
         }
         bind "f" {
             Run "zellij-nnn" {
-                direction "Down"
+                floating true
+                close_on_exit true
             }
             SwitchToMode "Locked";
         }
