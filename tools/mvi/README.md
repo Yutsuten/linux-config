@@ -22,13 +22,11 @@ To make the process *feel* faster, we also pre-process all opened images in back
 
 This way we achieve the best of both worlds: save disk usage and fast thumbnails generation.
 
-### Single worker thumbnail generation
+### Workers thumbnail generation
 
-The original script allowed the user to create multiple copies of the `gallery-thumbgen.lua` script to allow parallel processing. This feature was removed here.
+The original script allowed the user to create multiple copies of the `gallery-thumbgen.lua` script to allow parallel processing.
 
-My reasoning is that the pre-processing does its job quite well. Even if opening a batch of images for the first time, a few seconds is enough to pre-process all the images shown in the first page of the gallery. And it begins *before* opening the gallery.
-
-Also I save my config files in git, and don't want to save multiple copies of the same script. There may be ways to workaround this, but I don't think it worths the trouble.
+Here we have 3 workers.
 
 ### New dependency: `imagemagick`
 
@@ -44,7 +42,7 @@ This is configurable by changing `delete_old_thumbs_in_days` in `mvi/script-opts
 
 Not sure if the original scripts were supposed to work on Windows too, but here definitively it isn't supported. Several Linux-only tools are being used:
 
-- `magick` (may be installable on Windows too): For thumbnails generation
+- `magick` (installable on Windows too): For thumbnails generation
 - `mktemp`: To generate the temporary directory for BGRA images
 - `rm`: To delete the temporary directory of BGRA images
 - `mkdir` (with `-p` option): To create the user-defined thumbnail directory if it doesn't exist, used for phase 1
