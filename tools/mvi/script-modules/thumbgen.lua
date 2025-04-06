@@ -1,10 +1,9 @@
 --[[
-mpv-gallery-view | https://github.com/occivink/mpv-gallery-view
+Based on mpv-gallery-view | https://github.com/occivink/mpv-gallery-view
 
-This mpv script implements a worker for generating gallery thumbnails.
-It is meant to be used by other scripts.
+This mpv module contains the code for creating gallery thumbnail workers.
 
-File placement: inside scripts directory
+File placement: inside script-modules directory
 ]]
 
 local msg = require 'mp.msg'
@@ -18,6 +17,8 @@ local preprocessed_thumb_sizes = {}
 local script_id = mp.get_script_name() .. utils.getpid()
 local hash_cache = {}
 
+local worker_count = 0
+local worker_id = 0
 local thumbs_width = 0
 local thumbs_height = 0
 local thumbs_ext = ""
@@ -77,8 +78,10 @@ function preprocess_thumbnails(playlist)
     if preprocessed_thumb_sizes[thumb_size_str] == nil then
         preprocessed_thumb_sizes[thumb_size_str] = true
         preprocess_queue = {}
-        for _, item in ipairs(playlist) do
-            table.insert(preprocess_queue, 1, { requester = "", input_path = item.filename })
+        for index, item in ipairs(playlist) do
+            if (index % worker_count) == worker_id - 1 then
+                table.insert(preprocess_queue, 1, { requester = "", input_path = item.filename })
+            end
         end
     end
 end
@@ -113,7 +116,7 @@ function generate_thumbnail(thumbnail_job, generate_bgra)
     if string.match(input_dir, thumbs_dir_regex) then
         -- Be careful to not generate thumbnails of thumbnails
         local width, height
-        sha256sum_str, width, height = string.match(compressed_name, "([a-z0-9]+)_([0-9]+)-([0-9]+)%.[a-z]+")
+        sha256sum_str, width, height = string.match(input_name, "([a-z0-9]+)_([0-9]+)-([0-9]+)%.[a-z]+")
         if tonumber(width) ~= thumbs_width or tonumber(height) ~= thumbs_height then
             return "" -- Thumbnail of different size than the one currently configured
         end
@@ -202,6 +205,8 @@ function handle_events(wait)
                     thumbs_dir_regex = '^' .. string.gsub(thumbs_dir, "[%%()%[%]^$.*+-]", "%%%1")
                 end
                 thumbs_ext = e.args[5]
+                worker_count = e.args[6]
+                worker_id = e.args[7]
                 preprocess_thumbnails(mp.get_property_native("playlist"))
             end
         end
@@ -260,3 +265,5 @@ function mp_event_loop()
         end
     end
 end
+
+return { mp_event_loop = mp_event_loop }

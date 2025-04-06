@@ -16,6 +16,7 @@ local utils = require 'mp.utils'
 local HOURS = 60 -- find command uses minutes as unit
 local DAYS = 24 * HOURS
 local MAX_THUMBNAILS = 64
+local WORKERS_COUNT = 3
 
 local ass = ""
 local ass_changed = false
@@ -185,7 +186,10 @@ local gallery = {
         end
         -- reverse iterate so that the first thumbnail is at the top of the stack
         for i = #todo, 1, -1 do
-            mp.commandv("script-message-to", "thumbgen", "push-thumbnail-front",
+            mp.commandv(
+                "script-message-to",
+                string.format("thumbgen_%d", i % WORKERS_COUNT + 1),
+                "push-thumbnail-front",
                 mp.get_script_name(),
                 todo[i]
             )
@@ -1025,15 +1029,19 @@ function osd_size_changed()
     local ww, wh = mp.get_osd_size()
     if ww > 0 and wh > 0 then
         compute_geometry(ww, wh)
-        mp.commandv(
-            "script-message-to",
-            "thumbgen",
-            "thumb-config-broadcast",
-            tostring(gallery.geometry.thumbnail_size[1]),
-            tostring(gallery.geometry.thumbnail_size[2]),
-            thumbs_dir,
-            opts.thumbnail_format
-        )
+        for worker_id = 1, WORKERS_COUNT do
+            mp.commandv(
+                "script-message-to",
+                string.format("thumbgen_%d", worker_id),
+                "thumb-config-broadcast",
+                tostring(gallery.geometry.thumbnail_size[1]),
+                tostring(gallery.geometry.thumbnail_size[2]),
+                thumbs_dir,
+                opts.thumbnail_format,
+                WORKERS_COUNT,
+                worker_id
+            )
+        end
     end
 end
 mp.observe_property("osd-width", "number", osd_size_changed)
