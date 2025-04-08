@@ -1,5 +1,5 @@
 function passgen --argument-names ALLOWED_CHARS LENGTH --description 'Generate random passwords'
-    argparse --max-args 2 'h/help' -- $argv
+    argparse --max-args 2 h/help -- $argv
     set exitcode $status
 
     function help --argument-names ALLOWED_CHARS LENGTH
@@ -37,5 +37,5 @@ function passgen --argument-names ALLOWED_CHARS LENGTH --description 'Generate r
         set LENGTH $DEFAULT_LENGTH
     end
 
-    tr -dc $ALLOWED_CHARS < /dev/urandom | head -c$LENGTH
+    tr -dc $ALLOWED_CHARS </dev/urandom | head -c$LENGTH
 end
