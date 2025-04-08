@@ -10,10 +10,10 @@ config: desktop tools
 build:
 	@echo '${bold}>> Compile rust apps <<${reset}'
 	mkdir -p ~/.local/bin
-	cd rust/openweather && RUSTFLAGS='-C target-cpu=native' cargo build --release
+	cd rust/openweather && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/openweather ~/.local/bin/openweather
 	cd rust/record-reencoder && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/record-reencoder ~/.local/bin/record-reencoder
 	cd rust/record-settings && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/record-settings ~/.local/bin/record-settings
-	cd rust/wallpaper && RUSTFLAGS='-C target-cpu=native' cargo build --release
+	cd rust/wallpaper && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/wallpaper ~/.local/bin/wallpaper
 
 desktop: mime
 	@echo '${bold}>> Desktop environment settings <<${reset}'
@@ -59,8 +59,6 @@ mime:
 	xdg-mime default mvi.desktop image/webp
 
 system:
-	cp -af rust/openweather/target/release/openweather /usr/local/bin/openweather
-	cp -af rust/wallpaper/target/release/wallpaper /usr/local/bin/wallpaper
 	cp -af system/setvtrgb/arc.vga /etc/vtrgb
 	cp -af system/setvtrgb/install.sh /etc/initcpio/install/setvtrgb
 	cp -af system/setvtrgb/hook.sh /etc/initcpio/hooks/setvtrgb
