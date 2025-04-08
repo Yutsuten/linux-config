@@ -26,14 +26,14 @@ if test -z "$lsblk_output"
 end
 
 set mounted_devices
-echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9])".+MOUNTPOINT="/media/[^"]+"$#\1#p' | while read --line device
+echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9]?)" FSTYPE="(vfat|ext4)" MOUNTPOINT="/media/[^"]+"$#\1#p' | while read --line device
     set --append mounted_devices $device
     if string match --quiet 'enc*' $device
         set --append mounted_devices (echo $device | sed -nE 's#enc(sd[a-z])#\1#p')
     end
 end
 
-set available_devices (echo "$lsblk_output" | sed -nE 's#^NAME="(sd[a-z][0-9])".+MOUNTPOINT=""$#\1#p')
+set available_devices (echo "$lsblk_output" | sed -nE 's#^NAME="(sd[a-z][0-9]?)" FSTYPE="(vfat|ext4)" MOUNTPOINT=""$#\1#p')
 echo "$lsblk_output" | sed -nE 's#^NAME="(sd[a-z])" FSTYPE="crypto_LUKS" MOUNTPOINT=""$#\1#p' | while read --line device
     set is_available 1
     for mounted_device in $mounted_devices
@@ -47,7 +47,7 @@ echo "$lsblk_output" | sed -nE 's#^NAME="(sd[a-z])" FSTYPE="crypto_LUKS" MOUNTPO
     end
 end
 
-set mounted_targets (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9])".+MOUNTPOINT="(/media/[^"]+)"$#\2#p')
+set mounted_targets (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9]?)".+MOUNTPOINT="(/media/[^"]+)"$#\2#p')
 set available_targets (comm -23 (string join \n /media/* | sort | psub) (string join \n $mounted_targets | sort | psub))
 
 if test (count $available_devices) -eq 0 -a (count $mounted_targets) -eq 0
@@ -121,7 +121,7 @@ switch $selection
             set selected_target $mounted_targets[1]
         end
 
-        set device (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9])".+MOUNTPOINT="'"$selected_target"'"$#\1#p')
+        set device (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9]?)".+MOUNTPOINT="'"$selected_target"'"$#\1#p')
         if gum confirm "[MOUNT] Unmount $device mounted at $selected_target?" --show-output || return
             if sudo umount $selected_target
                 sudo sync
