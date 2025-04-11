@@ -1,6 +1,8 @@
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
 
+local cwd = mp.get_property_native("working-directory")
+
 function remove_current()
     local playlist_path = mp.get_property_native("playlist-path")
     if not playlist_path then
@@ -23,7 +25,8 @@ function remove_current()
         return
     end
     mp.commandv("playlist-remove", "current")
-    mp.commandv("show-text", string.format("Removed '%s' from playlist", current), 2000)
+    local current_short = string.gsub(current, string.format("^%s/", cwd), "")
+    mp.commandv("show-text", string.format("Removed '%s' from playlist", current_short), 2000)
 end
 
 mp.add_key_binding("D", "remove-from-playlist", remove_current)

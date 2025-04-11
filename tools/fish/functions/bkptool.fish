@@ -64,13 +64,8 @@ function bkptool --description 'Backup and restore user files'
         end
 
         # Compressed encrypted backup
-        set bkp_linux .config/backup.list
-        while read --line target
-            set --append bkp_linux $target
-        end <~/.config/backup.list
-
         echo $bold'Generate Linux.tar.zst.gpg'$reset
-        tar --create --zstd --directory ~ $bkp_linux \
+        tar --create --zstd --directory ~ .config/backup.list (read --null <~/.config/backup.list) (find ~/Projects -type d -name .zellij | string replace ~/ '') \
             | gpg --encrypt --default-recipient-self >Linux.tar.zst.gpg
 
         echo $bold'Backup Linux.tar.zst.gpg'$reset
