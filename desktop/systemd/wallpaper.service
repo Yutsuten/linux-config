@@ -4,4 +4,4 @@ Description=set random wallpaper
 [Service]
 Type=oneshot
 Environment=WALLPAPERS_PATH={WALLPAPERS_PATH}
-ExecStart=/usr/local/bin/wallpaper --random
+ExecStart={HOME}/.local/bin/wallpaper --random
