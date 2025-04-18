@@ -4,7 +4,7 @@
 # Extra scripts can be added at ~/.local/share/zellij #
 # --------------------------------------------------- #
 
-set choices 'Open project' 'Password Manager' 'File Browser' Fish
+set choices 'Open project' 'Password Manager' 'File Browser' Fish 'Fish Private'
 for filepath in ~/.local/share/zellij/*
     # Split on `-` AND capitalize
     set --erase choice
@@ -30,6 +30,10 @@ switch $selection
     case Fish
         zellij action rename-tab Fish
         cd ~ && fish
+        return 0
+    case 'Fish Private'
+        zellij action rename-tab Fish
+        cd ~ && fish --private
         return 0
     case '*'
         set scriptname (string lower (string replace --all ' ' '-' $selection))

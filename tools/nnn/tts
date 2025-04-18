@@ -26,7 +26,7 @@ curl --silent -X POST -H 'Content-Type:application/json' \
     | base64 --decode >$output_file
 
 if test -s "$output_file"
-    nohup mpv --terminal=no --volume=100 $output_file >/dev/null &
+    nohup mpv --terminal=no --volume=100 $output_file &>/dev/null &
 else
     echo '[TTS] Failed to generate speech.' >&2
     read --prompt-str 'Press ENTER to continue...'
