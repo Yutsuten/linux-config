@@ -1,7 +1,8 @@
 theme = "onedark_modified"
 
 [keys.normal]
-"?" = "@/(?-i)" # Case sensitive search
+"C-/" = "@/(?-i)" # Case sensitive search
+"C-?" = "@?(?-i)" # Case sensitive search
 
 [editor]
 auto-pairs = false

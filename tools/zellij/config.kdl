@@ -4,7 +4,7 @@ keybinds clear-defaults=true {
     }
     normal {
         // Searching
-        bind "/" "?" { SwitchToMode "EnterSearch"; }
+        bind "/" { SwitchToMode "EnterSearch"; }
 
         // Tab
         bind "r" { SwitchToMode "RenameTab"; }
@@ -30,6 +30,10 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "Locked";
         }
+        bind "d" {
+            EditScrollback;
+            SwitchToMode "Locked";
+        }
         bind "f" {
             Run "zellij-nnn" {
                 floating true
@@ -43,12 +47,8 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "Locked";
         }
-        bind "m" {
-            NewTab {
-                layout "neomutt"
-            }
-            SwitchToMode "Locked";
-        }
+        bind "g" { ScrollToTop; }
+        bind "G" { ScrollToBottom; }
         bind "n" {
             NewTab {
                 cwd ""
@@ -80,13 +80,13 @@ keybinds clear-defaults=true {
         }
 
         // Disable remaining characters to avoid typing while in normal mode
-        bind "a" "b" "c" "d" "e" "g" "h" "i" "j" "k" "l" "p" "q" "s" "u" "v" "x" "y" "z" {
-            SwitchToMode "Normal";
+        bind "a" "b" "c" "e" "h" "i" "j" "m" "k" "l" "p" "q" "s" "u" "v" "x" "y" "z" {
+            SwitchToMode "Locked";
         }
     }
     search {
         bind "Esc" "q" { SwitchToMode "Normal"; }
-        bind "/" "?" { SwitchToMode "EnterSearch"; }
+        bind "/" { SwitchToMode "EnterSearch"; }
         bind "N" { Search "up"; }
         bind "n" { Search "down"; }
     }
@@ -119,8 +119,8 @@ plugins {
 
 on_force_close "quit"
 simplified_ui true
-pane_frames false
-theme "tokyo-night"
+pane_frames true
+theme "nightfox"
 default_layout "compact"
 default_mode "locked"
 ui {
