@@ -53,7 +53,9 @@ if status is-interactive
     abbr --add lo -- 'ls -Noh --sort=v --group-directories-first'
     abbr --add ssh -- 'env TERM=xterm ssh'
 
-    fzf --fish | source
+    if test -d .venv
+        source .venv/bin/activate.fish
+    end
 end
 
 function fish_greeting
