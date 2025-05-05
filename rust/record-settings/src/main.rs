@@ -15,6 +15,7 @@ enum Message {
     AudioMic(bool),
     AudioRecording(bool),
     Save,
+    Exit,
 }
 
 struct Config {
@@ -102,7 +103,11 @@ impl Config {
                 Checkbox::new("Recording", self.audio_recording).on_toggle(Message::AudioRecording),
                 Checkbox::new("Speakers", self.audio_speakers).on_toggle(Message::AudioSpeakers),
                 Checkbox::new("Mic", self.audio_mic).on_toggle(Message::AudioMic),
-                Button::new("Save & Exit").on_press(Message::Save),
+                row![
+                    Button::new("Save & Exit").on_press(Message::Save),
+                    Button::new("Exit").on_press(Message::Exit),
+                ]
+                .spacing(10),
             ]
             .padding(20)
             .spacing(10),
@@ -151,6 +156,7 @@ impl Config {
                 .unwrap();
                 iced::exit()
             }
+            Message::Exit => iced::exit(),
         }
     }
 }
