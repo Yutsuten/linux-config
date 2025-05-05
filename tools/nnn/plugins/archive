@@ -13,48 +13,48 @@ if test (count $NNN_SELECTION) -eq 1
         # For a single file, check extension and auto-choose between archive/extract
         switch $selection # Try to extract
             case '*.zip'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 if which unar &>/dev/null
                     unar $selection
                 else
                     unzip $selection
                 end
             case '*.rar'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 unar $selection
             case '*.tar'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 tar --extract --file $selection
             case '*.tgz'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 tar --gzip --extract --file $selection
             case '*.tar.gz'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 tar --gzip --extract --file $selection
             case '*.tar.xz'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 tar --xz --extract --file $selection
             case '*.tar.zst'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 tar --zstd --extract --file $selection
             case '*.zst'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 unzstd $selection
             case '*.gz'
-                echo "[ARCHIVE] Extracting $selection"
+                echo "[ARCHIVE] Extracting $selection" >&2
                 gunzip --keep $selection
             case '*'
                 # Archive instead
                 gum choose --header 'Which format to compress to?' .zst .gz .zip | read format || return
                 switch $format
                     case .zst
-                        echo "[ARCHIVE] Generating $selection.zst"
+                        echo "[ARCHIVE] Generating $selection.zst" >&2
                         zstd $selection
                     case .gz
-                        echo "[ARCHIVE] Generating $selection.gz"
+                        echo "[ARCHIVE] Generating $selection.gz" >&2
                         gzip --keep $selection
                     case .zip
-                        echo "[ARCHIVE] Generating $selection.zip"
+                        echo "[ARCHIVE] Generating $selection.zip" >&2
                         zip $selection.zip $selection
                 end
         end
@@ -63,16 +63,16 @@ if test (count $NNN_SELECTION) -eq 1
         gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip | read format || return
         switch $format
             case .tar.zst
-                echo "[ARCHIVE] Generating $selection.tar.zst"
+                echo "[ARCHIVE] Generating $selection.tar.zst" >&2
                 tar --zstd --create --file $selection.tar.zst $selection
             case .tgz
-                echo "[ARCHIVE] Generating $selection.tgz"
+                echo "[ARCHIVE] Generating $selection.tgz" >&2
                 tar --gzip --create --file $selection.tgz $selection
             case .tar
-                echo "[ARCHIVE] Generating $selection.tar"
+                echo "[ARCHIVE] Generating $selection.tar" >&2
                 tar --create --file $selection.tar $selection
             case .zip
-                echo "[ARCHIVE] Generating $selection.zip"
+                echo "[ARCHIVE] Generating $selection.zip" >&2
                 zip -r $selection.zip $selection
         end
     end
@@ -85,16 +85,16 @@ else # For multiple selections, compress all into one file
     gum choose --header 'Which format to compress to?' .tar.zst .tgz .tar .zip | read format || return
     switch $format
         case .tar.zst
-            echo "[ARCHIVE] Generating $output.tar.zst"
+            echo "[ARCHIVE] Generating $output.tar.zst" >&2
             tar --zstd --create --file $output.tar.zst $NNN_SELECTION
         case .tgz
-            echo "[ARCHIVE] Generating $output.tgz"
+            echo "[ARCHIVE] Generating $output.tgz" >&2
             tar --gzip --create --file $output.tgz $NNN_SELECTION
         case .tar
-            echo "[ARCHIVE] Generating $output.tar"
+            echo "[ARCHIVE] Generating $output.tar" >&2
             tar --create --file $output.tar $NNN_SELECTION
         case .zip
-            echo "[ARCHIVE] Generating $output.zip"
+            echo "[ARCHIVE] Generating $output.zip" >&2
             zip -r $output.zip $NNN_SELECTION
     end
 end

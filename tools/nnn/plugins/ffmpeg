@@ -8,12 +8,12 @@ source (status dirname)/.utils
 nnn_get_selection FFMPEG process $argv[1] || return
 
 for selection in $NNN_SELECTION
-    echo
-    echo "[FFMPEG] Going to trim video: $selection"
-    echo
+    echo >&2
+    echo "[FFMPEG] Going to trim video: $selection" >&2
+    echo >&2
     read --line --prompt-str '[FFMPEG] From > ' from || return
     read --line --prompt-str '[FFMPEG] Until> ' until || return
-    echo
+    echo >&2
 
     set options
     if test -n "$from"
@@ -27,16 +27,16 @@ for selection in $NNN_SELECTION
         return 1
     end
 
-    echo '[FFMPEG] Processing...'
+    echo '[FFMPEG] Processing...' >&2
     ffmpeg -loglevel warning $options -i $selection -codec copy -avoid_negative_ts make_zero -y /tmp/$selection || return
     touch --reference $selection /tmp/$selection
 
-    echo "[FFMPEG] Before : $(du -h $selection | cut -f 1)"
-    echo "[FFMPEG] After  : $(du -h /tmp/$selection | cut -f 1)"
+    echo "[FFMPEG] Before : $(du -h $selection | cut -f 1)" >&2
+    echo "[FFMPEG] After  : $(du -h /tmp/$selection | cut -f 1)" >&2
     mpv --msg-level=all=warn /tmp/$selection
 
-    echo
-    if gum confirm '[FFMPEG] Replace original?' --show-output
+    echo >&2
+    if gum confirm '[FFMPEG] Replace original?' --show-output >&2
         trash-put $selection
         mv /tmp/$selection $selection
     else

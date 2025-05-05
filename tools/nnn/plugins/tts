@@ -4,7 +4,7 @@
 # -------------------------------- #
 
 set text (wl-paste)
-echo "[TTS] Going to generate speech for: $text"
+echo "[TTS] Going to generate speech for: $text" >&2
 
 set voice (gum choose Boy Girl) || return
 if test $voice = Girl

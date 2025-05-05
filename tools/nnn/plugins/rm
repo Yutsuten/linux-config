@@ -8,7 +8,7 @@ source (status dirname)/.utils
 nnn_get_selection RM REMOVE $argv[1] || return
 
 # Remove execution
-if gum confirm '[RM] Are you sure?' --prompt.foreground 1 --selected.background 1 --show-output
+if gum confirm '[RM] Are you sure?' --prompt.foreground 1 --selected.background 1 --show-output >&2
     rm --recursive --force -- $NNN_SELECTION
     nnn_clear_selection
 end

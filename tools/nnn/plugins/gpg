@@ -11,20 +11,20 @@ for selection in $NNN_SELECTION
     if test -f $selection
         switch $selection
             case '*.tar.zst.gpg' # Decrypt directory
-                echo "[GPG] Decrypt and extract $selection"
+                echo "[GPG] Decrypt and extract $selection" >&2
                 gpg --decrypt $selection | tar --zstd --extract || continue
             case '*.gpg' # Decrypt file
                 set out_file (string replace --regex '\.gpg$' '' $selection)
-                echo "[GPG] Decrypt $selection to $out_file"
+                echo "[GPG] Decrypt $selection to $out_file" >&2
                 gpg --output $out_file --decrypt $selection || continue
                 touch --reference $selection $out_file
             case '*' # Encrypt file
-                echo "[GPG] Generating $selection.gpg"
+                echo "[GPG] Generating $selection.gpg" >&2
                 gpg --output $selection.gpg --encrypt --default-recipient-self $selection || continue
                 touch --reference $selection $selection.gpg
         end
     else if test -d $selection # Encrypt directory
-        echo "[GPG] Generating $selection.tar.zst.gpg"
+        echo "[GPG] Generating $selection.tar.zst.gpg" >&2
         tar --zstd --create $selection | gpg --output $selection.tar.zst.gpg --encrypt --default-recipient-self || continue
     end
 end
