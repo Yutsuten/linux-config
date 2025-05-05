@@ -21,6 +21,7 @@ set --append shortcuts 'c:-!wl-copy < "$nnn"*'
 set --append shortcuts 'C:!wl-paste --no-newline > clipboard*'
 set --append shortcuts 'd:-dragdrop'
 set --append shortcuts 'D:!fdupes --recurse --delete .*'
+set --append shortcuts 'f:find'
 set --append shortcuts 'g:gpg'
 set --append shortcuts 'j:jumpdir'
 set --append shortcuts 'n:newfile'
@@ -35,7 +36,6 @@ set --append shortcuts 'x:rm'
 set --append shortcuts 'y:-!wl-copy -- "$nnn"*'
 set --append shortcuts 'Y:-!wl-copy -- "$PWD/$nnn"*'
 set --append shortcuts 'z:archive'
-set --append shortcuts '/:find'
 set --export NNN_PLUG (string join ';' $shortcuts)
 
 set bookmarks
