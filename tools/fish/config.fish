@@ -60,6 +60,18 @@ if status is-interactive
     if test -d .venv
         source .venv/bin/activate.fish
     end
+
+    if set --query nnn
+        set mimetype (file --mime-type $nnn | string match --regex --groups-only '.*: (image|video)/[a-z]+')
+        switch $mimetype
+            case image
+                echo (tput bold)"> identify -precision 3 '$nnn'"(tput sgr0)
+                identify -precision 3 $nnn
+            case video
+                echo (tput bold)"> ffprobe -hide_banner '$nnn'"(tput sgr0)
+                ffprobe -hide_banner $nnn
+        end
+    end
 end
 
 function fish_greeting
