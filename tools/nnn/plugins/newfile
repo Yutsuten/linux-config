@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+# ---------------------------------- #
+# Create a new file from a template. #
+# ---------------------------------- #
+
+echo '[NEWFILE] Create new file from template'
+
+set templates_dir ~/.config/nnn/file_templates
+printf '%s\n' $templates_dir/* | string replace $templates_dir/ '' | gum choose --header 'Choose template' | read selected || return
+gum input --placeholder $selected --header 'Type filename' | read filename || return
+
+if test -n "$filename"
+    cp --interactive $templates_dir/$selected $filename
+else
+    echo '[NEWFILE] Empty filename: Abort'
+end
