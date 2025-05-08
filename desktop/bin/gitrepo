@@ -1,0 +1,54 @@
+#!/usr/bin/env fish
+argparse --max-args 2 h/help -- $argv
+set exitcode $status
+
+set git_repo_root ~/.local/git
+
+function gitrepo_help
+    echo 'Usage: gitrepo [-h|--help] COMMAND' >&2
+    echo >&2
+    echo '  Synopsis:' >&2
+    echo '    Manage local git repositories.' >&2
+    echo >&2
+    echo '  Options:' >&2
+    echo '    -h, --help      Show list of command-line options' >&2
+    echo >&2
+    echo '  Commands:' >&2
+    echo '    new' >&2
+    echo '    ls/list' >&2
+end
+
+function new_repository --argument-names name
+    mkdir --parent $git_repo_root
+    git init --bare $git_repo_root/$name.git
+end
+
+function list_repositories
+    for repository in $git_repo_root/*.git
+        string replace --regex "^$HOME" '~' $repository >&2
+    end
+end
+
+if test $exitcode -ne 0 -o (count $argv) -eq 0 || set --query --local _flag_help
+    gitrepo_help
+    return $exitcode
+end
+
+switch $argv[1]
+    case new
+        if test -z "$argv[2]"
+            gum input --placeholder myrepo --header 'Repository name' | read repo_name || return
+        else
+            set repo_name $argv[2]
+        end
+        new_repository $repo_name
+    case ls
+        list_repositories
+    case list
+        list_repositories
+    case '*'
+        echo "gitrepo: '$argv[1]' is not a gitrepo command." >&2
+        echo >&2
+        gitrepo_help
+        return 1
+end
