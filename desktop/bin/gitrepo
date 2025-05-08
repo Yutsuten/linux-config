@@ -41,6 +41,10 @@ switch $argv[1]
         else
             set repo_name $argv[2]
         end
+        if test -z "$repo_name"
+            echo 'Empty repository name: Abort' >&2
+            return 1
+        end
         new_repository $repo_name
     case ls
         list_repositories
