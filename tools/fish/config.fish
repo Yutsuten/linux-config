@@ -62,7 +62,7 @@ if status is-interactive
     end
 
     if set --query nnn
-        set mimetype (file --mime-type $nnn | string match --regex --groups-only '.*: (image|video)/[a-z]+')
+        set mimetype (file --mime-type --brief $nnn | string match --regex --groups-only '^(image|video)/')
         switch $mimetype
             case image
                 echo (tput bold)"> identify -precision 3 '$nnn'"(tput sgr0)
