@@ -12,6 +12,7 @@ local utils = require 'mp.utils'
 local cwd = mp.get_property_native("working-directory")
 local jobs_queue = {} -- queue of thumbnail jobs
 local failed = {} -- list of failed input paths, to avoid redoing them
+local preprocess_flag = true
 local preprocess_queue = {}
 local preprocessed_thumb_sizes = {}
 local script_id = mp.get_script_name() .. utils.getpid()
@@ -205,9 +206,12 @@ function handle_events(wait)
                     thumbs_dir_regex = '^' .. string.gsub(thumbs_dir, "[%%()%[%]^$.*+-]", "%%%1")
                 end
                 thumbs_ext = e.args[5]
-                worker_count = e.args[6]
-                worker_id = e.args[7]
-                preprocess_thumbnails(mp.get_property_native("playlist"))
+                preprocess_flag = e.args[6] == "true"
+                worker_count = e.args[7]
+                worker_id = e.args[8]
+                if preprocess_flag then
+                    preprocess_thumbnails(mp.get_property_native("playlist"))
+                end
             end
         end
         e = mp.wait_event(0)
@@ -216,7 +220,9 @@ function handle_events(wait)
 end
 
 mp.observe_property("playlist", "native", function(key, playlist)
-    preprocess_thumbnails(playlist)
+    if preprocess_flag then
+        preprocess_thumbnails(playlist)
+    end
 end)
 
 -- Custom event loop for handling events while generating thumbnails

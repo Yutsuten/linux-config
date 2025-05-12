@@ -41,6 +41,7 @@ local opts = {
     min_spacing = "{ 15, 15 }",
     thumbnail_size = "(ww * wh <= 1366 * 768) and {192, 108} or {288, 162}",
     thumbnail_format = "webp",
+    preprocess_thumbnails = true,
 
     show_text = true,
     show_title = true,
@@ -1038,6 +1039,7 @@ function osd_size_changed()
                 tostring(gallery.geometry.thumbnail_size[2]),
                 thumbs_dir,
                 opts.thumbnail_format,
+                tostring(opts.preprocess_thumbnails),
                 WORKERS_COUNT,
                 worker_id
             )
