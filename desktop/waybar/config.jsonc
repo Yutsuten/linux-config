@@ -2,17 +2,12 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode", "custom/status"],
     "modules-center": ["clock", "custom/weather"],
-    "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "sway/language", "tray"],
-    "mpris": {
-        "format": "{status_icon}",
-        "max-length": 60,
-        "tooltip-format": " {title}\n {artist}\n {album}",
-        "status-icons": {
-            "playing": "",
-            "paused": "",
-            "stopped": ""
-        },
-        "ignored-players": ["firefox"]
+    "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "custom/notification", "sway/language", "tray"],
+    "custom/notification": {
+        "format": "🔔",
+        "on-click": "dunstctl history-pop",
+        "on-click-right": "dunstctl close-all",
+        "tooltip": false
     },
     "custom/status": {
         "signal": 1,
@@ -82,7 +77,8 @@
     },
     "sway/language": {
         "format": "{flag}",
-        "tooltip-format": "{long}"
+        "tooltip-format": "{long}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
     },
     "tray": {
         "icon-size": 21,
