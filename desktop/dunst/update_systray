@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+kill --signal RT2 waybar

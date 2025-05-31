@@ -4,10 +4,12 @@
     "modules-center": ["clock", "custom/weather"],
     "modules-right": ["pulseaudio", "memory", "cpu", "temperature", "custom/notification", "sway/language", "tray"],
     "custom/notification": {
-        "format": "🔔",
+        "signal": 2,
+        "exec": "{{ notification-script }}",
+        "exec-on-event": false,
+        "hide-empty-text": true,
         "on-click": "dunstctl history-pop",
-        "on-click-right": "dunstctl close-all",
-        "tooltip": false
+        "on-click-right": "dunstctl close-all"
     },
     "custom/status": {
         "signal": 1,

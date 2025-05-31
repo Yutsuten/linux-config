@@ -21,7 +21,6 @@ desktop: mime
 	ln -srf desktop/sway.conf ~/.config/sway/config
 	ln -srf desktop/swaylock.conf ~/.config/swaylock/config
 	ln -srf desktop/waybar/style.css ~/.config/waybar/style.css
-	ln -srf desktop/dunstrc.conf ~/.config/dunst/dunstrc
 	ln -srf desktop/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
 	ln -srf desktop/gtk/gtk3.ini ~/.config/gtk-4.0/settings.ini
 	ln -srf desktop/wofi/config ~/.config/wofi/config
@@ -35,6 +34,7 @@ desktop: mime
 	cp -af desktop/systemd/wallpaper.timer ~/.config/systemd/user/wallpaper.timer
 	cp -af desktop/systemd/trash.service ~/.config/systemd/user/trash.service
 	cp -af desktop/systemd/trash.timer ~/.config/systemd/user/trash.timer
+	fish desktop/dunst/configure.fish
 	bash desktop/pipewire/90-init.sh
 	fish desktop/waybar/configure.fish
 
