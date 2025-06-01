@@ -101,6 +101,7 @@ bind  index,pager          x               set-flag
 bind  index,pager          c               clear-flag
 macro index,pager          y               '<change-folder>?<change-dir><enter>'
 bind  index,pager          s               save-message
+macro index                a               '<tag-pattern>all<enter>'
 bind  index                A               tag-prefix
 bind  index,browser        <Space>         tag-entry
 bind  index,browser        t               tag-entry
@@ -109,7 +110,8 @@ bind  index                T               tag-pattern
 bind  index                Z               untag-pattern
 bind  index                D               delete-pattern
 bind  index                U               undelete-pattern
-bind  index                F               limit
+macro index                F               '<limit>~'
+macro index                /               '<limit>~'
 bind  index                <Right>         display-message
 bind  index                <Return>        display-message
 bind  index                <KeypadEnter>   display-message

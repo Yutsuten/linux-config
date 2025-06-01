@@ -5,6 +5,7 @@
 
 if not test -d .zellij
     echo '.zellij directory not found' >&2
+    read --prompt-str "[Process exited 1]"
     return 1
 end
 
@@ -15,12 +16,17 @@ for choice in .zellij/*
     end
 end
 
-if test (count $choices) -eq 0
-    echo 'There are no executable scripts in .zellij directory' >&2
-    return 1
-end
+set num_choices (count $choices)
 
-set selection (string join \n $choices | sort | fzf --layout=reverse) || return
+if test $num_choices -eq 0
+    echo 'There are no executable scripts in .zellij directory' >&2
+    read --prompt-str "[Process exited 1]"
+    return 1
+else if test $num_choices -eq 1
+    set selection $choices[1]
+else
+    set selection (string join \n $choices | sort | fzf --layout=reverse) || return
+end
 
 zellij action rename-tab "Exec $selection"
 ./.zellij/$selection
