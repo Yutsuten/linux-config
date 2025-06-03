@@ -52,6 +52,7 @@ set available_targets (comm -23 (string join \n /media/* | sort | psub) (string 
 
 if test (count $available_devices) -eq 0 -a (count $mounted_targets) -eq 0
     echo '[MOUNT] There are no devices to mount or unmount' >&2
+    read --prompt-str 'Press ENTER to continue...'
     return 0
 end
 
