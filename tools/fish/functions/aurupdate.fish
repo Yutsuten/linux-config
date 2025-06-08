@@ -40,7 +40,7 @@ function aurupdate --description 'Update AUR packages'
         set package (echo $package_dir | sed -nE 's#^.+/aur/([^/]+)/$#\1#p')
         if contains $package $packages
             echo $bold"($cur/$packages_count) AUR update $package"$reset
-            pushd $package_dir && makepkg -sic --needed --nocolor
+            pushd $package_dir && makepkg -sicr --needed --nocolor
             popd
             set cur (math $cur + 1)
         else
