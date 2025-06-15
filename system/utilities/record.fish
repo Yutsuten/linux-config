@@ -19,11 +19,12 @@ if test $exitcode -ne 0 || set --query --local _flag_help
     return $exitcode
 end
 
-set config_file ~/.config/record/config
+set NICE_LEVEL -5
+set CONFIG_FILE ~/.config/record/config
 set name $argv
 
 # Parse configuration
-if test -f $config_file
+if test -f $CONFIG_FILE
     while read --line line
         set key_value (string split '=' $line)
         if test (count $key_value) -le 1
@@ -47,7 +48,7 @@ if test -f $config_file
                     echo "Invalid key ignored: $key_value[0]"
             end
         end
-    end <$config_file
+    end <$CONFIG_FILE
 end
 
 # Process command line arguments
@@ -82,7 +83,7 @@ end
 
 function stop_recording
     debug '[VIDEO] Stop recording wayland screen'
-    kill --verbose $wf_recorder_pid
+    kill --verbose $wl_screenrec_pid
 
     if set --query mic_pid
         debug '[AUDIO] Stop recording mic'
@@ -109,31 +110,31 @@ debug "[INFO] Recording in $folder_name/"
 mkdir $folder_name || return 1
 
 if set --query rec_audio_mic
-    nice -n -5 pw-record --channels 1 --target (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') $folder_name/mic.flac &
+    nice -n $NICE_LEVEL pw-record --channels 1 --target (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') $folder_name/mic.flac &
     set mic_pid $last_pid
     debug "[AUDIO] Start recording mic (PID: $mic_pid)"
 end
 if set --query rec_audio_recording
     pactl set-sink-volume recording 100%
     # Cracklings if we use `pw-record`
-    nice -n -5 parec --record --raw --channels 2 --rate 48000 --device recording.monitor $folder_name/rec.raw &
+    nice -n $NICE_LEVEL parec --record --raw --channels 2 --rate 48000 --device recording.monitor $folder_name/rec.raw &
     set rec_pid $last_pid
     debug "[AUDIO] Start recording 'recording' source (PID: $rec_pid)"
 end
 if set --query rec_audio_speakers
     # Cracklings if we use `pw-record`
-    nice -n -5 parec --record --raw --channels 2 --rate 48000 --device (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') $folder_name/speakers.raw &
+    nice -n $NICE_LEVEL parec --record --raw --channels 2 --rate 48000 --device (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') $folder_name/speakers.raw &
     set speakers_pid $last_pid
     debug "[AUDIO] Start recording speakers (PID: $speakers_pid)"
 end
 
-nice -n -5 wf-recorder -c libx264rgb -p crf=0 -f $folder_name/video.mp4 &
-set wf_recorder_pid $last_pid
-debug "[VIDEO] Start recording wayland screen (PID: $wf_recorder_pid)"
+nice -n $NICE_LEVEL wl-screenrec --low-power off --filename $folder_name/video.mp4 &
+set wl_screenrec_pid $last_pid
+debug "[VIDEO] Start recording wayland screen (PID: $wl_screenrec_pid)"
 
 if set --query rec_waybar
     fish --command="
-    while pgrep --exact wf-recorder &>/dev/null
+    while pgrep --exact wl-screenrec &>/dev/null
         set seconds --scale 0 (math (date '+%s') - $(date '+%s'))
         set minutes --scale 0 (math \$seconds / 60)
         printf '🔴 %d:%02d:%02d - Recording\n' \
@@ -146,7 +147,7 @@ if set --query rec_waybar
     kill --signal RT1 waybar" &
 end
 
-wait $wf_recorder_pid $mic_pid $rec_pid $speakers_pid
+wait $wl_screenrec_pid $mic_pid $rec_pid $speakers_pid # Because fish stops here, SIGTERM does not work
 debug '[INFO] Recording finished, start post-processing'
 
 if set --query rec_audio_recording
