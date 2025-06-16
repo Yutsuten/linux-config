@@ -38,13 +38,13 @@ window#waybar {
 }
 
 .modules-left #workspaces button.focused {
-    background-color: #5294e2;
-    box-shadow: inset 0 -3px #3274c2;
+    background-color: #3274c2;
+    box-shadow: inset 0 -3px #5294e2;
 }
 
 .modules-left #workspaces button.urgent {
-    background-color: #eb4d4b;
-    box-shadow: inset 0 -3px #b3403f;
+    background-color: #b3403f;
+    box-shadow: inset 0 -3px #eb4d4b;
 }
 
 .modules-left #mode {
