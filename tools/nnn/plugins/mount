@@ -125,7 +125,6 @@ switch $selection
         set device (echo "$lsblk_output" | sed -nE 's#^NAME="(encsd[a-z]|sd[a-z][0-9]?)".+MOUNTPOINT="'"$selected_target"'"$#\1#p')
         if gum confirm "[MOUNT] Unmount $device mounted at $selected_target?" --show-output || return
             if sudo umount $selected_target
-                sudo sync
                 if string match --quiet 'enc*' $device
                     sudo cryptsetup close $device
                 end
