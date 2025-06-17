@@ -74,11 +74,8 @@ if not set --query rec_dir
 end
 
 # Script start
-set bold (tput bold)
-set reset (tput sgr0)
-
 function debug
-    echo $bold"[$(date '+%FT%T.%N')] $name"$reset
+    echo "[$(date '+%F %T.%N')] $argv"
 end
 
 function stop_recording
@@ -100,7 +97,6 @@ function stop_recording
 end
 
 trap stop_recording SIGHUP SIGINT
-trap '' SIGTERM
 
 set folder_name $rec_dir/(date '+%Y-%m-%d_%H-%M-%S')
 if test (count $name) -ge 1
@@ -110,20 +106,24 @@ debug "[INFO] Recording in $folder_name/"
 mkdir $folder_name || return 1
 
 if set --query rec_audio_mic
-    nice -n $NICE_LEVEL pw-record --channels 1 --target (pactl list short sources | sed -nE 's/^.*(alsa_input.+analog-stereo[^\s\t]*).*$/\1/p') $folder_name/mic.flac &
+    set node_id (wpctl status --name | sed -nE 's/^.* ([0-9]+)\. alsa_input.+analog-stereo .*$/\1/p')
+    debug "[AUDIO] Mic node ID: $node_id"
+    nice -n $NICE_LEVEL pw-record --channels 1 --target $node_id $folder_name/mic.flac &
     set mic_pid $last_pid
     debug "[AUDIO] Start recording mic (PID: $mic_pid)"
 end
 if set --query rec_audio_recording
-    pactl set-sink-volume recording 100%
-    # Cracklings if we use `pw-record`
-    nice -n $NICE_LEVEL parec --record --raw --channels 2 --rate 48000 --device recording.monitor $folder_name/rec.raw &
+    set node_id (wpctl status --name | sed -nE 's/^.* ([0-9]+)\. recording .*$/\1/p')
+    debug "[AUDIO] Recording node ID: $node_id"
+    wpctl set-volume $node_id 100%
+    nice -n $NICE_LEVEL pw-record --channels 2 --target $node_id --properties 'stream.capture.sink=true' $folder_name/rec.flac &
     set rec_pid $last_pid
     debug "[AUDIO] Start recording 'recording' source (PID: $rec_pid)"
 end
 if set --query rec_audio_speakers
-    # Cracklings if we use `pw-record`
-    nice -n $NICE_LEVEL parec --record --raw --channels 2 --rate 48000 --device (pactl list short sources | sed -nE 's/^.*(alsa_output.+analog-stereo\.monitor[^\s\t]*).*$/\1/p') $folder_name/speakers.raw &
+    set node_id (wpctl status --name | sed -nE 's/^.* ([0-9]+)\. alsa_output.+analog-stereo .*$/\1/p')
+    debug "[AUDIO] Speakers node ID: $node_id"
+    nice -n $NICE_LEVEL pw-record --channels 2 --target $node_id --properties 'stream.capture.sink=true' $folder_name/speakers.flac &
     set speakers_pid $last_pid
     debug "[AUDIO] Start recording speakers (PID: $speakers_pid)"
 end
@@ -147,22 +147,13 @@ if set --query rec_waybar
     kill --signal RT1 waybar" &
 end
 
-wait $wl_screenrec_pid $mic_pid $rec_pid $speakers_pid # Because fish stops here, SIGTERM does not work
+wait $wl_screenrec_pid $mic_pid $rec_pid $speakers_pid
 debug '[INFO] Recording finished, start post-processing'
-
-if set --query rec_audio_recording
-    debug '[AUDIO] Saving recording source audio as flac'
-    nice -n 5 ffmpeg -loglevel warning -f s16le -ar 48000 -ac 2 -i $folder_name/rec.raw $folder_name/rec.flac
-end
-
-if set --query rec_audio_speakers
-    debug '[AUDIO] Saving speakers audio as flac'
-    nice -n 5 ffmpeg -loglevel warning -f s16le -ar 48000 -ac 2 -i $folder_name/speakers.raw $folder_name/speakers.flac
-end
 
 if set --query rec_audio_mic && set --query rec_audio_speakers
     debug '[AUDIO] Mixing mic and speakers'
     nice -n 5 ffmpeg -loglevel warning -i $folder_name/mic.flac -i $folder_name/speakers.flac -filter_complex 'amerge=inputs=2' -ac 2 $folder_name/mix.flac
 end
+
 debug '[INFO] Finish!'
 return 0
