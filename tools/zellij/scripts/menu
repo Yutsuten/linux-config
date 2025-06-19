@@ -23,7 +23,7 @@ switch $selection
     case 'Password Manager'
         zellij action rename-tab Pass
         zellij action rename-pane fpass
-        fpass
+        fpass --quiet
         return 0
     case 'File Browser'
         zellij action rename-tab Nnn

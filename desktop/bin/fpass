@@ -1,15 +1,16 @@
 #!/usr/bin/env fish
-argparse h/help -- $argv
+argparse h/help q/quiet -- $argv
 set exitcode $status
 
 function help
-    echo 'Usage: fpass [-h|--help]' >&2
+    echo 'Usage: fpass OPTIONS' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Password manager using fuzzy finder' >&2
     echo >&2
     echo '  Options:' >&2
     echo '    -h, --help      Show list of command-line options' >&2
+    echo '    -q, --quiet     Do not print password, only copy to clipboard' >&2
 end
 
 if test $exitcode -ne 0 || set --query --local _flag_help
@@ -48,7 +49,9 @@ find . -type d -path '*/.*' -prune -or -type f -name '*.gpg' -printf '%P\n' | so
 end
 
 while test $interrupt -eq 0 && set selection (fzf --layout=reverse <$pass_store_cache)
-    pass $selection
+    if not set --query --local _flag_quiet
+        pass $selection
+    end
     if isatty stdout
         pass --clip $selection
         read --line --prompt-str '' || set interrupt 1
