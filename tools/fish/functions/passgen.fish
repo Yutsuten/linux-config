@@ -3,7 +3,7 @@ function passgen --argument-names ALLOWED_CHARS LENGTH --description 'Generate r
     set exitcode $status
 
     function help --argument-names ALLOWED_CHARS LENGTH
-        echo 'Usage: passgen [-h|--help] [ALLOWED_CHARS] [LENGTH]' >&2
+        echo 'Usage: passgen [options] [ALLOWED_CHARS] [LENGTH]' >&2
         echo >&2
         echo '  Synopsis:' >&2
         echo '    Generate random passwords.' >&2

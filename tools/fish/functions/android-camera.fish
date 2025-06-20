@@ -3,7 +3,7 @@ function android-camera --description 'Use phone camera as a webcam through v4l2
     set exitcode $status
 
     if test $exitcode -ne 0 || set --query --local _flag_help
-        echo 'Usage: android-camera OPTIONS' >&2
+        echo 'Usage: android-camera [options]' >&2
         echo >&2
         echo '  Synopsis:' >&2
         echo '    Use phone camera as a webcam through v4l2loopback. Options are the same as droidcam-cli.' >&2
