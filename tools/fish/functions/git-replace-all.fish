@@ -3,7 +3,7 @@ function git-replace-all --description 'Find and replace all in a git repository
     set exitcode $status
 
     if test $exitcode -ne 0 -o (count $argv) -ne 2 || set --query --local _flag_help
-        echo 'Usage: git-replace-all [options] BEFORE_REGEX AFTER_REGEX' >&2
+        echo 'Usage: git-replace-all [options] BEFORE_REGEX REPLACEMENT' >&2
         echo >&2
         echo '  Synopsis:' >&2
         echo '    Find and replace all in a git repository.' >&2
@@ -11,6 +11,11 @@ function git-replace-all --description 'Find and replace all in a git repository
         echo '  Options:' >&2
         echo '    -h, --help      Show list of command-line options' >&2
         return $exitcode
+    end
+
+    if not test -d .git
+        echo 'Not in a git repository.' >&2
+        return 1
     end
 
     if string match --quiet --entire --invert / $argv

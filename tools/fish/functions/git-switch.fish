@@ -13,6 +13,11 @@ function git-switch --description 'Change git branch using a fuzzy finder'
         return $exitcode
     end
 
+    if not test -d .git
+        echo 'Not in a git repository.' >&2
+        return 1
+    end
+
     set selection (git for-each-ref --format='%(refname:short)' refs/heads/ | fzf --height=10 --style=minimal) || return
     git switch $selection
 end
