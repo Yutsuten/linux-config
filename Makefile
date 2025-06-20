@@ -10,10 +10,10 @@ config: desktop tools
 build:
 	@echo '${bold}>> Compile rust apps <<${reset}'
 	mkdir -p ~/.local/bin
-	cd rust/openweather && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/openweather ~/.local/bin/openweather
-	cd rust/record-reencoder && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/record-reencoder ~/.local/bin/record-reencoder
-	cd rust/record-settings && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/record-settings ~/.local/bin/record-settings
-	cd rust/wallpaper && RUSTFLAGS='-C target-cpu=native' cargo build --release && cp -af target/release/wallpaper ~/.local/bin/wallpaper
+	cd rust/openweather && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/openweather ~/.local/bin/openweather
+	cd rust/record-reencoder && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/record-reencoder ~/.local/bin/record-reencoder
+	cd rust/record-settings && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/record-settings ~/.local/bin/record-settings
+	cd rust/wallpaper && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/wallpaper ~/.local/bin/wallpaper
 
 desktop: mime
 	@echo '${bold}>> Desktop environment settings <<${reset}'
