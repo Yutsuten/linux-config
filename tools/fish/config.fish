@@ -21,7 +21,7 @@ set -gx GUM_INPUT_CURSOR_MODE static
 set -gx GUM_INPUT_HEADER_FOREGROUND 6
 set -gx GUM_INPUT_SHOW_HELP 0
 
-set -gx FZF_DEFAULT_OPTS '--style=full --color=16,pointer:4 --layout=reverse'
+set -gx FZF_DEFAULT_OPTS '--style=full --color=16,pointer:4,border:8 --layout=reverse'
 
 if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     # Gnome

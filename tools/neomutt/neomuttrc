@@ -44,7 +44,7 @@ color index             bold  blue    default  ~O
 color index             bold  default default  ~T
 color index             bold  red     default  ~D
 color index             bold  yellow  default  ~F
-color index_flags       bold  default color8
+color index_flags       bold  default default
 color quoted                  blue    default
 color sidebar_divider         color8  default
 color sidebar_highlight       black   white

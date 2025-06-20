@@ -119,7 +119,7 @@ plugins {
 
 on_force_close "quit"
 simplified_ui true
-pane_frames true
+pane_frames false
 theme "nightfox"
 default_layout "compact"
 default_mode "locked"
