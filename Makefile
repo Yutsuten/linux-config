@@ -36,6 +36,7 @@ desktop: mime
 	fish desktop/dunst/configure.fish
 	fish desktop/pipewire/configure.fish
 	fish desktop/waybar/configure.fish
+	systemctl --user daemon-reload
 
 mime:
 	@echo '${bold}>> Xdg mime <<${reset}'
