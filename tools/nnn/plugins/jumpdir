@@ -10,7 +10,7 @@ if test $NNN_INCLUDE_HIDDEN -eq 0
     set --append restrictions -not -path '*/.*'
 end
 
-set selection (find -L . -maxdepth 5 $restrictions -not -path . -type d -printf '%P\n' | sort --version-sort | fzf --layout=reverse)
+set selection (find -L . -maxdepth 5 $restrictions -not -path . -type d -printf '%P\n' | sort --version-sort | fzf)
 if test -d "$selection"
     nnn_cd $selection
 end

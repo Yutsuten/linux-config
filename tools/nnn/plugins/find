@@ -7,16 +7,16 @@ source (status dirname)/.utils
 
 if test -d .git
     if test $NNN_INCLUDE_HIDDEN -eq 0
-        set selection (git ls-files | string match --regex '^[^.].*/[^.].*$' | fzf --layout=reverse)
+        set selection (git ls-files | string match --regex '^[^.].*/[^.].*$' | fzf)
     else
-        set selection (git ls-files | fzf --layout=reverse)
+        set selection (git ls-files | fzf)
     end
 else
     set restrictions
     if test $NNN_INCLUDE_HIDDEN -eq 0
         set --append restrictions -not -path '*/.*'
     end
-    set selection (find . $restrictions -type f -printf '%P\n' | fzf --layout=reverse)
+    set selection (find . $restrictions -type f -printf '%P\n' | fzf)
 end
 
 if test -f "$selection"

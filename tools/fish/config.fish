@@ -21,6 +21,8 @@ set -gx GUM_INPUT_CURSOR_MODE static
 set -gx GUM_INPUT_HEADER_FOREGROUND 6
 set -gx GUM_INPUT_SHOW_HELP 0
 
+set -gx FZF_DEFAULT_OPTS '--style=full --color=16 --layout=reverse'
+
 if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     # Gnome
     gsettings set org.gnome.desktop.interface gtk-theme Arc
