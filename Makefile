@@ -18,15 +18,15 @@ build:
 desktop: mime
 	@echo '${bold}>> Desktop environment settings <<${reset}'
 	mkdir -p ~/.config/sway ~/.config/swaylock ~/.config/waybar ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.config/systemd/user ~/.config/wofi/ ~/.local/share/applications ~/.local/bin ~/.local/server
-	ln -srf desktop/sway.conf ~/.config/sway/config
-	ln -srf desktop/swaylock.conf ~/.config/swaylock/config
-	ln -srf desktop/waybar/style.css ~/.config/waybar/style.css
-	ln -srf desktop/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
-	ln -srf desktop/gtk/gtk3.ini ~/.config/gtk-4.0/settings.ini
-	ln -srf desktop/wofi/config ~/.config/wofi/config
-	ln -srf desktop/wofi/style.css ~/.config/wofi/style.css
-	ln -srf desktop/bin/* ~/.local/bin/ && find ~/.local/bin -xtype l -delete
-	ln -srf desktop/entries/*.desktop ~/.local/share/applications/ && find ~/.local/share/applications -xtype l -delete
+	ln -nf desktop/sway.conf ~/.config/sway/config
+	ln -nf desktop/swaylock.conf ~/.config/swaylock/config
+	ln -nf desktop/waybar/style.css ~/.config/waybar/style.css
+	ln -nf desktop/gtk/gtk3.ini ~/.config/gtk-3.0/settings.ini
+	ln -nf desktop/gtk/gtk3.ini ~/.config/gtk-4.0/settings.ini
+	ln -nf desktop/wofi/config ~/.config/wofi/config
+	ln -nf desktop/wofi/style.css ~/.config/wofi/style.css
+	ln -nf desktop/bin/* ~/.local/bin/ && find ~/.local/bin -xtype l -delete
+	ln -nf desktop/entries/*.desktop ~/.local/share/applications/ && find ~/.local/share/applications -xtype l -delete
 	sed -e "s#{HOME}#$$HOME#g" -e "s#{WALLPAPERS_PATH}#$$WALLPAPERS_PATH#g" desktop/systemd/wallpaper.service > ~/.config/systemd/user/wallpaper.service
 	sed "s#{HOME}#$$HOME#g" desktop/systemd/caddy.service > ~/.config/systemd/user/caddy.service
 	sed -e "s#\[LOCAL_IP\]#$$(ip address | sed -nE 's# *inet (192[^/]+)/.*#\1#p')#g" -e "s#\[HOME\]#$$HOME#g" desktop/systemd/Caddyfile > ~/.local/server/Caddyfile
@@ -75,18 +75,18 @@ tools: alacritty fastfetch fish git helix less lftp mpv neomutt nnn zellij
 alacritty:
 	@echo '${bold}>> Alacritty settings <<${reset}'
 	mkdir -p ~/.config/alacritty
-	ln -srf tools/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+	ln -nf tools/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 
 fastfetch:
 	@echo '${bold}>> Fastfetch settings <<${reset}'
 	mkdir -p ~/.config/fastfetch
-	ln -srf tools/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc
+	ln -nf tools/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc
 
 fish:
 	@echo '${bold}>> Fish settings <<${reset}'
 	rm -f ~/.config/fish/config.fish
 	rm -rf ~/.config/fish/functions
-	ln -srf tools/fish/config.fish ~/.config/fish/config.fish
+	ln -nf tools/fish/config.fish ~/.config/fish/config.fish
 	ln -srnf tools/fish/functions ~/.config/fish/functions
 
 git:
@@ -103,8 +103,8 @@ git:
 helix:
 	@echo '${bold}>> Helix settings <<${reset}'
 	mkdir -p ~/.config/helix
-	ln -srf tools/helix/config.toml ~/.config/helix/config.toml
-	ln -srf tools/helix/languages.toml ~/.config/helix/languages.toml
+	ln -nf tools/helix/config.toml ~/.config/helix/config.toml
+	ln -nf tools/helix/languages.toml ~/.config/helix/languages.toml
 	ln -srnf tools/helix/themes ~/.config/helix/themes
 
 less:
@@ -114,7 +114,7 @@ less:
 lftp:
 	@echo '${bold}>> LFTP settings <<${reset}'
 	mkdir -p ~/.config/lftp
-	ln -srf tools/lftp/lftp.rc ~/.config/lftp/rc
+	ln -nf tools/lftp/lftp.rc ~/.config/lftp/rc
 
 mpv:
 	@echo '${bold}>> MPV settings <<${reset}'
@@ -124,12 +124,12 @@ mpv:
 neomutt:
 	@echo '${bold}>> Neomutt settings <<${reset}'
 	mkdir -p ~/.config/neomutt ~/.cache/neomutt/headers ~/.cache/neomutt/bodies
-	ln -srf tools/neomutt/neomuttrc ~/.config/neomutt/neomuttrc
+	ln -nf tools/neomutt/neomuttrc ~/.config/neomutt/neomuttrc
 
 nnn:
 	@echo '${bold}>> Nnn plugins <<${reset}'
 	mkdir -p ~/.config/nnn/plugins ~/.local/share/nnn
-	ln -srf tools/nnn/plugins/.utils tools/nnn/plugins/* ~/.config/nnn/plugins && find ~/.config/nnn/plugins -xtype l -delete
+	ln -nf tools/nnn/plugins/.utils tools/nnn/plugins/* ~/.config/nnn/plugins && find ~/.config/nnn/plugins -xtype l -delete
 	ln -srnf tools/nnn/file_templates ~/.config/nnn/file_templates
 
 zellij:
