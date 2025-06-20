@@ -40,7 +40,7 @@ function pkgup --description 'Update customly installed packages'
                 chmod +x ~/.local/games/osu/osu.AppImage
                 pushd ~/.local/games/osu && ./osu.AppImage --appimage-extract &>/dev/null
                 popd
-                ln -nf ~/.local/games/osu/squashfs-root/AppRun ~/.local/bin/'osu!'
+                ln -srf ~/.local/games/osu/squashfs-root/AppRun ~/.local/bin/'osu!'
                 ln -nf ~/.local/games/osu/squashfs-root/'osu!.desktop' ~/.local/share/applications/'osu!.desktop'
                 if not test -f ~/.local/share/icons/osu.png
                     mkdir --parents ~/.local/share/icons
