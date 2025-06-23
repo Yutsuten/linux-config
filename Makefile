@@ -8,12 +8,9 @@ config: desktop tools
 	@echo '${bold}Done!${reset}'
 
 build:
-	@echo '${bold}>> Compile rust apps <<${reset}'
+	@echo '${bold}>> Build and install rust apps <<${reset}'
 	mkdir -p ~/.local/bin
-	cd rust/openweather && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/openweather ~/.local/bin/openweather
-	cd rust/record-reencoder && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/record-reencoder ~/.local/bin/record-reencoder
-	cd rust/record-settings && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/record-settings ~/.local/bin/record-settings
-	cd rust/wallpaper && RUSTFLAGS='-C target-cpu=native' cargo build --release && ln -nf target/release/wallpaper ~/.local/bin/wallpaper
+	fish rust/install.fish
 
 desktop: mime
 	@echo '${bold}>> Desktop environment settings <<${reset}'
