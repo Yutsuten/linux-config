@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+set project_name (cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[0].name')
+rm -vf ~/.local/bin/$project_name

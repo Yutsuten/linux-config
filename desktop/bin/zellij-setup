@@ -45,13 +45,18 @@ switch $language
                 echo "$file already exists, skipping..." >&2
             end
         end
+        sed -i "s/{{ PROJECT_NAME }}/$PROJECT_NAME/g" pyproject.toml
 
         # Virtual environment
         if not test -d .venv
-            echo 'Creating virtual environment...'
+            echo 'Creating virtual environment...' >&2
             python -m venv .venv
         end
         source .venv/bin/activate.fish
+
+        # Install default dependencies
+        echo 'Install dev/test dependencies' >&2
+        pip install -e '.[dev,test]'
     case rust
         # Base files
         for file in ~/.config/zellij/base_files/rust/* ~/.config/zellij/base_files/rust/.*

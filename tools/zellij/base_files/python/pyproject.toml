@@ -1,0 +1,38 @@
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "{{ PROJECT_NAME }}"
+version = "0.1.0"
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyinstaller",
+    "toml",
+]
+test = [
+    "pytest",
+]
+
+[tool.ruff]
+line-length = 100
+lint.select = ["ALL"]
+lint.ignore = [
+  "D107",    # Missing docstring in `__init__`
+  "ANN002",  # Missing type annotation for `*args`
+  "ANN003",  # Missing type annotation for `**kwargs`
+  "ANN204",  # Missing return type annotation for special method
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+inline-quotes = "single"
+multiline-quotes = "single"

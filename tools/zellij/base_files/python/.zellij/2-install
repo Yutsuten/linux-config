@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+source .venv/bin/activate.fish
+python .zellij/2-install.py
