@@ -3,7 +3,7 @@ argparse h/help q/quiet -- $argv
 set exitcode $status
 
 function help
-    echo 'Usage: fpass OPTIONS' >&2
+    echo 'Usage: fpass [options]' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Password manager using fuzzy finder' >&2

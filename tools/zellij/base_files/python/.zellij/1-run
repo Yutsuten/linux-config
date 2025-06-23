@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+python src/main.py

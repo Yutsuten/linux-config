@@ -3,7 +3,7 @@ argparse h/help -- $argv
 set exitcode $status
 
 function help
-    echo 'Usage: edit [-h|--help] FILE' >&2
+    echo 'Usage: edit [options] FILE' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Edit text or gpg files using helix.' >&2

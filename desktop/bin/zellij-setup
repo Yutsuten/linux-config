@@ -1,16 +1,75 @@
 #!/usr/bin/env fish
-# -------------------------------------------------- #
-# Add zellij helper scripts for the current project. #
-# -------------------------------------------------- #
+# ----------------------------------- #
+# Initialize project with base files. #
+# ----------------------------------- #
+argparse h/help -- $argv
+set exitcode $status
 
-if test -d .zellij
-    echo '.zellij folder already exists.' >&2
-    return 1
+set AVAILABLE_LANGUAGES python rust
+
+set argv_count (count $argv)
+
+if test $exitcode -ne 0 -o $argv_count -ge 2 || set --query --local _flag_help
+    echo 'Usage: zellij-setup [options] LANGUAGE' >&2
+    echo >&2
+    echo '  Synopsis:' >&2
+    echo '    Initialize a project with base files.' >&2
+    echo >&2
+    echo '  Options:' >&2
+    echo '    -h, --help      Show list of command-line options' >&2
+    echo >&2
+    echo '  Arguments:' >&2
+    echo "    LANGUAGE: The programming language used in the project ($AVAILABLE_LANGUAGES)" >&2
+    return $exitcode
 end
 
-if test -s Cargo.toml # Rust project
-    ln -srnf ~/.config/zellij/exec/rust .zellij
-else
-    echo 'No available exec files for this project' >&2
-    return 1
+switch $argv_count
+    case 0
+        set language (gum choose --header 'Project language:' $AVAILABLE_LANGUAGES) || return
+    case 1
+        set language $argv[1]
+end
+
+switch $language
+    case python
+        # Git
+        if not test -d .git
+            git init
+        end
+
+        # Base files
+        for file in ~/.config/zellij/base_files/python/* ~/.config/zellij/base_files/python/.*
+            if not test -e (path basename $file)
+                cp -r $file .
+            else
+                echo "$file already exists, skipping..." >&2
+            end
+        end
+
+        # Virtual environment
+        if not test -d .venv
+            echo 'Creating virtual environment...'
+            python -m venv .venv
+        end
+        source .venv/bin/activate.fish
+    case rust
+        # Base files
+        for file in ~/.config/zellij/base_files/rust/* ~/.config/zellij/base_files/rust/.*
+            if not test -e (path basename $file)
+                cp -r $file .
+            else
+                echo "$file already exists, skipping..." >&2
+            end
+        end
+
+        # Adjust Cargo.toml
+        sed -i '/\[dependencies\]/i\
+[profile.release]\
+codegen-units = 1\
+lto = "fat"\
+strip = "symbols"\
+' Cargo.toml
+    case '*'
+        echo "Invalid language $language" >&2
+        return 1
 end

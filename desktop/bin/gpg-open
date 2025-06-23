@@ -3,7 +3,7 @@ argparse --max-args 1 h/help -- $argv
 set exitcode $status
 
 function help
-    echo 'Usage: gpg-open [-h|--help] FILE' >&2
+    echo 'Usage: gpg-open [options] FILE' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Open gpg files using xdg-open.' >&2

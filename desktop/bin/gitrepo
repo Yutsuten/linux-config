@@ -5,7 +5,7 @@ set exitcode $status
 set git_repo_root ~/.local/git
 
 function gitrepo_help
-    echo 'Usage: gitrepo [-h|--help] COMMAND' >&2
+    echo 'Usage: gitrepo [options] COMMAND' >&2
     echo >&2
     echo '  Synopsis:' >&2
     echo '    Manage local git repositories.' >&2
