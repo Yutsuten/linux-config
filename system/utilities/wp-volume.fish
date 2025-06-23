@@ -30,9 +30,12 @@ else
     end
 end
 
+pw-play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &
+set play_pid $last_pid
+
 set state (wpctl get-volume @DEFAULT_AUDIO_SINK@)
 
-if echo $state | grep --quiet MUTED
+if string match --quiet --entire MUTED $state
     notify-send --replace-id 9999 --app-name wp-volume --icon audio-volume-muted-symbolic --urgency low 'Volume: Muted'
 else
     set volume (math "$(echo $state | cut -d ' ' -f 2) * 100")
@@ -43,5 +46,8 @@ else
     else
         set icon audio-volume-high-symbolic
     end
-    notify-send --replace-id 9999 --app-name wp-volume --icon $icon --urgency low -h "int:value:$volume" "Volume: $volume%"
+    notify-send --replace-id 9999 --app-name wp-volume --icon $icon --urgency low -h "int:value:$volume" "Volume: $volume%" &
+    set notify_pid $last_pid
 end
+
+wait $notify_pid $play_pid
