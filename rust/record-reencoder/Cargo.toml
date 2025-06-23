@@ -1,12 +1,12 @@
 [package]
 name = "record-reencoder"
 version = "1.0.0"
-edition = "2021"
+edition = "2024"
 
 [profile.release]
-strip = "symbols"
 codegen-units = 1
 lto = "fat"
+strip = "symbols"
 
 [dependencies]
 chrono = "0.4.39"

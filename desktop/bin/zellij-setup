@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+# -------------------------------------------------- #
+# Add zellij helper scripts for the current project. #
+# -------------------------------------------------- #
+
+if test -d .zellij
+    echo '.zellij folder already exists.' >&2
+    return 1
+end
+
+if test -s Cargo.toml # Rust project
+    ln -srnf ~/.config/zellij/exec/rust .zellij
+else
+    echo 'No available exec files for this project' >&2
+    return 1
+end

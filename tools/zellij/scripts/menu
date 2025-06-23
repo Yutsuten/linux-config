@@ -5,7 +5,7 @@
 # --------------------------------------------------- #
 
 zellij action rename-pane menu
-set choices 'Open project' 'Password Manager' 'File Browser' Fish 'Fish Private'
+set choices 'Open project' 'New project' 'Password Manager' 'File Browser' Fish 'Fish Private'
 for filepath in ~/.local/share/zellij/*
     # Split on `-` AND capitalize
     set --erase choice
@@ -19,34 +19,38 @@ set selection (string join \n $choices | sort --version-sort | fzf) || return
 switch $selection
     case 'Open project'
         source ~/.config/zellij/scripts/open-project
-        return 0
+        return
+    case 'New project'
+        source ~/.config/zellij/scripts/new-project
+        return
     case 'Password Manager'
         zellij action rename-tab Pass
         zellij action rename-pane fpass
         fpass --quiet
-        return 0
+        return
     case 'File Browser'
         zellij action rename-tab Nnn
         zellij action rename-pane nnn
         cd ~ && nnn
-        return 0
+        return
     case Fish
         zellij action rename-tab Fish
         zellij action rename-pane fish
         cd ~ && fish
-        return 0
+        return
     case 'Fish Private'
         zellij action rename-tab Fish
         zellij action rename-pane 'fish --private'
         cd ~ && fish --private
-        return 0
+        return
     case '*'
         set scriptname (string lower (string replace --all ' ' '-' $selection))
         if test -x ~/.local/share/zellij/$scriptname
             source ~/.local/share/zellij/$scriptname
-            return 0
+            return
         end
 end
 
 echo 'Something went wrong...' >&2
+read --prompt-str 'Press ENTER to continue...'
 return 1

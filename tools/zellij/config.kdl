@@ -58,7 +58,13 @@ keybinds clear-defaults=true {
         }
         bind "o" {
             NewTab {
-                layout "project"
+                layout "open-project"
+            }
+            SwitchToMode "Locked";
+        }
+        bind "O" {
+            NewTab {
+                layout "new-project"
             }
             SwitchToMode "Locked";
         }

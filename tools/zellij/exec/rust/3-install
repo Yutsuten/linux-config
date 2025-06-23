@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+
+env RUSTFLAGS='-C target-cpu=native' cargo build --release || return
+
+set project_name (cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[0].name')
+ln -nf target/release/$project_name ~/.local/bin/$project_name

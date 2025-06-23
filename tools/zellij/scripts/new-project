@@ -1,0 +1,42 @@
+#!/usr/bin/env fish
+# --------------------- #
+# Create a new project. #
+# --------------------- #
+
+zellij action rename-pane new-project
+set project_lang (gum choose --header 'New project language:' rust) || return
+while test -z "$project_name"
+    set project_name (gum input --header 'Project name:') || return
+end
+
+switch $project_lang
+    case rust
+        # Create project
+        cd ~/Projects
+        cargo new $project_name
+        cd $project_name
+
+        # Default exec scripts
+        ln -srnf ~/.config/zellij/exec/rust .zellij
+
+        # Adjust Cargo.toml
+        sed -i '/\[dependencies\]/i\
+[profile.release]\
+codegen-units = 1\
+lto = "fat"\
+strip = "symbols"\
+' Cargo.toml
+
+        # TabName: Split on `-` AND capitalize
+        for word in (string split - $project_name)
+            set tabname "$tabname"(string sub --length 1 -- $word | string upper)(string sub --start 2 -- $word)
+        end
+        zellij action rename-tab $tabname
+        zellij action rename-pane hx
+        hx
+        return
+end
+
+echo 'Something went wrong...' >&2
+read --prompt-str 'Press ENTER to continue...'
+return 1
