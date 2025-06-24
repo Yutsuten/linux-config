@@ -10,7 +10,7 @@ if not test -d "$SCREENSHOTS_PATH"
     return 1
 end
 
-set NOTIFY notify-send --app-name Screenshot --action open
+set NOTIFY notify-send --app-name screenshot --action open
 set PLAY pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
 set output (date '+%Y-%m-%d-%H-%M-%S_%N')

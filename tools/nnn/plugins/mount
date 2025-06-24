@@ -107,9 +107,13 @@ switch $selection
             end
 
             if sudo mount -o $options /dev/$selected_device $selected_target
+                pw-play /usr/share/sounds/freedesktop/stereo/device-added.oga &
+                notify-send --urgency low --app-name mount --icon process-completed-symbolic 'Mount success' "Mounted $selected_device to $selected_target" &
                 echo '[MOUNT] Mounted successfully' >&2
                 nnn_cd $selected_target
             else
+                pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga &
+                notify-send --urgency critical --app-name mount --icon dialog-warning 'Mount fail' "Failed to mount $selected_device to $selected_target." &
                 echo '[MOUNT] Failed to mount' >&2
                 read --prompt-str 'Press ENTER to continue...'
             end
@@ -128,11 +132,15 @@ switch $selection
                 if string match --quiet 'enc*' $device
                     sudo cryptsetup close $device
                 end
+                pw-play /usr/share/sounds/freedesktop/stereo/device-removed.oga &
+                notify-send --urgency low --app-name mount --icon process-completed-symbolic 'Unmount success' "Unmounted $device from $selected_target" &
                 echo '[MOUNT] Unmounted successfully' >&2
                 echo >&2
                 lsblk --output NAME,FSTYPE,FSVER,FSSIZE,LABEL,VENDOR,MODEL,MOUNTPOINTS | string match --regex --entire '^NAME|sd[a-z]'
                 echo >&2
             else
+                pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga &
+                notify-send --urgency critical --app-name mount --icon dialog-warning 'Unmount fail' "Failed to unmount $device from $selected_target." &
                 echo '[MOUNT] Failed to unmount' >&2
             end
             read --prompt-str 'Press ENTER to continue...'
