@@ -56,7 +56,7 @@ switch $language
 
         # Install default dependencies
         echo 'Install dev/test dependencies' >&2
-        pip install -e '.[dev,test]'
+        pip install -e '.[dev]'
     case rust
         # Base files
         for file in ~/.config/zellij/base_files/rust/* ~/.config/zellij/base_files/rust/.*

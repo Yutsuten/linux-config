@@ -14,6 +14,6 @@ subprocess.run(
     check=True,
 )
 subprocess.run(
-    ['ln', '-srf', f'dist/{project_name}/{project_name}', f'{HOME}/.local/bin/'],
+    ['ln', '-srfv', f'dist/{project_name}/{project_name}', f'{HOME}/.local/bin/'],
     check=True,
 )

@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-cargo run
+env RUSTFLAGS='-C target-cpu=native' cargo run

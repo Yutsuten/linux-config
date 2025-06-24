@@ -15,9 +15,6 @@ dev = [
     "pyinstaller",
     "toml",
 ]
-test = [
-    "pytest",
-]
 
 [tool.ruff]
 line-length = 100
