@@ -36,7 +36,8 @@ set play_pid $last_pid
 set state (wpctl get-volume @DEFAULT_AUDIO_SINK@)
 
 if string match --quiet --entire MUTED $state
-    notify-send --replace-id 9999 --app-name wp-volume --icon audio-volume-muted-symbolic --urgency low 'Volume: Muted'
+    notify-send --replace-id 9999 --app-name wp-volume --icon audio-volume-muted-symbolic --urgency low 'Volume: Muted' &
+    set notify_pid $last_pid
 else
     set volume (math "$(echo $state | cut -d ' ' -f 2) * 100")
     if test $volume -le 33

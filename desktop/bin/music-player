@@ -7,5 +7,9 @@ find . -maxdepth 1 -type f -name '*.m3u' -printf '%P\n' \
     | cut -d ':' -f 4 \
     | read --line m3ufile || return
 
-m3ucheck $m3ufile || notify-send --app-name music-player --icon dialog-warning --urgency critical 'm3ucheck failed' "Playlist $m3ufile may have issues."
+if not m3ucheck $m3ufile
+    pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga &
+    notify-send --app-name music-player --icon dialog-warning --urgency critical 'm3ucheck failed' "Playlist $m3ufile may have issues." &
+end
+
 mpv --profile=music --shuffle --loop-playlist $m3ufile &>~/.local/logs/music-player.log
