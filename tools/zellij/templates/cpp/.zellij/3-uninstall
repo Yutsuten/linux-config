@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+xargs -d '\n' rm -v <target/release/install_manifest.txt

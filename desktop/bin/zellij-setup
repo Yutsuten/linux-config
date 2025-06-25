@@ -5,7 +5,7 @@
 argparse h/help -- $argv
 set exitcode $status
 
-set AVAILABLE_LANGUAGES c python rust
+set AVAILABLE_LANGUAGES c cpp python rust
 
 set argv_count (count $argv)
 
@@ -39,6 +39,21 @@ switch $language
 
         # Base files
         for file in ~/.config/zellij/templates/c/* ~/.config/zellij/templates/c/.*
+            if not test -e (path basename $file)
+                cp -r $file .
+            else
+                echo "$file already exists, skipping..." >&2
+            end
+        end
+        sed -i "s/myapp/$PROJECT_NAME/g" CMakeLists.txt .zellij/*
+    case cpp
+        # Git
+        if not test -d .git
+            git init
+        end
+
+        # Base files
+        for file in ~/.config/zellij/templates/cpp/* ~/.config/zellij/templates/cpp/.*
             if not test -e (path basename $file)
                 cp -r $file .
             else

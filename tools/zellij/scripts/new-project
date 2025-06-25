@@ -5,7 +5,7 @@
 
 zellij action rename-pane new-project
 
-set AVAILABLE_LANGUAGES c python rust
+set AVAILABLE_LANGUAGES c cpp python rust
 set project_lang (gum choose --header 'New project language:' $AVAILABLE_LANGUAGES) || return
 
 while test -z "$PROJECT_NAME"
@@ -20,6 +20,11 @@ switch $project_lang
         cd $PROJECT_NAME
         zellij-setup c
         set main src/main.c
+    case cpp
+        mkdir $PROJECT_NAME
+        cd $PROJECT_NAME
+        zellij-setup cpp
+        set main src/main.cpp
     case python
         mkdir $PROJECT_NAME
         cd $PROJECT_NAME
