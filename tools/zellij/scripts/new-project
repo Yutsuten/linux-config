@@ -4,23 +4,29 @@
 # --------------------- #
 
 zellij action rename-pane new-project
-set project_lang (gum choose --header 'New project language:' python rust) || return
+
+set AVAILABLE_LANGUAGES c python rust
+set project_lang (gum choose --header 'New project language:' $AVAILABLE_LANGUAGES) || return
+
 while test -z "$PROJECT_NAME"
     set -gx PROJECT_NAME (gum input --header 'Project name:') || return
 end
 
+cd ~/Projects
+
 switch $project_lang
+    case c
+        mkdir $PROJECT_NAME
+        cd $PROJECT_NAME
+        zellij-setup c
+        set main src/main.c
     case python
-        # Create project
-        cd ~/Projects
         mkdir $PROJECT_NAME
         cd $PROJECT_NAME
         zellij-setup python
         source .venv/bin/activate.fish
         set main src/main.py
     case rust
-        # Create project
-        cd ~/Projects
         cargo new $PROJECT_NAME
         cd $PROJECT_NAME
         zellij-setup rust

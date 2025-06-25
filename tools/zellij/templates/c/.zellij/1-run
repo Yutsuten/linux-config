@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+if not test -d target/debug
+    cmake -GNinja -DCMAKE_BUILD_TYPE:STRING=Debug -S. -Btarget/debug || return
+end
+
+cmake --build target/debug || return
+./target/debug/myapp

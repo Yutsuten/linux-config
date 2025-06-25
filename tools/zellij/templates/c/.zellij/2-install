@@ -1,0 +1,9 @@
+#!/usr/bin/env fish
+set INSTALL_PREFIX ~/.local
+
+if not test -d target/release
+    cmake -GNinja -DCMAKE_INSTALL_PREFIX:STRING=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE:STRING=Release -S. -Btarget/release || return
+end
+
+cmake --build target/release || return
+cmake --install target/release --strip
