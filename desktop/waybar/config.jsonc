@@ -34,11 +34,12 @@
             "on-scroll": -1,
             "format": {
                 "months": "<b>{}</b>",
-                "weekdays": "<u><b>日 月 火 水 木 金 土</b></u>",
+                "weekdays": "<u><b>{}</b></u>",
                 "today": "<span background='#5294e2'><b>{}</b></span>"
             }
         },
-        "actions":  {
+        "actions": {
+            "on-click-right": "mode",
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
         }
