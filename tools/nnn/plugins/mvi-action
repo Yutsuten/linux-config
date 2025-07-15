@@ -1,0 +1,35 @@
+#!/usr/bin/env fish
+# ---------------------------------------------------------- #
+# Copy or move files selected with mvi to current directory. #
+# ---------------------------------------------------------- #
+
+set bold (tput bold)
+set reset (tput sgr0)
+
+set mvi_selection
+if test -s /tmp/mvi_selection
+    while read --null selection
+        set --append mvi_selection (string replace --regex "^$PWD/" '' $selection)
+    end </tmp/mvi_selection
+else
+    echo '[MVI-ACTION] No mvi selection' >&2
+    return 1
+end
+
+echo >&2
+echo $bold"[MVI-ACTION] Selected the following $(count $mvi_selection) item(s):"$reset >&2
+echo >&2
+for i in (seq (count $mvi_selection))
+    echo "  $i: $mvi_selection[$i]" >&2
+end
+echo >&2
+
+set action (gum choose Copy Move) || return
+switch $action
+    case Copy
+        cp $mvi_selection .
+    case Move
+        mv $mvi_selection .
+end
+
+rm --force /tmp/mvi_selection
