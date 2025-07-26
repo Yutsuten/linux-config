@@ -17,6 +17,7 @@ end
 find ~/.config/nnn/plugins -xtype l -delete
 
 set shortcuts
+set --append shortcuts 'a:aurinstall'
 set --append shortcuts 'c:-!wl-copy < "$nnn"*'
 set --append shortcuts 'C:!wl-paste --no-newline > clipboard*'
 set --append shortcuts 'd:-dragdrop'

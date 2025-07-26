@@ -16,12 +16,15 @@ function aurupdate --description 'Update AUR packages'
     set bold (tput bold)
     set reset (tput sgr0)
 
-    echo $bold':: Update AUR packages'$reset
+    echo $bold':: Check for packages that need rebuild'$reset
+    checkrebuild -v
+
     set packages
     set pids
     set cur 1
 
     # Clone/pull
+    echo $bold':: Update git repositories'$reset
     while read --line package_url
         set package (echo $package_url | sed -nE 's#^https://aur\.archlinux\.org/([^.]+)\.git$#\1#p')
         set --append packages $package
@@ -36,11 +39,13 @@ function aurupdate --description 'Update AUR packages'
     wait $pids
 
     # Makepkg
+    echo $bold':: Update AUR packages'$reset
+    set artifacts
     for package_dir in ~/.local/aur/*/
         set package (echo $package_dir | sed -nE 's#^.+/aur/([^/]+)/$#\1#p')
         if contains $package $packages
             echo $bold"($cur/$packages_count) AUR update $package"$reset
-            pushd $package_dir && makepkg -sicr --needed --nocolor
+            pushd $package_dir && makepkg -scr --nocolor && set --append artifacts (string replace --regex ~/.local/aur/ '' (makepkg --packagelist))
             popd
             set cur (math $cur + 1)
         else
@@ -48,6 +53,16 @@ function aurupdate --description 'Update AUR packages'
             rm --recursive --force -- "$package_dir"
         end
     end
+
+    # Install
+    if test (count $artifacts) -gt 0
+        echo $bold':: Install AUR packages'$reset
+        if string join \n $artifacts | fzf --height=10 --style=minimal --multi | read selection
+            pushd ~/.local/aur/ && sudo pacman -U --needed $selection
+            popd
+        end
+    end
+
     echo $bold'Finish!'$reset
     return 0
 end

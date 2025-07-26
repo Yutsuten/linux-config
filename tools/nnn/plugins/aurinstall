@@ -1,0 +1,11 @@
+#!/usr/bin/env fish
+# ---------------------------------- #
+# Install packages with `pacman -U`. #
+# ---------------------------------- #
+
+source (status dirname)/.utils
+
+nnn_get_selection AURINSTALL install $argv[1] || return
+
+sudo pacman -U --needed $NNN_SELECTION
+read --prompt-str 'Press ENTER to continue...'
