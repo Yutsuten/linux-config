@@ -5,6 +5,6 @@ set waiting_count "$(dunstctl count waiting)"
 if test -n "$history_count" -a -n "$displayed_count" -a -n "$waiting_count"
     set total_count (math --scale 0 "$history_count + $displayed_count + $waiting_count")
     if test "$total_count" -ge 1
-        printf '%s\nTotal: %s' '🔔' "$total_count"
+        printf '%s\n%s' '🔔' "$total_count"
     end
 end

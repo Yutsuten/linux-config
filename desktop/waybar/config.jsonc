@@ -6,9 +6,9 @@
     "custom/notification": {
         "signal": 2,
         "exec": "{{ notification-script }}",
-        "exec-on-event": false,
         "hide-empty-text": true,
         "on-click": "dunstctl history-pop",
+        "on-click-middle": "dunstctl history-clear",
         "on-click-right": "dunstctl close-all"
     },
     "custom/status": {
