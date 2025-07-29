@@ -20,30 +20,24 @@ if test $exitcode -ne 0 -o (count $argv) -eq 0 || set --query --local _flag_help
     return $exitcode
 end
 
-if not test -f $argv[1]
-    echo "$argv[1] is not a file." >&2
-    help
-    return 1
-end
-
-switch (path extension $argv[1])
+switch (path extension $argv[-1])
     case '.gpg'
-        set decrypted_file (mktemp --tmpdir XXXXXXX_(path change-extension '' (path basename $argv[1])))
-        if not gpg --decrypt $argv[1] >$decrypted_file
-            echo "$argv[1] is not a gpg file." >&2
+        set decrypted_file (mktemp --tmpdir XXXXXXX_(path change-extension '' (path basename $argv[-1])))
+        if not gpg --decrypt $argv[-1] >$decrypted_file
+            echo "$argv[-1] is not a gpg file." >&2
             rm --force -- $decrypted_file
             return 1
         end
 
-        touch --reference $argv[1] $decrypted_file
+        touch --reference $argv[-1] $decrypted_file
         set before_shasum (sha512sum $decrypted_file)
-        hx $decrypted_file
+        helix $argv[..-2] $decrypted_file
 
         if test (sha512sum $decrypted_file) = $before_shasum
             rm --force -- $decrypted_file
             return 0
         end
-        gpg --output - --encrypt --default-recipient-self $decrypted_file >$argv[1] && rm --force -- $decrypted_file
+        gpg --output - --encrypt --default-recipient-self $decrypted_file >$argv[-1] && rm --force -- $decrypted_file
     case '*'
-        hx $argv
+        helix $argv
 end

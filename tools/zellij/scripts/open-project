@@ -16,5 +16,5 @@ zellij action rename-tab $tabname
 if test -d .venv
     source .venv/bin/activate.fish
 end
-zellij action rename-pane hx
-hx
+zellij action rename-pane helix
+helix

@@ -44,6 +44,6 @@ for word in (string split - $PROJECT_NAME)
 end
 
 zellij action rename-tab $tabname
-zellij action rename-pane hx
+zellij action rename-pane helix
 
-exec hx $main
+exec helix $main
