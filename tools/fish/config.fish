@@ -57,7 +57,6 @@ if status is-interactive
     abbr --add l1 -- 'ls -N1 --sort=v --group-directories-first'
     abbr --add ll -- 'ls -Nlh --sort=v --group-directories-first'
     abbr --add lo -- 'ls -Noh --sort=v --group-directories-first'
-    abbr --add ssh -- 'env TERM=xterm ssh'
 
     if test -d .venv
         source .venv/bin/activate.fish
