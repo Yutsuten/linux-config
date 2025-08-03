@@ -3,6 +3,8 @@ keybinds clear-defaults=true {
         bind "F1" { SwitchToMode "Normal"; }
     }
     normal {
+        bind "Ctrl z" { Detach; }
+
         // Searching
         bind "/" { SwitchToMode "EnterSearch"; }
 

@@ -1,5 +1,5 @@
 [terminal]
-shell = { program = "/usr/bin/zellij", args = ["--layout", "todo"] }
+shell = { program = "/bin/sh", args = ["-c", "zellij attach default || zellij --new-session-with-layout todo --session default"] }
 
 [window]
 opacity = 0.96
