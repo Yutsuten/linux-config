@@ -12,8 +12,8 @@ keybinds clear-defaults=true {
         bind "r" { SwitchToMode "RenameTab"; }
         bind "Left" { MoveFocusOrTab "Left"; }
         bind "Right" { MoveFocusOrTab "Right"; }
-        bind "Alt Left" { MoveTab "Left"; }
-        bind "Alt Right" { MoveTab "Right"; }
+        bind "Shift Left" { MoveTab "Left"; }
+        bind "Shift Right" { MoveTab "Right"; }
 
         // Panel
         bind "Alt F4" { CloseFocus; }
