@@ -36,6 +36,7 @@ if test (tty) = /dev/tty1 -a -z "$WAYLAND_DISPLAY"
     # Apps
     set -gx ANKI_WAYLAND 1
     # Start Window Manager
+    mkdir -p ~/.local/logs
     exec sway &>$HOME/.local/logs/sway.log
 end
 
